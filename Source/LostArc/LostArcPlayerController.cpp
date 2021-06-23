@@ -7,6 +7,7 @@
 #include "LostArcCharacter.h"
 #include "Engine/World.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
 {
@@ -25,7 +26,10 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 	}
 
 	// Camera Situation Update
-	CameraSituation(bMouseWheel);
+	if (bCameraSit.Key) 
+	{
+		CameraPositionChange(bCameraSit.Value);
+	}
 }
 
 void ALostArcPlayerController::SetupInputComponent()
@@ -46,7 +50,6 @@ void ALostArcPlayerController::SetupInputComponent()
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ALostArcPlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ALostArcPlayerController::MoveToTouchLocation);
-
 	InputComponent->BindAction("ResetVR", IE_Pressed, this, &ALostArcPlayerController::OnResetVR);
 }
 
@@ -138,27 +141,35 @@ void ALostArcPlayerController::StopJumping()
 
 void ALostArcPlayerController::MouseWheelUp()
 {
-	bMouseWheel = true;
+	bCameraSit.Key = true;
+	bCameraSit.Value = true;
+	GetWorldTimerManager().ClearTimer(CameraZoomTimer);
+	GetWorldTimerManager().SetTimer(CameraZoomTimer, FTimerDelegate::CreateLambda([&]() { bCameraSit.Key = false; }), 3.5f, false);
 }
 
 void ALostArcPlayerController::MouseWheelDown()
 {
-	bMouseWheel = false;
+	bCameraSit.Key = true;
+	bCameraSit.Value = false;
+	GetWorldTimerManager().ClearTimer(CameraZoomTimer);
+	GetWorldTimerManager().SetTimer(CameraZoomTimer, FTimerDelegate::CreateLambda([&]() { bCameraSit.Key = false; }), 3.5f, false);
 }
 
-void ALostArcPlayerController::CameraSituation(bool bWheel)
+void ALostArcPlayerController::CameraPositionChange(bool bWheel)
 {
 	auto ArcCharacter = Cast<ALostArcCharacter>(GetPawn());
 	if (ArcCharacter == nullptr) return;
 	if (bWheel)
 	{
-		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength -= 4.f, 300.f, 1000.f);
+		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength -= 3.f, 300.f, 1000.f);
 		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-20.0f, 0.0f, 0.0f)), 0.01));
+		ArcCharacter->GetTopDownCameraComponent()->SetFieldOfView(FMath::Clamp(ArcCharacter->GetTopDownCameraComponent()->FieldOfView += .05f, 90.f, 100.f));
 	}
 	else
 	{
-		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 4.f, 300.f, 1000.f);
+		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 3.f, 300.f, 1000.f);
 		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-50.0f, 0.0f, 0.0f)), 0.01));
+		ArcCharacter->GetTopDownCameraComponent()->SetFieldOfView(FMath::Clamp(ArcCharacter->GetTopDownCameraComponent()->FieldOfView -= .05f, 90.f, 100.f));
 	}
 }
 

@@ -48,9 +48,10 @@ protected:
 	void MouseWheelDown();
 
 private:
-	bool bMouseWheel;
-	void CameraSituation(bool bWheel);
-
+	/* Changing the Camera position according to the mouse wheel */
+	TPair<bool, bool> bCameraSit;
+	FTimerHandle CameraZoomTimer;
+	void CameraPositionChange(bool bWheel);
 };
 
 
