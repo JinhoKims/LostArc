@@ -8,9 +8,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "ArcAnimInstance.h"
+#include "autoAttack.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -55,14 +56,33 @@ ALostArcCharacter::ALostArcCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+	
+	// Create an autoAttack instance that is responsible for the default attack of the character. 
+	autoAttack = NewObject<UautoAttack>(UautoAttack::StaticClass());
+}
+
+void ALostArcCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
+	if (ArcanimInstance != nullptr) 
+		autoAttack->SetAnimInstance(ArcanimInstance);
+}
+
+void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	InputComponent->BindAction("MeleeAttack", IE_Pressed, autoAttack, &UautoAttack::autoAttack);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
 
 void ALostArcCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	CameraBoom->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
 }
-
 
 void ALostArcCharacter::Tick(float DeltaSeconds)
 {
@@ -82,4 +102,5 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 		}
 	}
 }
+
 

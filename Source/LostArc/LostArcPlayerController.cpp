@@ -3,7 +3,6 @@
 #include "LostArcPlayerController.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "LostArcCharacter.h"
 #include "Engine/World.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -13,6 +12,18 @@ ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
+}
+
+void ALostArcPlayerController::SetupInputComponent()
+{
+	// set up gameplay key bindings
+	Super::SetupInputComponent();
+
+	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
+	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
+
+	InputComponent->BindAction("WheelUp", IE_Pressed, this, &ALostArcPlayerController::MouseWheelUp);
+	InputComponent->BindAction("WheelDown", IE_Pressed, this, &ALostArcPlayerController::MouseWheelDown);
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)
@@ -30,22 +41,6 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 	{
 		CameraPositionChange(bCameraSit.Value);
 	}
-}
-
-void ALostArcPlayerController::SetupInputComponent()
-{
-	// set up gameplay key bindings
-	Super::SetupInputComponent();
-
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
-
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ALostArcPlayerController::Jump);
-	InputComponent->BindAction("Jump", IE_Released, this, &ALostArcPlayerController::StopJumping);
-
-	InputComponent->BindAction("WheelUp", IE_Pressed, this, &ALostArcPlayerController::MouseWheelUp);
-	InputComponent->BindAction("WheelDown", IE_Pressed, this, &ALostArcPlayerController::MouseWheelDown);
-
 }
 
 void ALostArcPlayerController::MoveToMouseCursor()
@@ -86,20 +81,6 @@ void ALostArcPlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
-}
-
-void ALostArcPlayerController::Jump()
-{
-	auto ArcCharacter = Cast<ALostArcCharacter>(GetPawn());
-	if (ArcCharacter != nullptr)
-		ArcCharacter->Jump();
-}
-
-void ALostArcPlayerController::StopJumping()
-{
-	auto ArcCharacter = Cast<ALostArcCharacter>(GetPawn());
-	if (ArcCharacter != nullptr)
-		ArcCharacter->StopJumping();
 }
 
 void ALostArcPlayerController::MouseWheelUp()
