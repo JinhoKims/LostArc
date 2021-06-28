@@ -30,10 +30,8 @@ void UArcAnimInstance::AnimNotify_AttackHitCheck()
 
 void UArcAnimInstance::JumpToAttackMontageSection(int32 NewSection)
 {
-	check(Montage_IsPlaying(auto_AttackMontage));
-	
+	//check(Montage_IsPlaying(auto_AttackMontage));
 	Montage_JumpToSection(GetAttackMontageSectionName(NewSection), auto_AttackMontage);
-	
 }
 
 FName UArcAnimInstance::GetAttackMontageSectionName(int32 Section)

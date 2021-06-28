@@ -12,49 +12,43 @@ UautoAttack::UautoAttack()
 void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
 {
 	Arcanim = anim;
+	auto Player = Arcanim->TryGetPawnOwner();
 	Arcanim->OnMontageEnded.AddDynamic(this, &UautoAttack::OnAttackMontageEnded);
 	Arcanim->OnNextAttackCheck.AddLambda([this]()->void
 		{
-			bCanNextCombo = false;
-			if (bIsComboInputOn)
-			{
+			if (bCanNextCombo) {
 				AttackStartComboState();
 				Arcanim->JumpToAttackMontageSection(CurrentCombo);
+				bCanNextCombo = false;
 			}
 		});
 }
 
 void UautoAttack::AttackStartComboState()
 {
-	bIsComboInputOn = false;
-	bCanNextCombo = true;
 	check(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
 	CurrentCombo = FMath::Clamp<int32>(CurrentCombo + 1, 1, MaxCombo);
 }
 
 void UautoAttack::AttackEndComboState()
 {
-	bIsComboInputOn = false;
 	bCanNextCombo = false;
 	CurrentCombo = 0;
 }
 
 void UautoAttack::autoAttack()
 {
-	if (bIsAttacking) // keep the combo
+	if (bIsAttacking) // keep the combo and waiting for animation
 	{
 		check(FMath::IsWithinInclusive<int32>(CurrentCombo, 1, MaxCombo));
-		if (bCanNextCombo)
-		{
-			bIsComboInputOn = true;
-		}
+		bCanNextCombo = true;
 	}
-	else // First combo
+	else // first attack
 	{
 		check(CurrentCombo == 0);
 		AttackStartComboState();
 		Arcanim->PlayAttackMontage();
-		Arcanim->JumpToAttackMontageSection(CurrentCombo);
+		Arcanim->JumpToAttackMontageSection(CurrentCombo); // If CurretCombo is 0, it will not run
 		bIsAttacking = true;
 	}
 }

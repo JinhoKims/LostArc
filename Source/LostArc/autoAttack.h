@@ -29,7 +29,6 @@ public:
 
 private:
 	bool bIsAttacking;
-	bool bIsComboInputOn;
 	bool bCanNextCombo;
 	int32 CurrentCombo;
 	int32 MaxCombo;
