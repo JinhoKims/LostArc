@@ -66,7 +66,8 @@ void ALostArcCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
-	if (ArcanimInstance != nullptr) 
+	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::OnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+	if (ArcanimInstance != nullptr)
 		autoAttack->SetAnimInstance(ArcanimInstance);
 }
 
@@ -74,7 +75,7 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction("MeleeAttack", IE_Pressed, autoAttack, &UautoAttack::autoAttack);
+	InputComponent->BindAction("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoautoAttack);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
@@ -101,6 +102,19 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
 	}
+}
+
+void ALostArcCharacter::CalltoautoAttack()
+{
+	autoAttack->autoAttack();
+}
+
+void ALostArcCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	//check(autoAttack->bIsAttacking);
+	check(autoAttack->CurrentCombo > 0);
+	autoAttack->bIsAttacking = false;
+	autoAttack->AttackEndComboState();
 }
 
 

@@ -6,6 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "autoAttack.generated.h"
 
+
+
 /**
  * that is responsible for the default attack of the character.
  */
@@ -19,17 +21,19 @@ public:
 	void SetAnimInstance(class UArcAnimInstance*);
 	void AttackStartComboState();
 	void AttackEndComboState();
-	void autoAttack();
-	
+
 	UFUNCTION()
-	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void autoAttack();
 
 	UPROPERTY()
 	class UArcAnimInstance* Arcanim;
 
-private:
+public:
 	bool bIsAttacking;
-	bool bCanNextCombo;
 	int32 CurrentCombo;
+
+private:
+	bool bCanNextCombo;
+	bool bIsComboInputOn;
 	int32 MaxCombo;
 };

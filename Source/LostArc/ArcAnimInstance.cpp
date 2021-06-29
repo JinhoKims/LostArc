@@ -16,7 +16,10 @@ void UArcAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UArcAnimInstance::PlayAttackMontage()
 {
-	Montage_Play(auto_AttackMontage, 1.0f);
+	if (!Montage_IsPlaying(auto_AttackMontage))
+	{
+		Montage_Play(auto_AttackMontage, 1.0f);
+	}
 }
 
 void UArcAnimInstance::AnimNotify_NextAttackCheck()

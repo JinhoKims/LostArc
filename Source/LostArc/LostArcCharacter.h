@@ -29,6 +29,10 @@ public:
 	class UArcAnimInstance* ArcanimInstance;
 	class UautoAttack* autoAttack;
 
+	UFUNCTION()
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void CalltoautoAttack();
+
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

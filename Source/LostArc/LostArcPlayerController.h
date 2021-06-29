@@ -10,6 +10,7 @@ UCLASS()
 class ALostArcPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+	friend class UautoAttack;
 
 public:
 	ALostArcPlayerController();
