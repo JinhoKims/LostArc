@@ -29,6 +29,7 @@ void UArcAnimInstance::AnimNotify_NextAttackCheck()
 
 void UArcAnimInstance::AnimNotify_AttackHitCheck()
 {
+	OnAttackHitCheck.Broadcast();
 }
 
 void UArcAnimInstance::JumpToAttackMontageSection(int32 NewSection)
@@ -42,5 +43,4 @@ FName UArcAnimInstance::GetAttackMontageSectionName(int32 Section)
 	check(FMath::IsWithinInclusive<int32>(Section, 1, 3));
 	return FName(*FString::Printf(TEXT("Attack%d"), Section));
 }
-
 

@@ -17,6 +17,7 @@ ALostArcCharacter::ALostArcCharacter()
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 
 	// Don't rotate character to camera direction
 	bUseControllerRotationPitch = false;
@@ -42,16 +43,38 @@ ALostArcCharacter::ALostArcCharacter()
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+
+	// Attach the mannequin skeletal mesh...
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	if (SK_MANNEQUIN.Succeeded())
+	{
+		GetMesh()->SetSkeletalMesh(SK_MANNEQUIN.Object);
+	}
+
 	// Create a decal in the world to show the cursor's location
 	CursorToWorld = CreateDefaultSubobject<UDecalComponent>("CursorToWorld");
 	CursorToWorld->SetupAttachment(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/TopDownCPP/Blueprints/M_Cursor_Decal.M_Cursor_Decal'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/ArcCharacter/Character/Blueprints/M_Cursor_Decal.M_Cursor_Decal'"));
 	if (DecalMaterialAsset.Succeeded())
 	{
 		CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
 	}
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
+
+	// Create main Weapon and mount it in a socket
+	FName WeaponSocket(TEXT("hand_rWeapon"));
+	if (GetMesh()->DoesSocketExist(WeaponSocket))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon Complete!"));
+		Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
+		static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_WEAPON(TEXT("/Game/Weapon_Pack/Skeletal_Mesh/SK_Sword.SK_Sword"));
+		if (SK_WEAPON.Succeeded())
+		{
+			Weapon->SetSkeletalMesh(SK_WEAPON.Object);
+		}
+		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
+	}
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
@@ -66,9 +89,11 @@ void ALostArcCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
-	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::OnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
-	if (ArcanimInstance != nullptr)
+	if (ArcanimInstance != nullptr) {
 		autoAttack->SetAnimInstance(ArcanimInstance);
+		ArcanimInstance->OnAttackHitCheck.AddUObject(this, &ALostArcCharacter::CalltoautoAttackHitCheck);
+		ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+	}
 }
 
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -109,12 +134,14 @@ void ALostArcCharacter::CalltoautoAttack()
 	autoAttack->autoAttack();
 }
 
-void ALostArcCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+void ALostArcCharacter::CalltoautoAttackHitCheck()
 {
-	//check(autoAttack->bIsAttacking);
-	check(autoAttack->CurrentCombo > 0);
-	autoAttack->bIsAttacking = false;
-	autoAttack->AttackEndComboState();
+	autoAttack->autoAttackHitCheck();
+}
+
+void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	autoAttack->OnAttackMontageEnded();
 }
 
 

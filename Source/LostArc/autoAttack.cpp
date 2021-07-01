@@ -5,12 +5,16 @@
 #include "LostArcPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "DrawDebugHelpers.h"
 
 
 UautoAttack::UautoAttack()
 {
 	MaxCombo = 3;
 	AttackEndComboState();
+
+	AttackRange = 100.0f;
+	AttackRadius = 150.0f;	
 }
 
 void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
@@ -26,6 +30,8 @@ void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
 			}
 		});
 }
+
+
 
 void UautoAttack::AttackStartComboState()
 {
@@ -44,8 +50,10 @@ void UautoAttack::AttackEndComboState()
 
 void UautoAttack::autoAttack()
 {
-	auto PlayerController = Cast<ALostArcPlayerController>(Arcanim->TryGetPawnOwner()->GetController());
 	auto PlayerCharacter = Cast<APawn>(Arcanim->TryGetPawnOwner());
+	if (PlayerCharacter == nullptr) return;
+	auto PlayerController = Cast<ALostArcPlayerController>(PlayerCharacter->GetController());
+	
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(PlayerController, PlayerCharacter->GetActorLocation());
 	FHitResult Hit;
 
@@ -70,4 +78,44 @@ void UautoAttack::autoAttack()
 		Arcanim->JumpToAttackMontageSection(CurrentCombo); // If CurretCombo is 0, it will not run
 		bIsAttacking = true;
 	}
+}
+
+void UautoAttack::autoAttackHitCheck()
+{
+	auto PlayerCharacter = Cast<APawn>(Arcanim->TryGetPawnOwner());
+	if (PlayerCharacter == nullptr) return;
+	FCollisionQueryParams Params(NAME_None, false, PlayerCharacter);
+	FHitResult HitResult;
+	bool bResult = PlayerCharacter->GetWorld()->SweepSingleByChannel(HitResult, PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f, 
+	PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * AttackRange,
+	FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AttackRadius), Params);
+
+	if (bResult)
+	{
+		if (HitResult.Actor.IsValid()) // If the hit actor is valid
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Hit Actor Name : %s"), *HitResult.Actor->GetName());
+		}
+	}
+
+//#if ENABLE_DRAW_DEBUG
+//
+//	FVector TraceVec = PlayerCharacter->GetActorForwardVector() * AttackRange;
+//	FVector Center = (PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f) + TraceVec * 0.5f; // 끝 점에서 0.5를 곱해주면 중심점이 된다.
+//	
+//	float HalfHeight = AttackRange * 0.5f + AttackRadius; 
+//	FQuat CapsuleRot = FRotationMatrix::MakeFromZ(TraceVec).ToQuat();
+//	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
+//	float DebugLifeTime = 1.0f;
+//
+//	DrawDebugCapsule(PlayerCharacter->GetWorld(), Center, HalfHeight, AttackRadius, CapsuleRot, DrawColor, false, DebugLifeTime);
+//#endif
+}
+
+void UautoAttack::OnAttackMontageEnded()
+{
+	//check(autoAttack->bIsAttacking);
+	check(CurrentCombo > 0);
+	bIsAttacking = false;
+	AttackEndComboState();
 }

@@ -29,9 +29,13 @@ public:
 	class UArcAnimInstance* ArcanimInstance;
 	class UautoAttack* autoAttack;
 
+	UPROPERTY(VisibleAnywhere, Category = Weapon)
+	USkeletalMeshComponent* Weapon;
+
 	UFUNCTION()
-	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	void CalltoautoAttack();
+	void CalltoautoAttackHitCheck();
 
 private:
 	/** Top down camera */
@@ -45,6 +49,5 @@ private:
 	/** A decal that projects to the cursor location. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
-	
 };
 
