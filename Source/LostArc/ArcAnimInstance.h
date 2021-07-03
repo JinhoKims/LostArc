@@ -29,7 +29,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
 	UAnimMontage * auto_AttackMontage;
 
-
 	UFUNCTION()
 	void AnimNotify_AttackHitCheck();
 

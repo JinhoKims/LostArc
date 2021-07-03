@@ -85,19 +85,37 @@ void UautoAttack::autoAttackHitCheck()
 	auto PlayerCharacter = Cast<APawn>(Arcanim->TryGetPawnOwner());
 	if (PlayerCharacter == nullptr) return;
 	FCollisionQueryParams Params(NAME_None, false, PlayerCharacter);
-	FHitResult HitResult;
-	bool bResult = PlayerCharacter->GetWorld()->SweepSingleByChannel(HitResult, PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f, 
+	TArray<FHitResult> HitResults;
+
+	bool bResult = PlayerCharacter->GetWorld()->SweepMultiByChannel(HitResults, PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f,
 	PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * AttackRange,
 	FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AttackRadius), Params);
-
-	if (bResult)
+	
+	for (int32 i = 0; i < HitResults.Num(); i++)
 	{
-		if (HitResult.Actor.IsValid()) // If the hit actor is valid
+		FHitResult hit = HitResults[i];
+		if (hit.Actor.IsValid()) // If the hit actor is a valid
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Hit Actor Name : %s"), *HitResult.Actor->GetName());
+			FDamageEvent DamageEvent;
+			hit.Actor->TakeDamage(10.0f, DamageEvent, PlayerCharacter->GetController(), PlayerCharacter);
 		}
 	}
 
+//FHitResult HitResult;
+//bool bResult = PlayerCharacter->GetWorld()->SweepSingleByChannel(HitResult, PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f, 
+//PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * AttackRange,
+//FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AttackRadius), Params);
+//if (bResult)
+//{
+//	if (HitResults.Actor.IsValid()) // If the hit actor is valid
+//	{
+//		UE_LOG(LogTemp, Warning, TEXT("Hit Actor Name : %s"), *HitResult.Actor->GetName());
+//		
+//		FDamageEvent DamageEvent;
+//		HitResult.Actor->TakeDamage(50.0f, DamageEvent, PlayerCharacter->GetController(), PlayerCharacter);
+//	}
+//}
+//
 //#if ENABLE_DRAW_DEBUG
 //
 //	FVector TraceVec = PlayerCharacter->GetActorForwardVector() * AttackRange;

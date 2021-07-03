@@ -45,7 +45,7 @@ ALostArcCharacter::ALostArcCharacter()
 
 
 	// Attach the mannequin skeletal mesh...
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Player/Mesh/SK_Mannequin.SK_Mannequin'"));
 	if (SK_MANNEQUIN.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SK_MANNEQUIN.Object);
@@ -54,7 +54,7 @@ ALostArcCharacter::ALostArcCharacter()
 	// Create a decal in the world to show the cursor's location
 	CursorToWorld = CreateDefaultSubobject<UDecalComponent>("CursorToWorld");
 	CursorToWorld->SetupAttachment(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/ArcCharacter/Character/Blueprints/M_Cursor_Decal.M_Cursor_Decal'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/ArcCharacter/Player/Blueprints/M_Cursor_Decal.M_Cursor_Decal'"));
 	if (DecalMaterialAsset.Succeeded())
 	{
 		CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
@@ -66,7 +66,6 @@ ALostArcCharacter::ALostArcCharacter()
 	FName WeaponSocket(TEXT("hand_rWeapon"));
 	if (GetMesh()->DoesSocketExist(WeaponSocket))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Weapon Complete!"));
 		Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
 		static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_WEAPON(TEXT("/Game/Weapon_Pack/Skeletal_Mesh/SK_Sword.SK_Sword"));
 		if (SK_WEAPON.Succeeded())
