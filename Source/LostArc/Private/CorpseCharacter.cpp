@@ -29,14 +29,12 @@ ACorpseCharacter::ACorpseCharacter()
 void ACorpseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void ACorpseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ACorpseCharacter::PostInitializeComponents()
@@ -70,5 +68,10 @@ float ACorpseCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent
 		}
 	}
 	return FInalDamage;
+}
+
+void ACorpseCharacter::Attack()
+{
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(PlayerController, PlayerCharacter->GetActorLocation());
 }
 

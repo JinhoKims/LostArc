@@ -22,6 +22,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* CorpseAnimMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* CorpseAttackMontage;
+
 	void PlayCorpseMontage();
 	void JumpToCorpseMontageSection();
 };

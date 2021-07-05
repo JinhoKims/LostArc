@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "CorpseCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
+
 UCLASS()
 class LOSTARC_API ACorpseCharacter : public ACharacter
 {
@@ -20,9 +22,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	void Attack();
 
 	UPROPERTY()
 	class UCorpseAnimInstance* Corpseanim;
+
+	FOnAttackEndDelegate OnAttackEnd;
 
 private:
 	float MonsterHP;
