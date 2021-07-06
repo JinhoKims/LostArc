@@ -7,7 +7,7 @@
 #include "BTTask_CorpseAttack.generated.h"
 
 /**
- * 현재 태스크는 
+ * 
  */
 UCLASS()
 class LOSTARC_API UBTTask_CorpseAttack : public UBTTaskNode
@@ -21,4 +21,7 @@ public:
 	
 protected:
 	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+
+private:
+	bool bIsAttacking;
 };

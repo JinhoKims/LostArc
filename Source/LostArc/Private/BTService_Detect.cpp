@@ -27,8 +27,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	TArray<FOverlapResult> OverlapResults;
 	FCollisionQueryParams CollisionQueryParams(NAME_None, false, ControllingPawn);
-	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
-
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel4, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
 
 	if (bResult)
 	{
@@ -39,8 +38,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACorpseAIController::TargetKey, Player); // set target value to player actor
 
-				DrawDebugSphere(World, Center, DetectRadius, 32, FColor::Green, false, 0.2f);
-				DrawDebugPoint(World, Player->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
+				//DrawDebugSphere(World, Center, DetectRadius, 32, FColor::Green, false, 0.2f);
+				//DrawDebugPoint(World, Player->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
 				DrawDebugLine(World, ControllingPawn->GetActorLocation(), Player->GetActorLocation(), FColor::Blue, false, 0.2f);
 				return;
 			}
@@ -50,6 +49,9 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			}
 		}
 	}
-
+	else
+	{
+		OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACorpseAIController::TargetKey, nullptr);
+	}
 	DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
 }

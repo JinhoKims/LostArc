@@ -10,6 +10,7 @@
 DECLARE_MULTICAST_DELEGATE(FOnNextAttackCheckDelegate)
 DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate)
 
+
 /**
  * 
  */

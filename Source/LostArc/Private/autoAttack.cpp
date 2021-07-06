@@ -3,6 +3,7 @@
 #include "autoAttack.h"
 #include "ArcAnimInstance.h"
 #include "LostArcPlayerController.h"
+#include "LostArcCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "DrawDebugHelpers.h"
@@ -20,8 +21,9 @@ UautoAttack::UautoAttack()
 void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
 {
 	Arcanim = anim;
+	PlayerCharacter = Cast<ALostArcCharacter>(Arcanim->TryGetPawnOwner());
+	if (PlayerCharacter == nullptr) return;
 	bCanNextCombo = false;
-
 	Arcanim->OnNextAttackCheck.AddLambda([this]()->void
 		{
 			if (bIsComboInputOn) {
@@ -48,11 +50,10 @@ void UautoAttack::AttackEndComboState()
 
 void UautoAttack::autoAttack()
 {
-	if (Arcanim == nullptr) return;
-	auto PlayerCharacter = Cast<APawn>(Arcanim->TryGetPawnOwner());
-	if (PlayerCharacter == nullptr) return;
-	auto PlayerController = Cast<ALostArcPlayerController>(PlayerCharacter->GetController());
-	
+	auto PCon = PlayerCharacter->GetController();
+	auto PlayerController = Cast<ALostArcPlayerController>(PCon);
+	if (PlayerController == nullptr) return;
+
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(PlayerController, PlayerCharacter->GetActorLocation());
 	FHitResult Hit;
 
@@ -81,8 +82,6 @@ void UautoAttack::autoAttack()
 
 void UautoAttack::autoAttackHitCheck()
 {
-	auto PlayerCharacter = Cast<APawn>(Arcanim->TryGetPawnOwner());
-	if (PlayerCharacter == nullptr) return;
 	FCollisionQueryParams Params(NAME_None, false, PlayerCharacter);
 	TArray<FHitResult> HitResults;
 

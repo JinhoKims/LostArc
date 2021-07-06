@@ -38,4 +38,6 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRadius;
+
+	class ALostArcCharacter* PlayerCharacter;
 };

@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "CorpseAnimInstance.generated.h"
+
+DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate)
 
 /**
  * 
@@ -15,16 +18,26 @@ class LOSTARC_API UCorpseAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
+
+	void PlayAttackMontage();
+	void PlayCorpseMontage();
+	void PlayDeathMontage();
+	void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	UFUNCTION()
+	void AnimNotify_CorpseAttackHitCheck();
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Pawn, meta = (AllowPrivateAccess=true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, meta = (AllowPrivateAccess = true))
 	bool bIsDead;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
-	UAnimMontage* CorpseAnimMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* CorpseFlinchMontage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* CorpseAttackMontage;
 
-	void PlayCorpseMontage();
-	void JumpToCorpseMontageSection();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* CorpseDeathMontage;
+
+	FOnAttackHitCheckDelegate OnAttackHitCheck;
 };
