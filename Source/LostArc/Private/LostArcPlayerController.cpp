@@ -14,6 +14,16 @@ ALostArcPlayerController::ALostArcPlayerController()
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
 }
 
+void ALostArcPlayerController::OnPossess(APawn* aPawn)
+{
+	Super::OnPossess(aPawn);
+
+	auto tempCharacter = Cast<ALostArcCharacter>(aPawn);
+	tempCharacter->autoAttack->PlayerController = Cast<ALostArcPlayerController>(aPawn->GetController());
+}
+
+
+
 void ALostArcPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings

@@ -10,7 +10,6 @@
 DECLARE_MULTICAST_DELEGATE(FOnNextAttackCheckDelegate)
 DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate)
 
-
 /**
  * 
  */
@@ -30,13 +29,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrviateAccess = true))
 	UAnimMontage * auto_AttackMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Skill, Meta = (AllowPrviateAccess = true))
+	UAnimMontage * SkillMontage;
+
 	UFUNCTION()
 	void AnimNotify_AttackHitCheck();
 
 	UFUNCTION()
 	void AnimNotify_NextAttackCheck();
 
+	UFUNCTION()
+	void AnimNotify_SkillAHitCheck();
+
 	void PlayAttackMontage();
 	void JumpToAttackMontageSection(int32 NewSection);
 	FName GetAttackMontageSectionName(int32 Section);
+
 };

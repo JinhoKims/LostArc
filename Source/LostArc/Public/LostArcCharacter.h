@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "autoAttack.h"
 #include "LostArcCharacter.generated.h"
+
+DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
@@ -28,14 +31,17 @@ public:
 	UPROPERTY()
 	class UArcAnimInstance* ArcanimInstance;
 	class UautoAttack* autoAttack;
+	class ULostArcPlayerSkill* PlayerSkillSet;
 
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
 	USkeletalMeshComponent* Weapon;
 
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	void CalltoautoAttack();
-	void CalltoautoAttackHitCheck();
+	void CalltoautoAttack(){ autoAttack->autoAttack(); }
+	void CalltoautoAttackHitCheck(){ autoAttack->autoAttackHitCheck(); }
+	void SkillCasting(int32 index);
+
 
 private:
 	/** Top down camera */

@@ -14,6 +14,7 @@ class ALostArcPlayerController : public APlayerController
 
 public:
 	ALostArcPlayerController();
+	virtual void OnPossess(APawn* aPawn) override;
 
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */

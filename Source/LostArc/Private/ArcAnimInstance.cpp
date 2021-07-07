@@ -44,3 +44,8 @@ FName UArcAnimInstance::GetAttackMontageSectionName(int32 Section)
 	return FName(*FString::Printf(TEXT("Attack%d"), Section));
 }
 
+void UArcAnimInstance::AnimNotify_SkillAHitCheck()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Skill Access"));
+	//Montage_JumpToSectionsEnd(TEXT("Skill_A")); // 현재 몽타주 애니메이션을 즉각 중단한다.
+}

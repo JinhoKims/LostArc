@@ -5,7 +5,7 @@
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "DrawDebugHelpers.h"
 
 
@@ -22,7 +22,6 @@ void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
 {
 	Arcanim = anim;
 	PlayerCharacter = Cast<ALostArcCharacter>(Arcanim->TryGetPawnOwner());
-	if (PlayerCharacter == nullptr) return;
 	bCanNextCombo = false;
 	Arcanim->OnNextAttackCheck.AddLambda([this]()->void
 		{
@@ -50,11 +49,9 @@ void UautoAttack::AttackEndComboState()
 
 void UautoAttack::autoAttack()
 {
-	auto PCon = PlayerCharacter->GetController();
-	auto PlayerController = Cast<ALostArcPlayerController>(PCon);
 	if (PlayerController == nullptr) return;
-
-	UAIBlueprintHelperLibrary::SimpleMoveToLocation(PlayerController, PlayerCharacter->GetActorLocation());
+	if (Arcanim->Montage_IsPlaying(Arcanim->SkillMontage)) return;
+	PlayerCharacter->GetMovementComponent()->StopMovementImmediately();
 	FHitResult Hit;
 
 	if (bIsAttacking) // keep the combo and waiting for animation

@@ -25,6 +25,8 @@ public:
 
 	UPROPERTY()
 	class UArcAnimInstance* Arcanim;
+	class ALostArcPlayerController* PlayerController;
+	class ALostArcCharacter* PlayerCharacter;
 
 private:
 	bool bIsAttacking;
@@ -38,6 +40,4 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRadius;
-
-	class ALostArcCharacter* PlayerCharacter;
 };

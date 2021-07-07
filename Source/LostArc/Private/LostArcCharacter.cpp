@@ -11,7 +11,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "ArcAnimInstance.h"
-#include "autoAttack.h"
+#include "LostArcPlayerSkill.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -81,6 +81,7 @@ ALostArcCharacter::ALostArcCharacter()
 	
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
 	autoAttack = NewObject<UautoAttack>(UautoAttack::StaticClass());
+	PlayerSkillSet = NewObject<ULostArcPlayerSkill>(ULostArcPlayerSkill::StaticClass());
 }
 
 void ALostArcCharacter::PostInitializeComponents()
@@ -90,6 +91,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
 	if (ArcanimInstance != nullptr) {
 		autoAttack->SetAnimInstance(ArcanimInstance);
+		PlayerSkillSet->SetAnimInstance(ArcanimInstance);
 		ArcanimInstance->OnAttackHitCheck.AddUObject(this, &ALostArcCharacter::CalltoautoAttackHitCheck);
 		ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
@@ -98,10 +100,12 @@ void ALostArcCharacter::PostInitializeComponents()
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	// 절대 다른 클래스의 함수를 바인딩하지 않기!!
 	InputComponent->BindAction("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoautoAttack);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 0);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 1);
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -128,19 +132,17 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
-void ALostArcCharacter::CalltoautoAttack()
+void ALostArcCharacter::SkillCasting(int32 index)
 {
-	autoAttack->autoAttack();
-}
-
-void ALostArcCharacter::CalltoautoAttackHitCheck()
-{
-	autoAttack->autoAttackHitCheck();
+	PlayerSkillSet->SkillCast(index);
 }
 
 void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	autoAttack->OnAttackMontageEnded();
+	if (Montage->IsValidSectionName(TEXT("Attack1")))
+	{
+		autoAttack->OnAttackMontageEnded();
+	}
 }
 
 
