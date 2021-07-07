@@ -32,6 +32,8 @@ ACorpseCharacter::ACorpseCharacter()
 void ACorpseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	//UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),);
 }
 
 // Called every frame

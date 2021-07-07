@@ -45,7 +45,7 @@ ALostArcCharacter::ALostArcCharacter()
 
 
 	// Attach the mannequin skeletal mesh...
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Player/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Player/Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
 	if (SK_MANNEQUIN.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SK_MANNEQUIN.Object);
