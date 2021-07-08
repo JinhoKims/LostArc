@@ -17,11 +17,12 @@ class LOSTARC_API ULostArcPlayerSkill : public UObject
 public:
 	void SetAnimInstance(class UArcAnimInstance* Anim);
 	void SkillCast(int32 Section);
+	void SkillAHitCheck();
 	
 	UPROPERTY()
 	class UArcAnimInstance* Arcanim;
-
-private:
+	class ALostArcPlayerController* PlayerController;
 	class ALostArcCharacter* PlayerCharacter;
-	bool bStillCasting;
+
+	bool bSkillCasting;
 };

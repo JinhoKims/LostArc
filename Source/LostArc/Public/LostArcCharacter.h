@@ -4,10 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "LostArcPlayerSkill.h"
 #include "autoAttack.h"
 #include "LostArcCharacter.generated.h"
-
-DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
@@ -16,8 +15,8 @@ class ALostArcCharacter : public ACharacter
 
 public:
 	ALostArcCharacter();
-	virtual void PostInitializeComponents();
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
+	virtual void PostInitializeComponents() override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -28,20 +27,19 @@ public:
 	/** Returns CursorToWorld subobject **/
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
-	UPROPERTY()
-	class UArcAnimInstance* ArcanimInstance;
-	class UautoAttack* autoAttack;
-	class ULostArcPlayerSkill* PlayerSkillSet;
-
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
 	USkeletalMeshComponent* Weapon;
 
+	UPROPERTY()
+	class UArcAnimInstance* ArcanimInstance;
+	class UautoAttack* PlayerAutoAttack;
+	class ULostArcPlayerSkill* PlayerSkillSet;
+
+	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	void CalltoautoAttack(){ autoAttack->autoAttack(); }
-	void CalltoautoAttackHitCheck(){ autoAttack->autoAttackHitCheck(); }
-	void SkillCasting(int32 index);
-
+	void CalltoAutoHitCheck() { PlayerAutoAttack->autoAttackHitCheck(); }
+	void CalltoSkillAHitCheck() { PlayerSkillSet->SkillAHitCheck(); }
 
 private:
 	/** Top down camera */

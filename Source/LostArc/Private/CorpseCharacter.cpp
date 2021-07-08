@@ -14,7 +14,7 @@ ACorpseCharacter::ACorpseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
-	MonsterHP = 50.0f;
+	MonsterHP = 100.0f;
 	AttackRadius = 50.0f;
 	AttackRange = 50.0f;
 

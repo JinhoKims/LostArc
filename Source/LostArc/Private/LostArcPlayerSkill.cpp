@@ -5,24 +5,20 @@
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
 #include "ArcAnimInstance.h"
-#include "GameFramework/PawnMovementComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "DrawDebugHelpers.h"
 
 
 void ULostArcPlayerSkill::SetAnimInstance(UArcAnimInstance* Anim)
 {
 	Arcanim = Anim;
-	PlayerCharacter = Cast<ALostArcCharacter>(Arcanim->TryGetPawnOwner());
+	PlayerCharacter = Cast<ALostArcCharacter>(Anim->TryGetPawnOwner());
 	if (PlayerCharacter == nullptr) return;
 }
 
 void ULostArcPlayerSkill::SkillCast(int32 Section)
 {
-	if (bStillCasting) return;
-	auto PCon = PlayerCharacter->GetController();
-	auto PlayerController = Cast<ALostArcPlayerController>(PCon);
-	if (PlayerController == nullptr) return;
-	PlayerCharacter->GetMovementComponent()->StopMovementImmediately();
-	
+	bSkillCasting = true;
 	switch (Section)
 	{
 	case 0:
@@ -35,5 +31,27 @@ void ULostArcPlayerSkill::SkillCast(int32 Section)
 	default:
 		break;
 	}
+}
 
+void ULostArcPlayerSkill::SkillAHitCheck()
+{
+	FCollisionQueryParams Params(NAME_None, false, PlayerCharacter);
+	TArray<FHitResult> HitResults;
+
+	bool bResult = PlayerCharacter->GetWorld()->SweepMultiByChannel(HitResults, PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f,
+		PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f,
+		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(FVector(100.f, 400.f, 50.f)), Params);
+
+	DrawDebugBox(PlayerCharacter->GetWorld(), PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 100.0f,
+		FVector(100.f, 400.f, 50.f), FQuat::Identity, FColor::Red, false, 1.f);
+
+	for (int32 i = 0; i < HitResults.Num(); i++)
+	{
+		FHitResult hit = HitResults[i];
+		if (hit.Actor.IsValid()) // If the hit actor is a valid
+		{
+			FDamageEvent DamageEvent;
+			hit.Actor->TakeDamage(10.0f, DamageEvent, PlayerCharacter->GetController(), PlayerCharacter);
+		}
+	}
 }

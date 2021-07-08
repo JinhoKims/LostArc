@@ -11,7 +11,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "ArcAnimInstance.h"
-#include "LostArcPlayerSkill.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -80,7 +80,7 @@ ALostArcCharacter::ALostArcCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
-	autoAttack = NewObject<UautoAttack>(UautoAttack::StaticClass());
+	PlayerAutoAttack = NewObject<UautoAttack>(UautoAttack::StaticClass());
 	PlayerSkillSet = NewObject<ULostArcPlayerSkill>(ULostArcPlayerSkill::StaticClass());
 }
 
@@ -88,11 +88,15 @@ void ALostArcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
+	UE_LOG(LogTemp, Warning, TEXT("PostInitalizeComponent"));
+
 	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
 	if (ArcanimInstance != nullptr) {
-		autoAttack->SetAnimInstance(ArcanimInstance);
+		PlayerAutoAttack->SetAnimInstance(ArcanimInstance);
 		PlayerSkillSet->SetAnimInstance(ArcanimInstance);
-		ArcanimInstance->OnAttackHitCheck.AddUObject(this, &ALostArcCharacter::CalltoautoAttackHitCheck);
+		ArcanimInstance->OnAttackHitCheck.AddUObject(this, &ALostArcCharacter::CalltoAutoHitCheck);
+		ArcanimInstance->OnSkillAHitCehck.AddUObject(this, &ALostArcCharacter::CalltoSkillAHitCheck);
+		ArcanimInstance->OnSkillBHitCehck.AddUObject(this, &ALostArcCharacter::CalltoSkillAHitCheck);
 		ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
 }
@@ -100,12 +104,14 @@ void ALostArcCharacter::PostInitializeComponents()
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	// 절대 다른 클래스의 함수를 바인딩하지 않기!!
-	InputComponent->BindAction("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoautoAttack);
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 0);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 1);
+
+	UE_LOG(LogTemp, Warning, TEXT("CharacterSetupPlayerInput"));
+	//// 절대 다른 클래스의 함수를 바인딩하지 않기!!
+	//InputComponent->BindAction("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoAutoAttack);
+	//InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	//InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	//InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 0);
+	//InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::SkillCasting, 1);
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -132,17 +138,19 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
-void ALostArcCharacter::SkillCasting(int32 index)
-{
-	PlayerSkillSet->SkillCast(index);
-}
-
 void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (Montage->IsValidSectionName(TEXT("Attack1")))
 	{
-		autoAttack->OnAttackMontageEnded();
+		PlayerAutoAttack->OnAttackMontageEnded();
+	}
+	
+	if (Montage->IsValidSectionName(TEXT("Skill_A")))
+	{
+		PlayerSkillSet->bSkillCasting = false;
 	}
 }
+
+
 
 
