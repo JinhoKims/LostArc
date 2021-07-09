@@ -17,8 +17,11 @@ public:
 	ALostArcPlayerController();
 	virtual void OnPossess(APawn* aPawn) override;
 
+	/* Impossible to move the character while a skill is being cast */
+	bool bWhileCasting;
+
 protected:
-	/** True if the controlled character should navigate to the mouse cursor. */
+	/* True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
 
 	// Begin PlayerController interface
@@ -34,13 +37,16 @@ protected:
 	void OnSetDestinationPressed() { bMoveToMouseCursor = true; }  // set flag to keep updating destination until released
 	void OnSetDestinationReleased() { bMoveToMouseCursor = false; }; // clear flag to indicate we should stop updating the destination
 
+	/* Player Evasion action */
+	void Evade();
+
 	/* Mouse Wheel Scroll */
 	void MouseWheelUp();
 	void MouseWheelDown();
 	
 	/* Player Combat Actions */
 	void CalltoAttack();
-	void SkillCasting(int32 slot);
+	void CalltoSkillCast(int32 slot);
 
 private:
 	/* Changing the Camera position according to the mouse wheel */

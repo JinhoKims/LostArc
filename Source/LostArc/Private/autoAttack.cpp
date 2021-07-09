@@ -65,10 +65,8 @@ void UautoAttack::autoAttack()
 		float ang = FMath::Atan2(Hit.ImpactPoint.Y - PlayerCharacter->GetActorLocation().Y, Hit.ImpactPoint.X - PlayerCharacter->GetActorLocation().X) * 180 / PI; if (ang < 0) ang += 360;
 		PlayerCharacter->SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
 
-		if (!Arcanim->Montage_IsPlaying(Arcanim->AttackMontage))
-		{
-			Arcanim->Montage_Play(Arcanim->AttackMontage, 1.0f);
-		}
+		// if (!Arcanim->Montage_IsPlaying(Arcanim->AttackMontage)) {}
+		Arcanim->Montage_Play(Arcanim->AttackMontage, 1.0f);
 		Arcanim->JumpToAutoComboMontageSection(CurrentCombo); // If CurretCombo is 0, it will not run
 		bIsAttacking = true;
 	}

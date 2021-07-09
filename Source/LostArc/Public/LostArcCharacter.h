@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "LostArcPlayerSkill.h"
-#include "autoAttack.h"
 #include "LostArcCharacter.generated.h"
 
 UCLASS(Blueprintable)
@@ -38,8 +36,6 @@ public:
 	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	void CalltoAutoHitCheck() { PlayerAutoAttack->autoAttackHitCheck(); }
-	void CalltoSkillAHitCheck() { PlayerSkillSet->SkillAHitCheck(); }
 
 private:
 	/** Top down camera */

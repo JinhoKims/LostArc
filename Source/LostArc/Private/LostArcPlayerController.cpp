@@ -30,25 +30,28 @@ void ALostArcPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
-
 	UE_LOG(LogTemp, Warning, TEXT("ControllerSetupInput"));
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
+	InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcPlayerController::Evade);
 
 	InputComponent->BindAction("WheelUp", IE_Pressed, this, &ALostArcPlayerController::MouseWheelUp);
 	InputComponent->BindAction("WheelDown", IE_Pressed, this, &ALostArcPlayerController::MouseWheelDown);
 
 	InputComponent->BindAction("MeleeAttack", IE_Pressed, this, &ALostArcPlayerController::CalltoAttack);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcPlayerController::SkillCasting, 0);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcPlayerController::SkillCasting, 1);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcPlayerController::CalltoSkillCast, 0);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcPlayerController::CalltoSkillCast, 1);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcPlayerController::CalltoSkillCast, 2);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_D", IE_Pressed, this, &ALostArcPlayerController::CalltoSkillCast, 3);
+
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 	// keep updating the destination every tick while desired
-	if (bMoveToMouseCursor)
+	if (bMoveToMouseCursor && !bWhileCasting)
 	{
 		MoveToMouseCursor();
 	}
@@ -86,6 +89,16 @@ void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation); // Requires placement of NevmeshboundsVolume in level
 		}
 	}
+}
+
+void ALostArcPlayerController::Evade()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Evade!"));
+	auto Anim = Cast<UArcAnimInstance>(GetCharacter()->GetMesh()->GetAnimInstance());
+	if (Anim == nullptr) return;
+
+
+	Anim->Montage_Play(Anim->EvadeMontage, 1.f);
 }
 
 void ALostArcPlayerController::MouseWheelUp()
@@ -130,29 +143,31 @@ void ALostArcPlayerController::CalltoAttack()
 
 	if (ArcCharacter != nullptr) 
 	{
-		if (ArcCharacter->ArcanimInstance->Montage_IsPlaying(ArcCharacter->ArcanimInstance->SkillMontage)) return;
-		
+		//if (ArcCharacter->ArcanimInstance->Montage_IsPlaying(ArcCharacter->ArcanimInstance->SkillMontage)) return;
+		if (ArcCharacter->PlayerSkillSet->bisBeingCast) return;
+
 		UAIBlueprintHelperLibrary::SimpleMoveToActor(this, GetCharacter());
 		ArcCharacter->PlayerAutoAttack->autoAttack();
 	}
 }
 
-void ALostArcPlayerController::SkillCasting(int32 slot)
+void ALostArcPlayerController::CalltoSkillCast(int32 slot)
 {
 	FHitResult Hit;
 	auto ArcCharacter = Cast<ALostArcCharacter>(GetCharacter());
 	
 	if (ArcCharacter != nullptr) 
 	{
-		if (ArcCharacter->ArcanimInstance->IsAnyMontagePlaying() || ArcCharacter->PlayerSkillSet->bSkillCasting) return;
+		if (ArcCharacter->ArcanimInstance->IsAnyMontagePlaying() || ArcCharacter->PlayerSkillSet->bisBeingCast) return;
 		ArcCharacter->PlayerAutoAttack->AttackEndComboState();
+		bWhileCasting = true;
 
 		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 		float ang = FMath::Atan2(Hit.ImpactPoint.Y - ArcCharacter->GetActorLocation().Y, Hit.ImpactPoint.X - ArcCharacter->GetActorLocation().X) * 180 / PI;
 		if (ang < 0) ang += 360;
 		ArcCharacter->SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
-		
 		UAIBlueprintHelperLibrary::SimpleMoveToActor(this, GetCharacter());
+		
 		ArcCharacter->PlayerSkillSet->SkillCast(slot);
 	}
 }

@@ -9,8 +9,7 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnNextAttackCheckDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate);
-DECLARE_MULTICAST_DELEGATE(FOnSkillAHitCheckDelegate);
-DECLARE_MULTICAST_DELEGATE(FOnSkillBHitCheckDelegate);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSkillHitCheckDelegate, int32)
 
 UCLASS()
 class LOSTARC_API UArcAnimInstance : public UAnimInstance
@@ -24,8 +23,7 @@ public:
 
 	FOnNextAttackCheckDelegate OnNextAttackCheck;	
 	FOnAttackHitCheckDelegate OnAttackHitCheck;
-	FOnSkillAHitCheckDelegate OnSkillAHitCehck;
-	FOnSkillBHitCheckDelegate OnSkillBHitCehck;
+	FOnSkillHitCheckDelegate OnSkillHitCheck;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, Meta = (AllowPrviateAccess = true))
 	UAnimMontage * AttackMontage;
@@ -33,17 +31,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, Meta = (AllowPrviateAccess = true))
 	UAnimMontage * SkillMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Evade, Meta = (AllowPrviateAccess = true))
+	UAnimMontage * EvadeMontage;
+
 	UFUNCTION()
 	void AnimNotify_AttackHitCheck();
-
 	UFUNCTION()
 	void AnimNotify_NextAttackCheck();
 
 	UFUNCTION()
 	void AnimNotify_SkillAHitCheck();
-
 	UFUNCTION()
 	void AnimNotify_SkillBHitCheck();
+	UFUNCTION()
+	void AnimNotify_SkillCHitCheck();
+	UFUNCTION()
+	void AnimNotify_SkillDHitCheck();
 
 	void JumpToAutoComboMontageSection(int32 NewSection);
 	FName GetAttackMontageSectionName(int32 Section) { check(FMath::IsWithinInclusive<int32>(Section, 1, 3)); return FName(*FString::Printf(TEXT("Attack%d"), Section)); }

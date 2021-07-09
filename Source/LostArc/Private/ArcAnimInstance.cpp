@@ -27,16 +27,26 @@ void UArcAnimInstance::AnimNotify_AttackHitCheck()
 void UArcAnimInstance::JumpToAutoComboMontageSection(int32 NewSection)
 {
 	//check(Montage_IsPlaying(auto_AttackMontage));
+	//Montage_JumpToSectionsEnd(TEXT("Skill_A")); // 현재 몽타주 애니메이션을 즉각 중단한다.
 	Montage_JumpToSection(GetAttackMontageSectionName(NewSection), AttackMontage);
 }
 
 void UArcAnimInstance::AnimNotify_SkillAHitCheck()
 {
-	//Montage_JumpToSectionsEnd(TEXT("Skill_A")); // 현재 몽타주 애니메이션을 즉각 중단한다.
-	OnSkillAHitCehck.Broadcast();
+	OnSkillHitCheck.Broadcast(0);
 }
 
 void UArcAnimInstance::AnimNotify_SkillBHitCheck()
 {
-	OnSkillBHitCehck.Broadcast();
+	OnSkillHitCheck.Broadcast(1);
+}
+
+void UArcAnimInstance::AnimNotify_SkillCHitCheck()
+{
+	OnSkillHitCheck.Broadcast(2);
+}
+
+void UArcAnimInstance::AnimNotify_SkillDHitCheck()
+{
+	OnSkillHitCheck.Broadcast(3);
 }
