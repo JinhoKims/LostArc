@@ -6,6 +6,7 @@
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "LostArcCharacter.h"
 #include "autoAttack.h"
 #include "ArcAnimInstance.h"
@@ -93,12 +94,21 @@ void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)
 
 void ALostArcPlayerController::Evade()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Evade!"));
 	auto Anim = Cast<UArcAnimInstance>(GetCharacter()->GetMesh()->GetAnimInstance());
-	if (Anim == nullptr) return;
+	if (Anim == nullptr || bEvading) return;
 
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetCharacter()->GetActorLocation().Y, Hit.ImpactPoint.X - GetCharacter()->GetActorLocation().X) * 180 / PI;
+	if (ang < 0) ang += 360;
+	GetCharacter()->SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
+	UAIBlueprintHelperLibrary::SimpleMoveToActor(this, GetCharacter());
 
-	Anim->Montage_Play(Anim->EvadeMontage, 1.f);
+	GetCharacter()->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+
+	bEvading = true;
+	Cast<ALostArcCharacter>(GetCharacter())->PlayerSkillSet->bisBeingCast = true;
+	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
 }
 
 void ALostArcPlayerController::MouseWheelUp()

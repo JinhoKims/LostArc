@@ -17,6 +17,36 @@ void UCorpseAnimInstance::PlayDeathMontage()
 	TryGetPawnOwner()->GetController()->AController::Destroy();
 }
 
+void UCorpseAnimInstance::PlayCorpseFlyawayMontage(float MonsterHP)
+{
+	if (MonsterHP <= 0.f) // is Dead
+	{
+		Montage_Play(CorpseFlyawayMontage, 1.1f);
+		TryGetPawnOwner()->SetActorEnableCollision(false);
+		TryGetPawnOwner()->SetLifeSpan(2.3f);
+		TryGetPawnOwner()->GetController()->AController::Destroy();
+	}
+	else
+	{
+		Montage_Play(CorpseFlyawayMontage, 1.f);
+	}
+}
+
+void UCorpseAnimInstance::PlayCorpseDamageHandlingMontage(float MonsterHP)
+{
+	if (MonsterHP <= 0.f) // is Dead
+	{
+		Montage_Play(CorpseDeathMontage, 1.1f);
+		TryGetPawnOwner()->SetActorEnableCollision(false);
+		TryGetPawnOwner()->SetLifeSpan(2.3f);
+		TryGetPawnOwner()->GetController()->AController::Destroy();
+	}
+	else
+	{
+		Montage_Play(CorpseFlinchMontage, 1.f);
+	}
+}
+
 void UCorpseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);

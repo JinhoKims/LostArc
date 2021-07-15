@@ -144,6 +144,13 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		PlayerSkillSet->bisBeingCast = false;
 		Cast<ALostArcPlayerController>(GetController())->bWhileCasting = false;
 	}
+
+	if (Montage->IsValidSectionName(TEXT("Evade")))
+	{
+		PlayerSkillSet->bisBeingCast = false;
+		Cast<ALostArcPlayerController>(GetController())->bEvading = false;
+		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
+	}
 }
 
 

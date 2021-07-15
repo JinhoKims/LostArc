@@ -64,14 +64,14 @@ float ACorpseCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent
 	if (FInalDamage > 0.f)
 	{
 		MonsterHP -= FInalDamage;
-		UE_LOG(LogTemp, Warning, TEXT("Current HP : %f"), MonsterHP);
-		if (MonsterHP <= 0.f) // is Dead
+
+		if (DamageEvent.IsOfType(FPointDamageEvent::ClassID))  // FPointDamage
 		{
-			Corpseanim->PlayDeathMontage();
+
 		}
-		else
+		else 
 		{
-			Corpseanim->PlayCorpseMontage();
+			Corpseanim->PlayCorpseDamageHandlingMontage(MonsterHP); // NormalDamage
 		}
 	}
 	return FInalDamage;

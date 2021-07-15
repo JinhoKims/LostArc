@@ -22,6 +22,8 @@ public:
 	void PlayAttackMontage();
 	void PlayCorpseMontage();
 	void PlayDeathMontage();
+	void PlayCorpseFlyawayMontage(float MonsterHP);
+	void PlayCorpseDamageHandlingMontage(float MonsterHP);
 	void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UFUNCTION()
@@ -38,6 +40,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* CorpseDeathMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* CorpseFlyawayMontage;
 
 	FOnAttackHitCheckDelegate OnAttackHitCheck;
 };

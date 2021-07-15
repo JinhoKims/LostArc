@@ -9,6 +9,15 @@
 /**
  * 
  */
+
+UENUM()
+enum class EAttackType
+{
+	Normal,
+	Point,
+	Radial,
+};
+
 UCLASS()
 class LOSTARC_API ULostArcPlayerSkill : public UObject
 {

@@ -19,6 +19,7 @@ public:
 
 	/* Impossible to move the character while a skill is being cast */
 	bool bWhileCasting;
+	bool bEvading;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
