@@ -11,9 +11,10 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Materials/Material.h"
 #include "LostArcPlayerController.h"
-#include "ArcAnimInstance.h"
+#include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerSkill.h"
 #include "autoAttack.h"
+#include "LostArcPlayerCombatComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcCharacter::ALostArcCharacter()
@@ -77,14 +78,12 @@ ALostArcCharacter::ALostArcCharacter()
 		}
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
+	// Create an autoAttack instance that is responsible for the default attack of the character. 
+	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("Combat"));
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
-	
-	// Create an autoAttack instance that is responsible for the default attack of the character. 
-	PlayerAutoAttack = NewObject<UautoAttack>(UautoAttack::StaticClass());
-	PlayerSkillSet = NewObject<ULostArcPlayerSkill>(ULostArcPlayerSkill::StaticClass());
 }
 
 void ALostArcCharacter::PostInitializeComponents()
@@ -92,20 +91,25 @@ void ALostArcCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	UE_LOG(LogTemp, Warning, TEXT("PostInitalizeComponent"));
 
-	ArcanimInstance = Cast<UArcAnimInstance>(GetMesh()->GetAnimInstance());
-	if (ArcanimInstance != nullptr) {
-		PlayerAutoAttack->SetAnimInstance(ArcanimInstance);
-		PlayerSkillSet->SetAnimInstance(ArcanimInstance);
-
-		ArcanimInstance->OnAttackHitCheck.AddLambda([this]()->void {PlayerAutoAttack->autoAttackHitCheck(); });
-		ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {PlayerSkillSet->SkillHitCheck(val); });
-		ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
-	}
+	ArcanimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (ArcanimInstance == nullptr) return;
+	
+	ArcanimInstance->OnNextAttackCheck.AddLambda([this]()->void {CombatComponent->BasicAttackNextComboCheck(); });
+	ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {CombatComponent->SkillHitCheck(val); });
+	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 }
 
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcCharacter::Evade);
+
+	InputComponent->BindAction<FBindActionDelegate>("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 0);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 1);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 2);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 3);
+	InputComponent->BindAction<FBindActionDelegate>("Skill_D", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 4);
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -132,23 +136,69 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
+void ALostArcCharacter::Evade()
+{
+	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (Anim == nullptr || bEvading) return;
+
+	FHitResult Hit;
+	Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
+	if (ang < 0) ang += 360;
+	SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
+	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+
+	bEvading = true;
+	CombatComponent->bSkillCasting = true;
+	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+}
+
+void ALostArcCharacter::CalltoSkillCast(int32 slot)
+{
+	if (bEvading) return;
+	Cast<ALostArcPlayerController>(GetController())->bWhileCasting = true;
+	FHitResult Hit;
+
+	if (slot) // Skill Cast
+	{
+		if (ArcanimInstance->IsAnyMontagePlaying() || CombatComponent->bSkillCasting) return;
+
+		Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+		float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
+		if (ang < 0) ang += 360;
+		SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
+		UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);
+
+		CombatComponent->SkillCast(slot);
+	}
+	else // Basic Attack
+	{
+		CombatComponent->SkillCast(slot);
+	}
+}
+
 void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (Montage->IsValidSectionName(TEXT("Attack1")))
 	{
-		PlayerAutoAttack->OnAttackMontageEnded();
+		CombatComponent->bSkillCasting = false;
+		CombatComponent->bBasicAttacking = false;
+		Cast<ALostArcPlayerController>(GetController())->bWhileCasting = false;
+		CombatComponent->BasicAttackEndComboState();
 	}
 	
 	if (Montage->IsValidSectionName(TEXT("Skill_A")))
 	{
-		PlayerSkillSet->bisBeingCast = false;
+		CombatComponent->bSkillCasting = false;
 		Cast<ALostArcPlayerController>(GetController())->bWhileCasting = false;
 	}
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
-		PlayerSkillSet->bisBeingCast = false;
-		Cast<ALostArcPlayerController>(GetController())->bEvading = false;
+		CombatComponent->bSkillCasting = false;
+		bEvading = false;
 		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 	}
 }

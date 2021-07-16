@@ -24,12 +24,12 @@ class LOSTARC_API ULostArcPlayerSkill : public UObject
 	GENERATED_BODY()
 
 public:
-	void SetAnimInstance(class UArcAnimInstance* Anim);
+	void SetAnimInstance(class ULostArcCharacterAnimInstance* Anim);
 	void SkillCast(int32 Section);
 	void SkillHitCheck(int32 Slot);
 
 	UPROPERTY()
-	class UArcAnimInstance* Arcanim;
+	class ULostArcCharacterAnimInstance* Arcanim;
 	class ALostArcPlayerController* PlayerController;
 	class ALostArcCharacter* PlayerCharacter;
 

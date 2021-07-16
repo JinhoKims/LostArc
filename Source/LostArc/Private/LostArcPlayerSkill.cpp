@@ -4,13 +4,13 @@
 #include "LostArcPlayerSkill.h"
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
-#include "ArcAnimInstance.h"
+#include "LostArcCharacterAnimInstance.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 
 
-void ULostArcPlayerSkill::SetAnimInstance(UArcAnimInstance* Anim)
+void ULostArcPlayerSkill::SetAnimInstance(ULostArcCharacterAnimInstance* Anim)
 {
 	Arcanim = Anim;
 	PlayerCharacter = Cast<ALostArcCharacter>(Anim->TryGetPawnOwner());

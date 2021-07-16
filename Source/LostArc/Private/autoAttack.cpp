@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "autoAttack.h"
-#include "ArcAnimInstance.h"
+#include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -17,7 +17,7 @@ UautoAttack::UautoAttack()
 	AttackRadius = 150.0f;	
 }
 
-void UautoAttack::SetAnimInstance(UArcAnimInstance* anim)
+void UautoAttack::SetAnimInstance(ULostArcCharacterAnimInstance* anim)
 {
 	Arcanim = anim;
 	PlayerCharacter = Cast<ALostArcCharacter>(anim->TryGetPawnOwner());

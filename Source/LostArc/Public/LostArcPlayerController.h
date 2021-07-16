@@ -6,8 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "LostArcPlayerController.generated.h"
 
-DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
-
 UCLASS()
 class ALostArcPlayerController : public APlayerController
 {
@@ -19,7 +17,6 @@ public:
 
 	/* Impossible to move the character while a skill is being cast */
 	bool bWhileCasting;
-	bool bEvading;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
@@ -38,16 +35,9 @@ protected:
 	void OnSetDestinationPressed() { bMoveToMouseCursor = true; }  // set flag to keep updating destination until released
 	void OnSetDestinationReleased() { bMoveToMouseCursor = false; }; // clear flag to indicate we should stop updating the destination
 
-	/* Player Evasion action */
-	void Evade();
-
 	/* Mouse Wheel Scroll */
 	void MouseWheelUp();
 	void MouseWheelDown();
-	
-	/* Player Combat Actions */
-	void CalltoAttack();
-	void CalltoSkillCast(int32 slot);
 
 private:
 	/* Changing the Camera position according to the mouse wheel */

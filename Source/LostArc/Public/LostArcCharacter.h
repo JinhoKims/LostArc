@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "LostArcCharacter.generated.h"
 
+DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
+
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
 {
@@ -28,14 +30,23 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Weapon)
 	USkeletalMeshComponent* Weapon;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	class ULostArcPlayerCombatComponent* CombatComponent;
+
 	UPROPERTY()
-	class UArcAnimInstance* ArcanimInstance;
-	class UautoAttack* PlayerAutoAttack;
-	class ULostArcPlayerSkill* PlayerSkillSet;
+	class ULostArcCharacterAnimInstance* ArcanimInstance;
+
+	/* Player Evasion action */
+	void Evade();
+
+	/* Player Combat Actions */
+	void CalltoSkillCast(int32 slot);
 
 	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	bool bEvading;
 
 private:
 	/** Top down camera */

@@ -16,7 +16,7 @@ class LOSTARC_API UautoAttack : public UObject
 
 public:
 	UautoAttack();
-	void SetAnimInstance(class UArcAnimInstance*);
+	void SetAnimInstance(class ULostArcCharacterAnimInstance*);
 	void AttackStartComboState();
 	void AttackEndComboState();
 	void OnAttackMontageEnded();
@@ -24,7 +24,7 @@ public:
 	void autoAttackHitCheck();
 
 	UPROPERTY()
-	class UArcAnimInstance* Arcanim;
+	class ULostArcCharacterAnimInstance* Arcanim;
 	class ALostArcPlayerController* PlayerController;
 	class ALostArcCharacter* PlayerCharacter;
 
