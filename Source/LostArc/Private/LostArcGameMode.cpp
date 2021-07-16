@@ -2,7 +2,6 @@
 
 #include "LostArcGameMode.h"
 #include "LostArcPlayerController.h"
-#include "LostArcCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 ALostArcGameMode::ALostArcGameMode()

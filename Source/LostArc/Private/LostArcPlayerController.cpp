@@ -2,15 +2,14 @@
 
 #include "LostArcPlayerController.h"
 #include "Engine/World.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "LostArcCharacter.h"
-#include "autoAttack.h"
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
 {

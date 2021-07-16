@@ -36,17 +36,20 @@ public:
 	UPROPERTY()
 	class ULostArcCharacterAnimInstance* ArcanimInstance;
 
+	bool bEvading;
+
+	/* Rotate the character in the direction the cursor is pointing */
+	void CharacterRotatetoCursor();
+
 	/* Player Evasion action */
 	void Evade();
 
 	/* Player Combat Actions */
-	void CalltoSkillCast(int32 slot);
+	void CalltoSkillCast(int32 Slot);
 
 	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-
-	bool bEvading;
 
 private:
 	/** Top down camera */

@@ -2,19 +2,17 @@
 
 #include "LostArcCharacter.h"
 #include "Engine/World.h"
-#include "UObject/ConstructorHelpers.h"
+#include "Materials/Material.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Materials/Material.h"
 #include "LostArcPlayerController.h"
 #include "LostArcCharacterAnimInstance.h"
-#include "LostArcPlayerSkill.h"
-#include "autoAttack.h"
 #include "LostArcPlayerCombatComponent.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcCharacter::ALostArcCharacter()
@@ -46,7 +44,6 @@ ALostArcCharacter::ALostArcCharacter()
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
 
 	// Attach the mannequin skeletal mesh...
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_MANNEQUIN(TEXT("SkeletalMesh'/Game/ArcCharacter/Player/Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
@@ -105,7 +102,7 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcCharacter::Evade);
 
-	InputComponent->BindAction<FBindActionDelegate>("MeleeAttack", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 0);
+	InputComponent->BindAction<FBindActionDelegate>("BasicAttack", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 0);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 1);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 2);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 3);
@@ -136,18 +133,22 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
-void ALostArcCharacter::Evade()
+void ALostArcCharacter::CharacterRotatetoCursor()
 {
-	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	if (Anim == nullptr || bEvading) return;
-
 	FHitResult Hit;
 	Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 	float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
 	if (ang < 0) ang += 360;
 	SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
 	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);
+}
 
+void ALostArcCharacter::Evade()
+{
+	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (Anim == nullptr || bEvading) return;
+
+	CharacterRotatetoCursor();
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
 
 	bEvading = true;
@@ -155,27 +156,21 @@ void ALostArcCharacter::Evade()
 	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
 }
 
-void ALostArcCharacter::CalltoSkillCast(int32 slot)
+void ALostArcCharacter::CalltoSkillCast(int32 Slot)
 {
 	if (bEvading) return;
 	Cast<ALostArcPlayerController>(GetController())->bWhileCasting = true;
-	FHitResult Hit;
 
-	if (slot) // Skill Cast
+	if (Slot) // Skill Cast
 	{
 		if (ArcanimInstance->IsAnyMontagePlaying() || CombatComponent->bSkillCasting) return;
 
-		Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-		float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
-		if (ang < 0) ang += 360;
-		SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
-		UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);
-
-		CombatComponent->SkillCast(slot);
+		CharacterRotatetoCursor();
+		CombatComponent->SkillCast(Slot);
 	}
 	else // Basic Attack
 	{
-		CombatComponent->SkillCast(slot);
+		CombatComponent->SkillCast(Slot);
 	}
 }
 
@@ -202,6 +197,7 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 	}
 }
+
 
 
 

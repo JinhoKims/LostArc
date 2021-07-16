@@ -22,7 +22,6 @@ ULostArcPlayerCombatComponent::ULostArcPlayerCombatComponent()
 	AttackRadius = 150.0f;
 }
 
-
 // Called when the game starts
 void ULostArcPlayerCombatComponent::BeginPlay()
 {
@@ -31,8 +30,6 @@ void ULostArcPlayerCombatComponent::BeginPlay()
 	// ...
 	
 }
-
-
 // Called every frame
 void ULostArcPlayerCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -64,13 +61,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 		{
 			check(CurrentCombo == 0);
 			BasicAttackStartComboState();
-
-			FHitResult Hit;
-			Cast<ALostArcPlayerController>(Character->GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-			float ang = FMath::Atan2(Hit.ImpactPoint.Y - Character->GetActorLocation().Y, Hit.ImpactPoint.X - Character->GetActorLocation().X) * 180 / PI;
-			if (ang < 0) ang += 360;
-			Character->SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
-			UAIBlueprintHelperLibrary::SimpleMoveToActor(Character->GetController(), GetOwner());
+			Character->CharacterRotatetoCursor();
 
 			Arcanim->Montage_Play(Arcanim->AttackMontage, 1.0f);
 			bBasicAttacking = true;
@@ -147,7 +138,6 @@ void ULostArcPlayerCombatComponent::SkillHitCheck(int32 Slot)
 		type = EAttackTypes::Normal;
 		break;
 	}
-
 
 	for (int32 i = 0; i < HitResults.Num(); i++) // Damage handling
 	{
