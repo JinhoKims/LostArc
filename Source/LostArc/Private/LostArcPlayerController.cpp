@@ -2,13 +2,13 @@
 
 #include "LostArcPlayerController.h"
 #include "Engine/World.h"
-#include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "LostArcCharacter.h"
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
@@ -26,7 +26,6 @@ void ALostArcPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
-	UE_LOG(LogTemp, Warning, TEXT("ControllerSetupInput"));
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
@@ -39,11 +38,10 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 	// keep updating the destination every tick while desired
-	if (bMoveToMouseCursor && !bWhileCasting)
+	if (bMoveToMouseCursor)
 	{
 		MoveToMouseCursor();
 	}
-
 	// Camera Situation Update
 	if (bCameraSit.Key) 
 	{
@@ -54,13 +52,18 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 void ALostArcPlayerController::MoveToMouseCursor()
 {
 		// Trace to see what is under the mouse cursor
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+		auto PCharacter = Cast<ALostArcCharacter>(GetCharacter());
 
-		if (Hit.bBlockingHit)
+		if (!PCharacter->CombatComponent->bSkillCasting)
 		{
-			// We hit something, move there
-			SetNewMoveDestination(Hit.ImpactPoint);
+			FHitResult Hit;
+			GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+
+			if (Hit.bBlockingHit)
+			{
+				// We hit something, move there
+				SetNewMoveDestination(Hit.ImpactPoint);
+			}
 		}
 }
 

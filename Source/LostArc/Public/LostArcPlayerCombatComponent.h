@@ -37,6 +37,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	// Basic attack variables
 	bool bCanNextCombo;
 	bool bIsComboInputOn;
 	int32 CurrentCombo;

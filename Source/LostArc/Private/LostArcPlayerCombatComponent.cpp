@@ -40,7 +40,6 @@ void ULostArcPlayerCombatComponent::TickComponent(float DeltaTime, ELevelTick Ti
 
 void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 {
-	if (bSkillCasting) return;
 	auto Character = Cast<ALostArcCharacter>(GetOwner());
 	auto Arcanim = Cast<ALostArcCharacter>(GetOwner())->ArcanimInstance;
 	if (Character == nullptr || Arcanim == nullptr) return;
@@ -48,8 +47,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 
 	switch (Slot)
 	{
-	case 0:
-		bSkillCasting = false;
+	case 0: // Basic attack
 		if (bBasicAttacking) // keep the combo and waiting for animation
 		{
 			check(FMath::IsWithinInclusive<int32>(CurrentCombo, 1, MaxCombo));
@@ -57,7 +55,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 				bIsComboInputOn = true;
 			}
 		}
-		else // first attack
+		else				// first attack
 		{
 			check(CurrentCombo == 0);
 			BasicAttackStartComboState();

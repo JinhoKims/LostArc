@@ -15,9 +15,6 @@ public:
 	ALostArcPlayerController();
 	virtual void OnPossess(APawn* aPawn) override;
 
-	/* Impossible to move the character while a skill is being cast */
-	bool bWhileCasting;
-
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;

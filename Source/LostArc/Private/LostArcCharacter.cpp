@@ -3,15 +3,15 @@
 #include "LostArcCharacter.h"
 #include "Engine/World.h"
 #include "Materials/Material.h"
+#include "LostArcPlayerController.h"
+#include "LostArcCharacterAnimInstance.h"
+#include "LostArcPlayerCombatComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "LostArcPlayerController.h"
-#include "LostArcCharacterAnimInstance.h"
-#include "LostArcPlayerCombatComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
@@ -152,47 +152,41 @@ void ALostArcCharacter::Evade()
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
 
 	bEvading = true;
-	CombatComponent->bSkillCasting = true;
 	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
 }
 
 void ALostArcCharacter::CalltoSkillCast(int32 Slot)
 {
 	if (bEvading) return;
-	Cast<ALostArcPlayerController>(GetController())->bWhileCasting = true;
 
 	if (Slot) // Skill Cast
 	{
-		if (ArcanimInstance->IsAnyMontagePlaying() || CombatComponent->bSkillCasting) return;
-
+		if (CombatComponent->bSkillCasting) return;
 		CharacterRotatetoCursor();
 		CombatComponent->SkillCast(Slot);
 	}
 	else // Basic Attack
 	{
+		if (CombatComponent->bSkillCasting && !CombatComponent->bBasicAttacking) return;
 		CombatComponent->SkillCast(Slot);
 	}
 }
 
 void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
+	CombatComponent->bSkillCasting = false;
+
 	if (Montage->IsValidSectionName(TEXT("Attack1")))
 	{
-		CombatComponent->bSkillCasting = false;
 		CombatComponent->bBasicAttacking = false;
-		Cast<ALostArcPlayerController>(GetController())->bWhileCasting = false;
 		CombatComponent->BasicAttackEndComboState();
 	}
-	
 	if (Montage->IsValidSectionName(TEXT("Skill_A")))
 	{
-		CombatComponent->bSkillCasting = false;
-		Cast<ALostArcPlayerController>(GetController())->bWhileCasting = false;
-	}
 
+	}
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
-		CombatComponent->bSkillCasting = false;
 		bEvading = false;
 		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 	}

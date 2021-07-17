@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+
 #include "CorpseAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "NavigationSystem.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "NavigationSystem.h"
 
 const FName ACorpseAIController::HomePosKey(TEXT("HomePos"));
 const FName ACorpseAIController::PatrolPosKey(TEXT("PatrolPos"));
