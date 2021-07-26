@@ -36,6 +36,9 @@ public:
 	UPROPERTY()
 	class ULostArcCharacterAnimInstance* ArcanimInstance;
 
+	UPROPERTY(VisibleAnywhere, Category = UI)
+	class UWidgetComponent* HUDWidget;
+
 	bool bEvading;
 
 	/* Rotate the character in the direction the cursor is pointing */

@@ -13,7 +13,14 @@ class ALostArcPlayerController : public APlayerController
 
 public:
 	ALostArcPlayerController();
+	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* aPawn) override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<class UUserWidget> HUDWidgetClass;
+
+	UPROPERTY()
+	class UUserWidget* HUDWidget;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */

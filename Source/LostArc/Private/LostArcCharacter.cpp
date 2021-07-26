@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -75,6 +76,11 @@ ALostArcCharacter::ALostArcCharacter()
 		}
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
+
+	
+	HUDWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HUDWIDGET"));
+	HUDWidget->SetupAttachment(GetMesh());
+
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
 	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("Combat"));
 
@@ -86,7 +92,6 @@ ALostArcCharacter::ALostArcCharacter()
 void ALostArcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	UE_LOG(LogTemp, Warning, TEXT("PostInitalizeComponent"));
 
 	ArcanimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	if (ArcanimInstance == nullptr) return;
@@ -183,7 +188,8 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	}
 	if (Montage->IsValidSectionName(TEXT("Skill_A")))
 	{
-
+		if (bInterrupted)
+			UE_LOG(LogTemp, Warning, TEXT("Evade!"));
 	}
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{

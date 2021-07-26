@@ -80,6 +80,8 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 		Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 		Arcanim->Montage_JumpToSection(TEXT("Skill_D"), Arcanim->SkillMontage);
 		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+		// Print montage section name
+		UE_LOG(LogTemp, Warning, TEXT("Playing Section Is : %s"), *Character->GetMesh()->GetAnimInstance()->Montage_GetCurrentSection().ToString());
 		break;
 	}
 }

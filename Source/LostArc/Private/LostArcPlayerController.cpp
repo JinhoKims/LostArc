@@ -9,12 +9,25 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
+	if (UI_HUD_C.Succeeded())
+	{
+		HUDWidgetClass = UI_HUD_C.Class;
+	}
+}
+
+void ALostArcPlayerController::BeginPlay()
+{
+	HUDWidget = CreateWidget<UUserWidget>(this, HUDWidgetClass);
+	HUDWidget->AddToViewport(1);
 }
 
 void ALostArcPlayerController::OnPossess(APawn* aPawn)
