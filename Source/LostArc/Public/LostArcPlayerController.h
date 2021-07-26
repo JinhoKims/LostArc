@@ -17,10 +17,10 @@ public:
 	virtual void OnPossess(APawn* aPawn) override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-	TSubclassOf<class UUserWidget> HUDWidgetClass;
+	TSubclassOf<class UHUDWidget> HUDWidgetClass;
 
 	UPROPERTY()
-	class UUserWidget* HUDWidget;
+	class UHUDWidget* HUDWidget;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */

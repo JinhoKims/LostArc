@@ -5,11 +5,11 @@
 #include "LostArcCharacter.h"
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
+#include "HUDWidget.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "Blueprint/UserWidget.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
@@ -17,7 +17,7 @@ ALostArcPlayerController::ALostArcPlayerController()
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
+	static ConstructorHelpers::FClassFinder<UHUDWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
 	if (UI_HUD_C.Succeeded())
 	{
 		HUDWidgetClass = UI_HUD_C.Class;
@@ -26,7 +26,7 @@ ALostArcPlayerController::ALostArcPlayerController()
 
 void ALostArcPlayerController::BeginPlay()
 {
-	HUDWidget = CreateWidget<UUserWidget>(this, HUDWidgetClass);
+	HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
 	HUDWidget->AddToViewport(1);
 }
 
