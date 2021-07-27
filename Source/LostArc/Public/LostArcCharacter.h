@@ -33,6 +33,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	class ULostArcPlayerCombatComponent* CombatComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = "true"))
+	class ULostArcCharacterStatComponent* StatComponent;
+
 	UPROPERTY()
 	class ULostArcCharacterAnimInstance* ArcanimInstance;
 

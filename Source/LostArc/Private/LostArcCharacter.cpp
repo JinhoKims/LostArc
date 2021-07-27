@@ -6,6 +6,7 @@
 #include "LostArcPlayerController.h"
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
+#include "LostArcCharacterStatComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -77,12 +78,11 @@ ALostArcCharacter::ALostArcCharacter()
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
 
-	
 	HUDWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HUDWIDGET"));
 	HUDWidget->SetupAttachment(GetMesh());
-
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
-	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("Combat"));
+	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
+	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
@@ -190,6 +190,8 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if (bInterrupted)
 			UE_LOG(LogTemp, Warning, TEXT("Evade!"));
+			
+		//UE_LOG(LogTemp, Warning,TEXT("%f"), StatComponent->getHP());
 	}
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{

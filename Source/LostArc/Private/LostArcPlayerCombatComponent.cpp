@@ -20,6 +20,7 @@ ULostArcPlayerCombatComponent::ULostArcPlayerCombatComponent()
 	MaxCombo = 3;
 	AttackRange = 100.0f;
 	AttackRadius = 150.0f;
+
 }
 
 // Called when the game starts
