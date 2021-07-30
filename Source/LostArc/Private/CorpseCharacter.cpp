@@ -99,7 +99,7 @@ void ACorpseCharacter::AttackHitCheck()
 			UE_LOG(LogTemp, Warning, TEXT("Hit Actor Name : %s"), *HitResult.Actor->GetName());
 
 			FDamageEvent DamageEvent;
-			HitResult.Actor->TakeDamage(10.0f, DamageEvent, GetController(), this);
+			HitResult.Actor->TakeDamage(25.0f, DamageEvent, GetController(), this);
 		}
 	}
 

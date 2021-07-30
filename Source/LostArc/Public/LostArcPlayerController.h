@@ -13,9 +13,9 @@ class ALostArcPlayerController : public APlayerController
 
 public:
 	ALostArcPlayerController();
-	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* aPawn) override;
-
+	virtual void BeginPlay() override;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class UHUDWidget> HUDWidgetClass;
 

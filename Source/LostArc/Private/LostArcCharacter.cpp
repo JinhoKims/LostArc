@@ -7,6 +7,7 @@
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
 #include "LostArcCharacterStatComponent.h"
+#include "HUDWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -78,8 +79,6 @@ ALostArcCharacter::ALostArcCharacter()
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
 
-	HUDWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HUDWIDGET"));
-	HUDWidget->SetupAttachment(GetMesh());
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
 	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
@@ -92,13 +91,14 @@ ALostArcCharacter::ALostArcCharacter()
 void ALostArcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
 	ArcanimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	if (ArcanimInstance == nullptr) return;
 	
 	ArcanimInstance->OnNextAttackCheck.AddLambda([this]()->void {CombatComponent->BasicAttackNextComboCheck(); });
 	ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {CombatComponent->SkillHitCheck(val); });
 	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+	
+	StatComponent->OnHPIsZero.AddLambda([this]()->void {ArcanimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); });
 }
 
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -198,6 +198,13 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		bEvading = false;
 		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 	}
+}
+
+float ALostArcCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	StatComponent->SetDamage(FinalDamage);
+	return FinalDamage;
 }
 
 

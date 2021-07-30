@@ -27,10 +27,17 @@ void ULostArcCharacterAnimInstance::AnimNotify_SkillDHitCheck()
 	OnSkillHitCheck.Broadcast(4);
 }
 
-
 void ULostArcCharacterAnimInstance::AnimNotify_NextAttackCheck()
 {
 	OnNextAttackCheck.Broadcast();
+}
+
+void ULostArcCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	auto Pawn = TryGetPawnOwner();
+	if (!::IsValid(Pawn)) return;
 }
 
 void ULostArcCharacterAnimInstance::JumpToAutoComboMontageSection(int32 NewSection)

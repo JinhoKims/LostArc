@@ -32,6 +32,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Evade, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* EvadeMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn, Meta = (AllowPrviateAccess = true))
+	bool IsDead;
 
 	UFUNCTION()
 	void AnimNotify_AttackHitCheck();
@@ -47,5 +49,7 @@ public:
 	UFUNCTION()
 	void AnimNotify_SkillDHitCheck();
 
+	void NativeUpdateAnimation(float DeltaSeconds) override;
 	void JumpToAutoComboMontageSection(int32 NewSection);
+	void SetDeadAnim() { IsDead = true; }
 };

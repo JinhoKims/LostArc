@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostArcGameInstance.h"
 #include "Components/ActorComponent.h"
 #include "Engine/DataTable.h"
 #include "LostArcCharacterStatComponent.generated.h"
+
+DECLARE_MULTICAST_DELEGATE(FOnHPChangedDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnHPIsZeroDelegate);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
@@ -13,19 +17,24 @@ class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	ULostArcCharacterStatComponent();
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void SetNewLevel(int32 NewLevel);
+	void SetDamage(float NewDamage) { SetHP(FMath::Clamp<float>(CurrentHP - NewDamage, 0.0f, CurrentStatData->Maxhp)); }
+	void SetHP(float NewHP);
+	void SetMP(float NewMP);
+	float GetAttack() { return CurrentStatData->Attack; }
+	float GetHPRatio() { return CurrentStatData->Maxhp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / CurrentStatData->Maxhp); }
+
+	FOnHPChangedDelegate OnHPChanged;
+	FOnHPIsZeroDelegate OnHPIsZero;
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 	virtual void InitializeComponent() override;
+	virtual void BeginPlay() override;
 
 private:
-	struct FArcCharacterData* CurrentStatData = nullptr;
+	FArcCharacterData* CurrentStatData;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
 	int32 Level;

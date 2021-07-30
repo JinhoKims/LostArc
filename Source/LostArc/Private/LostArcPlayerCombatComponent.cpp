@@ -4,6 +4,7 @@
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
 #include "LostArcCharacterAnimInstance.h"
+#include "LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "DrawDebugHelpers.h"
@@ -148,7 +149,7 @@ void ULostArcPlayerCombatComponent::SkillHitCheck(int32 Slot)
 			switch (type)
 			{
 			case EAttackTypes::Normal:
-				hit.Actor->TakeDamage(10.0f, DamageEvent, Controller, Character);
+				hit.Actor->TakeDamage(Character->StatComponent->GetAttack(), DamageEvent, Controller, Character);
 				break;
 			case EAttackTypes::Point:
 				hit.Actor->TakeDamage(10.0f, PointDamageEvent, Controller, Character);

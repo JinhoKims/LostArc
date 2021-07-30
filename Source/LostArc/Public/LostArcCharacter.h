@@ -39,11 +39,6 @@ public:
 	UPROPERTY()
 	class ULostArcCharacterAnimInstance* ArcanimInstance;
 
-	UPROPERTY(VisibleAnywhere, Category = UI)
-	class UWidgetComponent* HUDWidget;
-
-	bool bEvading;
-
 	/* Rotate the character in the direction the cursor is pointing */
 	void CharacterRotatetoCursor();
 
@@ -57,6 +52,8 @@ public:
 	UFUNCTION()
 	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
+	float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -69,5 +66,7 @@ private:
 	/** A decal that projects to the cursor location. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
+
+	bool bEvading;
 };
 

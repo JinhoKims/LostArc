@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LostArcCharacterStatComponent.h"
-#include "LostArcGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -17,14 +16,13 @@ ULostArcCharacterStatComponent::ULostArcCharacterStatComponent()
 void ULostArcCharacterStatComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-	SetNewLevel(1);
+	SetNewLevel(Level);
 }
 
 // Called when the game starts
 void ULostArcCharacterStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	// ...
 }
 
@@ -32,14 +30,16 @@ void ULostArcCharacterStatComponent::BeginPlay()
 void ULostArcCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	// ...
 }
 
 void ULostArcCharacterStatComponent::SetNewLevel(int32 NewLevel)
 {
 	auto ArcGameInstance = Cast<ULostArcGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	CurrentStatData = ArcGameInstance->GetArcCharacterData(NewLevel);
+	if (ArcGameInstance != nullptr)
+	{
+		CurrentStatData = ArcGameInstance->GetArcCharacterData(NewLevel);
+	}
 
 	if (CurrentStatData != nullptr)
 	{
@@ -47,5 +47,21 @@ void ULostArcCharacterStatComponent::SetNewLevel(int32 NewLevel)
 		CurrentHP = CurrentStatData->Maxhp;
 		CurrentMP = CurrentStatData->Maxmp;
 	}
+}
+
+void ULostArcCharacterStatComponent::SetHP(float NewHP)
+{
+	CurrentHP = NewHP;
+	OnHPChanged.Broadcast();
+	if (CurrentHP < KINDA_SMALL_NUMBER)
+	{
+		CurrentHP = 0.0f;
+		OnHPIsZero.Broadcast();
+	}
+}
+
+void ULostArcCharacterStatComponent::SetMP(float NewMP)
+{
+	CurrentMP = NewMP;
 }
 

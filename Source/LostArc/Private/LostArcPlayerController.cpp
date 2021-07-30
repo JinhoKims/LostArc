@@ -16,35 +16,37 @@ ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
-
 	static ConstructorHelpers::FClassFinder<UHUDWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
 	if (UI_HUD_C.Succeeded())
 	{
 		HUDWidgetClass = UI_HUD_C.Class;
 	}
-}
 
-void ALostArcPlayerController::BeginPlay()
-{
-	HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
-	HUDWidget->AddToViewport(1);
-}
-
-void ALostArcPlayerController::OnPossess(APawn* aPawn)
-{
-	Super::OnPossess(aPawn);
 }
 
 void ALostArcPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
-
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
 
 	InputComponent->BindAction("WheelUp", IE_Pressed, this, &ALostArcPlayerController::MouseWheelUp);
 	InputComponent->BindAction("WheelDown", IE_Pressed, this, &ALostArcPlayerController::MouseWheelDown);
+}
+
+void ALostArcPlayerController::OnPossess(APawn* aPawn)
+{
+	Super::OnPossess(aPawn);
+
+	HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
+	auto ArcChar = Cast<ALostArcCharacter>(GetCharacter());
+	HUDWidget->BindCharacterStat(ArcChar->StatComponent);
+	HUDWidget->AddToViewport(1);
+}
+
+void ALostArcPlayerController::BeginPlay()
+{	
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)

@@ -13,5 +13,22 @@ UCLASS()
 class LOSTARC_API UHUDWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	void BindCharacterStat(class ULostArcCharacterStatComponent* NewCharacterStat);
+	void UpdateHPWidget();
+
+protected:
+	virtual void NativeConstruct() override;
+
+	void UpdateMPWidget();
+
+private:
+	TWeakObjectPtr<class ULostArcCharacterStatComponent> CurrentCharacterStat;
 	
+	UPROPERTY()
+	class UProgressBar* HPProgressBar;
+
+	UPROPERTY()
+	class UProgressBar* MPProgressBar;
 };
