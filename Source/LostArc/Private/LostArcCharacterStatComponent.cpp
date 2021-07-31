@@ -10,6 +10,7 @@ ULostArcCharacterStatComponent::ULostArcCharacterStatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
+	ManaRegenerationPerSecond = 5.0f;
 	Level = 1;
 }
 
@@ -23,7 +24,13 @@ void ULostArcCharacterStatComponent::InitializeComponent()
 void ULostArcCharacterStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	// ...
+	TimerDel.BindUFunction(this, FName("ManaRecovery"), ManaRegenerationPerSecond);
+	GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, TimerDel, 2.0f, true);
+}
+
+void ULostArcCharacterStatComponent::ManaRecovery(float amount)
+{
+	SetMP(FMath::Clamp<float>(CurrentMP + amount, 0, CurrentStatData->Maxmp));
 }
 
 // Called every frame
@@ -44,8 +51,8 @@ void ULostArcCharacterStatComponent::SetNewLevel(int32 NewLevel)
 	if (CurrentStatData != nullptr)
 	{
 		Level = NewLevel;
-		CurrentHP = CurrentStatData->Maxhp;
-		CurrentMP = CurrentStatData->Maxmp;
+		SetHP(CurrentHP = CurrentStatData->Maxhp);
+		SetMP(CurrentMP = CurrentStatData->Maxmp);
 	}
 }
 
@@ -63,5 +70,6 @@ void ULostArcCharacterStatComponent::SetHP(float NewHP)
 void ULostArcCharacterStatComponent::SetMP(float NewMP)
 {
 	CurrentMP = NewMP;
+	OnMPChanged.Broadcast();
 }
 

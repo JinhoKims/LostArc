@@ -16,6 +16,7 @@ void UHUDWidget::BindCharacterStat(ULostArcCharacterStatComponent* NewCharacterS
 {
 	CurrentCharacterStat = NewCharacterStat;
 	NewCharacterStat->OnHPChanged.AddUObject(this, &UHUDWidget::UpdateHPWidget);
+	NewCharacterStat->OnMPChanged.AddUObject(this, &UHUDWidget::UpdateMPWidget);
 }
 
 void UHUDWidget::UpdateHPWidget()
@@ -31,4 +32,11 @@ void UHUDWidget::UpdateHPWidget()
 
 void UHUDWidget::UpdateMPWidget()
 {
+	if (CurrentCharacterStat.IsValid())
+	{
+		if (MPProgressBar != nullptr)
+		{
+			MPProgressBar->SetPercent(CurrentCharacterStat->GetMPRatio());
+		}
+	}
 }

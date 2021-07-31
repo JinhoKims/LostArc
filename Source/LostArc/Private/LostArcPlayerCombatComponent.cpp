@@ -32,6 +32,7 @@ void ULostArcPlayerCombatComponent::BeginPlay()
 	// ...
 	
 }
+
 // Called every frame
 void ULostArcPlayerCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -68,22 +69,34 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 		}
 		break;
 	case 1:
-		Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
+		if (CharacterManaCheck(10.0f))
+		{
+			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
+		}
 		break;
 	case 2:
-		Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
-		Arcanim->Montage_JumpToSection(TEXT("Skill_B"), Arcanim->SkillMontage);
+		if (CharacterManaCheck(5.0f))
+		{
+			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
+			Arcanim->Montage_JumpToSection(TEXT("Skill_B"), Arcanim->SkillMontage);
+		}
 		break;
 	case 3:
-		Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
-		Arcanim->Montage_JumpToSection(TEXT("Skill_C"), Arcanim->SkillMontage);
+		if (CharacterManaCheck(15.0f))
+		{
+			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
+			Arcanim->Montage_JumpToSection(TEXT("Skill_C"), Arcanim->SkillMontage);
+		}
 		break;
 	case 4:
-		Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
-		Arcanim->Montage_JumpToSection(TEXT("Skill_D"), Arcanim->SkillMontage);
-		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-		// Print montage section name
-		UE_LOG(LogTemp, Warning, TEXT("Playing Section Is : %s"), *Character->GetMesh()->GetAnimInstance()->Montage_GetCurrentSection().ToString());
+		if (CharacterManaCheck(20.0f))
+		{
+			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
+			Arcanim->Montage_JumpToSection(TEXT("Skill_D"), Arcanim->SkillMontage);
+			Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+			// Print montage section name
+			UE_LOG(LogTemp, Warning, TEXT("Playing Section Is : %s"), *Character->GetMesh()->GetAnimInstance()->Montage_GetCurrentSection().ToString());
+		}
 		break;
 	}
 }
@@ -187,3 +200,21 @@ void ULostArcPlayerCombatComponent::BasicAttackNextComboCheck()
 	}
 }
 
+bool ULostArcPlayerCombatComponent::CharacterManaCheck(float Mana)
+{
+	auto Character = Cast<ALostArcCharacter>(GetOwner());
+	if (Character == nullptr) return false;
+
+	if (Character->StatComponent->GetMP() < Mana)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No Mana!"));
+		bSkillCasting = false;	
+		return false;
+	}
+	else
+	{
+		Character->StatComponent->SetMP(Character->StatComponent->GetMP() - Mana);
+		Character->CharacterRotatetoCursor();
+		return true;
+	}
+}

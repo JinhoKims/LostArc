@@ -48,4 +48,6 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRadius;
+
+	bool CharacterManaCheck(float Mana);
 };
