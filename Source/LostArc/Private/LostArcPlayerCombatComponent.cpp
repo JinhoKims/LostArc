@@ -6,7 +6,8 @@
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "TimerManager.h"
 #include "DrawDebugHelpers.h"
 
 // Sets default values for this component's properties
@@ -22,6 +23,13 @@ ULostArcPlayerCombatComponent::ULostArcPlayerCombatComponent()
 	AttackRange = 100.0f;
 	AttackRadius = 150.0f;
 
+	SkillAvailable.Init(true, 5);
+	SkillCoolDownTimer.AddDefaulted(5);
+}
+
+void ULostArcPlayerCombatComponent::InitializeComponent()
+{
+	Super::InitializeComponent();
 }
 
 // Called when the game starts
@@ -46,8 +54,15 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	auto Character = Cast<ALostArcCharacter>(GetOwner());
 	auto Arcanim = Cast<ALostArcCharacter>(GetOwner())->ArcanimInstance;
 	if (Character == nullptr || Arcanim == nullptr) return;
-	bSkillCasting = true;
+	
 
+	if (!SkillAvailable[Slot])
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Skill Time remaining is : %f seconds left"), GetOwner()->GetWorldTimerManager().GetTimerRemaining(SkillCoolDownTimer[Slot]));
+		return;
+	}
+
+	bSkillCasting = true;
 	switch (Slot)
 	{
 	case 0: // Basic attack
@@ -71,12 +86,18 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 1:
 		if (CharacterManaCheck(10.0f))
 		{
+			SkillAvailable[Slot] = false;
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[1] = true; }), 5.0f, false);
+			
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 		}
 		break;
 	case 2:
 		if (CharacterManaCheck(5.0f))
 		{
+			SkillAvailable[Slot] = false;
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[2] = true; }), 3.0f, false);
+			
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_B"), Arcanim->SkillMontage);
 		}
@@ -84,6 +105,9 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 3:
 		if (CharacterManaCheck(15.0f))
 		{
+			SkillAvailable[Slot] = false;
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[3] = true; }), 7.0f, false);
+			
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_C"), Arcanim->SkillMontage);
 		}
@@ -91,11 +115,14 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 4:
 		if (CharacterManaCheck(20.0f))
 		{
+			SkillAvailable[Slot] = false;
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[4] = true; }), 10.0f, false);
+
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_D"), Arcanim->SkillMontage);
 			Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-			// Print montage section name
-			UE_LOG(LogTemp, Warning, TEXT("Playing Section Is : %s"), *Character->GetMesh()->GetAnimInstance()->Montage_GetCurrentSection().ToString());
+
+			UE_LOG(LogTemp, Warning, TEXT("Playing Section Is : %s"), *Character->GetMesh()->GetAnimInstance()->Montage_GetCurrentSection().ToString()); // Print montage section name
 		}
 		break;
 	}

@@ -18,7 +18,7 @@ class LOSTARC_API UCorpseAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
-
+	
 	void PlayAttackMontage();
 	void PlayCorpseMontage();
 	void PlayDeathMontage();

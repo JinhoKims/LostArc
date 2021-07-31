@@ -22,6 +22,7 @@ class LOSTARC_API ULostArcPlayerCombatComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	ULostArcPlayerCombatComponent();
+	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void SkillCast(int32 Slot);
 	void SkillHitCheck(int32 Slot);
@@ -34,6 +35,7 @@ public:
 
 protected:
 	// Called when the game starts
+	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
 
 private:
@@ -42,6 +44,9 @@ private:
 	bool bIsComboInputOn;
 	int32 CurrentCombo;
 	int32 MaxCombo;
+
+	TArray<bool> SkillAvailable;
+	TArray<FTimerHandle> SkillCoolDownTimer;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRange;

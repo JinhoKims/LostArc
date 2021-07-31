@@ -12,6 +12,7 @@ DECLARE_MULTICAST_DELEGATE(FOnHPChangedDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnMPChangedDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnHPIsZeroDelegate);
 
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
 {
@@ -32,6 +33,7 @@ public:
 	FOnHPChangedDelegate OnHPChanged;
 	FOnMPChangedDelegate OnMPChanged;
 	FOnHPIsZeroDelegate OnHPIsZero;
+
 
 protected:
 	virtual void InitializeComponent() override;

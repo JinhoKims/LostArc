@@ -16,16 +16,18 @@ class LOSTARC_API UHUDWidget : public UUserWidget
 
 public:
 	void BindCharacterStat(class ULostArcCharacterStatComponent* NewCharacterStat);
-	void UpdateHPWidget();
 
 protected:
 	virtual void NativeConstruct() override;
-
+	void UpdateHPWidget();
 	void UpdateMPWidget();
 
 private:
 	TWeakObjectPtr<class ULostArcCharacterStatComponent> CurrentCharacterStat;
 	
+	UPROPERTY()
+	TArray<class UBorder*> SkillSlots;
+
 	UPROPERTY()
 	class UProgressBar* HPProgressBar;
 
