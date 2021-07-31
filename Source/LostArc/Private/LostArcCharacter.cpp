@@ -98,7 +98,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {CombatComponent->SkillHitCheck(val); });
 	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	
-	StatComponent->OnHPIsZero.AddLambda([this]()->void {ArcanimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); CombatComponent->bSkillCasting = false; bEvading = false; });
+	StatComponent->OnHPIsZero.AddLambda([this]()->void {ArcanimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); CombatComponent->bSkillCasting = true; });
 }
 
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
