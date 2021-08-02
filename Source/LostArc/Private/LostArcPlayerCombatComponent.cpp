@@ -56,7 +56,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	if (Character == nullptr || Arcanim == nullptr) return;
 	
 
-	if (!SkillAvailable[Slot])
+	if (!SkillAvailable[Slot] && Slot != 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Skill Time remaining is : %f seconds left"), GetOwner()->GetWorldTimerManager().GetTimerRemaining(SkillCoolDownTimer[Slot]));
 		return;

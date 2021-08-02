@@ -151,13 +151,21 @@ void ALostArcCharacter::CharacterRotatetoCursor()
 void ALostArcCharacter::Evade()
 {
 	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	if (Anim == nullptr || bEvading) return;
-
-	CharacterRotatetoCursor();
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-
-	bEvading = true;
-	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+	UE_LOG(LogTemp, Warning, TEXT("Evade CoolTime reactivation %f seconds left"), GetWorldTimerManager().GetTimerRemaining(CombatComponent->GetEvadeCoolDownTimer()));
+	if (Anim == nullptr || bEvading)
+	{
+		return;
+	}
+	else if (CombatComponent->GetEvadeAvailable())
+	{
+		CombatComponent->GetEvadeAvailable() = false;
+		GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([&]() {CombatComponent->GetEvadeAvailable() = true; }), 5.0f, false);
+		
+		bEvading = true;
+		CharacterRotatetoCursor();
+		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+		Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+	}
 }
 
 void ALostArcCharacter::CalltoSkillCast(int32 Slot)

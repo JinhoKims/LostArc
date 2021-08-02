@@ -32,6 +32,8 @@ public:
 	void BasicAttackStartComboState();
 	void BasicAttackEndComboState();
 	void BasicAttackNextComboCheck();
+	bool& GetEvadeAvailable() { return SkillAvailable[0]; }
+	FTimerHandle& GetEvadeCoolDownTimer() { return SkillCoolDownTimer[0]; }
 
 protected:
 	// Called when the game starts
