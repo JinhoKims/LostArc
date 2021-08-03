@@ -36,6 +36,7 @@ public:
 	FTimerHandle& GetEvadeCoolDownTimer() { return SkillCoolDownTimer[0]; }
 	FTimerHandle& GetCDTimerHandle(int32 index) { return SkillCoolDownTimer[index]; }
 	bool GetSkillAvailable(int32 index) { return SkillAvailable[index]; }
+	float GetSkillCD(float index) { return SkillCD[index]; }
 
 protected:
 	// Called when the game starts
@@ -51,6 +52,7 @@ private:
 
 	TArray<bool> SkillAvailable;
 	TArray<FTimerHandle> SkillCoolDownTimer;
+	TArray<float> SkillCD;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRange;

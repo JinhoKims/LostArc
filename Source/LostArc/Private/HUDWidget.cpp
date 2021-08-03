@@ -13,20 +13,18 @@ void UHUDWidget::NativeConstruct()
 	HPProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PB_HPBar")));
 	MPProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PB_MPBar")));
 
-	TestImage = Cast<UImage>(GetWidgetFromName(TEXT("CicularImage_0")));
-
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		UBorder* Border;
+		UImage* Image;
 		Border = Cast<UBorder>(GetWidgetFromName(FName(FString::Printf(TEXT("Bdr_Slot_%d"), i))));
-		if (Border)
+		Image = Cast<UImage>(GetWidgetFromName(FName(FString::Printf(TEXT("CicularImage_%d"), i))));
+		if (Border && Image)
 		{
 			SkillSlots.Add(Border);
-			UE_LOG(LogTemp, Warning, TEXT("Yezs"));
+			CicularImages.Add(Image);
 		}
 	}
-	
 	
 }
 
@@ -34,12 +32,15 @@ void UHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-	if (!CombatComponent->GetSkillAvailable(1))
+	for (int i = 0; i < 5; i++)
 	{
-		float CDTime = 5.0f;
-		float RemainingTime = CombatComponent->GetOwner()->GetWorldTimerManager().GetTimerRemaining(CombatComponent->GetCDTimerHandle(1));
-		float Result = RemainingTime / 5.0f;
-		TestImage->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Result < 0.002f ? 0.0f : Result);
+		if (!CombatComponent->GetSkillAvailable(i))
+		{
+			if (i == 0) SkillSlots[i]->SetVisibility(ESlateVisibility::Visible);
+			CicularImages[i]->SetVisibility(ESlateVisibility::Visible);
+			float Result = CombatComponent->GetOwner()->GetWorldTimerManager().GetTimerRemaining(CombatComponent->GetCDTimerHandle(i)) / CombatComponent->GetSkillCD(i);
+			CicularImages[i]->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Result < 0.002f ? 0.0f : Result);
+		}
 	}
 }
 
@@ -49,8 +50,6 @@ void UHUDWidget::BindCharacterStat(ULostArcCharacterStatComponent* NewCharacterS
 	CombatComponent = CombatCompo;
 	NewCharacterStat->OnHPChanged.AddUObject(this, &UHUDWidget::UpdateHPWidget);
 	NewCharacterStat->OnMPChanged.AddUObject(this, &UHUDWidget::UpdateMPWidget);
-
-	
 }
 
 void UHUDWidget::UpdateHPWidget()

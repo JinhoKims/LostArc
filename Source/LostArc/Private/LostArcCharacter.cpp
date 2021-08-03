@@ -9,6 +9,8 @@
 #include "LostArcCharacterStatComponent.h"
 #include "HUDWidget.h"
 #include "Camera/CameraComponent.h"
+#include "Components/Border.h"
+#include "Components/Image.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
@@ -151,7 +153,8 @@ void ALostArcCharacter::CharacterRotatetoCursor()
 void ALostArcCharacter::Evade()
 {
 	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	UE_LOG(LogTemp, Warning, TEXT("Evade CoolTime reactivation %f seconds left"), GetWorldTimerManager().GetTimerRemaining(CombatComponent->GetEvadeCoolDownTimer()));
+	auto Widget = Cast<ALostArcPlayerController>(GetController())->HUDWidget;
+
 	if (Anim == nullptr || bEvading)
 	{
 		return;
@@ -159,7 +162,12 @@ void ALostArcCharacter::Evade()
 	else if (CombatComponent->GetEvadeAvailable())
 	{
 		CombatComponent->GetEvadeAvailable() = false;
-		GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([&]() {CombatComponent->GetEvadeAvailable() = true; }), 5.0f, false);
+	
+		GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([=]() {
+			CombatComponent->GetEvadeAvailable() = true;
+			Widget->GetCicularImage(0)->SetVisibility(ESlateVisibility::Hidden);
+			Widget->GetSkillSlot(0)->SetVisibility(ESlateVisibility::Hidden);
+			}), 5.0f, false);
 		
 		bEvading = true;
 		CharacterRotatetoCursor();

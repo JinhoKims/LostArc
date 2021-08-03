@@ -6,6 +6,8 @@
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/Image.h"
+#include "HUDWidget.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "TimerManager.h"
 #include "DrawDebugHelpers.h"
@@ -25,6 +27,12 @@ ULostArcPlayerCombatComponent::ULostArcPlayerCombatComponent()
 
 	SkillAvailable.Init(true, 5);
 	SkillCoolDownTimer.AddDefaulted(5);
+
+	SkillCD.Add(5.f);
+	SkillCD.Add(5.f);
+	SkillCD.Add(3.f);
+	SkillCD.Add(7.f);
+	SkillCD.Add(10.f);
 }
 
 void ULostArcPlayerCombatComponent::InitializeComponent()
@@ -53,6 +61,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 {
 	auto Character = Cast<ALostArcCharacter>(GetOwner());
 	auto Arcanim = Cast<ALostArcCharacter>(GetOwner())->ArcanimInstance;
+	auto ArcPlayer = Cast<ALostArcPlayerController>(Character->GetController());
 	if (Character == nullptr || Arcanim == nullptr) return;
 	
 
@@ -86,18 +95,24 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 1:
 		if (CharacterManaCheck(10.0f))
 		{
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([=]() {
+				SkillAvailable[Slot] = true;
+				ArcPlayer->HUDWidget->GetCicularImage(Slot)->SetVisibility(ESlateVisibility::Hidden);
+				}), SkillCD[Slot], false);
+
 			SkillAvailable[Slot] = false;
-			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[1] = true; }), 5.0f, false);
-			
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 		}
 		break;
 	case 2:
 		if (CharacterManaCheck(5.0f))
 		{
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([=]() {
+				SkillAvailable[Slot] = true;
+				ArcPlayer->HUDWidget->GetCicularImage(Slot)->SetVisibility(ESlateVisibility::Hidden);
+				}), SkillCD[Slot], false);
+
 			SkillAvailable[Slot] = false;
-			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[2] = true; }), 3.0f, false);
-			
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_B"), Arcanim->SkillMontage);
 		}
@@ -105,9 +120,12 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 3:
 		if (CharacterManaCheck(15.0f))
 		{
-			SkillAvailable[Slot] = false;
-			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[3] = true; }), 7.0f, false);
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([=]() {
+				SkillAvailable[Slot] = true;
+				ArcPlayer->HUDWidget->GetCicularImage(Slot)->SetVisibility(ESlateVisibility::Hidden);
+				}), SkillCD[Slot], false);
 			
+			SkillAvailable[Slot] = false;
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_C"), Arcanim->SkillMontage);
 		}
@@ -115,9 +133,12 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 	case 4:
 		if (CharacterManaCheck(20.0f))
 		{
-			SkillAvailable[Slot] = false;
-			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([&]() {SkillAvailable[4] = true; }), 10.0f, false);
+			GetOwner()->GetWorldTimerManager().SetTimer(SkillCoolDownTimer[Slot], FTimerDelegate::CreateLambda([=]() {
+				SkillAvailable[Slot] = true;
+				ArcPlayer->HUDWidget->GetCicularImage(Slot)->SetVisibility(ESlateVisibility::Hidden);
+				}), SkillCD[Slot], false);
 
+			SkillAvailable[Slot] = false;
 			Arcanim->Montage_Play(Arcanim->SkillMontage, 1.f);
 			Arcanim->Montage_JumpToSection(TEXT("Skill_D"), Arcanim->SkillMontage);
 			Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));

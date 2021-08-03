@@ -16,6 +16,8 @@ class LOSTARC_API UHUDWidget : public UUserWidget
 
 public:
 	void BindCharacterStat(class ULostArcCharacterStatComponent* NewCharacterStat, class ULostArcPlayerCombatComponent* CombatCompo);
+	class UImage* GetCicularImage(int32 index) { return CicularImages[index]; }
+	class UBorder* GetSkillSlot(int32 index) { return SkillSlots[index]; }
 
 protected:
 	virtual void NativeConstruct() override;
@@ -37,5 +39,5 @@ private:
 	class UProgressBar* MPProgressBar;
 
 	UPROPERTY()
-	class UImage* TestImage;
+	TArray<class UImage*> CicularImages;
 };
