@@ -34,6 +34,8 @@ public:
 	void BasicAttackNextComboCheck();
 	bool& GetEvadeAvailable() { return SkillAvailable[0]; }
 	FTimerHandle& GetEvadeCoolDownTimer() { return SkillCoolDownTimer[0]; }
+	FTimerHandle& GetCDTimerHandle(int32 index) { return SkillCoolDownTimer[index]; }
+	bool GetSkillAvailable(int32 index) { return SkillAvailable[index]; }
 
 protected:
 	// Called when the game starts

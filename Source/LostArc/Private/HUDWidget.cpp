@@ -2,14 +2,19 @@
 
 #include "HUDWidget.h"
 #include "LostArcCharacterStatComponent.h"
+#include "LostArcPlayerCombatComponent.h"
 #include "Components/ProgressBar.h"
 #include "Components/Border.h"
+#include "Components/Image.h"
 
 void UHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	HPProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PB_HPBar")));
 	MPProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PB_MPBar")));
+
+	TestImage = Cast<UImage>(GetWidgetFromName(TEXT("CicularImage_0")));
+
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -25,11 +30,27 @@ void UHUDWidget::NativeConstruct()
 	
 }
 
-void UHUDWidget::BindCharacterStat(ULostArcCharacterStatComponent* NewCharacterStat)
+void UHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
+	if (!CombatComponent->GetSkillAvailable(1))
+	{
+		float CDTime = 5.0f;
+		float RemainingTime = CombatComponent->GetOwner()->GetWorldTimerManager().GetTimerRemaining(CombatComponent->GetCDTimerHandle(1));
+		float Result = RemainingTime / 5.0f;
+		TestImage->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Result < 0.002f ? 0.0f : Result);
+	}
+}
+
+void UHUDWidget::BindCharacterStat(ULostArcCharacterStatComponent* NewCharacterStat, ULostArcPlayerCombatComponent* CombatCompo)
 {
 	CurrentCharacterStat = NewCharacterStat;
+	CombatComponent = CombatCompo;
 	NewCharacterStat->OnHPChanged.AddUObject(this, &UHUDWidget::UpdateHPWidget);
 	NewCharacterStat->OnMPChanged.AddUObject(this, &UHUDWidget::UpdateMPWidget);
+
+	
 }
 
 void UHUDWidget::UpdateHPWidget()

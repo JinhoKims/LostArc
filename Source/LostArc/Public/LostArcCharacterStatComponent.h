@@ -34,7 +34,6 @@ public:
 	FOnMPChangedDelegate OnMPChanged;
 	FOnHPIsZeroDelegate OnHPIsZero;
 
-
 protected:
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;

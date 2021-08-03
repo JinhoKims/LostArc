@@ -15,15 +15,17 @@ class LOSTARC_API UHUDWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void BindCharacterStat(class ULostArcCharacterStatComponent* NewCharacterStat);
+	void BindCharacterStat(class ULostArcCharacterStatComponent* NewCharacterStat, class ULostArcPlayerCombatComponent* CombatCompo);
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	void UpdateHPWidget();
 	void UpdateMPWidget();
 
 private:
 	TWeakObjectPtr<class ULostArcCharacterStatComponent> CurrentCharacterStat;
+	TWeakObjectPtr<class ULostArcPlayerCombatComponent> CombatComponent;
 	
 	UPROPERTY()
 	TArray<class UBorder*> SkillSlots;
@@ -33,4 +35,7 @@ private:
 
 	UPROPERTY()
 	class UProgressBar* MPProgressBar;
+
+	UPROPERTY()
+	class UImage* TestImage;
 };

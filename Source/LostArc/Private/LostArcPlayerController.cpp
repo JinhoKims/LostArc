@@ -41,7 +41,7 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 
 	HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
 	auto ArcChar = Cast<ALostArcCharacter>(GetCharacter());
-	HUDWidget->BindCharacterStat(ArcChar->StatComponent);
+	HUDWidget->BindCharacterStat(ArcChar->StatComponent, ArcChar->CombatComponent);
 	HUDWidget->AddToViewport(1);
 }
 
