@@ -7,6 +7,7 @@
 #include "LostArcCharacter.generated.h"
 
 DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
+DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, int32)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
