@@ -8,6 +8,6 @@ void ULostArcUIInventory::NativeConstruct()
 {
 	for (int i = 0; i < 32; i++)
 	{
-		InventorySlots.Add(Cast<ULostArcUIInventorySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BPInventory_Slot_%d"), i)))));
+		InventorySlot.Add(Cast<ULostArcUIInventorySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BPInventory_Slot_%d"), i)))));
 	}
 }
