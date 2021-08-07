@@ -22,7 +22,7 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기화는 반드시 컴포넌트 초기화에서!
 {
 	Super::InitializeComponent();
-	UE_LOG(LogTemp, Warning, TEXT("Finally!"));
+
 	Abilities.Add(NewObject<ULostArcCharacterAbilityBasic>());
 	for (int i = 1; i < 5; i++)
 		Abilities.Add(NewObject<ULostArcCharacterAbilityMelee>());
