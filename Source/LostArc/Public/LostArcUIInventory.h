@@ -19,5 +19,5 @@ protected:
 
 public:
 	UPROPERTY()
-	TArray<class ULostArcUIInventorySlot*> InventorySlot;
+	TArray<class ULostArcUIInventorySlot*> InventorySlots;
 };

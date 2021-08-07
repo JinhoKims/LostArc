@@ -28,8 +28,8 @@ public:
 	int32 DummyType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* ItemImage;	
+	class UImage* Image;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* ItemText;
+	class UTextBlock* Text;
 };
