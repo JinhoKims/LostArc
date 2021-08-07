@@ -4,32 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "LostArcUIInventorySlot.generated.h"
+#include "LostArcUIProgressBar.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LOSTARC_API ULostArcUIInventorySlot : public UUserWidget
+class LOSTARC_API ULostArcUIProgressBar : public UUserWidget
 {
 	GENERATED_BODY()
-
+	
 protected:
 	virtual void NativeConstruct() override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 SlotNum;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 Count;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 DummyType;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UProgressBar* ProgressBar;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image;
+	class UTextBlock* CurrentText;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Text;
+	class UTextBlock* MaxText;
 };
