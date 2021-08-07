@@ -7,7 +7,6 @@
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
 #include "LostArcCharacterStatComponent.h"
-#include "MyActorComponent.h"
 #include "HUDWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
@@ -115,9 +114,6 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 2);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 3);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_D", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 4);
-
-	/*InputComponent->BindAction<FBindActionDelegate>("Skill_Q", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 1);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_W", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 2);*/
 }
 
 void ALostArcCharacter::BeginPlay()
