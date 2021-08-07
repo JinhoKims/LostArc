@@ -54,10 +54,7 @@ private:
 	TArray<FTimerHandle> SkillCoolDownTimer;
 	TArray<float> SkillCD;
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRange;
-
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
 	float AttackRadius;
 
 	bool CharacterManaCheck(float Mana);
