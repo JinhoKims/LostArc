@@ -7,6 +7,7 @@
 #include "LostArcCharacter.generated.h"
 
 DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
+DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, int32)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
@@ -35,6 +36,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = "true"))
 	class ULostArcCharacterStatComponent* StatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+	class ULostArcCharacterAbilityComponent* AbilityComponent;
 
 	UPROPERTY()
 	class ULostArcCharacterAnimInstance* ArcanimInstance;

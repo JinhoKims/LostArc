@@ -7,6 +7,7 @@
 #include "LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
 #include "LostArcCharacterStatComponent.h"
+#include "LostArcCharacterAbilityComponent.h"
 #include "HUDWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
@@ -19,6 +20,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "LostArcCharacterAbilityBasic.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -84,6 +86,7 @@ ALostArcCharacter::ALostArcCharacter()
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
 	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
+	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
@@ -96,7 +99,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	ArcanimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	if (ArcanimInstance == nullptr) return;
 	
-	ArcanimInstance->OnNextAttackCheck.AddLambda([this]()->void {CombatComponent->BasicAttackNextComboCheck(); });
+	ArcanimInstance->OnNextAttackCheck.AddLambda([this]()->void {/*CombatComponent->BasicAttackNextComboCheck();*/  Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->BasicAttackNextComboCheck(this); });
 	ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {CombatComponent->SkillHitCheck(val); });
 	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	
@@ -114,6 +117,8 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 2);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 3);
 	InputComponent->BindAction<FBindActionDelegate>("Skill_D", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 4);
+
+	InputComponent->BindAction<FBindActionDelegate>("Skill_Basic", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 0);
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -200,6 +205,9 @@ void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		CombatComponent->bBasicAttacking = false;
 		CombatComponent->BasicAttackEndComboState();
+
+		Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->bBasicAttacking = false;
+		Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->BasicAttackEndComboState();
 	}
 	if (Montage->IsValidSectionName(TEXT("Skill_A")))
 	{
