@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "LostArcCharacter.generated.h"
 
-DECLARE_DELEGATE_OneParam(FBindActionDelegate, int32)
 DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, int32)
 
 UCLASS(Blueprintable)
@@ -28,20 +27,20 @@ public:
 	/** Returns CursorToWorld subobject **/
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
-	UPROPERTY(VisibleAnywhere, Category = Weapon)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	USkeletalMeshComponent* Weapon;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	class ULostArcPlayerCombatComponent* CombatComponent;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	//class ULostArcPlayerCombatComponent* CombatComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterStatComponent* StatComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterAbilityComponent* AbilityComponent;
 
-	UPROPERTY()
-	class ULostArcCharacterAnimInstance* ArcanimInstance;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ULostArcCharacterAnimInstance* AnimInstance;
 
 	/* Rotate the character in the direction the cursor is pointing */
 	void CharacterRotatetoCursor();
@@ -54,7 +53,7 @@ public:
 
 	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
-	void CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void CallOnCharacterMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 	float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 

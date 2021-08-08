@@ -19,8 +19,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class UHUDWidget> HUDWidgetClass;
 
-	UPROPERTY()
-	class UHUDWidget* HUDWidget;
+	/*UPROPERTY()
+	class UHUDWidget* HUDWidget;*/
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */

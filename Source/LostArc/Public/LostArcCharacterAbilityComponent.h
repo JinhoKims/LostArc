@@ -19,9 +19,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = true))
-	TArray<class ULostArcCharacterAbilityBase*> Abilities;
-
+	class ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<class ULostArcCharacterAbilityBasic>(Abilities[0]); }
 	void AbilityCast(int32 Slot);
 	void AbilityHitCheck(int32 Slot);
 
@@ -30,6 +28,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	float AttackRange = 100.0f;
-	float AttackRadius = 150.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = true))
+	TArray<class ULostArcCharacterAbilityBase*> Abilities;
 };

@@ -3,12 +3,18 @@
 #include "LostArcCharacterAbilityComponent.h"
 #include "LostArcPlayerController.h"
 #include "LostArcCharacter.h"
-#include "LostArcCharacterAnimInstance.h"
 #include "LostArcCharacterStatComponent.h"
-#include "LostArcCharacterAbilityBasic.h"
-#include "LostArcCharacterAbilityMelee.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
+
+#include "Abilities/LostArcCharacterAbilityBase.h"
+#include "Abilities/LostArcCharacterAbilityBasic.h"
+#include "Abilities/LostArcCharacterMeleeSkill_1.h"
+#include "Abilities/LostArcCharacterMeleeSkill_2.h"
+#include "Abilities/LostArcCharacterMeleeSkill_3.h"
+#include "Abilities/LostArcCharacterMeleeSkill_4.h"
+#include "Abilities/LostArcCharacterAbilityEvade.h"
+
 
 // Sets default values for this component's properties
 ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
@@ -23,23 +29,28 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기�
 {
 	Super::InitializeComponent();
 
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBasic>());
-	for (int i = 1; i < 5; i++)
-		Abilities.Add(NewObject<ULostArcCharacterAbilityMelee>());
-	for (int i = 5; i < 9; i++)
-		Abilities.Add(NewObject<ULostArcCharacterAbilityMelee>());
-	Abilities.Add(NewObject<ULostArcCharacterAbilityMelee>());
+	Abilities.Add(NewObject<ULostArcCharacterAbilityBasic>(this));
+	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_1>(this));
+	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_2>(this));
+	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_3>(this));
+	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_4>(this));
+	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
+	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
+	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
+	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
+	Abilities.Add(NewObject<ULostArcCharacterAbilityEvade>(this));
 
-	Abilities[0]->ConstructAbility(0.f, 0.f, FName("Basic").ToString()); // Basic Attack
-	Abilities[1]->ConstructAbility(10.f, 5.f, FName("Skill_A").ToString());
-	Abilities[2]->ConstructAbility(10.f, 5.f, FName("Skill_B").ToString());
-	Abilities[3]->ConstructAbility(15.f, 6.f, FName("Skill_C").ToString());
-	Abilities[4]->ConstructAbility(20.f, 8.f, FName("Skill_D").ToString());
-	Abilities[5]->ConstructAbility(0.f, 0.f, FName("Range_A").ToString());
-	Abilities[6]->ConstructAbility(0.f, 0.f, FName("Range_B").ToString());
-	Abilities[7]->ConstructAbility(0.f, 0.f, FName("Range_C").ToString());
-	Abilities[8]->ConstructAbility(0.f, 0.f, FName("Range_D").ToString());
-	Abilities[9]->ConstructAbility(0.f, 10.f, FName("Evade").ToString()); // Evade
+
+	Abilities[0]->ConstructAbility(0.f, 0.f, 1.f); // Basic Attack
+	Abilities[1]->ConstructAbility(10.f, 5.f, 1.5f);
+	Abilities[2]->ConstructAbility(12.f, 5.f, 1.2f);
+	Abilities[3]->ConstructAbility(15.f, 6.f, 1.25f);
+	Abilities[4]->ConstructAbility(20.f, 8.f, 2.f);
+	Abilities[5]->ConstructAbility(0.f, 0.f, 1.f); // Dummy Slot
+	Abilities[6]->ConstructAbility(0.f, 0.f, 1.f);
+	Abilities[7]->ConstructAbility(0.f, 0.f, 1.f);
+	Abilities[8]->ConstructAbility(0.f, 0.f, 1.f);
+	Abilities[9]->ConstructAbility(0.f, 10.f, 0.f); // Evade
 }
 
 // Called when the game starts
@@ -67,50 +78,6 @@ void ULostArcCharacterAbilityComponent::AbilityCast(int32 Slot)
 
 void ULostArcCharacterAbilityComponent::AbilityHitCheck(int32 Slot)
 {
-	auto Character = Cast<ALostArcCharacter>(GetOwner());
-	auto Controller = Cast<ALostArcCharacter>(GetOwner())->GetController();
-
-	FCollisionQueryParams Params(NAME_None, false, Character);
-	TArray<FHitResult> HitResults;
-	FDamageEvent DamageEvent;
-	float Damage;
-
-	switch (Slot)
-	{
-	case 0:
-		GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorLocation() + Character->GetActorForwardVector() * AttackRange, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AttackRadius), Params);
-		Damage = 1.f;
-		break;
-	case 1:
-		GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(275.f), Params);
-		DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 275.f, 32, FColor::Cyan, false, 1.f);
-		Damage = 1.5f;
-		break;
-	case 2:
-		GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorQuat(), ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(FVector(100.f, 400.f, 50.f)), Params);
-		DrawDebugBox(GetWorld(), Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, FVector(100.f, 400.f, 50.f), Character->GetActorQuat(), FColor::Orange, false, 1.f);
-		Damage = 1.f;
-		break;
-	case 3:
-		GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(250.f), Params);
-		DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 250.f, 32, FColor::Silver, false, 1.f);
-		Damage = 1.25f;
-		break;
-	case 4:
-		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
-		GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(260.f), Params);
-		DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 260.f, 32, FColor::Purple, false, 1.f);
-		Damage = 2.f;
-		break;
-	}
-
-	for (int32 i = 0; i < HitResults.Num(); i++) // Damage Count
-	{
-		FHitResult hit = HitResults[i];
-		if (hit.Actor.IsValid())
-		{
-			hit.Actor->TakeDamage(Character->StatComponent->GetAttack() * Damage, DamageEvent, Controller, Character);
-		}
-	}
+	Abilities[Slot]->HitCheck(Cast<ALostArcCharacter>(GetOwner()));
 }
 

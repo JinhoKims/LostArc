@@ -3,7 +3,7 @@
 #include "LostArcPlayerController.h"
 #include "Engine/World.h"
 #include "LostArcCharacter.h"
-#include "LostArcCharacterAnimInstance.h"
+#include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
 #include "HUDWidget.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -39,10 +39,10 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
 
-	HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
+	/*HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
 	auto ArcChar = Cast<ALostArcCharacter>(GetCharacter());
 	HUDWidget->BindCharacterStat(ArcChar->StatComponent, ArcChar->CombatComponent);
-	HUDWidget->AddToViewport(1);
+	HUDWidget->AddToViewport(1);*/
 }
 
 void ALostArcPlayerController::BeginPlay()
@@ -69,8 +69,8 @@ void ALostArcPlayerController::MoveToMouseCursor()
 		// Trace to see what is under the mouse cursor
 		auto PCharacter = Cast<ALostArcCharacter>(GetCharacter());
 
-		if (!PCharacter->CombatComponent->bSkillCasting)
-		{
+	/*	if (!PCharacter->CombatComponent->bSkillCasting)
+		{*/
 			FHitResult Hit;
 			GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
@@ -79,7 +79,7 @@ void ALostArcPlayerController::MoveToMouseCursor()
 				// We hit something, move there
 				SetNewMoveDestination(Hit.ImpactPoint);
 			}
-		}
+		/*}*/
 }
 
 void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)

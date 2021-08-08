@@ -4,7 +4,7 @@
 #include "Engine/World.h"
 #include "Materials/Material.h"
 #include "LostArcPlayerController.h"
-#include "LostArcCharacterAnimInstance.h"
+#include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "LostArcPlayerCombatComponent.h"
 #include "LostArcCharacterStatComponent.h"
 #include "LostArcCharacterAbilityComponent.h"
@@ -20,7 +20,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "LostArcCharacterAbilityBasic.h"
+#include "Abilities/LostArcCharacterAbilityBasic.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -84,7 +84,7 @@ ALostArcCharacter::ALostArcCharacter()
 	}
 
 	// Create an autoAttack instance that is responsible for the default attack of the character. 
-	CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
+	//CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
 
@@ -96,29 +96,31 @@ ALostArcCharacter::ALostArcCharacter()
 void ALostArcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	ArcanimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	if (ArcanimInstance == nullptr) return;
 	
-	ArcanimInstance->OnNextAttackCheck.AddLambda([this]()->void {/*CombatComponent->BasicAttackNextComboCheck();*/  Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->BasicAttackNextComboCheck(this); });
-	ArcanimInstance->OnSkillHitCheck.AddLambda([this](int32 val)->void {CombatComponent->SkillHitCheck(val); });
-	ArcanimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnAttackMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
-	
-	StatComponent->OnHPIsZero.AddLambda([this]()->void {ArcanimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); CombatComponent->bSkillCasting = true; });
+	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (AnimInstance != nullptr)
+	{
+		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { AbilityComponent->GetBasicAttackAbility()->BasicAttackNextComboCheck(this); });
+		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](int32 val)->void { AbilityComponent->AbilityHitCheck(val); });
+		AnimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnCharacterMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+	}
+
+	StatComponent->OnHPIsZero.AddLambda([this]()->void {AnimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); /*CombatComponent->bSkillCasting = true;*/ });
 }
 
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcCharacter::Evade);
+	//InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcCharacter::Evade);
 
-	InputComponent->BindAction<FBindActionDelegate>("BasicAttack", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 0);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_A", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 1);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_B", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 2);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_C", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 3);
-	InputComponent->BindAction<FBindActionDelegate>("Skill_D", IE_Pressed, this, &ALostArcCharacter::CalltoSkillCast, 4);
+	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 0);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_1", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 1);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_2", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 2);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 3);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 4);
+	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 9);
 
-	InputComponent->BindAction<FBindActionDelegate>("Skill_Basic", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 0);
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -157,65 +159,56 @@ void ALostArcCharacter::CharacterRotatetoCursor()
 
 void ALostArcCharacter::Evade()
 {
-	auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	auto Widget = Cast<ALostArcPlayerController>(GetController())->HUDWidget;
+	//auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	//auto Widget = Cast<ALostArcPlayerController>(GetController())->HUDWidget;
 
-	if (Anim == nullptr || bEvading)
-	{
-		return;
-	}
-	else if (CombatComponent->GetEvadeAvailable())
-	{
-		CombatComponent->GetEvadeAvailable() = false;
-	
-		GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([=]() {
-			CombatComponent->GetEvadeAvailable() = true;
-			Widget->GetCicularImage(0)->SetVisibility(ESlateVisibility::Hidden);
-			Widget->GetSkillSlot(0)->SetVisibility(ESlateVisibility::Hidden);
-			}), 5.0f, false);
-		
-		bEvading = true;
-		CharacterRotatetoCursor();
-		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-		Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
-	}
+	//if (Anim == nullptr || bEvading)
+	//{
+	//	return;
+	//}
+	//else if (CombatComponent->GetEvadeAvailable())
+	//{
+	//	CombatComponent->GetEvadeAvailable() = false;
+	//
+	//	GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([=]() {
+	//		CombatComponent->GetEvadeAvailable() = true;
+	//		Widget->GetCicularImage(0)->SetVisibility(ESlateVisibility::Hidden);
+	//		Widget->GetSkillSlot(0)->SetVisibility(ESlateVisibility::Hidden);
+	//		}), 5.0f, false);
+	//	
+	//	bEvading = true;
+	//	CharacterRotatetoCursor();
+	//	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+	//	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+	//}
 }
 
 void ALostArcCharacter::CalltoSkillCast(int32 Slot)
 {
-	if (bEvading) return;
+	//if (bEvading) return;
 
-	if (Slot) // Skill Cast
-	{
-		if (CombatComponent->bSkillCasting) return;
-		CombatComponent->SkillCast(Slot);
-	}
-	else // Basic Attack
-	{
-		if (CombatComponent->bSkillCasting && !CombatComponent->bBasicAttacking) return;
-		CombatComponent->SkillCast(Slot);
-	}
+	//if (Slot) // Skill Cast
+	//{
+	//	if (CombatComponent->bSkillCasting) return;
+	//	CombatComponent->SkillCast(Slot);
+	//}
+	//else // Basic Attack
+	//{
+	//	if (CombatComponent->bSkillCasting && !CombatComponent->bBasicAttacking) return;
+	//	CombatComponent->SkillCast(Slot);
+	//}
 }
 
-void ALostArcCharacter::CallOnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	CombatComponent->bSkillCasting = false;
+	/*CombatComponent->bSkillCasting = false;*/
 
-	if (Montage->IsValidSectionName(TEXT("Attack1")))
+	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 	{
-		CombatComponent->bBasicAttacking = false;
-		CombatComponent->BasicAttackEndComboState();
+		AbilityComponent->GetBasicAttackAbility()->SetBasicAttacking(false);
+		AbilityComponent->GetBasicAttackAbility()->BasicAttackEndComboState();
+	}
 
-		Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->bBasicAttacking = false;
-		Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->Abilities[0])->BasicAttackEndComboState();
-	}
-	if (Montage->IsValidSectionName(TEXT("Skill_A")))
-	{
-		if (bInterrupted)
-			UE_LOG(LogTemp, Warning, TEXT("Evade!"));
-			
-		//UE_LOG(LogTemp, Warning,TEXT("%f"), StatComponent->getHP());
-	}
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
 		bEvading = false;
