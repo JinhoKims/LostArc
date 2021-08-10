@@ -2,10 +2,10 @@
 
 
 #include "AI/BTService_Detect.h"
-#include "Enemy/CorpseAIController.h"
+#include "Controller/CorpseAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 
 UBTService_Detect::UBTService_Detect()
 {

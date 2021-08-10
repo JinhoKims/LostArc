@@ -1,11 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "LostArcPlayerController.h"
+#include "Controller/LostArcPlayerController.h"
 #include "Engine/World.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcPlayerCombatComponent.h"
-#include "HUDWidget.h"
+#include "Abilities/LostArcCharacterAbilityBase.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -16,11 +15,11 @@ ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
-	static ConstructorHelpers::FClassFinder<UHUDWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
-	if (UI_HUD_C.Succeeded())
-	{
-		HUDWidgetClass = UI_HUD_C.Class;
-	}
+	//static ConstructorHelpers::FClassFinder<UHUDWidget> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/GameHUD.GameHUD_C'"));
+	//if (UI_HUD_C.Succeeded())
+	//{
+	//	HUDWidgetClass = UI_HUD_C.Class;
+	//}
 
 }
 
@@ -39,10 +38,10 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
 
-	/*HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
-	auto ArcChar = Cast<ALostArcCharacter>(GetCharacter());
-	HUDWidget->BindCharacterStat(ArcChar->StatComponent, ArcChar->CombatComponent);
-	HUDWidget->AddToViewport(1);*/
+	//HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
+	//auto ArcChar = Cast<ALostArcCharacter>(GetCharacter());
+	//HUDWidget->BindCharacterStat(ArcChar->StatComponent, ArcChar->CombatComponent);
+	//HUDWidget->AddToViewport(1);
 }
 
 void ALostArcPlayerController::BeginPlay()

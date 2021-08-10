@@ -2,8 +2,8 @@
 
 
 #include "Abilities/LostArcCharacterAbilityBase.h"
-#include "LostArcCharacter.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Character/LostArcCharacter.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 bool ULostArcCharacterAbilityBase::bAnimationRunning = false;

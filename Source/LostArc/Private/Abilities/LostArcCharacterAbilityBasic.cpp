@@ -2,9 +2,9 @@
 
 
 #include "Abilities/LostArcCharacterAbilityBasic.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "DrawDebugHelpers.h"
 
 void ULostArcCharacterAbilityBasic::ConstructAbility(float mana, float cooldown, float ratio)

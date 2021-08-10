@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LostArcPlayerCombatComponent.h"
-#include "LostArcPlayerController.h"
-#include "LostArcCharacter.h"
+#include "Controller/LostArcPlayerController.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Image.h"
 #include "HUDWidget.h"

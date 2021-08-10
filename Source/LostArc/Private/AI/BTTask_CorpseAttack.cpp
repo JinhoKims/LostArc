@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AI/BTTask_CorpseAttack.h"
-#include "Enemy/CorpseAIController.h"
-#include "Enemy/CorpseCharacter.h"
+#include "Controller/CorpseAIController.h"
+#include "Character/CorpseCharacter.h"
 #include "AnimInstances/CorpseAnimInstance.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_CorpseAttack::UBTTask_CorpseAttack()

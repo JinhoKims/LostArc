@@ -2,9 +2,9 @@
 
 
 #include "AI/BTTask_TurnToTarget.h"
-#include "Enemy/CorpseAIController.h"
-#include "Enemy/CorpseCharacter.h"
-#include "LostArcCharacter.h"
+#include "Controller/CorpseAIController.h"
+#include "Character/CorpseCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_TurnToTarget::UBTTask_TurnToTarget()

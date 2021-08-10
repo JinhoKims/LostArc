@@ -2,9 +2,9 @@
 
 
 #include "Abilities/LostArcCharacterMeleeSkill_4.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 

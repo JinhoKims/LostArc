@@ -2,9 +2,9 @@
 
 
 #include "Abilities/LostArcCharacterMeleeSkill_2.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "DrawDebugHelpers.h"
 
 void ULostArcCharacterMeleeSkill_2::ConstructAbility(float mana, float cooldown, float ratio)

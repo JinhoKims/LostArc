@@ -2,9 +2,9 @@
 
 
 #include "Abilities/LostArcCharacterAbilityEvade.h"
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 
 void ULostArcCharacterAbilityEvade::ConstructAbility(float mana, float cooldown, float ratio)

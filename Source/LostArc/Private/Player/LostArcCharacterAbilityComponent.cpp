@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "LostArcCharacterAbilityComponent.h"
-#include "LostArcPlayerController.h"
-#include "LostArcCharacter.h"
-#include "LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterAbilityComponent.h"
+#include "Controller/LostArcPlayerController.h"
+#include "Character/LostArcCharacter.h"
+#include "Player/LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 

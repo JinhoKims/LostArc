@@ -1,13 +1,12 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "LostArcCharacter.h"
+#include "Character/LostArcCharacter.h"
 #include "Engine/World.h"
 #include "Materials/Material.h"
-#include "LostArcPlayerController.h"
+#include "Controller/LostArcPlayerController.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcCharacterStatComponent.h"
-#include "LostArcCharacterAbilityComponent.h"
-#include "HUDWidget.h"
+#include "Player/LostArcCharacterStatComponent.h"
+#include "Player/LostArcCharacterAbilityComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
 #include "Components/Image.h"

@@ -16,8 +16,8 @@ public:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-	TSubclassOf<class UHUDWidget> HUDWidgetClass;
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	//TSubclassOf<class UHUDWidget> HUDWidgetClass;
 
 	/*UPROPERTY()
 	class UHUDWidget* HUDWidget;*/

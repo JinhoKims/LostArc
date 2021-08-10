@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "LostArcGameMode.h"
-#include "LostArcPlayerController.h"
+#include "Controller/LostArcPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
 
 ALostArcGameMode::ALostArcGameMode()

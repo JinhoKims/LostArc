@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Enemy/CorpseCharacter.h"
-#include "Enemy/CorpseAIController.h"
+#include "Character/CorpseCharacter.h"
+#include "Controller/CorpseAIController.h"
 #include "AnimInstances/CorpseAnimInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"

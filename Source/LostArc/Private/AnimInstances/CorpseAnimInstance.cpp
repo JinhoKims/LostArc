@@ -2,7 +2,7 @@
 
 
 #include "AnimInstances/CorpseAnimInstance.h"
-#include "Enemy/CorpseCharacter.h"
+#include "Character/CorpseCharacter.h"
 
 void UCorpseAnimInstance::PlayCorpseMontage()
 {
