@@ -14,7 +14,12 @@ void ULostArcCharacterMeleeSkill_2::ConstructAbility(float mana, float cooldown,
 
 void ULostArcCharacterMeleeSkill_2::Use(ALostArcCharacter* Character)
 {
-	Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerMeleeSkill_2_Montage, 1.f);
+	Super::Use(Character);
+
+	if (bAbilityAvailable)
+	{
+		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerMeleeSkill_2_Montage, 1.f);
+	}
 }
 
 void ULostArcCharacterMeleeSkill_2::HitCheck(ALostArcCharacter* Character)

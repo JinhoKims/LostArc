@@ -66,20 +66,20 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 
 void ALostArcPlayerController::MoveToMouseCursor()
 {
-		// Trace to see what is under the mouse cursor
-		auto PCharacter = Cast<ALostArcCharacter>(GetCharacter());
+	// Trace to see what is under the mouse cursor
+	auto PCharacter = Cast<ALostArcCharacter>(GetCharacter());
 
-	/*	if (!PCharacter->CombatComponent->bSkillCasting)
-		{*/
-			FHitResult Hit;
-			GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	if (!ULostArcCharacterAbilityBase::bAnimationRunning)
+	{
+		FHitResult Hit;
+		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-			if (Hit.bBlockingHit)
-			{
-				// We hit something, move there
-				SetNewMoveDestination(Hit.ImpactPoint);
-			}
-		/*}*/
+		if (Hit.bBlockingHit)
+		{
+			// We hit something, move there
+			SetNewMoveDestination(Hit.ImpactPoint);
+		}
+	}
 }
 
 void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)

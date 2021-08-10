@@ -18,6 +18,8 @@ public:
 	virtual void ConstructAbility(float mana, float cooldown, float ratio);
 	virtual void Use(class ALostArcCharacter* Character);
 	virtual void HitCheck(class ALostArcCharacter* Character);
+	virtual bool AbilityStatusCheck(class ALostArcCharacter* Character);
+	void CharacterRotatetoCursor(class ALostArcCharacter* Character);
 
 public:
 	UPROPERTY()
@@ -28,4 +30,9 @@ public:
 
 	UPROPERTY()
 	float Damage_Ratio;
+
+	bool bAbilityAvailable;
+	bool bAbilityNowCD;
+	static bool bAnimationRunning;
+	FTimerHandle AbilityCoolDownTimer;
 };

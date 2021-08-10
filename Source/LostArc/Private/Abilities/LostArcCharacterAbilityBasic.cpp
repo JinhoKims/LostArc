@@ -29,12 +29,16 @@ void ULostArcCharacterAbilityBasic::Use(ALostArcCharacter* Character)
 	}
 	else				// first attack
 	{
-		check(CurrentCombo == 0);
-		BasicAttackStartComboState();
-		Character->CharacterRotatetoCursor();
+		if (AbilityStatusCheck(Character))
+		{
+			check(CurrentCombo == 0);
+			BasicAttackStartComboState();
+			Super::CharacterRotatetoCursor(Character);
 
-		Character->AnimInstance->Montage_Play(Character->AnimInstance->BasicAttack_Montage, 1.0f);
-		bBasicAttacking = true;
+			Character->AnimInstance->Montage_Play(Character->AnimInstance->BasicAttack_Montage, 1.0f);
+			bBasicAttacking = true;
+			bAnimationRunning = true;
+		}
 	}
 }
 
@@ -54,6 +58,15 @@ void ULostArcCharacterAbilityBasic::HitCheck(ALostArcCharacter* Character)
 			hit.Actor->TakeDamage(Character->StatComponent->GetAttack() * Damage_Ratio, DamageEvent, Character->GetController(), Character);
 		}
 	}
+}
+
+bool ULostArcCharacterAbilityBasic::AbilityStatusCheck(ALostArcCharacter* Character)
+{
+	if (bAnimationRunning)
+	{
+		return false;
+	}
+	return true;
 }
 
 void ULostArcCharacterAbilityBasic::BasicAttackStartComboState()

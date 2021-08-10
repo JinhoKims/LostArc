@@ -15,8 +15,13 @@ void ULostArcCharacterMeleeSkill_4::ConstructAbility(float mana, float cooldown,
 
 void ULostArcCharacterMeleeSkill_4::Use(ALostArcCharacter* Character)
 {
-	Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-	Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerMeleeSkill_4_Montage, 1.f);
+	Super::Use(Character);
+
+	if (bAbilityAvailable)
+	{
+		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerMeleeSkill_4_Montage, 1.f);
+	}
 }
 
 void ULostArcCharacterMeleeSkill_4::HitCheck(ALostArcCharacter* Character)

@@ -17,4 +17,5 @@ class LOSTARC_API ULostArcCharacterAbilityEvade : public ULostArcCharacterAbilit
 public:
 	virtual void ConstructAbility(float mana, float cooldown, float ratio) override;
 	virtual void Use(class ALostArcCharacter* Character) override;
+	virtual bool AbilityStatusCheck(class ALostArcCharacter* Character) override;
 };

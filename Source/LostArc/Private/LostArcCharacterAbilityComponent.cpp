@@ -43,7 +43,7 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기�
 
 	Abilities[0]->ConstructAbility(0.f, 0.f, 1.f); // Basic Attack
 	Abilities[1]->ConstructAbility(10.f, 5.f, 1.5f);
-	Abilities[2]->ConstructAbility(12.f, 5.f, 1.2f);
+	Abilities[2]->ConstructAbility(15.f, 5.f, 1.2f);
 	Abilities[3]->ConstructAbility(15.f, 6.f, 1.25f);
 	Abilities[4]->ConstructAbility(20.f, 8.f, 2.f);
 	Abilities[5]->ConstructAbility(0.f, 0.f, 1.f); // Dummy Slot

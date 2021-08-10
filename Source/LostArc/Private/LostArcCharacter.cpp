@@ -149,12 +149,12 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 
 void ALostArcCharacter::CharacterRotatetoCursor()
 {
-	FHitResult Hit;
+	/*FHitResult Hit;
 	Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 	float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
 	if (ang < 0) ang += 360;
 	SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
-	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);
+	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);*/
 }
 
 void ALostArcCharacter::Evade()
@@ -203,6 +203,11 @@ void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool 
 {
 	/*CombatComponent->bSkillCasting = false;*/
 
+	if (bInterrupted) // Evade
+	{
+		return;
+	}
+
 	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 	{
 		AbilityComponent->GetBasicAttackAbility()->SetBasicAttacking(false);
@@ -211,8 +216,14 @@ void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool 
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
-		bEvading = false;
 		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
+		ULostArcCharacterAbilityBase::bAnimationRunning = false;
+	}
+
+	for (int i = 1; i < 5; i++)
+	{
+		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
+		ULostArcCharacterAbilityBase::bAnimationRunning = false;
 	}
 }
 

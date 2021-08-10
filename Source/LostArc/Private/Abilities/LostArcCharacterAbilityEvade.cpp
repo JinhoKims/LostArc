@@ -4,6 +4,7 @@
 #include "Abilities/LostArcCharacterAbilityEvade.h"
 #include "LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
+#include "LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 
 void ULostArcCharacterAbilityEvade::ConstructAbility(float mana, float cooldown, float ratio)
@@ -14,8 +15,29 @@ void ULostArcCharacterAbilityEvade::ConstructAbility(float mana, float cooldown,
 
 void ULostArcCharacterAbilityEvade::Use(ALostArcCharacter* Character)
 {
-	auto Anim = Character->AnimInstance;
+	Super::Use(Character);
+	
+	if (bAbilityAvailable)
+	{
+		auto Anim = Character->AnimInstance;
 
-	Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-	Anim->Montage_Play(Anim->Evade_Montage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
+		Anim->Montage_Play(Anim->Evade_Montage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
+		bAnimationRunning = true;
+	}
+}
+
+bool ULostArcCharacterAbilityEvade::AbilityStatusCheck(ALostArcCharacter* Character)
+{
+	if (bAbilityNowCD)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCoolDownTimer));
+		return false;
+	}
+	if (Character->StatComponent->GetMP() < ManaCost)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetMP());
+		return false;
+	}
+	return true;
 }

@@ -18,6 +18,7 @@ public:
 	virtual void ConstructAbility(float mana, float cooldown, float ratio);
 	virtual void Use(class ALostArcCharacter* Character);
 	virtual void HitCheck(class ALostArcCharacter* Character) override;
+	virtual bool AbilityStatusCheck(class ALostArcCharacter* Character) override;
 
 	void BasicAttackStartComboState();
 	void BasicAttackEndComboState();
