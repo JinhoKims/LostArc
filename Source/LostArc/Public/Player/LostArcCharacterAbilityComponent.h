@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Abilities/LostArcCharacterAbilityBasic.h"
 #include "LostArcCharacterAbilityComponent.generated.h"
 
 
@@ -19,7 +20,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	class ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<class ULostArcCharacterAbilityBasic>(Abilities[0]); }
+	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[0]); }
 	void AbilityCast(int32 Slot);
 	void AbilityHitCheck(int32 Slot);
 
