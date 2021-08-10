@@ -67,8 +67,6 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 void ALostArcPlayerController::MoveToMouseCursor()
 {
 	// Trace to see what is under the mouse cursor
-	auto PCharacter = Cast<ALostArcCharacter>(GetCharacter());
-
 	if (!ULostArcCharacterAbilityBase::bAnimationRunning)
 	{
 		FHitResult Hit;
