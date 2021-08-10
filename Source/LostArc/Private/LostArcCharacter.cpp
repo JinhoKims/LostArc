@@ -5,7 +5,6 @@
 #include "Materials/Material.h"
 #include "LostArcPlayerController.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "LostArcPlayerCombatComponent.h"
 #include "LostArcCharacterStatComponent.h"
 #include "LostArcCharacterAbilityComponent.h"
 #include "HUDWidget.h"
@@ -83,8 +82,6 @@ ALostArcCharacter::ALostArcCharacter()
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
 
-	// Create an autoAttack instance that is responsible for the default attack of the character. 
-	//CombatComponent = CreateDefaultSubobject<ULostArcPlayerCombatComponent>(TEXT("COMBAT"));
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
 
@@ -112,15 +109,12 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//InputComponent->BindAction("Evade", IE_Pressed, this, &ALostArcCharacter::Evade);
-
 	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 0);
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_1", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 1);
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_2", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 2);
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 3);
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 4);
 	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 9);
-
 }
 
 void ALostArcCharacter::BeginPlay()
@@ -147,62 +141,8 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
-void ALostArcCharacter::CharacterRotatetoCursor()
-{
-	/*FHitResult Hit;
-	Cast<ALostArcPlayerController>(GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-	float ang = FMath::Atan2(Hit.ImpactPoint.Y - GetActorLocation().Y, Hit.ImpactPoint.X - GetActorLocation().X) * 180 / PI;
-	if (ang < 0) ang += 360;
-	SetActorRelativeRotation(FRotator(0.0f, ang, 0.0f));
-	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), this);*/
-}
-
-void ALostArcCharacter::Evade()
-{
-	//auto Anim = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-	//auto Widget = Cast<ALostArcPlayerController>(GetController())->HUDWidget;
-
-	//if (Anim == nullptr || bEvading)
-	//{
-	//	return;
-	//}
-	//else if (CombatComponent->GetEvadeAvailable())
-	//{
-	//	CombatComponent->GetEvadeAvailable() = false;
-	//
-	//	GetWorldTimerManager().SetTimer(CombatComponent->GetEvadeCoolDownTimer(), FTimerDelegate::CreateLambda([=]() {
-	//		CombatComponent->GetEvadeAvailable() = true;
-	//		Widget->GetCicularImage(0)->SetVisibility(ESlateVisibility::Hidden);
-	//		Widget->GetSkillSlot(0)->SetVisibility(ESlateVisibility::Hidden);
-	//		}), 5.0f, false);
-	//	
-	//	bEvading = true;
-	//	CharacterRotatetoCursor();
-	//	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacterEvade"));
-	//	Anim->Montage_Play(Anim->EvadeMontage, 1.f); // Montage_Play()가 시작되면 이전에 실행 중이던 몽타주는 자동으로 End된다. 
-	//}
-}
-
-void ALostArcCharacter::CalltoSkillCast(int32 Slot)
-{
-	//if (bEvading) return;
-
-	//if (Slot) // Skill Cast
-	//{
-	//	if (CombatComponent->bSkillCasting) return;
-	//	CombatComponent->SkillCast(Slot);
-	//}
-	//else // Basic Attack
-	//{
-	//	if (CombatComponent->bSkillCasting && !CombatComponent->bBasicAttacking) return;
-	//	CombatComponent->SkillCast(Slot);
-	//}
-}
-
 void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	/*CombatComponent->bSkillCasting = false;*/
-
 	if (bInterrupted) // Evade
 	{
 		return;

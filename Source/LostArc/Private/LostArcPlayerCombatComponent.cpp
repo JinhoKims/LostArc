@@ -86,7 +86,7 @@ void ULostArcPlayerCombatComponent::SkillCast(int32 Slot)
 		{
 			check(CurrentCombo == 0);
 			BasicAttackStartComboState();
-			Character->CharacterRotatetoCursor();
+			//Character->CharacterRotatetoCursor();
 
 			Arcanim->Montage_Play(Arcanim->BasicAttack_Montage, 1.0f);
 			bBasicAttacking = true;
@@ -262,7 +262,7 @@ bool ULostArcPlayerCombatComponent::CharacterManaCheck(float Mana)
 	else
 	{
 		Character->StatComponent->SetMP(Character->StatComponent->GetMP() - Mana);
-		Character->CharacterRotatetoCursor();
+		//Character->CharacterRotatetoCursor();
 		return true;
 	}
 }

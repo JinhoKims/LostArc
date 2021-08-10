@@ -30,9 +30,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	USkeletalMeshComponent* Weapon;
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	//class ULostArcPlayerCombatComponent* CombatComponent;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterStatComponent* StatComponent;
 
@@ -41,15 +38,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ULostArcCharacterAnimInstance* AnimInstance;
-
-	/* Rotate the character in the direction the cursor is pointing */
-	void CharacterRotatetoCursor();
-
-	/* Player Evasion action */
-	void Evade();
-
-	/* Player Combat Actions */
-	void CalltoSkillCast(int32 Slot);
 
 	/* Functions that bind to the AnimInstnace delegate */
 	UFUNCTION()
@@ -69,7 +57,5 @@ private:
 	/** A decal that projects to the cursor location. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
-
-	bool bEvading;
 };
 
