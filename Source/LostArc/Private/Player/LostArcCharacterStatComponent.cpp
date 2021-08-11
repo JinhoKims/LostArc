@@ -25,7 +25,7 @@ void ULostArcCharacterStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	TimerDel.BindUFunction(this, FName("ManaRecovery"), ManaRegenerationPerSecond);
-	GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, TimerDel, 2.0f, true);
+	GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, TimerDel, 2.0f, true);	
 }
 
 void ULostArcCharacterStatComponent::ManaRecovery(float amount)
@@ -59,7 +59,7 @@ void ULostArcCharacterStatComponent::SetNewLevel(int32 NewLevel)
 void ULostArcCharacterStatComponent::SetHP(float NewHP)
 {
 	CurrentHP = NewHP;
-	OnHPChanged.Broadcast();
+	OnProgressBarChanged.Broadcast();
 	if (CurrentHP < KINDA_SMALL_NUMBER)
 	{
 		CurrentHP = 0.0f;
@@ -70,6 +70,7 @@ void ULostArcCharacterStatComponent::SetHP(float NewHP)
 void ULostArcCharacterStatComponent::SetMP(float NewMP)
 {
 	CurrentMP = NewMP;
-	OnMPChanged.Broadcast();
+	OnProgressBarChanged.Broadcast();
 }
+
 

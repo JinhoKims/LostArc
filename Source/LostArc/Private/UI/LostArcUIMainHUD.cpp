@@ -3,6 +3,9 @@
 
 #include "UI/LostArcUIMainHUD.h"
 #include "UI/LostArcUIAbilitySlot.h"
+#include "UI/LostArcUIProgressBar.h"
+#include "Character/LostArcCharacter.h"
+#include "Components/ProgressBar.h"
 
 void ULostArcUIMainHUD::NativeConstruct()
 {
@@ -12,4 +15,8 @@ void ULostArcUIMainHUD::NativeConstruct()
 	{
 		AbilitySlots.Add(Cast<ULostArcUIAbilitySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_AbilitySlot_%d"), i)))));
 	}
+
+	BP_HPBAR->Init(EBarType::HP, Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
+	BP_MPBAR->Init(EBarType::MP, Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
+	BP_EXPBAR->Init(EBarType::EXP, Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
 }

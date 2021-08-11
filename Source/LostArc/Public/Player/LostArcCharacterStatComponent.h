@@ -8,10 +8,8 @@
 #include "Engine/DataTable.h"
 #include "LostArcCharacterStatComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnHPChangedDelegate);
-DECLARE_MULTICAST_DELEGATE(FOnMPChangedDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnHPIsZeroDelegate);
-
+DECLARE_MULTICAST_DELEGATE(FOnProgressBarDelegate);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
@@ -21,18 +19,22 @@ class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
 public:	
 	ULostArcCharacterStatComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	void SetNewLevel(int32 NewLevel);
 	void SetDamage(float NewDamage) { SetHP(FMath::Clamp<float>(CurrentHP - NewDamage, 0.0f, CurrentStatData->Maxhp)); }
 	void SetHP(float NewHP);
 	void SetMP(float NewMP);
-	float GetHPRatio() { return CurrentStatData->Maxhp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / CurrentStatData->Maxhp); }
-	float GetMPRatio() { return CurrentStatData->Maxmp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / CurrentStatData->Maxmp); }
+	
+	float GetHP() { return CurrentHP; }
 	float GetMP() { return CurrentMP; }
 	float GetAttack() { return CurrentStatData->Attack; }
 
-	FOnHPChangedDelegate OnHPChanged;
-	FOnMPChangedDelegate OnMPChanged;
+	float GetHPRatio() { return CurrentStatData->Maxhp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / CurrentStatData->Maxhp); }
+	float GetMPRatio() { return CurrentStatData->Maxmp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / CurrentStatData->Maxmp); }
+	float GetEXPRatio() { return CurrentStatData->Nextexp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentExp / CurrentStatData->Nextexp); }
+
 	FOnHPIsZeroDelegate OnHPIsZero;
+	FOnProgressBarDelegate OnProgressBarChanged;
 
 protected:
 	virtual void InitializeComponent() override;

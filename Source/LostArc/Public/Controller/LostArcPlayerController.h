@@ -16,11 +16,11 @@ public:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void BeginPlay() override;
 	
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-	//TSubclassOf<class UHUDWidget> HUDWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<class ULostArcUIMainHUD> MainHUDClass;
 
-	/*UPROPERTY()
-	class UHUDWidget* HUDWidget;*/
+	UPROPERTY()
+	class ULostArcUIMainHUD* MainHUD;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
