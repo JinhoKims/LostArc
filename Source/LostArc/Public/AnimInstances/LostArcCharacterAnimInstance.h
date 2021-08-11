@@ -6,8 +6,10 @@
 #include "Animation/AnimInstance.h"
 #include "LostArcCharacterAnimInstance.generated.h"
 
+enum EAbilityType;
+
 DECLARE_MULTICAST_DELEGATE(FOnNextBasicAttackCheckDelegate);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMeleeSkillHitCheckDelegate, int32)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMeleeSkillHitCheckDelegate, EAbilityType);
 
 /**
  * 

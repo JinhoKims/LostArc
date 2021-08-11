@@ -97,7 +97,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	if (AnimInstance != nullptr)
 	{
 		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { AbilityComponent->GetBasicAttackAbility()->BasicAttackNextComboCheck(this); });
-		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](int32 val)->void { AbilityComponent->AbilityHitCheck(val); });
+		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitCheck(Type); });
 		AnimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnCharacterMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
 
@@ -108,12 +108,12 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 0);
-	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_1", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 1);
-	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_2", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 2);
-	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 3);
-	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 4);
-	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, 9);
+	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::BasicAttack);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_1", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_1);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_2", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_2);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_3);
+	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_4);
+	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
 }
 
 void ALostArcCharacter::BeginPlay()

@@ -6,7 +6,9 @@
 #include "GameFramework/Character.h"
 #include "LostArcCharacter.generated.h"
 
-DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, int32)
+enum EAbilityType;
+
+DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, EAbilityType)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter

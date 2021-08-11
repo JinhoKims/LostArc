@@ -7,6 +7,20 @@
 #include "Abilities/LostArcCharacterAbilityBasic.h"
 #include "LostArcCharacterAbilityComponent.generated.h"
 
+UENUM(BlueprintType)
+enum EAbilityType
+{
+	BasicAttack  UMETA(DisplayName = "Basic"),
+	MeleeSkill_1 UMETA(DisplayName = "Melee_1"),
+	MeleeSkill_2 UMETA(DisplayName = "Melee_2"),
+	MeleeSkill_3 UMETA(DisplayName = "Melee_3"),
+	MeleeSkill_4 UMETA(DisplayName = "Melee_4"),
+	RangedSpell_1 UMETA(DisplayName = "Ranged_1"),
+	RangedSpell_2 UMETA(DisplayName = "Ranged_2"),
+	RangedSpell_3 UMETA(DisplayName = "Ranged_3"),
+	RangedSpell_4 UMETA(DisplayName = "Ranged_4"),
+	Evade		 UMETA(DisplayName = "Evade")
+};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterAbilityComponent : public UActorComponent
@@ -20,9 +34,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[0]); }
-	void AbilityCast(int32 Slot);
-	void AbilityHitCheck(int32 Slot);
+	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]); }
+	void AbilityCast(EAbilityType Type);
+	void AbilityHitCheck(EAbilityType Type);
 
 protected:
 	// Called when the game starts

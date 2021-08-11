@@ -12,11 +12,11 @@ void ULostArcUIProgressBar::NativeConstruct()
 	Super::NativeConstruct();
 }
 
-void ULostArcUIProgressBar::Init(EBarType type, ALostArcCharacter *Character)
+void ULostArcUIProgressBar::Init(EBarType Type, ALostArcCharacter *Character)
 {
-	ThisBarType = type;
+	ThisBarType = Type;
 
-	switch (type)
+	switch (Type)
 	{
 	case HP:
 		ProgressBar->SetFillColorAndOpacity(FLinearColor(1.f, 0.019f, 0.f, 1.f));

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
+#include "Player/LostArcCharacterAbilityComponent.h"
 
 void ULostArcCharacterAnimInstance::AnimNotify_Next_BasicAttackCheck()
 {
@@ -9,27 +10,27 @@ void ULostArcCharacterAnimInstance::AnimNotify_Next_BasicAttackCheck()
 
 void ULostArcCharacterAnimInstance::AnimNotify_BasicAttack_HitCheck()
 {
-	OnMeleeSkillHitCheck.Broadcast(0);
+	OnMeleeSkillHitCheck.Broadcast(EAbilityType::BasicAttack);
 }
 
 void ULostArcCharacterAnimInstance::AnimNotify_MeleeSkill_1_HitCheck()
 {
-	OnMeleeSkillHitCheck.Broadcast(1);
+	OnMeleeSkillHitCheck.Broadcast(EAbilityType::MeleeSkill_1);
 }
 
 void ULostArcCharacterAnimInstance::AnimNotify_MeleeSkill_2_HitCheck()
 {
-	OnMeleeSkillHitCheck.Broadcast(2);
+	OnMeleeSkillHitCheck.Broadcast(EAbilityType::MeleeSkill_2);
 }
 
 void ULostArcCharacterAnimInstance::AnimNotify_MeleeSkill_3_HitCheck()
 {
-	OnMeleeSkillHitCheck.Broadcast(3);
+	OnMeleeSkillHitCheck.Broadcast(EAbilityType::MeleeSkill_3);
 }
 
 void ULostArcCharacterAnimInstance::AnimNotify_MeleeSkill_4_HitCheck()
 {
-	OnMeleeSkillHitCheck.Broadcast(4);
+	OnMeleeSkillHitCheck.Broadcast(EAbilityType::MeleeSkill_4);
 }
 
 void ULostArcCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
