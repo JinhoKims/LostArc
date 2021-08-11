@@ -144,6 +144,11 @@ void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool 
 {
 	if (bInterrupted) // Evade
 	{
+		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
+		{
+			AbilityComponent->GetBasicAttackAbility()->SetBasicAttacking(false);
+			AbilityComponent->GetBasicAttackAbility()->BasicAttackEndComboState();
+		}
 		return;
 	}
 
