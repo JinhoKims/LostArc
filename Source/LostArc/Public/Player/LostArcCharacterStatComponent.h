@@ -8,8 +8,21 @@
 #include "Engine/DataTable.h"
 #include "LostArcCharacterStatComponent.generated.h"
 
+enum EBarType;
+
 DECLARE_MULTICAST_DELEGATE(FOnHPIsZeroDelegate);
-DECLARE_MULTICAST_DELEGATE(FOnProgressBarDelegate);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnProgressBarDelegate, EBarType);
+
+UENUM(BlueprintType)
+enum EAttributeType
+{
+	HP_X UMETA(DisplayName = "HP"),
+	MP_X UMETA(DisplayName = "MP"),
+	ATK UMETA(DisplayName = "ATK"),
+	DEF UMETA(DisplayName = "DEF"),
+	EXP_X UMETA(DisplayName = "EXP"),
+	LVL UMETA(DisplayName = "LVL")
+};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterStatComponent : public UActorComponent
@@ -25,13 +38,23 @@ public:
 	void SetHP(float NewHP);
 	void SetMP(float NewMP);
 	
-	float GetHP() { return CurrentHP; }
-	float GetMP() { return CurrentMP; }
-	float GetAttack() { return CurrentStatData->Attack; }
+	float GetCurrentHP() { return CurrentHP; }
+	float GetCurrentMP() { return CurrentMP; }
+	float GetMaxHP() { return CurrentStatData->Maxhp; }
+	float GetMaxMP() { return CurrentStatData->Maxmp; }
+
+	float GetAttackDamage() { return CurrentStatData->Attack; }
 
 	float GetHPRatio() { return CurrentStatData->Maxhp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / CurrentStatData->Maxhp); }
 	float GetMPRatio() { return CurrentStatData->Maxmp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / CurrentStatData->Maxmp); }
 	float GetEXPRatio() { return CurrentStatData->Nextexp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentExp / CurrentStatData->Nextexp); }
+
+
+	float GetCurrnetAttribute(EAttributeType Type);
+	float GetAttributeRatio(EAttributeType Type);
+	float GetMaxAttribute(EAttributeType Type);
+	void SetAttribute(EAttributeType Type);
+
 
 	FOnHPIsZeroDelegate OnHPIsZero;
 	FOnProgressBarDelegate OnProgressBarChanged;
@@ -42,9 +65,8 @@ protected:
 
 private:
 	FArcCharacterData* CurrentStatData;
-
-	FTimerHandle TimerHandle;
-	FTimerDelegate TimerDel;
+	FTimerHandle ManaRegenerationTimerHandle;
+	FTimerDelegate ManaRegenerationTimerDelegate;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
 	int32 Level;
@@ -59,8 +81,8 @@ private:
 	float CurrentMP;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
-	float ManaRegenerationPerSecond;
+	float IncreasedManaRegeneration;
 
-	UFUNCTION()
-	void ManaRecovery(float amount);
+	UFUNCTION(meta = (AllowPrivateAccess = true))
+	void ManaRegenerationPerSecond(float Amount);
 };

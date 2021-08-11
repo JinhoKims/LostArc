@@ -7,7 +7,7 @@ ULostArcGameInstance::ULostArcGameInstance()
 {
 	FString CharacterDataPath = TEXT("/Game/GameData/PlayerCharacter/LostArcCharacterData.LostArcCharacterData");
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_CHARACTER(*CharacterDataPath);
-	check(DT_CHARACTER.Succeeded());
+
 	ArcCharacterTable = DT_CHARACTER.Object;
 }
 

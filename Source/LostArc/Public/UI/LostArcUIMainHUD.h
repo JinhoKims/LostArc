@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIMainHUD.generated.h"
 
+
 /**
  * 
  */
@@ -14,6 +15,7 @@ class LOSTARC_API ULostArcUIMainHUD : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
 	virtual void NativeConstruct() override;
 
 public:

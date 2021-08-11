@@ -5,27 +5,55 @@
 #include "Character/LostArcCharacter.h"
 #include "Player/LostArcCharacterStatComponent.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
+
 
 
 void ULostArcUIProgressBar::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	ProgressBar->SetFillColorAndOpacity(FLinearColor(BarColor.R, BarColor.G, BarColor.B));
+	ProgressBar->SetRenderShear(BarShearValue);
+	ProgressBar->SetRenderScale(BarRenderScale);
 }
 
-void ULostArcUIProgressBar::Init(EBarType Type, ALostArcCharacter *Character)
+void ULostArcUIProgressBar::Init(ALostArcCharacter *Character)
 {
-	ThisBarType = Type;
-
-	switch (Type)
+	switch (BarType)
 	{
 	case HP:
-		ProgressBar->SetFillColorAndOpacity(FLinearColor(1.f, 0.019f, 0.f, 1.f));
+		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentHP()));
+		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxHP()));
 		break;
 	case MP:
-		ProgressBar->SetFillColorAndOpacity(FLinearColor(0.f, 0.106f, 1.f, 1.f));
+		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentMP()));
+		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxMP()));
 		break;
 	case EXP:
-		ProgressBar->SetFillColorAndOpacity(FLinearColor(0.549f, 0.932f, 0.241f, 1.f));
+		ProgressBar->SetPercent(0.5f);
+		CurrentText->SetVisibility(ESlateVisibility::Hidden);
+		SlashText->SetVisibility(ESlateVisibility::Hidden);
+		MaxText->SetVisibility(ESlateVisibility::Hidden);
+		break;
+	default:
+		break;
+	}
+
+	EAttributeType AType = EAttributeType::ATK;
+	switch (AType)
+	{
+	case HP_X:
+		break;
+	case MP_X:
+		break;
+	case ATK:
+		break;
+	case DEF:
+		break;
+	case EXP_X:
+		break;
+	case LVL:
 		break;
 	default:
 		break;
@@ -34,25 +62,33 @@ void ULostArcUIProgressBar::Init(EBarType Type, ALostArcCharacter *Character)
 	Character->StatComponent->OnProgressBarChanged.AddUObject(this, &ULostArcUIProgressBar::UpdateProgressBar);
 }
 
-void ULostArcUIProgressBar::UpdateProgressBar()
+void ULostArcUIProgressBar::UpdateProgressBar(EBarType Type)
 {
-	float Ratio = 0.f;
-
-	switch (ThisBarType)
+	if (BarType == Type)
 	{
-	case HP:
-		Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetHPRatio();
-		ProgressBar->SetPercent(Ratio);
-		break;
-	case MP:
-		Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetMPRatio();
-		ProgressBar->SetPercent(Ratio);
-		break;
-	case EXP:
-		Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetEXPRatio();
-		ProgressBar->SetPercent(Ratio);
-		break;
-	default:
-		break;
+		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+		float Ratio = 0.f;
+
+		switch (BarType)
+		{
+		case HP:
+			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetHPRatio();
+			CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentHP()));
+			MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxHP()));
+			ProgressBar->SetPercent(Ratio);
+			break;
+		case MP:
+			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetMPRatio();
+			CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentMP()));
+			MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxMP()));
+			ProgressBar->SetPercent(Ratio);
+			break;
+		case EXP:
+			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetEXPRatio();
+			ProgressBar->SetPercent(Ratio);
+			break;
+		default:
+			break;
+		}
 	}
 }

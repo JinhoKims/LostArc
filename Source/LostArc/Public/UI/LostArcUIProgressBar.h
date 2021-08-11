@@ -17,18 +17,16 @@ enum EBarType
 	EXP UMETA(DisplayName = "EXP")
 };
 
-
 UCLASS()
 class LOSTARC_API ULostArcUIProgressBar : public UUserWidget
 {
 	GENERATED_BODY()
-	
-protected:
-	virtual void NativeConstruct() override;
+
 
 public:
-	void Init(EBarType type, class ALostArcCharacter *Character);
-	void UpdateProgressBar();
+	virtual void NativeConstruct() override;
+	void Init(class ALostArcCharacter *Character);
+	void UpdateProgressBar(EBarType Type);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -40,6 +38,22 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* MaxText;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TEnumAsByte<EBarType> ThisBarType;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* SlashText;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	TEnumAsByte<EBarType> BarType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	UTexture2D* BarTexture;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	FLinearColor BarColor;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	FVector2D BarShearValue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	FVector2D BarRenderScale;
 };

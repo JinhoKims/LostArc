@@ -24,7 +24,7 @@ void ULostArcCharacterAbilityBase::Use(ALostArcCharacter* Character)
 	{
 		CharacterRotatetoCursor(Character);
 		Character->GetWorldTimerManager().SetTimer(AbilityCoolDownTimer, FTimerDelegate::CreateLambda([=]() {bAbilityNowCD = false; }), CoolDown, false);
-		Character->StatComponent->SetMP(Character->StatComponent->GetMP() - ManaCost);
+		Character->StatComponent->SetMP(Character->StatComponent->GetCurrentMP() - ManaCost);
 		bAbilityNowCD = true;
 		bAnimationRunning = true;
 	}
@@ -41,9 +41,9 @@ bool ULostArcCharacterAbilityBase::AbilityStatusCheck(ALostArcCharacter* Charact
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCoolDownTimer));
 		return false;
 	}
-	if (Character->StatComponent->GetMP() < ManaCost)
+	if (Character->StatComponent->GetCurrentMP() < ManaCost)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetMP());
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrentMP());
 		return false;
 	}
 	if (bAnimationRunning)

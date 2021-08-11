@@ -15,6 +15,9 @@ class LOSTARC_API ULostArcUIAbilitySlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	virtual void NativeConstruct();
+
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UImage* Image_Border;
 	
@@ -29,4 +32,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* Text_ShortcutKey;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* Text_CDNum;
 };

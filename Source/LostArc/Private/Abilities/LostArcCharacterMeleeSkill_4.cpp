@@ -39,7 +39,7 @@ void ULostArcCharacterMeleeSkill_4::HitCheck(ALostArcCharacter* Character)
 		FHitResult hit = HitResults[i];
 		if (hit.Actor.IsValid())
 		{
-			hit.Actor->TakeDamage(Character->StatComponent->GetAttack() * Damage_Ratio, DamageEvent, Character->GetController(), Character);
+			hit.Actor->TakeDamage(Character->StatComponent->GetAttackDamage() * Damage_Ratio, DamageEvent, Character->GetController(), Character);
 		}
 	}
 }

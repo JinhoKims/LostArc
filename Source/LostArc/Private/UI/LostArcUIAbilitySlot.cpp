@@ -3,3 +3,6 @@
 
 #include "UI/LostArcUIAbilitySlot.h"
 
+void ULostArcUIAbilitySlot::NativeConstruct()
+{
+}
