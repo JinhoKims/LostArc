@@ -15,7 +15,7 @@ class LOSTARC_API ULostArcCharacterAbilityBase : public UObject
 	GENERATED_BODY()
 	
 public:	
-	virtual void ConstructAbility(float mana, float cooldown, float ratio);
+	virtual void ConstructAbility(float mana, float cooldown, float factor);
 	virtual void Use(class ALostArcCharacter* Character);
 	virtual void HitCheck(class ALostArcCharacter* Character);
 	virtual bool AbilityStatusCheck(class ALostArcCharacter* Character);
@@ -29,10 +29,9 @@ public:
 	float ManaCost;
 
 	UPROPERTY()
-	float Damage_Ratio;
-	// Change Damage_Factor
+	float Damage_Factor;
 
-	bool bAbilityAvailable;
+	bool bAbilityNowAvailable;
 	bool bAbilityNowCD;
 
 	static bool bAnimationRunning;

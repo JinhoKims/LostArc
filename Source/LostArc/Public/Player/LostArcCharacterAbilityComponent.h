@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Abilities/LostArcCharacterAbilityBasic.h"
 #include "LostArcCharacterAbilityComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -19,7 +18,7 @@ enum EAbilityType
 	RangedSpell_2 UMETA(DisplayName = "Ranged_2"),
 	RangedSpell_3 UMETA(DisplayName = "Ranged_3"),
 	RangedSpell_4 UMETA(DisplayName = "Ranged_4"),
-	Evade		 UMETA(DisplayName = "Evade")
+	Evade		  UMETA(DisplayName = "Evade")
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -35,7 +34,10 @@ public:
 
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitCheck(EAbilityType Type);
-	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]); }
+	class ULostArcCharacterAbilityBasic* GetBasicAttackAbility();
+
+	UFUNCTION()
+	void AbilityMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
 
 protected:
 	// Called when the game starts

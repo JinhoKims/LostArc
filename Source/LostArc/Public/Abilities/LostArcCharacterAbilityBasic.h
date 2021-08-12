@@ -15,7 +15,7 @@ class LOSTARC_API ULostArcCharacterAbilityBasic : public ULostArcCharacterAbilit
 	GENERATED_BODY()
 	
 public:
-	virtual void ConstructAbility(float mana, float cooldown, float ratio);
+	virtual void ConstructAbility(float mana, float cooldown, float factor);
 	virtual void Use(class ALostArcCharacter* Character);
 	virtual void HitCheck(class ALostArcCharacter* Character) override;
 	virtual bool AbilityStatusCheck(class ALostArcCharacter* Character) override;

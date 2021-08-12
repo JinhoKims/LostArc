@@ -98,7 +98,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	{
 		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { AbilityComponent->GetBasicAttackAbility()->BasicAttackNextComboCheck(this); });
 		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitCheck(Type); });
-		AnimInstance->OnMontageEnded.AddDynamic(this, &ALostArcCharacter::CallOnCharacterMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
 
 	StatComponent->OnHPIsZero.AddLambda([this]()->void {AnimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); });
@@ -140,45 +140,9 @@ void ALostArcCharacter::Tick(float DeltaSeconds)
 	}
 }
 
-void ALostArcCharacter::CallOnCharacterMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	if (bInterrupted) // Evade
-	{
-		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
-		{
-			AbilityComponent->GetBasicAttackAbility()->SetBasicAttacking(false);
-			AbilityComponent->GetBasicAttackAbility()->BasicAttackEndComboState();
-		}
-		return;
-	}
-
-	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
-	{
-		AbilityComponent->GetBasicAttackAbility()->SetBasicAttacking(false);
-		AbilityComponent->GetBasicAttackAbility()->BasicAttackEndComboState();
-	}
-
-	if (Montage->IsValidSectionName(TEXT("Evade")))
-	{
-		GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
-		ULostArcCharacterAbilityBase::bAnimationRunning = false;
-	}
-
-	for (int i = 1; i < 5; i++)
-	{
-		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
-		ULostArcCharacterAbilityBase::bAnimationRunning = false;
-	}
-}
-
 float ALostArcCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 	StatComponent->SetDamage(FinalDamage);
 	return FinalDamage;
 }
-
-
-
-
-

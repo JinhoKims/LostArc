@@ -8,19 +8,19 @@
 
 bool ULostArcCharacterAbilityBase::bAnimationRunning = false;
 
-void ULostArcCharacterAbilityBase::ConstructAbility(float mana, float cooldown, float ratio)
+void ULostArcCharacterAbilityBase::ConstructAbility(float mana, float cooldown, float factor)
 {
 	ManaCost = mana;
 	CoolDown = cooldown;
-	Damage_Ratio = ratio;
+	Damage_Factor = factor;
 	bAbilityNowCD = false;
 }
 
 void ULostArcCharacterAbilityBase::Use(ALostArcCharacter* Character)
 {
-	bAbilityAvailable = AbilityStatusCheck(Character);
+	bAbilityNowAvailable = AbilityStatusCheck(Character);
 
-	if (bAbilityAvailable)
+	if (bAbilityNowAvailable)
 	{
 		CharacterRotatetoCursor(Character);
 		Character->GetWorldTimerManager().SetTimer(AbilityCoolDownTimer, FTimerDelegate::CreateLambda([=]() {bAbilityNowCD = false; }), CoolDown, false);
@@ -39,7 +39,7 @@ void ULostArcCharacterAbilityBase::HitCheck(ALostArcCharacter* Character)
 		FHitResult hit = HitResultProperty.Value[i];
 		if (hit.Actor.IsValid())
 		{
-			hit.Actor->TakeDamage(Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::ATK) * Damage_Ratio, DamageEvent, Character->GetController(), Character);
+			hit.Actor->TakeDamage(Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::ATK) * Damage_Factor, DamageEvent, Character->GetController(), Character);
 		}
 	}
 }

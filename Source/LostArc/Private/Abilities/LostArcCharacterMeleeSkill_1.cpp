@@ -7,16 +7,16 @@
 #include "Player/LostArcCharacterStatComponent.h"
 #include "DrawDebugHelpers.h"
 
-void ULostArcCharacterMeleeSkill_1::ConstructAbility(float mana, float cooldown, float ratio)
+void ULostArcCharacterMeleeSkill_1::ConstructAbility(float mana, float cooldown, float factor)
 {
-	Super::ConstructAbility(mana, cooldown, ratio);
+	Super::ConstructAbility(mana, cooldown, factor);
 }
 
 void ULostArcCharacterMeleeSkill_1::Use(ALostArcCharacter* Character)
 {
 	Super::Use(Character);
 
-	if (bAbilityAvailable)
+	if (bAbilityNowAvailable)
 	{
 		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerMeleeSkill_1_Montage, 1.f);
 	}

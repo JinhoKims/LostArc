@@ -7,17 +7,16 @@
 #include "Player/LostArcCharacterStatComponent.h"
 #include "Components/CapsuleComponent.h"
 
-void ULostArcCharacterAbilityEvade::ConstructAbility(float mana, float cooldown, float ratio)
+void ULostArcCharacterAbilityEvade::ConstructAbility(float mana, float cooldown, float factor)
 {
-	Super::ConstructAbility(mana, cooldown, ratio);
+	Super::ConstructAbility(mana, cooldown, factor);
 }
-
 
 void ULostArcCharacterAbilityEvade::Use(ALostArcCharacter* Character)
 {
 	Super::Use(Character);
 	
-	if (bAbilityAvailable)
+	if (bAbilityNowAvailable)
 	{
 		auto Anim = Character->AnimInstance;
 

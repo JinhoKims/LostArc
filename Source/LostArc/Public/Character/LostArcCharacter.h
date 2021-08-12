@@ -41,10 +41,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ULostArcCharacterAnimInstance* AnimInstance;
 
-	/* Functions that bind to the AnimInstnace delegate */
-	UFUNCTION()
-	void CallOnCharacterMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-
 	float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 private:

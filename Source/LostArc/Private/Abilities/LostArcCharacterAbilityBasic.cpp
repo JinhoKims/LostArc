@@ -7,9 +7,9 @@
 #include "Player/LostArcCharacterStatComponent.h"
 #include "DrawDebugHelpers.h"
 
-void ULostArcCharacterAbilityBasic::ConstructAbility(float mana, float cooldown, float ratio)
+void ULostArcCharacterAbilityBasic::ConstructAbility(float mana, float cooldown, float factor)
 {
-	Super::ConstructAbility(mana, cooldown, ratio);
+	Super::ConstructAbility(mana, cooldown, factor);
 
 	bBasicAttacking = false;
 	CurrentCombo = 0;

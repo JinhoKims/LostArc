@@ -15,7 +15,7 @@ class LOSTARC_API ULostArcCharacterMeleeSkill_1 : public ULostArcCharacterAbilit
 	GENERATED_BODY()
 	
 public:
-	virtual void ConstructAbility(float mana, float cooldown, float ratio) override;
+	virtual void ConstructAbility(float mana, float cooldown, float factor) override;
 	virtual void Use(class ALostArcCharacter* Character) override;
 	virtual void HitCheck(class ALostArcCharacter* Character) override;
 

@@ -80,3 +80,38 @@ void ULostArcCharacterAbilityComponent::AbilityHitCheck(EAbilityType Type)
 	Abilities[Type]->HitCheck(Cast<ALostArcCharacter>(GetOwner()));
 }
 
+ULostArcCharacterAbilityBasic* ULostArcCharacterAbilityComponent::GetBasicAttackAbility()
+{
+	return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]);
+}
+
+void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (bInterrupted) // Evade
+	{
+		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
+		{
+			GetBasicAttackAbility()->SetBasicAttacking(false);
+			GetBasicAttackAbility()->BasicAttackEndComboState();
+		}
+		return;
+	}
+
+	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
+	{
+		GetBasicAttackAbility()->SetBasicAttacking(false);
+		GetBasicAttackAbility()->BasicAttackEndComboState();
+	}
+
+	if (Montage->IsValidSectionName(TEXT("Evade")))
+	{
+		Cast<ALostArcCharacter>(GetOwner())->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
+		ULostArcCharacterAbilityBase::bAnimationRunning = false;
+	}
+
+	for (int i = 1; i < 5; i++)
+	{
+		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
+		ULostArcCharacterAbilityBase::bAnimationRunning = false;
+	}
+}
