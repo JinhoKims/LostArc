@@ -9,24 +9,18 @@
 /**
  * 
  */
-UENUM(BlueprintType)
-enum EBarType
-{
-	HP UMETA(DisplayName = "HP"),
-	MP UMETA(DisplayName = "MP"),
-	EXP UMETA(DisplayName = "EXP")
-};
+
+enum EAttributeType;
 
 UCLASS()
 class LOSTARC_API ULostArcUIProgressBar : public UUserWidget
 {
 	GENERATED_BODY()
 
-
 public:
 	virtual void NativeConstruct() override;
 	void Init(class ALostArcCharacter *Character);
-	void UpdateProgressBar(EBarType Type);
+	void UpdateProgressBar(EAttributeType Type);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -43,7 +37,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
-	TEnumAsByte<EBarType> BarType;
+	TEnumAsByte<EAttributeType> BarType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
 	UTexture2D* BarTexture;

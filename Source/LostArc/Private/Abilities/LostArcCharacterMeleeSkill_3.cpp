@@ -24,19 +24,10 @@ void ULostArcCharacterMeleeSkill_3::Use(ALostArcCharacter* Character)
 
 void ULostArcCharacterMeleeSkill_3::HitCheck(ALostArcCharacter* Character)
 {
-	FCollisionQueryParams Params(NAME_None, false, Character);
-	TArray<FHitResult> HitResults;
-	FDamageEvent DamageEvent;
+	HitResultProperty = TPairInitializer<FCollisionQueryParams, TArray<FHitResult>>(FCollisionQueryParams(NAME_None, false, Character), TArray<FHitResult>());
 
-	GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(250.f), Params);
-	DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 250.f, 32, FColor::Silver, false, 1.f);
+	GetWorld()->SweepMultiByChannel(HitResultProperty.Value, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(250.f), HitResultProperty.Key);
+	//DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 250.f, 32, FColor::Silver, false, 1.f);
 
-	for (int32 i = 0; i < HitResults.Num(); i++) // Damage Count
-	{
-		FHitResult hit = HitResults[i];
-		if (hit.Actor.IsValid())
-		{
-			hit.Actor->TakeDamage(Character->StatComponent->GetAttackDamage() * Damage_Ratio, DamageEvent, Character->GetController(), Character);
-		}
-	}
+	Super::HitCheck(Character);
 }

@@ -14,8 +14,7 @@ class LOSTARC_API ULostArcCharacterAbilityBase : public UObject
 {
 	GENERATED_BODY()
 	
-public:
-	
+public:	
 	virtual void ConstructAbility(float mana, float cooldown, float ratio);
 	virtual void Use(class ALostArcCharacter* Character);
 	virtual void HitCheck(class ALostArcCharacter* Character);
@@ -31,9 +30,14 @@ public:
 
 	UPROPERTY()
 	float Damage_Ratio;
+	// Change Damage_Factor
 
 	bool bAbilityAvailable;
 	bool bAbilityNowCD;
+
 	static bool bAnimationRunning;
 	FTimerHandle AbilityCoolDownTimer;
+
+protected:
+	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty;
 };

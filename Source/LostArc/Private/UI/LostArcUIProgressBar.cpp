@@ -8,7 +8,6 @@
 #include "Components/TextBlock.h"
 
 
-
 void ULostArcUIProgressBar::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -20,75 +19,27 @@ void ULostArcUIProgressBar::NativeConstruct()
 
 void ULostArcUIProgressBar::Init(ALostArcCharacter *Character)
 {
-	switch (BarType)
+	CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrnetAttributeValue(BarType)));
+	MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));
+
+	Character->StatComponent->OnProgressBarChanged.AddUObject(this, &ULostArcUIProgressBar::UpdateProgressBar);
+
+	if (BarType == EXP)
 	{
-	case HP:
-		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentHP()));
-		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxHP()));
-		break;
-	case MP:
-		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentMP()));
-		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxMP()));
-		break;
-	case EXP:
-		ProgressBar->SetPercent(0.5f);
 		CurrentText->SetVisibility(ESlateVisibility::Hidden);
 		SlashText->SetVisibility(ESlateVisibility::Hidden);
 		MaxText->SetVisibility(ESlateVisibility::Hidden);
-		break;
-	default:
-		break;
 	}
-
-	EAttributeType AType = EAttributeType::ATK;
-	switch (AType)
-	{
-	case HP_X:
-		break;
-	case MP_X:
-		break;
-	case ATK:
-		break;
-	case DEF:
-		break;
-	case EXP_X:
-		break;
-	case LVL:
-		break;
-	default:
-		break;
-	}
-
-	Character->StatComponent->OnProgressBarChanged.AddUObject(this, &ULostArcUIProgressBar::UpdateProgressBar);
 }
 
-void ULostArcUIProgressBar::UpdateProgressBar(EBarType Type)
+void ULostArcUIProgressBar::UpdateProgressBar(EAttributeType OwnerType)
 {
-	if (BarType == Type)
+	if (BarType == OwnerType)
 	{
 		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
-		float Ratio = 0.f;
 
-		switch (BarType)
-		{
-		case HP:
-			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetHPRatio();
-			CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentHP()));
-			MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxHP()));
-			ProgressBar->SetPercent(Ratio);
-			break;
-		case MP:
-			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetMPRatio();
-			CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentMP()));
-			MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxMP()));
-			ProgressBar->SetPercent(Ratio);
-			break;
-		case EXP:
-			Ratio = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->StatComponent->GetEXPRatio();
-			ProgressBar->SetPercent(Ratio);
-			break;
-		default:
-			break;
-		}
+		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrnetAttributeValue(BarType)));
+		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));
+		ProgressBar->SetPercent(Character->StatComponent->GetCurrentAttributeRatio(BarType));
 	}
 }

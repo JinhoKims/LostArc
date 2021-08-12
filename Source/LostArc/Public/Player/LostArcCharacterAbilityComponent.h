@@ -32,15 +32,15 @@ public:
 	ULostArcCharacterAbilityComponent();
 	virtual void InitializeComponent() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]); }
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitCheck(EAbilityType Type);
+	ULostArcCharacterAbilityBasic* GetBasicAttackAbility() { return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]); }
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = true))

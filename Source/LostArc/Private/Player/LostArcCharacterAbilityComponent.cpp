@@ -40,7 +40,6 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기�
 	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
 	Abilities.Add(NewObject<ULostArcCharacterAbilityEvade>(this));
 
-
 	Abilities[EAbilityType::BasicAttack]->ConstructAbility(0.f, 0.f, 1.f); // Basic Attack
 	Abilities[EAbilityType::MeleeSkill_1]->ConstructAbility(10.f, 5.f, 1.5f);
 	Abilities[EAbilityType::MeleeSkill_2]->ConstructAbility(15.f, 5.f, 1.2f);

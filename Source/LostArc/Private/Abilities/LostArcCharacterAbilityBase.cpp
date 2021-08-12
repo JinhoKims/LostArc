@@ -24,7 +24,7 @@ void ULostArcCharacterAbilityBase::Use(ALostArcCharacter* Character)
 	{
 		CharacterRotatetoCursor(Character);
 		Character->GetWorldTimerManager().SetTimer(AbilityCoolDownTimer, FTimerDelegate::CreateLambda([=]() {bAbilityNowCD = false; }), CoolDown, false);
-		Character->StatComponent->SetMP(Character->StatComponent->GetCurrentMP() - ManaCost);
+		Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) - ManaCost);
 		bAbilityNowCD = true;
 		bAnimationRunning = true;
 	}
@@ -32,6 +32,16 @@ void ULostArcCharacterAbilityBase::Use(ALostArcCharacter* Character)
 
 void ULostArcCharacterAbilityBase::HitCheck(ALostArcCharacter* Character)
 {
+	FDamageEvent DamageEvent;
+
+	for (int32 i = 0; i < HitResultProperty.Value.Num(); i++)
+	{
+		FHitResult hit = HitResultProperty.Value[i];
+		if (hit.Actor.IsValid())
+		{
+			hit.Actor->TakeDamage(Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::ATK) * Damage_Ratio, DamageEvent, Character->GetController(), Character);
+		}
+	}
 }
 
 bool ULostArcCharacterAbilityBase::AbilityStatusCheck(ALostArcCharacter* Character)
@@ -41,9 +51,9 @@ bool ULostArcCharacterAbilityBase::AbilityStatusCheck(ALostArcCharacter* Charact
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCoolDownTimer));
 		return false;
 	}
-	if (Character->StatComponent->GetCurrentMP() < ManaCost)
+	if (Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) < ManaCost)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrentMP());
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP));
 		return false;
 	}
 	if (bAnimationRunning)

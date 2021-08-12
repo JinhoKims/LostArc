@@ -34,9 +34,9 @@ bool ULostArcCharacterAbilityEvade::AbilityStatusCheck(ALostArcCharacter* Charac
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCoolDownTimer));
 		return false;
 	}
-	if (Character->StatComponent->GetCurrentMP() < ManaCost)
+	if (Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) < ManaCost)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrentMP());
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP));
 		return false;
 	}
 	return true;

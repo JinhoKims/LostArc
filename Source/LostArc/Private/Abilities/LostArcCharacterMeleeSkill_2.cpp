@@ -24,19 +24,10 @@ void ULostArcCharacterMeleeSkill_2::Use(ALostArcCharacter* Character)
 
 void ULostArcCharacterMeleeSkill_2::HitCheck(ALostArcCharacter* Character)
 {
-	FCollisionQueryParams Params(NAME_None, false, Character);
-	TArray<FHitResult> HitResults;
-	FDamageEvent DamageEvent;
+	HitResultProperty = TPairInitializer<FCollisionQueryParams, TArray<FHitResult>>(FCollisionQueryParams(NAME_None, false, Character), TArray<FHitResult>());
 
-	GetWorld()->SweepMultiByChannel(HitResults, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorQuat(), ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(FVector(100.f, 400.f, 50.f)), Params);
-	DrawDebugBox(GetWorld(), Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, FVector(100.f, 400.f, 50.f), Character->GetActorQuat(), FColor::Orange, false, 1.f);
+	GetWorld()->SweepMultiByChannel(HitResultProperty.Value, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, Character->GetActorQuat(), ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(FVector(100.f, 400.f, 50.f)), HitResultProperty.Key);
+	//DrawDebugBox(GetWorld(), Character->GetActorLocation() + Character->GetActorForwardVector() * 100.0f, FVector(100.f, 400.f, 50.f), Character->GetActorQuat(), FColor::Orange, false, 1.f);
 
-	for (int32 i = 0; i < HitResults.Num(); i++) // Damage Count
-	{
-		FHitResult hit = HitResults[i];
-		if (hit.Actor.IsValid())
-		{
-			hit.Actor->TakeDamage(Character->StatComponent->GetAttackDamage() * Damage_Ratio, DamageEvent, Character->GetController(), Character);
-		}
-	}
+	Super::HitCheck(Character);
 }
