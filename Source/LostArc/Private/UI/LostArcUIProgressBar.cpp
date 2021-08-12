@@ -9,14 +9,12 @@
 void ULostArcUIProgressBar::NativeConstruct()
 {
 	Super::NativeConstruct();
+	auto Character = GetOwningPlayerPawn<ALostArcCharacter>();
 
 	ProgressBar->SetFillColorAndOpacity(FLinearColor(BarColor.R, BarColor.G, BarColor.B));
 	ProgressBar->SetRenderShear(BarShearValue);
 	ProgressBar->SetRenderScale(BarRenderScale);
-}
 
-void ULostArcUIProgressBar::Init(ALostArcCharacter *Character)
-{
 	CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrnetAttributeValue(BarType)));
 	MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));
 

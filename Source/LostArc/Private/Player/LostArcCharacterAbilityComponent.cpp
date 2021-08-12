@@ -85,6 +85,11 @@ ULostArcCharacterAbilityBasic* ULostArcCharacterAbilityComponent::GetBasicAttack
 	return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]);
 }
 
+ULostArcCharacterAbilityBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
+{
+	return Abilities[Type];
+}
+
 void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (bInterrupted) // Evade

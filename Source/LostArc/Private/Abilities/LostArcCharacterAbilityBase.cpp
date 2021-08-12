@@ -23,10 +23,11 @@ void ULostArcCharacterAbilityBase::Use(ALostArcCharacter* Character)
 	if (bAbilityNowAvailable)
 	{
 		CharacterRotatetoCursor(Character);
-		Character->GetWorldTimerManager().SetTimer(AbilityCoolDownTimer, FTimerDelegate::CreateLambda([=]() {bAbilityNowCD = false; }), CoolDown, false);
+		Character->GetWorldTimerManager().SetTimer(AbilityCoolDownTimer, FTimerDelegate::CreateLambda([=]() {bAbilityNowCD = false; OnAbilityhasCD.Broadcast(false); }), CoolDown, false);
 		Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) - ManaCost);
 		bAbilityNowCD = true;
 		bAnimationRunning = true;
+		OnAbilityhasCD.Broadcast(true);
 	}
 }
 

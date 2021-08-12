@@ -15,8 +15,4 @@ void ULostArcUIMainHUD::NativeConstruct()
 	{
 		AbilitySlots.Add(Cast<ULostArcUIAbilitySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_AbilitySlot_%d"), i)))));
 	}
-
-	BP_HPBAR->Init(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
-	BP_MPBAR->Init(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
-	BP_EXPBAR->Init(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
 }

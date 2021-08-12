@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIAbilitySlot.generated.h"
 
+enum EAbilityType;
+
 /**
  * 
  */
@@ -16,6 +18,9 @@ class LOSTARC_API ULostArcUIAbilitySlot : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
+
+protected:
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -36,8 +41,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* Text_CDNum;
 
+	// UFUNCTION()는 델리게이트에 Bind'U'Function()을 해줄 때만 선언해준다.
+	void SetNativeTick(bool CD);
 
 private :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
 	class UTexture2D * ThumbTexture2D;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	TEnumAsByte<EAbilityType> SlotType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	FText KeyName;
+
+	bool bEnableTick = false;
 };

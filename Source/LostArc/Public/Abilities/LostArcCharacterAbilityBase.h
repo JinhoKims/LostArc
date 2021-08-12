@@ -6,9 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "LostArcCharacterAbilityBase.generated.h"
 
-/**
- * 
- */
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilityCDDelegate, bool);
+
 UCLASS()
 class LOSTARC_API ULostArcCharacterAbilityBase : public UObject
 {
@@ -36,6 +35,8 @@ public:
 
 	static bool bAnimationRunning;
 	FTimerHandle AbilityCoolDownTimer;
+
+	FOnAbilityCDDelegate OnAbilityhasCD;
 
 protected:
 	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty;

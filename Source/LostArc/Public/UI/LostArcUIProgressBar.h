@@ -6,10 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIProgressBar.generated.h"
 
-/**
- * 
- */
-
 enum EAttributeType;
 
 UCLASS()
@@ -19,7 +15,6 @@ class LOSTARC_API ULostArcUIProgressBar : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
-	void Init(class ALostArcCharacter *Character);
 	void UpdateProgressBar(EAttributeType Type);
 
 public:
