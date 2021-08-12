@@ -15,7 +15,7 @@ class LOSTARC_API ULostArcUIAbilitySlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	virtual void NativeConstruct();
+	virtual void NativeConstruct() override;
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -35,4 +35,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* Text_CDNum;
+
+
+private :
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	class UTexture2D * ThumbTexture2D;
 };
