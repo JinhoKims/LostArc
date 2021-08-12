@@ -8,9 +8,6 @@
 
 enum EAbilityType;
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcUIAbilitySlot : public UUserWidget
 {
@@ -42,7 +39,7 @@ public:
 	class UTextBlock* Text_CDNum;
 
 	// UFUNCTION()는 델리게이트에 Bind'U'Function()을 해줄 때만 선언해준다.
-	void SetNativeTick(bool CD);
+
 
 private :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
@@ -55,4 +52,6 @@ private :
 	FText KeyName;
 
 	bool bEnableTick = false;
+
+	void SetNativeTick(bool CD);
 };
