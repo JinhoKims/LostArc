@@ -15,7 +15,7 @@ void ULostArcCharacterStatComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	CurrentLevel = 10;
+	CurrentLevel = 5;
 	SetCurrentLevel(CurrentLevel);
 }
 

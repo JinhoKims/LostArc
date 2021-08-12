@@ -29,7 +29,6 @@ void UCorpseAnimInstance::PlayCorpseFlyawayMontage(float MonsterHP)
 	else
 	{
 		Montage_Play(CorpseFlyawayMontage, 1.f);
-		
 	}
 }
 
