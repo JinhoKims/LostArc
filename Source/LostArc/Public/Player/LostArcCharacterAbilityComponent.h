@@ -34,7 +34,6 @@ public:
 
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitCheck(EAbilityType Type);
-	class ULostArcCharacterAbilityBasic* GetBasicAttackAbility();
 	class ULostArcCharacterAbilityBase* GetAbilites(EAbilityType Type);
 
 	UFUNCTION()

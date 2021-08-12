@@ -45,4 +45,6 @@ public:
 	UAnimMontage* CorpseFlyawayMontage;
 
 	FOnAttackHitCheckDelegate OnAttackHitCheck;
+
+	void SetDeadAnim() { bIsDead = true; }
 };

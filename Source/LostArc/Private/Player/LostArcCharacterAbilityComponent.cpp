@@ -67,6 +67,7 @@ void ULostArcCharacterAbilityComponent::TickComponent(float DeltaTime, ELevelTic
 void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) // 동적 할당한 멤버를 여기서 해제해준다.
 {
 	Super::EndPlay(EndPlayReason);
+	ULostArcCharacterAbilityBase::bAnimationRunning = false;
 	Abilities.Empty();
 }
 
@@ -80,11 +81,6 @@ void ULostArcCharacterAbilityComponent::AbilityHitCheck(EAbilityType Type)
 	Abilities[Type]->HitCheck(Cast<ALostArcCharacter>(GetOwner()));
 }
 
-ULostArcCharacterAbilityBasic* ULostArcCharacterAbilityComponent::GetBasicAttackAbility()
-{
-	return Cast<ULostArcCharacterAbilityBasic>(Abilities[EAbilityType::BasicAttack]);
-}
-
 ULostArcCharacterAbilityBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
 {
 	return Abilities[Type];
@@ -96,16 +92,16 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 	{
 		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 		{
-			GetBasicAttackAbility()->SetBasicAttacking(false);
-			GetBasicAttackAbility()->BasicAttackEndComboState();
+			Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+			Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 		}
 		return;
 	}
 
 	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 	{
-		GetBasicAttackAbility()->SetBasicAttacking(false);
-		GetBasicAttackAbility()->BasicAttackEndComboState();
+		Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+		Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 	}
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))

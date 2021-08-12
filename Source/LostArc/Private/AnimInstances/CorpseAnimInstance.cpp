@@ -29,6 +29,7 @@ void UCorpseAnimInstance::PlayCorpseFlyawayMontage(float MonsterHP)
 	else
 	{
 		Montage_Play(CorpseFlyawayMontage, 1.f);
+		
 	}
 }
 
@@ -36,10 +37,10 @@ void UCorpseAnimInstance::PlayCorpseDamageHandlingMontage(float MonsterHP)
 {
 	if (MonsterHP <= 0.f) // is Dead
 	{
-		Montage_Play(CorpseDeathMontage, 1.1f);
+		SetDeadAnim();
 		TryGetPawnOwner()->SetActorEnableCollision(false);
-		TryGetPawnOwner()->SetLifeSpan(2.3f);
 		TryGetPawnOwner()->GetController()->AController::Destroy();
+		TryGetPawnOwner()->SetLifeSpan(3.f);
 	}
 	else
 	{

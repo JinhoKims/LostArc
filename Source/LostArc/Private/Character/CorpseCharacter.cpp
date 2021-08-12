@@ -64,15 +64,7 @@ float ACorpseCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent
 	if (FInalDamage > 0.f)
 	{
 		MonsterHP -= FInalDamage;
-
-		if (DamageEvent.IsOfType(FPointDamageEvent::ClassID))  // FPointDamage
-		{
-
-		}
-		else 
-		{
-			Corpseanim->PlayCorpseDamageHandlingMontage(MonsterHP); // NormalDamage
-		}
+		Corpseanim->PlayCorpseDamageHandlingMontage(MonsterHP);
 	}
 	return FInalDamage;
 }

@@ -96,7 +96,7 @@ void ALostArcCharacter::PostInitializeComponents()
 	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	if (AnimInstance != nullptr)
 	{
-		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { AbilityComponent->GetBasicAttackAbility()->BasicAttackNextComboCheck(this); });
+		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
 		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitCheck(Type); });
 		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
