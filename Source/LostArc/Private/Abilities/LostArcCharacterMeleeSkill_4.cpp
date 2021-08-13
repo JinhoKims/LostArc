@@ -30,7 +30,7 @@ void ULostArcCharacterMeleeSkill_4::HitCheck(ALostArcCharacter* Character)
 
 	Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 	GetWorld()->SweepMultiByChannel(HitResultProperty.Value, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(260.f), HitResultProperty.Key);
-	DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 260.f, 32, FColor::Purple, false, 1.f);
+	//DrawDebugSphere(GetWorld(), Character->GetActorLocation(), 260.f, 32, FColor::Purple, false, 1.f);
 
 	Super::HitCheck(Character);
 }
