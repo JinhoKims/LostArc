@@ -4,6 +4,7 @@
 #include "Character/CorpseCharacter.h"
 #include "Controller/CorpseAIController.h"
 #include "AnimInstances/CorpseAnimInstance.h"
+#include "LineOfSightComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"
@@ -26,6 +27,9 @@ ACorpseCharacter::ACorpseCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+
+	LOSComponent = CreateDefaultSubobject<ULineOfSightComponent>(TEXT("LineOfSightComponent"));
+	LOSComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -33,7 +37,6 @@ void ACorpseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),);
 }
 
 // Called every frame

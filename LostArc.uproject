@@ -13,7 +13,8 @@
 				"CoreUObject",
 				"AIModule",
 				"Niagara",
-				"UMG"
+				"UMG",
+				"ProceduralMeshComponent"
 			]
 		}
 	]
