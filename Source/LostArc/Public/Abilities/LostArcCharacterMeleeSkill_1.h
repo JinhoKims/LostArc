@@ -18,5 +18,5 @@ public:
 	virtual void ConstructAbility(float mana, float cooldown, float factor) override;
 	virtual void Use(class ALostArcCharacter* Character) override;
 	virtual void HitCheck(class ALostArcCharacter* Character) override;
-
+	void TestDrawArc(class ALostArcCharacter* Character);
 };

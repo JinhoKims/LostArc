@@ -8,8 +8,8 @@ ULineOfSightComponent::ULineOfSightComponent(const FObjectInitializer& ObjectIni
 {
     PrimaryComponentTick.bCanEverTick = true;
 
-    SightRadius = 500.0f;
-    SightAngle = 90.0f;
+    SightRadius = 300.0f;
+    SightAngle = 120.0f;
     MeshQuality = 5.0f;
 
     CastShadow = false;
