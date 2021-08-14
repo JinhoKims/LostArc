@@ -30,13 +30,16 @@ public:
 	UPROPERTY()
 	float Damage_Factor;
 
-	bool bAbilityNowAvailable;
-	bool bAbilityNowCD;
+	bool bAbilityNowAvailable; // 삭제 : Use 함수를 bool 반환형으로 전환하고 if(AbilityStatusCheck(Character)) { ... return true; }로 교체 
+	bool bAbilityNowCD; // 삭제 : GetWorldTimerManager().IsTimerActive(AbilityCoolDownTimer)로 교체
 
 	static bool bAnimationRunning;
-	FTimerHandle AbilityCoolDownTimer;
+	FTimerHandle AbilityCoolDownTimer;  // 변수명 AbilityCDTimer로 바꾸기
 
-	FOnAbilityCDDelegate OnAbilityhasCD;
+	FOnAbilityCDDelegate OnAbilityhasCD; // 변수명 AbilityCDDelegate로 바꾸기
+
+	// 둘을 합치는걸 추천
+	TPair<FTimerHandle, FOnAbilityCDDelegate> AbilityCDProperty;
 
 protected:
 	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty;

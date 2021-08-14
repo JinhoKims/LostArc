@@ -40,16 +40,7 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기�
 	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
 	Abilities.Add(NewObject<ULostArcCharacterAbilityEvade>(this));
 
-	Abilities[EAbilityType::BasicAttack]->ConstructAbility(0.f, 0.f, 1.f); // Basic Attack
-	Abilities[EAbilityType::MeleeSkill_1]->ConstructAbility(10.f, 5.f, 1.5f);
-	Abilities[EAbilityType::MeleeSkill_2]->ConstructAbility(15.f, 5.f, 1.2f);
-	Abilities[EAbilityType::MeleeSkill_3]->ConstructAbility(15.f, 6.f, 1.25f);
-	Abilities[EAbilityType::MeleeSkill_4]->ConstructAbility(20.f, 8.f, 2.f);
-	Abilities[EAbilityType::RangedSpell_1]->ConstructAbility(0.f, 0.f, 1.f); // Dummy Slot
-	Abilities[EAbilityType::RangedSpell_2]->ConstructAbility(0.f, 0.f, 1.f);
-	Abilities[EAbilityType::RangedSpell_3]->ConstructAbility(0.f, 0.f, 1.f);
-	Abilities[EAbilityType::RangedSpell_4]->ConstructAbility(0.f, 0.f, 1.f);
-	Abilities[EAbilityType::Evade]->ConstructAbility(0.f, 10.f, 0.f); // Evade
+
 }
 
 // Called when the game starts
