@@ -23,6 +23,9 @@ public:
 	bool GetBasicAttacking() { return bBasicAttacking; }
 	void SetBasicAttacking(bool bAttack) { bBasicAttacking = bAttack; }
 
+protected:
+	virtual void PreCast(ALostArcCharacter* Character) override;
+
 private:
 	bool bBasicAttacking;
 	bool bCanNextCombo;

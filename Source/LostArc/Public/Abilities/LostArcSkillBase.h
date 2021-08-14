@@ -30,5 +30,5 @@ public:
 	virtual void HitDetection(ALostArcCharacter* Character);
 
 protected:
-	void PreCast(ALostArcCharacter* Character);
+	virtual void PreCast(ALostArcCharacter* Character);
 };

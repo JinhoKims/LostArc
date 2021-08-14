@@ -17,27 +17,24 @@ ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& O
 
 bool ULostArcSkill_BasicAttack::Use(ALostArcCharacter* Character)
 {
-	if (bBasicAttacking) // keep the combo and waiting for animation
+	if (bBasicAttacking) // stack up the combo and waiting for next section
 	{
 		check(FMath::IsWithinInclusive<int32>(CurrentCombo, 1, MaxCombo));
-		if (bCanNextCombo) {
+		if (bCanNextCombo)
+		{
 			bIsComboInputOn = true;
 		}
+		return false;
 	}
-	else				// first attack
+	else				 // first attack
 	{
 		if (AbilityStateCheck(Character))
 		{
-			check(CurrentCombo == 0);
-			BasicAttackStartComboState();
-			CharacterRotatetoCursor(Character);
-
+			PreCast(Character);
 			Character->AnimInstance->Montage_Play(Character->AnimInstance->BasicAttack_Montage, 1.0f);
-			bBasicAttacking = true;
-			bAnimationRunning = true;
 		}
+		return true;
 	}
-	return true;
 }
 
 bool ULostArcSkill_BasicAttack::AbilityStateCheck(ALostArcCharacter* Character)
@@ -46,7 +43,8 @@ bool ULostArcSkill_BasicAttack::AbilityStateCheck(ALostArcCharacter* Character)
 	{
 		return false;
 	}
-	return true;
+	else
+		return true;
 }
 
 void ULostArcSkill_BasicAttack::BasicAttackStartComboState()
@@ -71,4 +69,13 @@ void ULostArcSkill_BasicAttack::BasicAttackNextComboCheck(ALostArcCharacter* Cha
 		BasicAttackStartComboState();
 		Character->AnimInstance->JumpToBasicAttackMontageSection(CurrentCombo);
 	}
+}
+
+void ULostArcSkill_BasicAttack::PreCast(ALostArcCharacter* Character)
+{
+	check(CurrentCombo == 0);
+	BasicAttackStartComboState();
+	CharacterRotatetoCursor(Character);
+	bBasicAttacking = true;
+	bAnimationRunning = true;
 }
