@@ -4,7 +4,7 @@
 #include "Engine/World.h"
 #include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "Abilities/LostArcCharacterAbilityBase.h"
+#include "Abilities/LostArcAbilityBase.h"
 #include "UI/LostArcUIMainHUD.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -65,7 +65,7 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 void ALostArcPlayerController::MoveToMouseCursor()
 {
 	// Trace to see what is under the mouse cursor
-	if (!ULostArcCharacterAbilityBase::bAnimationRunning)
+	if (!ULostArcSkillBase::bAnimationRunning)
 	{
 		FHitResult Hit;
 		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
