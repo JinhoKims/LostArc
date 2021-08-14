@@ -24,17 +24,17 @@ bool ULostArcSkill_BasicAttack::Use(ALostArcCharacter* Character)
 		{
 			bIsComboInputOn = true;
 		}
-		return false;
 	}
-	else				 // first attack
+	else // first attack
 	{
 		if (AbilityStateCheck(Character))
 		{
 			PreCast(Character);
 			Character->AnimInstance->Montage_Play(Character->AnimInstance->BasicAttack_Montage, 1.0f);
+			return true;
 		}
-		return true;
 	}
+	return false;
 }
 
 bool ULostArcSkill_BasicAttack::AbilityStateCheck(ALostArcCharacter* Character)
