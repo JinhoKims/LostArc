@@ -4,7 +4,7 @@
 #include "UI/LostArcUIAbilitySlot.h"
 #include "Character/LostArcCharacter.h"
 #include "Player/LostArcCharacterAbilityComponent.h"
-#include "Abilities/LostArcCharacterAbilityBase.h"
+#include "Abilities/LostArcSkillBase.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 
@@ -19,7 +19,7 @@ void ULostArcUIAbilitySlot::NativeConstruct()
 		Text_ShortcutKey->SetText(KeyName);
 	}
 
-	Character->AbilityComponent->GetAbilites(SlotType)->OnAbilityhasCD.AddUObject(this, &ULostArcUIAbilitySlot::SetNativeTick);
+	Character->AbilityComponent->GetAbilites(SlotType)->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIAbilitySlot::SetNativeTick);
 	if (SlotType == EAbilityType::Evade) Image_ShortcutTri->SetVisibility(ESlateVisibility::Hidden);
 	SetNativeTick(bEnableTick);
 }
@@ -31,10 +31,10 @@ void ULostArcUIAbilitySlot::NativeTick(const FGeometry& MyGeometry, float InDelt
 		Super::NativeTick(MyGeometry, InDeltaTime);
 		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
 		
-		float Value = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(SlotType)->AbilityCoolDownTimer) / Character->AbilityComponent->GetAbilites(SlotType)->CoolDown;
+		float Value = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(SlotType)->AbilityCDProperty.Key) / Character->AbilityComponent->GetAbilites(SlotType)->GetCDTime();
 		Image_CoolDown->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Value < 0.002f ? 0.0f : Value);
 
-		float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(SlotType)->AbilityCoolDownTimer);
+		float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(SlotType)->AbilityCDProperty.Key);
 		Text_CDNum->SetText(FText::AsNumber(FMath::FloorToInt(Count)));
 	}
 }

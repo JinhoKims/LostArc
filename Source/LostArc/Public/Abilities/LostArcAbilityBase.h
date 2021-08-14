@@ -24,6 +24,7 @@ public:
 public:
 	virtual bool Use(ALostArcCharacter* Character);
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character);
+	float GetCDTime() { return CoolDown; }
 
 protected:
 	float CoolDown;

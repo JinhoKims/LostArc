@@ -19,7 +19,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "Abilities/LostArcCharacterAbilityBasic.h"
+#include "Abilities/LostArcSkill_BasicAttack.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -97,8 +97,8 @@ void ALostArcCharacter::PostInitializeComponents()
 	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	if (AnimInstance != nullptr)
 	{
-		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcCharacterAbilityBasic>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
-		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitCheck(Type); });
+		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcSkill_BasicAttack>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
+		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitDetection(Type); });
 		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
 

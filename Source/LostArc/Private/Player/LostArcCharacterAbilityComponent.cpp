@@ -7,14 +7,14 @@
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 
-#include "Abilities/LostArcCharacterAbilityBase.h"
-#include "Abilities/LostArcCharacterAbilityBasic.h"
-#include "Abilities/LostArcCharacterMeleeSkill_1.h"
-#include "Abilities/LostArcCharacterMeleeSkill_2.h"
-#include "Abilities/LostArcCharacterMeleeSkill_3.h"
-#include "Abilities/LostArcCharacterMeleeSkill_4.h"
-#include "Abilities/LostArcCharacterAbilityEvade.h"
-
+#include "Abilities/LostArcAbilityBase.h"
+#include "Abilities/LostArcSkillBase.h"
+#include "Abilities/LostArcSkill_BasicAttack.h"
+#include "Abilities/LostArcSkill_1.h"
+#include "Abilities/LostArcSkill_2.h"
+#include "Abilities/LostArcSkill_3.h"
+#include "Abilities/LostArcSkill_4.h"
+#include "Abilities/LostArcSkill_Dodge.h"
 
 // Sets default values for this component's properties
 ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
@@ -29,18 +29,16 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기�
 {
 	Super::InitializeComponent();
 
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBasic>(this));
-	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_1>(this));
-	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_2>(this));
-	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_3>(this));
-	Abilities.Add(NewObject<ULostArcCharacterMeleeSkill_4>(this));
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
-	Abilities.Add(NewObject<ULostArcCharacterAbilityBase>(this));
-	Abilities.Add(NewObject<ULostArcCharacterAbilityEvade>(this));
-
-
+	Abilities.Add(NewObject<ULostArcSkill_BasicAttack>(this));
+	Abilities.Add(NewObject<ULostArcSkill_1>(this));
+	Abilities.Add(NewObject<ULostArcSkill_2>(this));
+	Abilities.Add(NewObject<ULostArcSkill_3>(this));
+	Abilities.Add(NewObject<ULostArcSkill_4>(this));
+	Abilities.Add(NewObject<ULostArcSkillBase>(this));
+	Abilities.Add(NewObject<ULostArcSkillBase>(this));
+	Abilities.Add(NewObject<ULostArcSkillBase>(this));
+	Abilities.Add(NewObject<ULostArcSkillBase>(this));
+	Abilities.Add(NewObject<ULostArcSkill_Dodge>(this));
 }
 
 // Called when the game starts
@@ -58,7 +56,7 @@ void ULostArcCharacterAbilityComponent::TickComponent(float DeltaTime, ELevelTic
 void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) // 동적 할당한 멤버를 여기서 해제해준다.
 {
 	Super::EndPlay(EndPlayReason);
-	ULostArcCharacterAbilityBase::bAnimationRunning = false;
+	ULostArcSkillBase::bAnimationRunning = false;
 	Abilities.Empty();
 }
 
@@ -67,12 +65,12 @@ void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 	Abilities[Type]->Use(Cast<ALostArcCharacter>(GetOwner()));
 }
 
-void ULostArcCharacterAbilityComponent::AbilityHitCheck(EAbilityType Type)
+void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
-	Abilities[Type]->HitCheck(Cast<ALostArcCharacter>(GetOwner()));
+	Abilities[Type]->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
 }
 
-ULostArcCharacterAbilityBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
+ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
 {
 	return Abilities[Type];
 }
@@ -83,27 +81,27 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 	{
 		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 		{
-			Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
-			Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
+			Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+			Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 		}
 		return;
 	}
 
 	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 	{
-		Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
-		Cast<ULostArcCharacterAbilityBasic>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
+		Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+		Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 	}
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
 		Cast<ALostArcCharacter>(GetOwner())->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
-		ULostArcCharacterAbilityBase::bAnimationRunning = false;
+		ULostArcSkillBase::bAnimationRunning = false;
 	}
 
 	for (int i = 1; i < 5; i++)
 	{
 		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
-		ULostArcCharacterAbilityBase::bAnimationRunning = false;
+		ULostArcSkillBase::bAnimationRunning = false;
 	}
 }

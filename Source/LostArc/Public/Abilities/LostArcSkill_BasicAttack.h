@@ -18,6 +18,7 @@ public:
 	ULostArcSkill_BasicAttack(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character) override;
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
+	void BasicAttackNextComboCheck(ALostArcCharacter* Character);
 	void BasicAttackEndComboState();
 	bool GetBasicAttacking() { return bBasicAttacking; }
 	void SetBasicAttacking(bool bAttack) { bBasicAttacking = bAttack; }
@@ -30,5 +31,4 @@ private:
 	int32 MaxCombo;
 
 	void BasicAttackStartComboState();
-	void BasicAttackNextComboCheck(ALostArcCharacter* Character);
 };

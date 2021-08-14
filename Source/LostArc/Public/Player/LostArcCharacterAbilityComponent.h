@@ -33,8 +33,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AbilityCast(EAbilityType Type);
-	void AbilityHitCheck(EAbilityType Type);
-	class ULostArcCharacterAbilityBase* GetAbilites(EAbilityType Type);
+	void AbilityHitDetection(EAbilityType Type);
+	class ULostArcSkillBase* GetAbilites(EAbilityType Type);
 
 	UFUNCTION()
 	void AbilityMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
@@ -46,5 +46,5 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = true))
-	TArray<class ULostArcCharacterAbilityBase*> Abilities;
+	TArray<class ULostArcSkillBase*> Abilities;
 };
