@@ -4,9 +4,6 @@
 #include "Controller/LostArcPlayerController.h"
 #include "Character/LostArcCharacter.h"
 #include "Player/LostArcCharacterStatComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "DrawDebugHelpers.h"
-
 #include "Abilities/LostArcAbilityBase.h"
 #include "Abilities/LostArcSkillBase.h"
 #include "Abilities/LostArcSkill_BasicAttack.h"
@@ -15,6 +12,10 @@
 #include "Abilities/LostArcSkill_3.h"
 #include "Abilities/LostArcSkill_4.h"
 #include "Abilities/LostArcSkill_Dodge.h"
+#include "Components/CapsuleComponent.h"
+#include "DrawDebugHelpers.h"
+
+
 
 // Sets default values for this component's properties
 ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
@@ -23,27 +24,23 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
+	AbilityClass.SetNum(10);
 }
 
 void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기화는 반드시 컴포넌트 초기화에서!
 {
 	Super::InitializeComponent();
-
-	Abilities.Add(NewObject<ULostArcSkill_BasicAttack>(this));
-	Abilities.Add(NewObject<ULostArcSkill_1>(this));
-	Abilities.Add(NewObject<ULostArcSkill_2>(this));
-	Abilities.Add(NewObject<ULostArcSkill_3>(this));
-	Abilities.Add(NewObject<ULostArcSkill_4>(this));
-	Abilities.Add(NewObject<ULostArcSkillBase>(this));
-	Abilities.Add(NewObject<ULostArcSkillBase>(this));
-	Abilities.Add(NewObject<ULostArcSkillBase>(this));
-	Abilities.Add(NewObject<ULostArcSkillBase>(this));
-	Abilities.Add(NewObject<ULostArcSkill_Dodge>(this));
+	
+	for (int i = 0; i < 10; i++)
+	{
+		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get()));
+	}
 }
 
 // Called when the game starts
 void ULostArcCharacterAbilityComponent::BeginPlay()
 {
+
 	Super::BeginPlay();
 }
 
@@ -62,16 +59,19 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 
 void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
+	//AbilityClass[Type].GetDefaultObject()->Use(Cast<ALostArcCharacter>(GetOwner()));
 	Abilities[Type]->Use(Cast<ALostArcCharacter>(GetOwner()));
 }
 
 void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
+	//AbilityClass[Type].GetDefaultObject()->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
 	Abilities[Type]->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
 }
 
 ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
 {
+	//return AbilityClass[Type].GetDefaultObject();
 	return Abilities[Type];
 }
 

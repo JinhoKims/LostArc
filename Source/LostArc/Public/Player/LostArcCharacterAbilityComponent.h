@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+
 #include "LostArcCharacterAbilityComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -45,6 +46,12 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = true))
-	TArray<class ULostArcSkillBase*> Abilities;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	TArray<TSubclassOf<ULostArcSkillBase>> AbilityClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	TArray<ULostArcSkillBase*> Abilities;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	ULostArcSkillBase* MSABilty;
 };

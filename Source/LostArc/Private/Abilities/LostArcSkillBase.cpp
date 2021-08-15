@@ -49,18 +49,20 @@ void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcCharacter* Character)
 
 void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 {
+
 	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty(FCollisionQueryParams(NAME_None, false, Character), TArray<FHitResult>());
 	float dotValue = FMath::Cos(((PI * 2) / 360) * (SkillRadius.Value / 2));;
 	FDamageEvent DamageEvent;
 	FVector direction;
 	
 	GetWorld()->SweepMultiByChannel(HitResultProperty.Value, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(SkillRadius.Key), HitResultProperty.Key);
-
+	UE_LOG(LogTemp, Warning, TEXT("%d!"), HitResultProperty.Value.Num());
 	for (int32 i = 0; i < HitResultProperty.Value.Num(); i++)
 	{
 		FHitResult hit = HitResultProperty.Value[i];
 		if (hit.Actor.IsValid())
 		{
+		
 			direction = hit.Actor.Get()->GetActorLocation() - Character->GetActorLocation();
 			if (direction.Size() < SkillRadius.Key) // 타겟과의 거리가 부채꼴 전체 길이보다 짧으면
 			{
