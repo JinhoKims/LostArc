@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable, BlueprintType)
+UCLASS()
 class LOSTARC_API ULostArcSkill_2 : public ULostArcSkillBase
 {
 	GENERATED_BODY()

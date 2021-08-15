@@ -15,8 +15,6 @@
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 
-
-
 // Sets default values for this component's properties
 ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 {
@@ -24,23 +22,23 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
-	AbilityClass.SetNum(10);
+	
+	AbilityClass.Init(ULostArcSkillBase::StaticClass(), 10);
 }
 
-void ULostArcCharacterAbilityComponent::InitializeComponent() // 멤버 초기화는 반드시 컴포넌트 초기화에서!
+void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌트는 컴파일 타임에 생성자가 호출된 후에 같이 호출되는 경향이 있기에 미리 AbilityClass를 초기화해줘야한다.
 {
 	Super::InitializeComponent();
-	
+
 	for (int i = 0; i < 10; i++)
 	{
-		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get()));
+		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터를 반환한다.
 	}
 }
 
 // Called when the game starts
 void ULostArcCharacterAbilityComponent::BeginPlay()
 {
-
 	Super::BeginPlay();
 }
 
@@ -59,19 +57,16 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 
 void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
-	//AbilityClass[Type].GetDefaultObject()->Use(Cast<ALostArcCharacter>(GetOwner()));
 	Abilities[Type]->Use(Cast<ALostArcCharacter>(GetOwner()));
 }
 
 void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
-	//AbilityClass[Type].GetDefaultObject()->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
 	Abilities[Type]->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
 }
 
 ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
 {
-	//return AbilityClass[Type].GetDefaultObject();
 	return Abilities[Type];
 }
 
