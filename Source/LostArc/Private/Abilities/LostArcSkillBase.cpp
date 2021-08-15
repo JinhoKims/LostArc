@@ -56,7 +56,7 @@ void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 	FVector direction;
 	
 	GetWorld()->SweepMultiByChannel(HitResultProperty.Value, Character->GetActorLocation(), Character->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeSphere(SkillRadius.Key), HitResultProperty.Key);
-
+	
 	for (int32 i = 0; i < HitResultProperty.Value.Num(); i++)
 	{
 		FHitResult hit = HitResultProperty.Value[i];

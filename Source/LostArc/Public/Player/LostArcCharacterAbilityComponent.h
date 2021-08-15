@@ -48,7 +48,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<ULostArcSkillBase>> AbilityClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	
+	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<ULostArcSkillBase*> Abilities;
 };
