@@ -49,7 +49,6 @@ void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcCharacter* Character)
 
 void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 {
-
 	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty(FCollisionQueryParams(NAME_None, false, Character), TArray<FHitResult>());
 	float dotValue = FMath::Cos(((PI * 2) / 360) * (SkillRadius.Value / 2));;
 	FDamageEvent DamageEvent;
