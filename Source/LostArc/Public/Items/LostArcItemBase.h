@@ -3,31 +3,36 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Abilities/LostArcAbilityBase.h"
 #include "LostArcItemBase.generated.h"
 
 /**
  * 
  */
+UENUM(BlueprintType)
+enum EItemType
+{
+	ITEM_Equip UMETA(DisplayName = "Equip"),
+	ITEM_Potion UMETA(DisplayName = "Potion"),
+	ITEM_None  UMETA(DisplayName = "None")
+};
+
 UCLASS()
-class LOSTARC_API ULostArcItemBase : public UObject
+class LOSTARC_API ULostArcItemBase : public ULostArcAbilityBase
 {
 	GENERATED_BODY()
 	
 public:
-	ULostArcItemBase();
-	virtual void Use(class ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcItemBase, );
+	/** Maximum number of instances that can be in inventory at once, <= 0 means infinite */
+	int32 MaxCount;
+	/** User-visible short name */
+	FString ItemName;
+	/** Type of this item, set in native parent class */
+	EItemType ItemType;
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
-	class UStaticMesh* PickupMesh;
+	virtual bool Use(ALostArcCharacter* Character) override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
-	class UTexture2D* Thumbnail;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
-	FText ItemDisplayName;
-
-	UPROPERTY()
-	class ULostArcInventoryComponent* OwningInventory;
+	/** Returns if the item is consumable (MaxCount <= 0)*/
+	bool IsConsumable() const;
 };

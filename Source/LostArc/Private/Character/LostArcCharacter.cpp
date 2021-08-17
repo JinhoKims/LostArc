@@ -7,6 +7,7 @@
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "Player/LostArcCharacterStatComponent.h"
 #include "Player/LostArcCharacterAbilityComponent.h"
+#include "Player/LostArcInventoryComponent.h"
 #include "LineOfSightComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
@@ -88,6 +89,7 @@ ALostArcCharacter::ALostArcCharacter()
 
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
+	InventoryCompoennt = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
 }
 
 void ALostArcCharacter::PostInitializeComponents()
@@ -95,13 +97,13 @@ void ALostArcCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	
 	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	
 	if (AnimInstance != nullptr)
 	{
 		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcSkill_BasicAttack>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
 		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitDetection(Type); });
 		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
-
 	StatComponent->OnHPIsZero.AddLambda([this]()->void {AnimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); });
 }
 

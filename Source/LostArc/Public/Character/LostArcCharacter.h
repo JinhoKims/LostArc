@@ -38,6 +38,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterAbilityComponent* AbilityComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcInventoryComponent* InventoryCompoennt;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Line of Sight", meta = (AllowPrivateAccess = "true"))
 	class ULineOfSightComponent* LOSComponent;
 
