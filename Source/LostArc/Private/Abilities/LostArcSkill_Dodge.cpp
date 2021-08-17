@@ -11,6 +11,7 @@ ULostArcSkill_Dodge::ULostArcSkill_Dodge(const FObjectInitializer& ObjectInitial
 	SkillRatio = 0.f;
 	SkillRadius.Key = 0.f;
 	SkillRadius.Value = 0.f;
+	Name = "Skill_Dodge";
 }
 
 bool ULostArcSkill_Dodge::Use(ALostArcCharacter* Character)

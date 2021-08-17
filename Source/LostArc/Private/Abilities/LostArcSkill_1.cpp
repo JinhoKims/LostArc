@@ -10,6 +10,7 @@ ULostArcSkill_1::ULostArcSkill_1(const FObjectInitializer& ObjectInitializer) : 
 	SkillRatio = 1.5f;
 	SkillRadius.Key = 500.f;
 	SkillRadius.Value = 180.f;
+	Name = "Skill_1";
 }
 
 bool ULostArcSkill_1::Use(ALostArcCharacter* Character)

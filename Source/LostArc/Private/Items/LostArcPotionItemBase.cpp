@@ -8,5 +8,3 @@ ULostArcPotionItemBase::ULostArcPotionItemBase(const FObjectInitializer& ObjectI
 	ItemType = EItemType::ITEM_Potion;
 	MaxCount = 0;
 }
-
-

@@ -31,8 +31,6 @@ public:
 	EItemType ItemType;
 
 public:
-	virtual bool Use(ALostArcCharacter* Character) override;
-
 	/** Returns if the item is consumable (MaxCount <= 0)*/
 	bool IsConsumable() const;
 };

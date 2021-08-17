@@ -7,8 +7,3 @@ ULostArcPotionHealth::ULostArcPotionHealth(const FObjectInitializer& ObjectIniti
 {
 	ItemName = FString("Potion_Health");
 }
-
-bool ULostArcPotionHealth::Use(ALostArcCharacter* Character)
-{
-	return false;
-}

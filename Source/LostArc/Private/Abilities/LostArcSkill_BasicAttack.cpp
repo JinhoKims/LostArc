@@ -13,6 +13,7 @@ ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& O
 	bBasicAttacking = false;
 	CurrentCombo = 0;
 	MaxCombo = 3;
+	Name = "Skill_BasicAttack";
 }
 
 bool ULostArcSkill_BasicAttack::Use(ALostArcCharacter* Character)

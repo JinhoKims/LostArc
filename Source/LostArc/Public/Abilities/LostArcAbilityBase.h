@@ -13,7 +13,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilityCDDelegate, bool);
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class LOSTARC_API ULostArcAbilityBase : public UObject
 {
 	GENERATED_BODY()
@@ -22,10 +22,12 @@ public:
 	TPair<FTimerHandle, FOnAbilityCDDelegate> AbilityCDProperty;
 
 public:
-	virtual bool Use(ALostArcCharacter* Character);
-	virtual bool AbilityStateCheck(ALostArcCharacter* Character);
+	virtual bool Use(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::Use, return false;);
+	virtual bool AbilityStateCheck(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::AbilityStateCheck, return false;);
 	float GetCDTime() { return CoolDown; }
+	FString GetName() { return Name; }
 
 protected:
 	float CoolDown;
+	FString Name;
 };

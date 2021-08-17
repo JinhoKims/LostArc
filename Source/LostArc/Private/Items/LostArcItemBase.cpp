@@ -3,11 +3,6 @@
 
 #include "Items/LostArcItemBase.h"
 
-bool ULostArcItemBase::Use(ALostArcCharacter* Character)
-{
-	return false;
-}
-
 bool ULostArcItemBase::IsConsumable() const
 {
 	if (MaxCount <= 0)
