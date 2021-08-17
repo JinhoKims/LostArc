@@ -14,4 +14,6 @@ class LOSTARC_API ULostArcItemPotionBase : public ULostArcItemBase
 {
 	GENERATED_BODY()
 	
+public:
+	ULostArcItemPotionBase(const FObjectInitializer& ObjectInitializer);
 };

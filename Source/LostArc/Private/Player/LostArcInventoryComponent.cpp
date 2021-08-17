@@ -3,7 +3,7 @@
 
 #include "Player/LostArcInventoryComponent.h"
 #include "Items/LostArcItemBase.h"
-#include "Items/LostArcPotionHealth.h"
+#include "Items/LostArcItemPotionBase.h"
 
 // Sets default values for this component's properties
 ULostArcInventoryComponent::ULostArcInventoryComponent()
@@ -39,7 +39,7 @@ void ULostArcInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (ItemData.Find(DataTable.FindRef("Potion_Health")))
+	if (ItemData.Find(DataTable.FindRef("Potion_Mana")))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AI"));
 	}
