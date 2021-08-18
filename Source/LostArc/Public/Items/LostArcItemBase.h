@@ -33,4 +33,8 @@ public:
 public:
 	/** Returns if the item is consumable (MaxCount <= 0)*/
 	bool IsConsumable() const;
+
+	EItemType GetItemType() const;
+
+	int32 GetMaxCount() { return MaxCount; }
 };

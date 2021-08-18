@@ -11,3 +11,8 @@ bool ULostArcItemBase::IsConsumable() const
 	}
 	return false;
 }
+
+EItemType ULostArcItemBase::GetItemType() const
+{
+	return ItemType;
+}

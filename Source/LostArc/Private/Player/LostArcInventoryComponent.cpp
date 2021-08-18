@@ -3,6 +3,7 @@
 
 #include "Player/LostArcInventoryComponent.h"
 #include "Items/LostArcItemBase.h"
+
 #include "Items/LostArcItemPotionBase.h"
 
 // Sets default values for this component's properties
@@ -23,15 +24,7 @@ void ULostArcInventoryComponent::InitializeComponent()
 	for (int i = 0; i < 5; i++)
 	{
 		DataTable.Add(ItemClass[i].GetDefaultObject()->ItemName, NewObject<ULostArcItemBase>(this, ItemClass[i].Get())); // 데이터 테이블에 모든 아이템 정보를 넣는다.
-		ItemData.Add(DataTable.FindRef(ItemClass[i].GetDefaultObject()->ItemName)); // pickup 함수에서 아이템을 추가하는 코드다. 지금은 테스트용으로 해놨다.
 	}
-
-
-	//for (auto& Elem : DataTable)
-	//{
-	//	Elem.Key = ItemClass[i].GetDefaultObject()->ItemName;
-	//	Elem.Value = NewObject<ULostArcItemBase>(this, ItemClass[i++].Get());
-	//}
 }
 
 // Called when the game starts
@@ -39,12 +32,33 @@ void ULostArcInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (ItemData.Find(DataTable.FindRef("Potion_Mana")))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI"));
-	}
+	AddPickupItem(DataTable.Find("Potion_Health"), 10);
+	AddPickupItem(DataTable.Find("Potion_Health"), 10);
+	AddPickupItem(DataTable.Find("Potion_Health"), 10);
+	AddPickupItem(DataTable.Find("Potion_Health"), 10);
 
+	UE_LOG(LogTemp, Warning, TEXT("======================="));
 	
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+	
+	UE_LOG(LogTemp, Warning, TEXT("======================="));
+	
+	AddPickupItem(DataTable.Find("Potion_Health"), 10);
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+
+	UE_LOG(LogTemp, Warning, TEXT("======================="));
+
+	AddPickupItem(DataTable.Find("Potdfs"), 10);
+	AddPickupItem(DataTable.Find("zxcs"), 10);
+	AddPickupItem(DataTable.Find("Potion"), 10);
+}
+
+void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	InventoryData.Empty();
 }
 
 // Called every frame
@@ -55,27 +69,37 @@ void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickT
 	// ...
 }
 
-
-void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase* NewItem, int32 ItemCount)
+void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase** NewItem, int32 ItemCount)
 {
-	FLostArcItemData OldData;
-	GetInventoryData(NewItem, OldData);
+	if (NewItem == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("NewItem is nullptr"));
+		return;
+	}
 
-	FLostArcItemData NewData = OldData;
-	NewData.UpdateItemData(FLostArcItemData(ItemCount), NewItem->MaxCount);
+	FLostArcItemData* FoundItem = InventoryData.Find(*NewItem); // 인벤토리 서치
+	auto ItemData = *NewItem;
+
+	if (FoundItem) // 인벤토리에 같은 아이템이 존재한다면
+	{
+		if (ItemData->GetItemType() == EItemType::ITEM_Equip) // 습득한 아이템이 장비 아이템이라면
+		{
+			InventoryData.Add(EquipItemGenerator(), FLostArcItemData());
+		}
+		else // 중첩이 가능한 소모형 아이템이라면 
+		{
+			FoundItem->AddItemCount(ItemCount, ItemData->GetMaxCount()); // 추가되려는 아이템 데이터를 인벤토리에 있는 데이터로 덮어씀
+			UE_LOG(LogTemp, Warning, TEXT("This Item Count Now %d"), FoundItem->ItemCount);
+		}
+	}
+	else // 인벤토리에 같은 아이템이 없으면
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Added Item %d"), ItemCount);
+		InventoryData.Add(ItemData, FLostArcItemData(ItemCount)); // 인벤토리에 새로 추가
+	}
 }
 
-
-bool ULostArcInventoryComponent::GetInventoryData(ULostArcItemBase* Item, FLostArcItemData& ItemDatavs) const
+ULostArcItemBase* ULostArcInventoryComponent::EquipItemGenerator()
 {
-	const FLostArcItemData* FoundItem = InventoryData.Find(Item);
-
-	if (FoundItem)
-	{
-		ItemDatavs = *FoundItem;
-		return true;
-	}
-	// Create new ItemData at Inventory
-	ItemDatavs = FLostArcItemData(0);
-	return false;
+	return NewObject<ULostArcItemBase>(this);
 }
