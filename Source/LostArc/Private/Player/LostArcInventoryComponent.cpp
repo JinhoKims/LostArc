@@ -84,7 +84,7 @@ void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase** NewItem, int32
 	{
 		if (ItemData->GetItemType() == EItemType::ITEM_Equip) // 습득한 아이템이 장비 아이템이라면
 		{
-			InventoryData.Add(EquipItemGenerator(), FLostArcItemData());
+			InventoryData.Add(EquipmentItemGenerator(), FLostArcItemData());
 		}
 		else // 중첩이 가능한 소모형 아이템이라면 
 		{
@@ -99,7 +99,7 @@ void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase** NewItem, int32
 	}
 }
 
-ULostArcItemBase* ULostArcInventoryComponent::EquipItemGenerator()
+ULostArcItemBase* ULostArcInventoryComponent::EquipmentItemGenerator()
 {
-	return NewObject<ULostArcItemBase>(this);
+	return NewObject<ULostArcItemBase>(this); // 어차피 TMap은 ULostArcItemBase를 받으니 <그대로> 생성해주면 된다.
 }

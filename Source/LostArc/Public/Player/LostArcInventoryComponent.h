@@ -32,7 +32,5 @@ private:
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TMap<class ULostArcItemBase*, FLostArcItemData> InventoryData;
 
-	TArray<class ULostArcItemBase*> EquipItemList;
-
-	class ULostArcItemBase* EquipItemGenerator();
+	class ULostArcItemBase* EquipmentItemGenerator();
 };
