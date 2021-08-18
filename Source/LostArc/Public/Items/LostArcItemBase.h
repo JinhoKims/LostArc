@@ -24,17 +24,25 @@ class LOSTARC_API ULostArcItemBase : public ULostArcAbilityBase
 	
 public:
 	/** Maximum number of instances that can be in inventory at once, <= 0 means infinite */
-	int32 MaxCount;
-	/** User-visible short name */
-	FString ItemName;
-	/** Type of this item, set in native parent class */
-	EItemType ItemType;
 
+	int32 MaxCount;
+	FString ItemName;
+	EItemType ItemType;
+	UTexture2D* ItemTexture2D;
+	int32 ItemQuantity;
+	
 public:
 	/** Returns if the item is consumable (MaxCount <= 0)*/
 	bool IsConsumable() const;
-
 	EItemType GetItemType() const;
-
 	int32 GetMaxCount() { return MaxCount; }
+	FString GetItemName() { return ItemName; }
+	int32 GetItemQuantity() { return ItemQuantity; }
+
+	virtual bool Use(ALostArcCharacter* Character) override;
+	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
+	void AddItemCount(int32 Count);
+
+protected:
+	virtual void PreCast(ALostArcCharacter* Character);
 };

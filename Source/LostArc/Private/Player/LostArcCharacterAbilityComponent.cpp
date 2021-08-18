@@ -32,7 +32,7 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌�
 
 	for (int i = 0; i < 10; i++)
 	{
-		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터를 반환한다.
+		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
 }
 

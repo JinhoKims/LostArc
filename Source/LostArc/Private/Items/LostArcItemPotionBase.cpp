@@ -8,4 +8,16 @@ ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectI
 {
 	ItemType = EItemType::ITEM_Potion;
 	MaxCount = 0;
+	CoolDown = 1.5f;
+	ItemQuantity = 0;
+}
+
+bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
+{
+	if (Super::Use(Character))
+	{
+		return true;
+	}
+	return false;
+	
 }
