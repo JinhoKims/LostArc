@@ -24,12 +24,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int32 Count;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 DummyType;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Image_Bdr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image;
+	class UImage* Image_Icon;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Text;
+	class UTextBlock* Text_Count;
+
+	class ULostArcItemBase* Item;
 };

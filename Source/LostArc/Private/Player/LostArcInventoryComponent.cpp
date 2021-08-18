@@ -3,7 +3,10 @@
 
 #include "Player/LostArcInventoryComponent.h"
 #include "Items/LostArcItemBase.h"
-
+#include "UI/LostArcUIInventory.h"
+#include "UI/LostArcUIInventorySlot.h"
+#include "UI/LostArcUIMainHUD.h"
+#include "Controller/LostArcPlayerController.h"
 #include "Items/LostArcItemPotionBase.h"
 
 // Sets default values for this component's properties
@@ -15,11 +18,14 @@ ULostArcInventoryComponent::ULostArcInventoryComponent()
 	bWantsInitializeComponent = true;
 
 	ItemClass.Init(ULostArcItemBase::StaticClass(), 10);
+
 }
 
 void ULostArcInventoryComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+
+	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -35,24 +41,38 @@ void ULostArcInventoryComponent::BeginPlay()
 	AddPickupItem(DataTable.Find("Potion_Health"), 10);
 	AddPickupItem(DataTable.Find("Potion_Health"), 10);
 	AddPickupItem(DataTable.Find("Potion_Health"), 10);
+	AddPickupItem(DataTable.Find("Potion_Health"), 15);
+
+	UE_LOG(LogTemp, Warning, TEXT("======================="));
+	
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+	AddPickupItem(DataTable.Find("Potion_Mana"), 17);
+	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
+	
+	UE_LOG(LogTemp, Warning, TEXT("======================="));
+	
 	AddPickupItem(DataTable.Find("Potion_Health"), 10);
-
-	UE_LOG(LogTemp, Warning, TEXT("======================="));
-	
-	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
-	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
-	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
-	
-	UE_LOG(LogTemp, Warning, TEXT("======================="));
-	
-	AddPickupItem(DataTable.Find("Potion_Health"), 10);
 	AddPickupItem(DataTable.Find("Potion_Mana"), 10);
 
 	UE_LOG(LogTemp, Warning, TEXT("======================="));
 
-	AddPickupItem(DataTable.Find("Potdfs"), 10);
-	AddPickupItem(DataTable.Find("zxcs"), 10);
-	AddPickupItem(DataTable.Find("Potion"), 10);
+	auto Character = Cast<ALostArcCharacter>(GetOwner());
+	auto Controller = Cast<ALostArcPlayerController>(Character->GetController());
+
+	auto Data = InventoryData.Find(Controller->MainHUD->BP_Inventory->InventorySlots[0]->Item);
+	if (Data)
+		UE_LOG(LogTemp, Warning, TEXT("Health Item Count is : %d"), Data->ItemCount);
+	
+	Data = InventoryData.Find(Controller->MainHUD->BP_Inventory->InventorySlots[1]->Item);
+	if (Data)
+		UE_LOG(LogTemp, Warning, TEXT("Mana Item Count is : %d"), Data->ItemCount);
+		
+
+	
+	if (InventorySlot[12] == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("This isF NullptrS!"));
+	}
 }
 
 void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -77,8 +97,11 @@ void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase** NewItem, int32
 		return;
 	}
 
-	FLostArcItemData* FoundItem = InventoryData.Find(*NewItem); // 인벤토리 서치
+	FLostArcItemData* FoundItem = InventoryData.Find(*NewItem); // 인벤토리 서치 (없으면 Null을 반환함)
 	auto ItemData = *NewItem;
+
+	auto Character = Cast<ALostArcCharacter>(GetOwner());
+	auto Controller = Cast<ALostArcPlayerController>(Character->GetController());
 
 	if (FoundItem) // 인벤토리에 같은 아이템이 존재한다면
 	{
@@ -89,17 +112,29 @@ void ULostArcInventoryComponent::AddPickupItem(ULostArcItemBase** NewItem, int32
 		else // 중첩이 가능한 소모형 아이템이라면 
 		{
 			FoundItem->AddItemCount(ItemCount, ItemData->GetMaxCount()); // 추가되려는 아이템 데이터를 인벤토리에 있는 데이터로 덮어씀
+
 			UE_LOG(LogTemp, Warning, TEXT("This Item Count Now %d"), FoundItem->ItemCount);
 		}
 	}
 	else // 인벤토리에 같은 아이템이 없으면
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Added Item %d"), ItemCount);
+		
 		InventoryData.Add(ItemData, FLostArcItemData(ItemCount)); // 인벤토리에 새로 추가
+
+		for (int i = 0; i < 16; i++)
+		{
+			if (Controller->MainHUD->BP_Inventory->InventorySlots[i]->Item == nullptr)
+			{
+				Controller->MainHUD->BP_Inventory->InventorySlots[i]->Item = *NewItem;
+				break;
+			} 
+		}
 	}
 }
 
 ULostArcItemBase* ULostArcInventoryComponent::EquipmentItemGenerator()
 {
-	return NewObject<ULostArcItemBase>(this); // 어차피 TMap은 ULostArcItemBase를 받으니 <그대로> 생성해주면 된다.
+	return NewObject<ULostArcItemBase>(this);
+	// 수정 필요 NewItem 객체의 클래스형을 리턴해줘야 한다.
 }

@@ -30,4 +30,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<class ULostArcUIAbilitySlot*> AbilitySlots;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class ULostArcUIInventory* BP_Inventory;
 };

@@ -21,6 +21,7 @@ struct LOSTARC_API FLostArcItemData
 	GENERATED_BODY()
 	
 	int32 ItemCount;
+	int32 SlotIndex;
 
 	FLostArcItemData() :ItemCount(1) {}
 	FLostArcItemData(int32 Count) :ItemCount(Count) {}
