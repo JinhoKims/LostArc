@@ -74,9 +74,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 		if (NewItem->IsConsumable()) // 소비 아이템
 		{
 			if (ConsumableItemCheck(NewItem, ItemCount)) // 소비템이 인벤에 이미있는 경우
-			{
-				
-			}
+			{ }
 			else // 소비템을 새로 추가하는 경우
 			{
 				for (int i = 0; i < 16; i++)
@@ -85,6 +83,8 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					{
 						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
 						InventorySlot[i]->AddItemCount(ItemCount); // 수량 증가
+
+						OnInventorySlotActivity.Broadcast(i);
 						UE_LOG(LogTemp, Warning, TEXT("%s Item have been added"), *ItemName);
 						break;
 					}
@@ -107,10 +107,19 @@ bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, 
 			if (InventorySlot[i]->ItemName == NewItem->ItemName)
 			{
 				InventorySlot[i]->AddItemCount(ItemCount); // 수량만 증가
+				// need Broadcast
 				UE_LOG(LogTemp, Warning, TEXT("The quantity of %s is a few %d"), *InventorySlot[i]->GetItemName(), InventorySlot[i]->GetItemQuantity());
 				return true;
 			}
 		}
 	}
 	return false;
+}
+
+ULostArcItemBase* ULostArcInventoryComponent::GetSlotItem(int32 Index)
+{
+	if (InventorySlot[Index] == nullptr)
+		return nullptr;
+	else
+		return InventorySlot[Index];
 }

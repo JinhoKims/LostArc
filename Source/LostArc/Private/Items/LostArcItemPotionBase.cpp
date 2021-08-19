@@ -10,6 +10,12 @@ ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectI
 	MaxCount = 0;
 	CoolDown = 1.5f;
 	ItemQuantity = 0;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/blue_layer.blue_layer'"));
+	if (T2D_ICON.Object != NULL)
+	{
+		SlotTexture2D = T2D_ICON.Object;
+	}
 }
 
 bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
@@ -19,5 +25,4 @@ bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 		return true;
 	}
 	return false;
-	
 }

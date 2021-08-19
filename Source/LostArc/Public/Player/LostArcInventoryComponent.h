@@ -6,18 +6,24 @@
 #include "Components/ActorComponent.h"
 #include "LostArcInventoryComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventorySlotDelegate, int32)
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
+	
+public:
+	FOnInventorySlotDelegate OnInventorySlotActivity;
 
-public:	
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 	bool ConsumableItemCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
+
+	ULostArcItemBase* GetSlotItem(int32 Index);
 
 protected:
 	virtual void BeginPlay() override;

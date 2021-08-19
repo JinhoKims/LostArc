@@ -4,7 +4,7 @@
 
 bool ULostArcItemBase::IsConsumable() const
 {
-	if (MaxCount <= 0)
+	if (MaxCount <= 0) // MaxCount가 0이면 소모품(무제한)
 	{
 		return true;
 	}

@@ -16,22 +16,26 @@ class LOSTARC_API ULostArcUIInventorySlot : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 SlotNum;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 Count;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Image_Slot;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_Bdr;
+	class UImage* Image_Item;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_Icon;
+	class UImage* Image_CoolDown;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Text_Count;
+	class UTextBlock* Text_Quantity;
 
 	class ULostArcItemBase* Item;
+
+	void InventorySlotDelegateConnection();
+	void SetNativeTick(bool CD);
+
+private:
+	bool bEnableTick = false;
 };

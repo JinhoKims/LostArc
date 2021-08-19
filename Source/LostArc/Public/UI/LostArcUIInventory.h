@@ -19,5 +19,9 @@ protected:
 
 public:
 	UPROPERTY()
-	TArray<class ULostArcUIInventorySlot*> InventorySlots;
+	TArray<class ULostArcUIInventorySlot*> InventorySlot;
+
+	void InventorySlotDelegateListener(int32 SlotIndex);
+
+
 };

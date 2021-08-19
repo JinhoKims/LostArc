@@ -18,6 +18,4 @@ public:
 	ULostArcItemPotionBase(const FObjectInitializer& ObjectInitializer);
 
 	virtual bool Use(ALostArcCharacter* Character) override;
-	
-
 };
