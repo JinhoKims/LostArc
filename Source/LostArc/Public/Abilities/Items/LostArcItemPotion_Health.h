@@ -20,5 +20,5 @@ public:
 	virtual bool Use(ALostArcCharacter* Character) override;
 
 private:
-	float Value = 10.f;
+	float Value = 100.f;
 };

@@ -12,3 +12,14 @@ ULostArcItemPotion_Mana::ULostArcItemPotion_Mana(const FObjectInitializer& Objec
 		ItemTexture2D = T2D_ICON.Object;
 	}
 }
+
+bool ULostArcItemPotion_Mana::Use(ALostArcCharacter* Character)
+{
+	if (Super::Use(Character))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp(StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
+		return true;
+	}
+	return false;
+}

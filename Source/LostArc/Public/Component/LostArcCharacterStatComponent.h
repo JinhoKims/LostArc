@@ -63,6 +63,12 @@ private:
 	float CurrentMP;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
+	float CurrentATK;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
+	float CurrentDEF;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
 	float IncreasedManaRegeneration;
 
 	UFUNCTION(meta = (AllowPrivateAccess = true))

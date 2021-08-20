@@ -12,7 +12,7 @@ ULostArcInventoryComponent::ULostArcInventoryComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
 
 	ItemClass.Init(ULostArcItemBase::StaticClass(), 10);
@@ -56,6 +56,7 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 	InventorySlot.Empty();
+	ItemTable.Empty();
 }
 
 // Called every frame

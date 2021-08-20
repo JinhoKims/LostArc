@@ -42,10 +42,10 @@ float ULostArcCharacterStatComponent::GetCurrnetAttributeValue(EAttributeType Ty
 		return CurrentMP;
 		break;
 	case ATK:
-		return CurrentStatData->Attack;
+		return CurrentATK;
 		break;
 	case DEF:
-		return CurrentStatData->Defense;
+		return CurrentDEF;
 		break;
 	case EXP:
 		return CurrentEXP;
@@ -104,7 +104,6 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 	case HP:
 		CurrentHP = Value;
 		OnProgressBarChanged.Broadcast(Type);
-
 		if (CurrentHP < KINDA_SMALL_NUMBER)
 		{
 			CurrentHP = 0.0f;
@@ -114,6 +113,12 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 	case MP:
 		CurrentMP = Value;
 		OnProgressBarChanged.Broadcast(Type);
+		break;
+	case ATK:
+		CurrentATK = Value;
+		break;
+	case DEF:
+		CurrentDEF = Value;
 		break;
 	case EXP:
 		SetCurrentAttributeValueToInt32(Type, FMath::FloorToInt(Value));
