@@ -17,6 +17,8 @@ class LOSTARC_API ULostArcItemPotion_Health : public ULostArcItemPotionBase
 public:
 	ULostArcItemPotion_Health(const FObjectInitializer& ObjectInitializer);
 
-	//virtual bool Use(ALostArcCharacter* Character) override;
+	virtual bool Use(ALostArcCharacter* Character) override;
 
+private:
+	float Value = 10.f;
 };

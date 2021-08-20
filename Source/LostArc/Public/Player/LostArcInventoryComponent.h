@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "LostArcInventoryComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventorySlotDelegate, int32)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventorySlotUpdateDelegate, int32)
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
@@ -14,7 +14,7 @@ class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	FOnInventorySlotDelegate OnInventorySlotActivity;
+	FOnInventorySlotUpdateDelegate InventorySlotUpdate;
 
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
@@ -22,8 +22,7 @@ public:
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 	bool ConsumableItemCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
-
-	ULostArcItemBase* GetSlotItem(int32 Index);
+	class ULostArcItemBase* GetSlotItem(int32 Index);
 
 protected:
 	virtual void BeginPlay() override;
@@ -31,9 +30,9 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
-	TArray<TSubclassOf<ULostArcItemBase>> ItemClass;
+	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 
-	TMap<FString, TSubclassOf<ULostArcItemBase>> ItemTable;
+	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
 
 	TArray<class ULostArcItemBase*> InventorySlot;
 };

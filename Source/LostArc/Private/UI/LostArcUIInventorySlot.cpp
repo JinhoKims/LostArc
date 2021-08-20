@@ -8,6 +8,7 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 
+
 void ULostArcUIInventorySlot::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -39,11 +40,11 @@ void ULostArcUIInventorySlot::SetNativeTick(bool CD)
 	}
 }
 
-
-void ULostArcUIInventorySlot::InventorySlotDelegateConnection()
+void ULostArcUIInventorySlot::BindItemDelegate()
 {
 	Item->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInventorySlot::SetNativeTick);
-	
+	Item->ItemQuantityUpdate.AddUObject(this, &ULostArcUIInventorySlot::UpdateItemQuantity);
+
 	if (Item->GetItemTexture2D() != nullptr)
 	{
 		Image_Item->SetBrushFromTexture(Item->GetItemTexture2D());
@@ -59,3 +60,23 @@ void ULostArcUIInventorySlot::InventorySlotDelegateConnection()
 	Text_Quantity->SetVisibility(ESlateVisibility::Visible);
 }
 
+void ULostArcUIInventorySlot::UpdateItemQuantity()
+{
+	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
+}
+
+FReply ULostArcUIInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	FEventReply reply;
+	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+
+	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
+	{
+		if (Item)
+		{
+			Item->Use(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
+		}
+	}
+
+	return reply.NativeReply;
+}

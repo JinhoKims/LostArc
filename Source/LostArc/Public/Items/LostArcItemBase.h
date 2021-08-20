@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+DECLARE_MULTICAST_DELEGATE(FOnItemQuantityUpdateDelegate);
+
 UENUM(BlueprintType)
 enum EItemType
 {
@@ -29,6 +32,7 @@ public:
 	UTexture2D* SlotTexture2D;
 	UTexture2D* ItemTexture2D;
 	int32 ItemQuantity;
+	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
 	
 public:
 	/** Returns if the item is consumable (MaxCount <= 0)*/
@@ -46,4 +50,6 @@ public:
 
 protected:
 	virtual void PreCast(ALostArcCharacter* Character);
+
+
 };

@@ -16,12 +16,13 @@ class LOSTARC_API ULostArcUIInventory : public UUserWidget
 	
 protected:
 	virtual void NativeConstruct() override;
+	virtual void BeginDestroy() override;
 
 public:
 	UPROPERTY()
 	TArray<class ULostArcUIInventorySlot*> InventorySlot;
 
-	void InventorySlotDelegateListener(int32 SlotIndex);
-
+	void InventorySlotConstruct(int32 SlotIndex);
+	void UpdateItemQuantity(int32 SlotIndex);
 
 };

@@ -12,3 +12,14 @@ ULostArcItemPotion_Health::ULostArcItemPotion_Health(const FObjectInitializer& O
 		ItemTexture2D = T2D_ICON.Object;
 	}
 }
+
+bool ULostArcItemPotion_Health::Use(ALostArcCharacter* Character)
+{
+	if (Super::Use(Character))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp(StatComponent->GetCurrnetAttributeValue(EAttributeType::HP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
+		return true;
+	}
+	return false;
+}

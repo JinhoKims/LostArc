@@ -17,6 +17,7 @@ class LOSTARC_API ULostArcUIInventorySlot : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -33,8 +34,9 @@ public:
 
 	class ULostArcItemBase* Item;
 
-	void InventorySlotDelegateConnection();
+	void BindItemDelegate();
 	void SetNativeTick(bool CD);
+	void UpdateItemQuantity();
 
 private:
 	bool bEnableTick = false;

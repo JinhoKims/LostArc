@@ -22,7 +22,12 @@ bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 {
 	if (Super::Use(Character))
 	{
-		return true;
+		if (ItemQuantity)
+		{
+			ItemQuantity -= 1;
+			ItemQuantityUpdate.Broadcast();
+			return true;
+		}
 	}
 	return false;
 }
