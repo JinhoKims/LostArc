@@ -6,7 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIMainHUD.generated.h"
 
-
 /**
  * 
  */

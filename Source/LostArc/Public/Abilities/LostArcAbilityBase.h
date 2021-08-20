@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Character/LostArcCharacter.h"
-#include "Player/LostArcCharacterStatComponent.h"
+#include "Component/LostArcCharacterStatComponent.h"
 #include "LostArcAbilityBase.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilityCDDelegate, bool);

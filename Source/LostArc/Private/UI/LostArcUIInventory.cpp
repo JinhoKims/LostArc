@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UI/LostArcUIInventory.h"
-#include "UI/LostArcUIInventorySlot.h"
+#include "UI/Inventory/LostArcUIInventory.h"
+#include "UI/Inventory/LostArcUIInventorySlot.h"
 #include "Character/LostArcCharacter.h"
-#include "Player/LostArcInventoryComponent.h"
+#include "Component/LostArcInventoryComponent.h"
 
 
 void ULostArcUIInventory::NativeConstruct()

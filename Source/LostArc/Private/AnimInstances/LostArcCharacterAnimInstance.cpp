@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "Player/LostArcCharacterAbilityComponent.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 
 void ULostArcCharacterAnimInstance::AnimNotify_Next_BasicAttackCheck()
 {

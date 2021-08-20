@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.  
 
-#include "LineOfSightComponent.h"
+#include "Component/LineOfSightComponent.h"
 #include "ProceduralMeshComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 

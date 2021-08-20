@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Player/LostArcCharacterStatComponent.h"
-#include "UI/LostArcUIProgressBar.h"
+#include "Component/LostArcCharacterStatComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 ULostArcCharacterStatComponent::ULostArcCharacterStatComponent()

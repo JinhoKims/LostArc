@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Player/LostArcInventoryComponent.h"
-#include "Items/LostArcItemBase.h"
-#include "UI/LostArcUIInventory.h"
-#include "UI/LostArcUIInventorySlot.h"
+#include "Component/LostArcInventoryComponent.h"
+#include "Abilities/Items/LostArcItemBase.h"
 #include "UI/LostArcUIMainHUD.h"
+#include "UI/Inventory/LostArcUIInventory.h"
+#include "UI/Inventory/LostArcUIInventorySlot.h"
 #include "Controller/LostArcPlayerController.h"
 
 // Sets default values for this component's properties

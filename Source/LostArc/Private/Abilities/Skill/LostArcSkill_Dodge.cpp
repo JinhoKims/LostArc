@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Abilities/LostArcSkill_Dodge.h"
+#include "Abilities/Skill/LostArcSkill_Dodge.h"
 #include "Components/CapsuleComponent.h"
 
 ULostArcSkill_Dodge::ULostArcSkill_Dodge(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)

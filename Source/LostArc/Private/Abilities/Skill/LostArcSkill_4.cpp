@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Abilities/LostArcSkill_4.h"
+#include "Abilities/Skill/LostArcSkill_4.h"
 #include "Components/CapsuleComponent.h"
 
 ULostArcSkill_4::ULostArcSkill_4(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)

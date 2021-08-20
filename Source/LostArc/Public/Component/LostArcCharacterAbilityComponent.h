@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-
 #include "LostArcCharacterAbilityComponent.generated.h"
 
 UENUM(BlueprintType)

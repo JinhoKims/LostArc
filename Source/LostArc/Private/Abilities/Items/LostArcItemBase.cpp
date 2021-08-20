@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Items/LostArcItemBase.h"
+#include "Abilities/Items/LostArcItemBase.h"
 
 bool ULostArcItemBase::IsConsumable() const
 {

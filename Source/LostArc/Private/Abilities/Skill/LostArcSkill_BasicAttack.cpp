@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Abilities/LostArcSkill_BasicAttack.h"
+#include "Abilities/Skill/LostArcSkill_BasicAttack.h"
 
 ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

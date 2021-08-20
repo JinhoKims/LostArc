@@ -3,8 +3,8 @@
 
 #include "UI/LostArcUIAbilitySlot.h"
 #include "Character/LostArcCharacter.h"
-#include "Player/LostArcCharacterAbilityComponent.h"
-#include "Abilities/LostArcSkillBase.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 

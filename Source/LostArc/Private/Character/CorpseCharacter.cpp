@@ -4,7 +4,7 @@
 #include "Character/CorpseCharacter.h"
 #include "Controller/CorpseAIController.h"
 #include "AnimInstances/CorpseAnimInstance.h"
-#include "LineOfSightComponent.h"
+#include "Component/LineOfSightComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"

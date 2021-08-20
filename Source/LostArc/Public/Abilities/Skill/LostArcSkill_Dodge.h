@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/LostArcSkillBase.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "LostArcSkill_Dodge.generated.h"
 
 /**

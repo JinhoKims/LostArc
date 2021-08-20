@@ -5,10 +5,11 @@
 #include "Materials/Material.h"
 #include "Controller/LostArcPlayerController.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "Player/LostArcCharacterStatComponent.h"
-#include "Player/LostArcCharacterAbilityComponent.h"
-#include "Player/LostArcInventoryComponent.h"
-#include "LineOfSightComponent.h"
+#include "Abilities/Skill/LostArcSkill_BasicAttack.h"
+#include "Component/LostArcCharacterStatComponent.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
+#include "Component/LostArcInventoryComponent.h"
+#include "Component/LineOfSightComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
 #include "Components/Image.h"
@@ -20,7 +21,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "Abilities/LostArcSkill_BasicAttack.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {

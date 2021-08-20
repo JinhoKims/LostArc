@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Abilities/LostArcSkillBase.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
 bool ULostArcSkillBase::bAnimationRunning = false;

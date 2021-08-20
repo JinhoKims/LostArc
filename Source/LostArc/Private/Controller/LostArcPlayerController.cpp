@@ -4,7 +4,7 @@
 #include "Engine/World.h"
 #include "Character/LostArcCharacter.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
-#include "Abilities/LostArcSkillBase.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "UI/LostArcUIMainHUD.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
