@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Abilities/Items/LostArcItemPotionBase.h"
+#include "Abilities/Items/Potion/LostArcItemPotionBase.h"
 
 ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

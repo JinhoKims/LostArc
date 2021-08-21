@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/Items/LostArcItemEquipBase.h"
+#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 #include "LostArcItemEquip_Ring.generated.h"
 
 /**

@@ -159,8 +159,11 @@ void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 			CurrentLevel = NewLevel;
 			SetCurrentAttributeValue(EAttributeType::HP, CurrentStatData->Maxhp);
 			SetCurrentAttributeValue(EAttributeType::MP, CurrentStatData->Maxmp);
+			SetCurrentAttributeValue(EAttributeType::ATK, CurrentStatData->Attack);
+			SetCurrentAttributeValue(EAttributeType::DEF, CurrentStatData->Defense);
 			OnProgressBarChanged.Broadcast(EAttributeType::HP);
 			OnProgressBarChanged.Broadcast(EAttributeType::MP);
+
 		}
 	}
 }

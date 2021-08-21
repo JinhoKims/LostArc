@@ -15,7 +15,6 @@ class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent
 public:	
 	TArray<class ULostArcItemEquipBase*> equipSlot;
 
-
 protected:
 
 	virtual void BeginPlay() override;
@@ -23,6 +22,5 @@ protected:
 public:	
 	ULostArcCharacterEquipComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+	
 };

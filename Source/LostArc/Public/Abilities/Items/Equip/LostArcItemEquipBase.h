@@ -15,5 +15,6 @@ class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 	GENERATED_BODY()
 	
 public:
+	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
 	bool Use(ALostArcCharacter* Character) override;
 };

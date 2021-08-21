@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Abilities/Items/LostArcItemEquip_Ring.h"
+#include "Abilities/Items/Equip/LostArcItemEquip_Ring.h"
 
 ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {

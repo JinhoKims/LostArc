@@ -20,7 +20,7 @@ class LOSTARC_API ULostArcAbilityBase : public UObject
 
 public:
 	TPair<FTimerHandle, FOnAbilityCDDelegate> AbilityCDProperty;
-
+	
 public:
 	virtual bool Use(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::Use, return false;);
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::AbilityStateCheck, return false;);

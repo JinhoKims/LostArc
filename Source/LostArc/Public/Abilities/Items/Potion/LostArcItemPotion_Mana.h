@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/Items/LostArcItemPotionBase.h"
+#include "Abilities/Items/Potion/LostArcItemPotionBase.h"
 #include "LostArcItemPotion_Mana.generated.h"
 
 /**
