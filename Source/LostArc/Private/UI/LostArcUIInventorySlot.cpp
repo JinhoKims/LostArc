@@ -57,7 +57,10 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 	}
 
 	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
-	Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+	if (Item->GetMaxCount() <= 0)
+	{
+		Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+	}
 }
 
 void ULostArcUIInventorySlot::UpdateItemQuantity()

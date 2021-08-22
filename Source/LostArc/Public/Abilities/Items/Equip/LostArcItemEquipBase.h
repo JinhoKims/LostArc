@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Component/LostArcCharacterEquipComponent.h"
 #include "LostArcItemEquipBase.generated.h"
 
 /**
@@ -17,4 +18,9 @@ class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
 	bool Use(ALostArcCharacter* Character) override;
+	void SetInventoryIndex(int32 index);
+	int32 GetInventoryIndex() { return InventoryIndex; }
+
+private:
+	int32 InventoryIndex;
 };

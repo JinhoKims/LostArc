@@ -2,6 +2,8 @@
 
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
+
 
 // Sets default values for this component's properties
 ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
@@ -12,16 +14,17 @@ ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
 	bWantsInitializeComponent = true;
 }
 
+void ULostArcCharacterEquipComponent::InitializeComponent()
+{
+	Super::InitializeComponent();
+	EarringSlot.SetNum(2);
+	RingSlot.SetNum(2);
+}
+
 // Called when the game starts
 void ULostArcCharacterEquipComponent::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-void ULostArcCharacterEquipComponent::InitializeComponent()
-{
-	Super::InitializeComponent();
-	equipSlot.SetNum(5);
 }
 
 // Called every frame
@@ -30,19 +33,9 @@ void ULostArcCharacterEquipComponent::TickComponent(float DeltaTime, ELevelTick 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemBase* NewEquip)
+ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemEquipBase* NewEquip)
 {
 	if (NewEquip == nullptr) return nullptr;
 
-	for (int i = 0; i < 5; i++) // 장비창에 빈 슬롯이 있는 경우
-	{
-		if (equipSlot[i] == nullptr)
-		{
-			equipSlot[i] = NewEquip;
-			return nullptr;
-		}
-	}
-
-	Swap(equipSlot[0], NewEquip);
-	return NewEquip;
+	return nullptr;
 }

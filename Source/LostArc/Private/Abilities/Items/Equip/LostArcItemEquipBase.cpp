@@ -7,15 +7,23 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 {
 	ItemType = EItemType::ITEM_Equip;
 	MaxCount = 1;
-	CoolDown = 0.f;
 	ItemQuantity = 1;
+	CoolDown = 0.f;
+	InventoryIndex = 0;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/Ddu8ENAV0AEMKkh.Ddu8ENAV0AEMKkh'"));
+	if (T2D_ICON.Object != NULL)
+	{
+		SlotTexture2D = T2D_ICON.Object;
+	}
 }
 
 bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
-	if (Super::Use(Character))
-	{
-		return true;
-	}
-	return false;
+	return true;
+}
+
+void ULostArcItemEquipBase::SetInventoryIndex(int32 index)
+{
+	InventoryIndex = index;
 }

@@ -102,7 +102,7 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 	switch (Type)
 	{
 	case HP:
-		CurrentHP = Value;
+		CurrentHP = Value + BonusMaxHP;
 		OnProgressBarChanged.Broadcast(Type);
 		if (CurrentHP < KINDA_SMALL_NUMBER)
 		{
@@ -111,14 +111,14 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 		}
 		break;
 	case MP:
-		CurrentMP = Value;
+		CurrentMP = Value + BonusMaxMP;
 		OnProgressBarChanged.Broadcast(Type);
 		break;
 	case ATK:
-		CurrentATK = Value;
+		CurrentATK = Value + BonusATK;
 		break;
 	case DEF:
-		CurrentDEF = Value;
+		CurrentDEF = Value + BonusDEF;
 		break;
 	case EXP:
 		SetCurrentAttributeValueToInt32(Type, FMath::FloorToInt(Value));
@@ -147,6 +147,29 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValueToInt32(EAttributeT
 	}
 }
 
+void ULostArcCharacterStatComponent::AddBonusAttribute(EAttributeType Type, float Value)
+{
+	switch (Type)
+	{
+	case HP:
+		BonusMaxHP += Value;
+		break;
+	case MP:
+		BonusMaxMP += Value;
+		break;
+	case ATK:
+		BonusATK += Value;
+		break;
+	case DEF:
+		BonusDEF += Value;
+		break;
+	default:
+		break;
+	}
+
+	SetCurrentAttributeValue(Type, GetCurrnetAttributeValue(Type));
+}
+
 void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 {
 	auto ArcGameInstance = Cast<ULostArcGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
@@ -163,7 +186,6 @@ void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 			SetCurrentAttributeValue(EAttributeType::DEF, CurrentStatData->Defense);
 			OnProgressBarChanged.Broadcast(EAttributeType::HP);
 			OnProgressBarChanged.Broadcast(EAttributeType::MP);
-
 		}
 	}
 }

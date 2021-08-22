@@ -17,14 +17,14 @@ ULostArcInventoryComponent::ULostArcInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
 
-	ItemClass.Init(ULostArcItemBase::StaticClass(), 10);
+	ItemClass.Init(ULostArcItemBase::StaticClass(), 5);
 }
 
 void ULostArcInventoryComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		ItemTable.Add(ItemClass[i].GetDefaultObject()->ItemName, ItemClass[i]); // 아이템 테이블에 모든 아이템 정보를 넣는다.
 	}
@@ -52,6 +52,14 @@ void ULostArcInventoryComponent::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("Item Health : %d"), InventorySlot[0]->GetItemQuantity());
 	UE_LOG(LogTemp, Warning, TEXT("Item Mana : %d"), InventorySlot[1]->GetItemQuantity());
+	
+	AddPickupItem("Equip_Ring", 35);
+	AddPickupItem("Equip_Ring", 1);
+	AddPickupItem("Equip_Ring", 1);
+
+	AddPickupItem("Equip_Earrings", 45);
+	AddPickupItem("Equip_Earrings", 50);
+	AddPickupItem("Equip_Earrings", 22);
 }
 
 void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -98,16 +106,20 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
 					InventorySlotUpdate.Broadcast(i);
+
+					ULostArcItemEquipBase* Temp = dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[i]);
+					Temp->SetInventoryIndex(i);
+					break;
 				}
 			}
 		}
 	}
 }
 
-/*
-	auto EquipSlot = Cast<ALostArcCharacter>(GetOwner())->EquipComponent;
-	EquipSlot->EquipmentMounts(dynamic_cast<ULostArcItemEquipBase*>(NewItem));
-*/
+void ULostArcInventoryComponent::DeleteItem(int32 Index)
+{
+	InventorySlot.Remove(InventorySlot[Index]);
+}
 
 bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, int32 ItemCount)
 {
@@ -131,4 +143,10 @@ ULostArcItemBase* ULostArcInventoryComponent::GetSlotItem(int32 Index)
 		return nullptr;
 	else
 		return InventorySlot[Index];
+}
+
+void ULostArcInventoryComponent::InventorySlotChangeNullptr(int32 Index)
+{
+	InventorySlot[Index] = nullptr;
+	InventorySlotUpdate.Broadcast(Index);
 }

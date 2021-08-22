@@ -37,6 +37,7 @@ public:
 	float GetCurrentAttributeRatio(EAttributeType Type);
 	void SetCurrentAttributeValue(EAttributeType Type, float Value);
 	void SetCurrentAttributeValueToInt32(EAttributeType Type, int32 Value);
+	void AddBonusAttribute(EAttributeType Type, float Value);
 
 	FOnProgressBarDelegate OnProgressBarChanged;
 	FOnHPIsZeroDelegate OnHPIsZero;
@@ -70,6 +71,11 @@ private:
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = "Stat", meta = (AllowPrivateAccess = true))
 	float IncreasedManaRegeneration;
+
+	float BonusATK = 0.f;
+	float BonusDEF = 0.f;
+	float BonusMaxHP = 0.f;
+	float BonusMaxMP = 0.f;
 
 	UFUNCTION(meta = (AllowPrivateAccess = true))
 	void SetCurrentLevel(int32 NewLevel);
