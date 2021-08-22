@@ -9,6 +9,7 @@
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
 #include "Component/LostArcInventoryComponent.h"
+#include "Component/LostArcCharacterEquipComponent.h"
 #include "Component/LineOfSightComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/Border.h"
@@ -89,7 +90,8 @@ ALostArcCharacter::ALostArcCharacter()
 
 	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
-	InventoryCompoennt = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
+	InventoryComponent = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
+	EquipComponent = CreateDefaultSubobject<ULostArcCharacterEquipComponent>(TEXT("EQUIP"));
 }
 
 void ALostArcCharacter::PostInitializeComponents()

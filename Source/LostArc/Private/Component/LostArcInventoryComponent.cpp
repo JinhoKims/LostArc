@@ -2,6 +2,8 @@
 
 #include "Component/LostArcInventoryComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
+#include "Component/LostArcCharacterEquipComponent.h"
 #include "UI/LostArcUIMainHUD.h"
 #include "UI/Inventory/LostArcUIInventory.h"
 #include "UI/Inventory/LostArcUIInventorySlot.h"
@@ -90,10 +92,22 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 		}
 		else // 장비 아이템
 		{
-			
+			for (int i = 0; i < 16; i++)
+			{
+				if (InventorySlot[i] == nullptr)
+				{
+					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
+					InventorySlotUpdate.Broadcast(i);
+				}
+			}
 		}
 	}
 }
+
+/*
+	auto EquipSlot = Cast<ALostArcCharacter>(GetOwner())->EquipComponent;
+	EquipSlot->EquipmentMounts(dynamic_cast<ULostArcItemEquipBase*>(NewItem));
+*/
 
 bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, int32 ItemCount)
 {
