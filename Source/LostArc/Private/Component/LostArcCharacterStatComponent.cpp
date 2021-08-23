@@ -159,9 +159,11 @@ void ULostArcCharacterStatComponent::AddBonusAttribute(EAttributeType Type, floa
 		break;
 	case ATK:
 		BonusATK += Value;
+		UE_LOG(LogTemp, Warning, TEXT("Add Bonous ATK(%d) : %f"), Type, BonusATK);
 		break;
 	case DEF:
 		BonusDEF += Value;
+		UE_LOG(LogTemp, Warning, TEXT("Add Bonous DEF(%d) : %f"), Type, BonusDEF);
 		break;
 	default:
 		break;

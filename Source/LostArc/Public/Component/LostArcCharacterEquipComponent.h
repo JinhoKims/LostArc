@@ -9,17 +9,22 @@
 UENUM(BlueprintType)
 enum EAccessoryType
 {
+	Necklace UMETA(DisplayName = "Necklace"),
 	Earring UMETA(DisplayName = "Earring"),
-	Ring UMETA(DisplayName = "Ring"),
-	Necklace UMETA(DisplayName = "Necklace")
+	Ring UMETA(DisplayName = "Ring")
 };
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquipSlotUpdateDelegate, EAccessoryType, int32);
+
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
+	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
+
+	TArray<class ULostArcItemEquipBase*> NecklaceSlot;
 	TArray<class ULostArcItemEquipBase*> EarringSlot;
 	TArray<class ULostArcItemEquipBase*> RingSlot;
 
@@ -30,7 +35,7 @@ protected:
 public:	
 	ULostArcCharacterEquipComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	class ULostArcItemBase* EquipmentMounts(class ULostArcItemEquipBase* NewEquip);
-
+	class ULostArcItemBase* EquipmentMounts(class ULostArcItemEquipBase* NewEquip, EAccessoryType Type);
+	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 Index);
 	
 };

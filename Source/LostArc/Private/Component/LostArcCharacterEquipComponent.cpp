@@ -17,6 +17,7 @@ ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
 void ULostArcCharacterEquipComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+	NecklaceSlot.SetNum(1);
 	EarringSlot.SetNum(2);
 	RingSlot.SetNum(2);
 }
@@ -33,9 +34,56 @@ void ULostArcCharacterEquipComponent::TickComponent(float DeltaTime, ELevelTick 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemEquipBase* NewEquip)
+ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemEquipBase* NewEquip, EAccessoryType Type)
 {
 	if (NewEquip == nullptr) return nullptr;
+
+	switch (Type)
+	{
+	case Necklace:
+		break;
+	case Earring:
+		for (int i = 0; i < 2; i++)
+		{
+			if (EarringSlot[i] == nullptr)
+			{
+				EarringSlot[i] = NewEquip;
+				EquipSlotUpdate.Broadcast(Type, i);
+				return nullptr;
+			}
+		} // slot saturation
+		// Broadcast
+		return NewEquip;
+		break;
+	case Ring:
+		for (int i = 0; i < 2; i++)
+		{
+			if (RingSlot[i] == nullptr)
+			{
+				RingSlot[i] = NewEquip;
+				EquipSlotUpdate.Broadcast(Type, i);
+				return nullptr;
+			}
+		} // slot saturation
+		// Broadcast
+		return NewEquip;
+		break;
+	}
+
+	return nullptr;
+}
+
+ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryType Type, int32 Index)
+{
+	switch (Type)
+	{
+	case Necklace:
+		return NecklaceSlot[Index];
+	case Earring:
+		return EarringSlot[Index];
+	case Ring:
+		return RingSlot[Index];
+	}
 
 	return nullptr;
 }

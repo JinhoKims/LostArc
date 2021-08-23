@@ -4,19 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "LostArcUIInventorySlot.generated.h"
+#include "LostArcUIEquipSlot.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LOSTARC_API ULostArcUIInventorySlot : public UUserWidget
+class LOSTARC_API ULostArcUIEquipSlot : public UUserWidget
 {
 	GENERATED_BODY()
 
 protected:
 	virtual void NativeConstruct() override;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
 
 public:
@@ -29,19 +28,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UImage* Image_Item;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_CoolDown;
+	class ULostArcItemEquipBase* EquipItem;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Text_Quantity;
-
-	class ULostArcItemBase* Item;
-
-	void BindItemDelegate();
-	void SetNativeTick(bool CD);
-	void UpdateItemQuantity();
-	void ClearItemDelegate();
-
-private:
-	bool bEnableTick = false;
+	void BindEquipDelegate();
 };

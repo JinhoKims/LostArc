@@ -24,5 +24,5 @@ public:
 
 	void InventorySlotConstruct(int32 SlotIndex);
 	void UpdateItemQuantity(int32 SlotIndex);
-
+	void InventorySlotClear(int32 SlotIndex);
 };

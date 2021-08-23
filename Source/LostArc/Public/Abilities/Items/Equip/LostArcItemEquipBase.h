@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Component/LostArcInventoryComponent.h"
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "LostArcItemEquipBase.generated.h"
 
@@ -21,6 +22,8 @@ public:
 	void SetInventoryIndex(int32 index);
 	int32 GetInventoryIndex() { return InventoryIndex; }
 
-private:
+protected:
 	int32 InventoryIndex;
+	int32 MaxEqiupSlotCount;
+	EAccessoryType Type;
 };

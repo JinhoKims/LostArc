@@ -147,6 +147,6 @@ ULostArcItemBase* ULostArcInventoryComponent::GetSlotItem(int32 Index)
 
 void ULostArcInventoryComponent::InventorySlotChangeNullptr(int32 Index)
 {
+	InventorySlotEmpty.Broadcast(Index);
 	InventorySlot[Index] = nullptr;
-	InventorySlotUpdate.Broadcast(Index);
 }

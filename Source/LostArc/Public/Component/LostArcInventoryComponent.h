@@ -8,13 +8,14 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventorySlotUpdateDelegate, int32)
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 	
 public:
 	FOnInventorySlotUpdateDelegate InventorySlotUpdate;
+	FOnInventorySlotUpdateDelegate InventorySlotEmpty;
 
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;

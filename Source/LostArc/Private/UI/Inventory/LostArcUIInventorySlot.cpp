@@ -1,13 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "UI/Inventory//LostArcUIInventorySlot.h"
 #include "Character/LostArcCharacter.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
-
 
 void ULostArcUIInventorySlot::NativeConstruct()
 {
@@ -51,9 +49,10 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 		Image_Item->SetVisibility(ESlateVisibility::Visible);
 	}
 
-	if (Item->GetSlotTexture2D() != nullptr)
+	if (Item->GetBgTexture2D() != nullptr)
 	{
-		Image_Slot->SetBrushFromTexture(Item->GetSlotTexture2D());
+		Image_bgColor->SetBrushFromTexture(Item->GetBgTexture2D());
+		Image_bgColor->SetVisibility(ESlateVisibility::Visible);
 	}
 
 	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
@@ -66,6 +65,15 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 void ULostArcUIInventorySlot::UpdateItemQuantity()
 {
 	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
+}
+
+void ULostArcUIInventorySlot::ClearItemDelegate()
+{
+	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+	Image_bgColor->SetVisibility(ESlateVisibility::Hidden);
+	Image_Item->SetVisibility(ESlateVisibility::Hidden);
+
+	Item = nullptr;
 }
 
 FReply ULostArcUIInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

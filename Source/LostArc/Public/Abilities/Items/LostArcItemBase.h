@@ -29,7 +29,7 @@ public:
 	int32 MaxCount;
 	FString ItemName;
 	EItemType ItemType;
-	UTexture2D* SlotTexture2D;
+	UTexture2D* BgTexture2D;
 	UTexture2D* ItemTexture2D;
 	int32 ItemQuantity;
 	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
@@ -42,7 +42,7 @@ public:
 	FString GetItemName() { return ItemName; }
 	int32 GetItemQuantity() { return ItemQuantity; }
 	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
-	UTexture2D* GetSlotTexture2D() { return SlotTexture2D; }
+	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
 
 	virtual bool Use(ALostArcCharacter* Character) override;
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;

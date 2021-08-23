@@ -16,6 +16,7 @@ void ULostArcUIInventory::NativeConstruct()
 
 	auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
 	Character->InventoryComponent->InventorySlotUpdate.AddUObject(this, &ULostArcUIInventory::InventorySlotConstruct);
+	Character->InventoryComponent->InventorySlotEmpty.AddUObject(this, &ULostArcUIInventory::InventorySlotClear);
 }
 
 void ULostArcUIInventory::BeginDestroy()
@@ -42,4 +43,9 @@ void ULostArcUIInventory::UpdateItemQuantity(int32 SlotIndex)
 	{
 		InventorySlot[SlotIndex]->UpdateItemQuantity();
 	}
+}
+
+void ULostArcUIInventory::InventorySlotClear(int32 SlotIndex)
+{
+	InventorySlot[SlotIndex]->ClearItemDelegate();
 }
