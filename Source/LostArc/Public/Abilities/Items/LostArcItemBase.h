@@ -32,6 +32,7 @@ public:
 	UTexture2D* BgTexture2D;
 	UTexture2D* ItemTexture2D;
 	int32 ItemQuantity;
+	int32 InventorySlotIndex;
 	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
 	
 public:
@@ -43,6 +44,8 @@ public:
 	int32 GetItemQuantity() { return ItemQuantity; }
 	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
 	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
+	void SetInventorySlotIndex(int32 index);
+	int32 GetInventorySlotIndex() { return InventorySlotIndex; }
 
 	virtual bool Use(ALostArcCharacter* Character) override;
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;

@@ -17,11 +17,18 @@ ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectI
 
 bool ULostArcItemEquip_Ring::Use(ALostArcCharacter* Character)
 {
-	Super::Use(Character);
-
-	auto StatComponent = Character->StatComponent;
-	StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
-
+	if (Super::Use(Character))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
+	}
 
 	return true;
+}
+
+void ULostArcItemEquip_Ring::Dismount(ALostArcCharacter* Character)
+{
+	Super::Dismount(Character);
+	auto StatComponent = Character->StatComponent;
+	StatComponent->AddBonusAttribute(EAttributeType::DEF, -Value);
 }

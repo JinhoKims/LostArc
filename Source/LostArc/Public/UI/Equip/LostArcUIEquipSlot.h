@@ -20,9 +20,6 @@ protected:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_Slot;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UImage* Image_bgColor;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -31,4 +28,5 @@ public:
 	class ULostArcItemEquipBase* EquipItem;
 
 	void BindEquipDelegate();
+	void ClearEquipDelegate();
 };

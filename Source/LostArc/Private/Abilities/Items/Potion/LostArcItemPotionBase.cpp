@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Abilities/Items/Potion/LostArcItemPotionBase.h"
+#include "Component/LostArcInventoryComponent.h"
 
 ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -20,12 +21,7 @@ bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 {
 	if (Super::Use(Character))
 	{
-		if (ItemQuantity)
-		{
-			ItemQuantity -= 1;
-			ItemQuantityUpdate.Broadcast();
-			return true;
-		}
+		return true;
 	}
 	return false;
 }

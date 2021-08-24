@@ -18,7 +18,11 @@ FReply ULostArcUIEquipSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
-		
+		if (EquipItem != nullptr)
+		{
+			EquipItem->Dismount(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
+			return reply.NativeReply;
+		}
 	}
 
 	return reply.NativeReply;
@@ -31,4 +35,11 @@ void ULostArcUIEquipSlot::BindEquipDelegate()
 
 	Image_Item->SetBrushFromTexture(EquipItem->GetItemTexture2D());
 	Image_Item->SetVisibility(ESlateVisibility::Visible);
+}
+
+void ULostArcUIEquipSlot::ClearEquipDelegate()
+{
+	Image_bgColor->SetVisibility(ESlateVisibility::Hidden);
+	Image_Item->SetVisibility(ESlateVisibility::Hidden);
+	EquipItem = nullptr;
 }

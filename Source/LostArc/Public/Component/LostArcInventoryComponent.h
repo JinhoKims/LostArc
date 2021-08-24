@@ -22,7 +22,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
-	void DeleteItem(int32 Index);
+	void MoveItem(class ULostArcItemBase* Item, int32 ItemCount = 1);
 	bool ConsumableItemCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
 	class ULostArcItemBase* GetSlotItem(int32 Index);
 	void InventorySlotChangeNullptr(int32 Index);

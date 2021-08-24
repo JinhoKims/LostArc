@@ -19,10 +19,18 @@ ULostArcItemEquip_Earrings::ULostArcItemEquip_Earrings(const FObjectInitializer&
 
 bool ULostArcItemEquip_Earrings::Use(ALostArcCharacter* Character)
 {
-	Super::Use(Character);
-
-	auto StatComponent = Character->StatComponent;
-	StatComponent->AddBonusAttribute(EAttributeType::ATK, Value);
+	if (Super::Use(Character))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->AddBonusAttribute(EAttributeType::ATK, Value);
+	}
 
 	return true;
+}
+
+void ULostArcItemEquip_Earrings::Dismount(ALostArcCharacter* Character)
+{
+	Super::Dismount(Character);
+	auto StatComponent = Character->StatComponent;
+	StatComponent->AddBonusAttribute(EAttributeType::ATK, -Value);
 }

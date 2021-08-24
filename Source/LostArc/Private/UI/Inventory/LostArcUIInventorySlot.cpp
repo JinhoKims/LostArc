@@ -64,7 +64,10 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 
 void ULostArcUIInventorySlot::UpdateItemQuantity()
 {
-	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
+	if (Item != nullptr)
+	{
+		Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
+	}
 }
 
 void ULostArcUIInventorySlot::ClearItemDelegate()
@@ -86,6 +89,7 @@ FReply ULostArcUIInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeome
 		if (Item)
 		{
 			Item->Use(Cast<ALostArcCharacter>(GetOwningPlayerPawn()));
+			return reply.NativeReply;
 		}
 	}
 

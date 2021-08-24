@@ -23,6 +23,7 @@ class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent
 
 public:	
 	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
+	FOnEquipSlotUpdateDelegate EquipSlotClear;
 
 	TArray<class ULostArcItemEquipBase*> NecklaceSlot;
 	TArray<class ULostArcItemEquipBase*> EarringSlot;
@@ -35,7 +36,7 @@ protected:
 public:	
 	ULostArcCharacterEquipComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	class ULostArcItemBase* EquipmentMounts(class ULostArcItemEquipBase* NewEquip, EAccessoryType Type);
+	bool EquipmentMounts(class ULostArcItemEquipBase* NewEquip, EAccessoryType Type);
 	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 Index);
-	
+	void DismountEquip(EAccessoryType Type, int32 Index);
 };

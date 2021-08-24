@@ -23,6 +23,7 @@ void ULostArcUIEquipWindow::NativeConstruct()
 	}
 
 	Character->EquipComponent->EquipSlotUpdate.AddUObject(this, &ULostArcUIEquipWindow::EquipSlotConstruct);
+	Character->EquipComponent->EquipSlotClear.AddUObject(this, &ULostArcUIEquipWindow::EquipSlotClear);
 }
 
 void ULostArcUIEquipWindow::BeginDestroy()
@@ -62,9 +63,22 @@ void ULostArcUIEquipWindow::EquipSlotConstruct(EAccessoryType Type, int32 SlotIn
 		}
 		break;
 	}
-
 }
 
-void ULostArcUIEquipWindow::EquipSlotClear(int32 SlotIndex)
+void ULostArcUIEquipWindow::EquipSlotClear(EAccessoryType Type, int32 SlotIndex)
 {
+	auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+
+	switch (Type)
+	{
+	case Necklace:
+		Equip_NecklaceSlot[SlotIndex]->ClearEquipDelegate();
+		break;
+	case Earring:
+		Equip_EarringSlot[SlotIndex]->ClearEquipDelegate();
+		break;
+	case Ring:
+		Equip_RingSlot[SlotIndex]->ClearEquipDelegate();
+		break;
+	}
 }

@@ -17,6 +17,7 @@ class LOSTARC_API ULostArcItemEquip_Ring : public ULostArcItemEquipBase
 public:
 	ULostArcItemEquip_Ring(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character);
+	virtual void Dismount(ALostArcCharacter* Character) override;
 
 private:
 	float Value = 10.0f;

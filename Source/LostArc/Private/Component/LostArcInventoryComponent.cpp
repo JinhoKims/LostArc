@@ -36,30 +36,27 @@ void ULostArcInventoryComponent::InitializeComponent()
 void ULostArcInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("======================="));
-	AddPickupItem("Potion_Health", 17);
-	AddPickupItem("Potion_Mana", 8);
-	AddPickupItem("Potion_Health", 48);
+	
+	AddPickupItem("Potion_Health", 3);
+	AddPickupItem("Potion_Mana", 1);
+	/*AddPickupItem("Potion_Health", 48);
 	AddPickupItem("Potion_Mana", 56);
-	UE_LOG(LogTemp, Warning, TEXT("======================="));
 	AddPickupItem("Potion_Health", 10);
 	AddPickupItem("Potion_Mana", 20);
 	AddPickupItem("Potion_Health", 54);
-	UE_LOG(LogTemp, Warning, TEXT("======================="));
 	AddPickupItem("Potion_Mana", 25);
-	AddPickupItem("Potion_Mana", 15);
+	AddPickupItem("Potion_Mana", 15);*/
 
 	UE_LOG(LogTemp, Warning, TEXT("Item Health : %d"), InventorySlot[0]->GetItemQuantity());
 	UE_LOG(LogTemp, Warning, TEXT("Item Mana : %d"), InventorySlot[1]->GetItemQuantity());
 	
-	AddPickupItem("Equip_Ring", 35);
-	AddPickupItem("Equip_Ring", 1);
-	AddPickupItem("Equip_Ring", 1);
+	AddPickupItem("Equip_Ring");
+	AddPickupItem("Equip_Ring");
+	AddPickupItem("Equip_Ring");
 
-	AddPickupItem("Equip_Earrings", 45);
-	AddPickupItem("Equip_Earrings", 50);
-	AddPickupItem("Equip_Earrings", 22);
+	AddPickupItem("Equip_Earrings");
+	AddPickupItem("Equip_Earrings");
+	AddPickupItem("Equip_Earrings");
 }
 
 void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -73,6 +70,22 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* Item, int32 ItemCount)
+{
+	for (int i = 0; i < 16; i++)
+	{
+		if (InventorySlot[i] == nullptr)
+		{
+			InventorySlot[i] = Item;
+			InventorySlot[i]->SetInventorySlotIndex(i);
+			InventorySlotUpdate.Broadcast(i);
+			if (Item->IsConsumable())
+				InventorySlot[i]->AddItemCount(ItemCount);
+			break;
+		}
+	}
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)
@@ -91,6 +104,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					if (InventorySlot[i] == nullptr)
 					{
 						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
+						InventorySlot[i]->SetInventorySlotIndex(i);
 						InventorySlotUpdate.Broadcast(i);
 						InventorySlot[i]->AddItemCount(ItemCount); // 수량 증가
 						break;
@@ -105,20 +119,13 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				if (InventorySlot[i] == nullptr)
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
+					InventorySlot[i]->SetInventorySlotIndex(i);
 					InventorySlotUpdate.Broadcast(i);
-
-					ULostArcItemEquipBase* Temp = dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[i]);
-					Temp->SetInventoryIndex(i);
 					break;
 				}
 			}
 		}
 	}
-}
-
-void ULostArcInventoryComponent::DeleteItem(int32 Index)
-{
-	InventorySlot.Remove(InventorySlot[Index]);
 }
 
 bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, int32 ItemCount)

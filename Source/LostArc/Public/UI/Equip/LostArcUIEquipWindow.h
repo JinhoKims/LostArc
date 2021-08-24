@@ -32,5 +32,5 @@ public:
 	TArray<class ULostArcUIEquipSlot*> Equip_RingSlot;
 
 	void EquipSlotConstruct(EAccessoryType Type, int32 SlotIndex);
-	void EquipSlotClear(int32 SlotIndex);
+	void EquipSlotClear(EAccessoryType Type, int32 SlotIndex);
 };

@@ -8,7 +8,7 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 	MaxCount = 1;
 	ItemQuantity = 1;
 	CoolDown = 0.f;
-	InventoryIndex = 0;
+	InventorySlotIndex = 0;
 
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/Ddu8ENAV0AEMKkh.Ddu8ENAV0AEMKkh'"));
 	if (T2D_ICON.Object != NULL)
@@ -19,13 +19,21 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 
 bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
-	Character->EquipComponent->EquipmentMounts(this, Type);
-	Character->InventoryComponent->InventorySlotChangeNullptr(GetInventoryIndex());
-
-	return true;
+	if (Character->EquipComponent->EquipmentMounts(this, Type))
+	{
+		Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
+		return true;
+	}
+	return false;
 }
 
-void ULostArcItemEquipBase::SetInventoryIndex(int32 index)
+void ULostArcItemEquipBase::SetEquipSlotIndex(int32 index)
 {
-	InventoryIndex = index;
+	EquipSlotIndex = index;
+}
+
+void ULostArcItemEquipBase::Dismount(ALostArcCharacter* Character)
+{
+	auto Component = Character->EquipComponent;
+	Component->DismountEquip(Type, EquipSlotIndex);
 }

@@ -14,9 +14,10 @@ class LOSTARC_API ULostArcItemEquip_Earrings : public ULostArcItemEquipBase
 {
 	GENERATED_BODY()
 	
+public:
 	ULostArcItemEquip_Earrings(const FObjectInitializer& ObjectInitializer);
-
 	virtual bool Use(ALostArcCharacter* Character) override;
+	virtual void Dismount(ALostArcCharacter* Character) override;
 
 private:
 	float Value = 10.0f;

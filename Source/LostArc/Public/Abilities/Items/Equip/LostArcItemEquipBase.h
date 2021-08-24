@@ -19,11 +19,12 @@ class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
 	bool Use(ALostArcCharacter* Character) override;
-	void SetInventoryIndex(int32 index);
-	int32 GetInventoryIndex() { return InventoryIndex; }
+	void SetEquipSlotIndex(int32 index);
+	int32 GetEquipSlotIndex() { return EquipSlotIndex; }
+	virtual void Dismount(ALostArcCharacter* Character);
 
 protected:
-	int32 InventoryIndex;
+	int32 EquipSlotIndex;
 	int32 MaxEqiupSlotCount;
 	EAccessoryType Type;
 };

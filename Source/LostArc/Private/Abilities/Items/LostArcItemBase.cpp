@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Component/LostArcInventoryComponent.h"
 
 bool ULostArcItemBase::IsConsumable() const
 {
@@ -14,6 +15,11 @@ bool ULostArcItemBase::IsConsumable() const
 EItemType ULostArcItemBase::GetItemType() const
 {
 	return ItemType;
+}
+
+void ULostArcItemBase::SetInventorySlotIndex(int32 index)
+{
+	InventorySlotIndex = index;
 }
 
 bool ULostArcItemBase::Use(ALostArcCharacter* Character)
@@ -45,6 +51,14 @@ void ULostArcItemBase::AddItemCount(int32 Count)
 
 void ULostArcItemBase::PreCast(ALostArcCharacter* Character)
 {
-	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
-	AbilityCDProperty.Value.Broadcast(true);
+	if (--ItemQuantity)
+	{
+		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
+		ItemQuantityUpdate.Broadcast();
+		AbilityCDProperty.Value.Broadcast(true);
+	}
+	else // Last Item
+	{
+		Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
+	}
 }

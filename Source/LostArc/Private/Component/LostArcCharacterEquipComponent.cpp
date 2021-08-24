@@ -34,13 +34,23 @@ void ULostArcCharacterEquipComponent::TickComponent(float DeltaTime, ELevelTick 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemEquipBase* NewEquip, EAccessoryType Type)
+bool ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemEquipBase* NewEquip, EAccessoryType Type)
 {
-	if (NewEquip == nullptr) return nullptr;
+	if (NewEquip == nullptr) return false;
 
 	switch (Type)
 	{
 	case Necklace:
+		for (int i = 0; i < 1; i++)
+		{
+			if (NecklaceSlot[i] == nullptr)
+			{
+				NecklaceSlot[i] = NewEquip;
+				NecklaceSlot[i]->SetEquipSlotIndex(i);
+				EquipSlotUpdate.Broadcast(Type, i);
+				return true;
+			}
+		}
 		break;
 	case Earring:
 		for (int i = 0; i < 2; i++)
@@ -48,12 +58,12 @@ ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemE
 			if (EarringSlot[i] == nullptr)
 			{
 				EarringSlot[i] = NewEquip;
+				EarringSlot[i]->SetEquipSlotIndex(i);
 				EquipSlotUpdate.Broadcast(Type, i);
-				return nullptr;
+				return true;
 			}
 		} // slot saturation
 		// Broadcast
-		return NewEquip;
 		break;
 	case Ring:
 		for (int i = 0; i < 2; i++)
@@ -61,16 +71,15 @@ ULostArcItemBase* ULostArcCharacterEquipComponent::EquipmentMounts(ULostArcItemE
 			if (RingSlot[i] == nullptr)
 			{
 				RingSlot[i] = NewEquip;
+				RingSlot[i]->SetEquipSlotIndex(i);
 				EquipSlotUpdate.Broadcast(Type, i);
-				return nullptr;
+				return true;
 			}
 		} // slot saturation
 		// Broadcast
-		return NewEquip;
 		break;
 	}
-
-	return nullptr;
+	return false;
 }
 
 ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryType Type, int32 Index)
@@ -86,4 +95,41 @@ ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryT
 	}
 
 	return nullptr;
+}
+
+void ULostArcCharacterEquipComponent::DismountEquip(EAccessoryType Type, int32 Index)
+{
+	auto Char = Cast<ALostArcCharacter>(GetOwner());
+	ULostArcItemBase* OwingItem;
+
+	switch (Type)
+	{
+	case Necklace:
+		OwingItem = dynamic_cast<ULostArcItemBase*>(NecklaceSlot[Index]);
+		if (OwingItem != nullptr)
+		{
+			EquipSlotClear.Broadcast(Type,Index);
+			NecklaceSlot[Index] = nullptr;
+			Char->InventoryComponent->MoveItem(OwingItem);
+		}
+		break;
+	case Earring:
+		OwingItem = dynamic_cast<ULostArcItemBase*>(EarringSlot[Index]);
+		if (OwingItem != nullptr)
+		{
+			EquipSlotClear.Broadcast(Type, Index);
+			EarringSlot[Index] = nullptr;
+			Char->InventoryComponent->MoveItem(OwingItem);
+		}
+		break;
+	case Ring:
+		OwingItem = dynamic_cast<ULostArcItemBase*>(RingSlot[Index]);
+		if (OwingItem != nullptr)
+		{
+			EquipSlotClear.Broadcast(Type, Index);
+			RingSlot[Index] = nullptr;
+			Char->InventoryComponent->MoveItem(OwingItem);
+		}
+		break;
+	}
 }
