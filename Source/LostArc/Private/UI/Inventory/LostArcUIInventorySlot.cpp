@@ -95,3 +95,8 @@ FReply ULostArcUIInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeome
 
 	return reply.NativeReply;
 }
+
+void ULostArcUIInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
+{
+
+}
