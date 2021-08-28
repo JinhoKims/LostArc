@@ -129,7 +129,6 @@ void ULostArcUIInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, 
 
 }
 
-
 bool ULostArcUIInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
@@ -150,4 +149,3 @@ bool ULostArcUIInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FD
 		return false;
 	}
 }
-
