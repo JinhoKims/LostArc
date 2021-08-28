@@ -10,6 +10,12 @@ ULostArcSkill_1::ULostArcSkill_1(const FObjectInitializer& ObjectInitializer) : 
 	SkillRatio = 1.5f;
 	SkillRadius.Key = 500.f;
 	SkillRadius.Value = 180.f;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Skill/dm_skill_01_6.dm_skill_01_6'"));
+	if (T2D_ICON.Object != NULL)
+	{
+		Ability_Icon = T2D_ICON.Object;
+	}
 	Name = "Skill_1";
 }
 

@@ -32,6 +32,14 @@ void ULostArcInventoryComponent::InitializeComponent()
 	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
 }
 
+ULostArcAbilityBase* ULostArcInventoryComponent::GetItemData(int32 Index)
+{
+	if (InventorySlot[Index] == nullptr)
+		return nullptr;
+	else
+		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
+}
+
 // Called when the game starts
 void ULostArcInventoryComponent::BeginPlay()
 {

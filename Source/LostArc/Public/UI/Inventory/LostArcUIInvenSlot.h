@@ -15,16 +15,22 @@ class LOSTARC_API ULostArcUIInvenSlot : public ULostArcUISlotBase
 	GENERATED_BODY()
 	
 public:
-	virtual void NativeConstruct() override;
 	virtual void SetNativeTick(bool CD) override;
+	virtual void SetSlotData(ULostArcAbilityBase* NewData) override;
+	void UpdateQuantity();
 
 protected:
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_BG;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UTextBlock* Text_Quantity;
+
+	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+private:
+	UPROPERTY()
+	class ULostArcItemBase* SlotItem;
 };
 

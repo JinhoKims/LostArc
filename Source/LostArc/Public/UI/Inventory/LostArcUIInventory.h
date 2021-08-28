@@ -14,7 +14,7 @@ class LOSTARC_API ULostArcUIInventory : public UUserWidget
 {
 	GENERATED_BODY()
 	
-protected:
+private:
 	virtual void NativeConstruct() override;
 	virtual void BeginDestroy() override;
 
