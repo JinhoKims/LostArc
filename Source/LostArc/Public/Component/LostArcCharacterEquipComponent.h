@@ -14,6 +14,15 @@ enum EAccessoryType
 	Ring UMETA(DisplayName = "Ring")
 };
 
+USTRUCT(Atomic, BlueprintType)
+struct FEquipSlot
+{
+	GENERATED_BODY()
+
+public:
+	TArray<class ULostArcItemEquipBase*> EquipArray;
+};
+
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquipSlotUpdateDelegate, EAccessoryType, int32);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -28,6 +37,11 @@ public:
 	TArray<class ULostArcItemEquipBase*> NecklaceSlot;
 	TArray<class ULostArcItemEquipBase*> EarringSlot;
 	TArray<class ULostArcItemEquipBase*> RingSlot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
+	TMap<TEnumAsByte<EAccessoryType>, TSubclassOf<class ULostArcItemEquipBase>> EquipTable;
+
+	TMap<EAccessoryType, FEquipSlot> EquipSlot;
 
 protected:
 	virtual void BeginPlay() override;

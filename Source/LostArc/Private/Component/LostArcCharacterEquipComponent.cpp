@@ -3,7 +3,7 @@
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
-
+#include "Abilities/Items/Equip/LostArcItemEquip_Earrings.h"
 
 // Sets default values for this component's properties
 ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
@@ -12,6 +12,13 @@ ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
+
+	for (int i = 0; i < 3; i++)
+	{
+		EquipTable.Add((EAccessoryType)i);
+		EquipSlot.Add((EAccessoryType)i);
+	}
+
 }
 
 void ULostArcCharacterEquipComponent::InitializeComponent()
@@ -20,12 +27,18 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 	NecklaceSlot.SetNum(1);
 	EarringSlot.SetNum(2);
 	RingSlot.SetNum(2);
+
+	/* EquipSlot.Find(EAccessoryType::Earring)->EquipArray.Add(NewObject<ULostArcItemEquipBase>(this, ULostArcItemEquip_Earrings::StaticClass()));
+	EquipTable의 Key의 Value는 블루프린트(에디터)에서 설정해주는데 Init()는 에디터(블프) 실행 전에도 호출되어서 
+	이 때 EquipTable의 Value를 가져올 수 없기에 직접 클래스정보(StaticClass)를 가져와야 한다. */
 }
 
 // Called when the game starts
 void ULostArcCharacterEquipComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	EquipSlot.Find(EAccessoryType::Earring)->EquipArray.Add(NewObject<ULostArcItemEquipBase>(this, EquipTable.Find(EAccessoryType::Earring)->Get()));
 }
 
 // Called every frame

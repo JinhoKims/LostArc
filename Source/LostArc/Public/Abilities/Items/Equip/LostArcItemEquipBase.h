@@ -23,7 +23,7 @@ public:
 	int32 GetEquipSlotIndex() { return EquipSlotIndex; }
 	virtual void Dismount(ALostArcCharacter* Character);
 
-protected:
+public:
 	int32 EquipSlotIndex;
 	int32 MaxEqiupSlotCount;
 	EAccessoryType Type;

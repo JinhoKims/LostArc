@@ -27,12 +27,16 @@ class LOSTARC_API ULostArcItemBase : public ULostArcAbilityBase
 	
 public:
 	int32 MaxCount;
+	
 	FString ItemName;
 	EItemType ItemType;
+
 	UTexture2D* BgTexture2D;
 	UTexture2D* ItemTexture2D;
+	
 	int32 ItemQuantity;
 	int32 InventorySlotIndex;
+	
 	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
 	
 public:
