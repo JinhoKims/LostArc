@@ -19,11 +19,43 @@ void ULostArcUIInvenSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
+FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	FEventReply reply;
+	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	auto OwingCharacter = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+
+	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
+	{
+		if (SlotData)
+		{
+			OwingCharacter->InventoryComponent->UseItem(SlotIndex);
+			return reply.NativeReply;
+		}
+	}
+	//else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	//{
+	//	reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+	//}
+	return reply.NativeReply;
+}
+
+void ULostArcUIInvenSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
+{
+
+}
+
+bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	return false;
+}
+
+
 void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
 {
 	Super::SetSlotData(NewData);
 
-	SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
+	auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
 	if (SlotItem == nullptr) return;
 
 	if (SlotItem->GetBgTexture2D() != nullptr)
@@ -45,7 +77,6 @@ void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
 void ULostArcUIInvenSlot::ClearSlotData()
 {
 	Super::ClearSlotData();
-	SlotItem = nullptr;
 
 	Image_BG->SetVisibility(ESlateVisibility::Hidden);
 	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
@@ -55,6 +86,6 @@ void ULostArcUIInvenSlot::UpdateQuantity()
 {
 	if (SlotData != nullptr) 
 	{
-		Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(SlotItem->GetItemQuantity())));
+		Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(dynamic_cast<ULostArcItemBase*>(SlotData)->GetItemQuantity())));
 	}
 }

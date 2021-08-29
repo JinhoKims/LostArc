@@ -88,14 +88,13 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	{
 		if (NewItem->IsConsumable()) // 소비 아이템
 		{
-			if (!ConsumableItemCheck(NewItem, ItemCount)) // 인벤에 이미 있는지 체크
+			if (!ConsumableCheck(NewItem, ItemCount)) // 인벤에 이미 있는지 체크
 			{
 				for (int i = 0; i < 16; i++)
 				{
 					if (InventorySlot[i] == nullptr)
 					{
 						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
-						// InventorySlotUpdate.Broadcast(i);
 						InvenSlotUpdate.Broadcast(i, true);
 						InventorySlot[i]->SetItemQuantity(ItemCount); // 수량 증가
 						break;
@@ -110,7 +109,6 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				if (InventorySlot[i] == nullptr)
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
-					// InventorySlotUpdate.Broadcast(i);
 					InvenSlotUpdate.Broadcast(i, true);
 					break;
 				}
@@ -119,13 +117,13 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	}
 }
 
-bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, int32 ItemCount)
+bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int32 ItemCount)
 {
 	for (int i = 0; i < 16; i++)
 	{
 		if (InventorySlot[i] != nullptr)
 		{
-			if (InventorySlot[i]->GetName() == NewItem->GetName())
+			if (InventorySlot[i]->GetName() == NewItem->GetName()) // 인벤에 이미 있으면
 			{
 				InventorySlot[i]->SetItemQuantity(ItemCount); // 수량만 증가
 				return true;
@@ -133,14 +131,6 @@ bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, 
 		}
 	}
 	return false;
-}
-
-ULostArcItemBase* ULostArcInventoryComponent::GetSlotItem(int32 Index)
-{
-	if (InventorySlot[Index] == nullptr)
-		return nullptr;
-	else
-		return InventorySlot[Index];
 }
 
 ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
@@ -151,7 +141,7 @@ ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
 		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
 }
 
-void ULostArcInventoryComponent::ItemUse(int32 SlotIndex)
+void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
 	{

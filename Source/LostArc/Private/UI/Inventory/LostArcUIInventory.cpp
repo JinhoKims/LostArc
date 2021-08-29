@@ -29,7 +29,7 @@ void ULostArcUIInventory::InventorySlotConstruct(int32 SlotIndex)
 {
 	auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
 
-	InventorySlot[SlotIndex]->Item = Character->InventoryComponent->GetSlotItem(SlotIndex);
+//	InventorySlot[SlotIndex]->Item = Character->InventoryComponent->GetSlotItem(SlotIndex);
 
 	if (InventorySlot[SlotIndex]->Item != nullptr)
 	{

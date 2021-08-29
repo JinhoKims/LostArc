@@ -20,14 +20,10 @@ public:
 	virtual void InitializeComponent() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void ItemUse(int32 SlotInex);	
-
+	void UseItem(int32 SlotInex);	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 	void MoveItem(class ULostArcItemBase* Item, int32 ItemCount = 1);
-	bool ConsumableItemCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
-	class ULostArcItemBase* GetSlotItem(int32 Index);
-	void InventorySlotChangeNullptr(int32 Index);
-
+	bool ConsumableCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
 	class ULostArcAbilityBase* GetSlotData(int32 Index);
 
 protected:
@@ -39,6 +35,6 @@ private:
 	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
-
+	
 	TArray<class ULostArcItemBase*> InventorySlot;
 };

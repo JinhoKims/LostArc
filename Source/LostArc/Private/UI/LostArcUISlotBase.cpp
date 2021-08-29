@@ -2,6 +2,7 @@
 
 #include "UI/LostArcUISlotBase.h"
 #include "Character/LostArcCharacter.h"
+#include "Component/LostArcInventoryComponent.h"
 
 void ULostArcUISlotBase::NativeConstruct()
 {

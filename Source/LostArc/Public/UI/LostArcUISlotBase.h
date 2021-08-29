@@ -32,6 +32,8 @@ protected:
 	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;
 
+	int32 SlotIndex;
+
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void SetSlotData(ULostArcAbilityBase* NewData);
@@ -39,5 +41,4 @@ protected:
 
 private:
 	bool bEnableTick;
-	int32 SlotIndex;
 };
