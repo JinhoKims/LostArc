@@ -26,18 +26,10 @@ void ULostArcInventoryComponent::InitializeComponent()
 
 	for (int i = 0; i < 5; i++)
 	{
-		ItemTable.Add(ItemClass[i].GetDefaultObject()->ItemName, ItemClass[i]); // 아이템 테이블에 모든 아이템 정보를 넣는다.
+		ItemTable.Add(ItemClass[i].GetDefaultObject()->GetItemName(), ItemClass[i]); // 아이템 테이블에 모든 아이템 정보를 넣는다.
 	}
 
 	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
-}
-
-ULostArcAbilityBase* ULostArcInventoryComponent::GetItemData(int32 Index)
-{
-	if (InventorySlot[Index] == nullptr)
-		return nullptr;
-	else
-		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
 }
 
 // Called when the game starts
@@ -47,13 +39,6 @@ void ULostArcInventoryComponent::BeginPlay()
 	
 	AddPickupItem("Potion_Health", 3);
 	AddPickupItem("Potion_Mana", 1);
-	/*AddPickupItem("Potion_Health", 48);
-	AddPickupItem("Potion_Mana", 56);
-	AddPickupItem("Potion_Health", 10);
-	AddPickupItem("Potion_Mana", 20);
-	AddPickupItem("Potion_Health", 54);
-	AddPickupItem("Potion_Mana", 25);
-	AddPickupItem("Potion_Mana", 15);*/
 
 	UE_LOG(LogTemp, Warning, TEXT("Item Health : %d"), InventorySlot[0]->GetItemQuantity());
 	UE_LOG(LogTemp, Warning, TEXT("Item Mana : %d"), InventorySlot[1]->GetItemQuantity());
@@ -74,7 +59,6 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 	ItemTable.Empty();
 }
 
-// Called every frame
 void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -113,7 +97,8 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					{
 						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
 						InventorySlot[i]->SetInventorySlotIndex(i);
-						InventorySlotUpdate.Broadcast(i);
+						// InventorySlotUpdate.Broadcast(i);
+						InvenSlotUpdate.Broadcast(i, true);
 						InventorySlot[i]->AddItemCount(ItemCount); // 수량 증가
 						break;
 					}
@@ -128,7 +113,8 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
 					InventorySlot[i]->SetInventorySlotIndex(i);
-					InventorySlotUpdate.Broadcast(i);
+					// InventorySlotUpdate.Broadcast(i);
+					InvenSlotUpdate.Broadcast(i, true);
 					break;
 				}
 			}
@@ -142,7 +128,7 @@ bool ULostArcInventoryComponent::ConsumableItemCheck(ULostArcItemBase* NewItem, 
 	{
 		if (InventorySlot[i] != nullptr)
 		{
-			if (InventorySlot[i]->ItemName == NewItem->ItemName)
+			if (InventorySlot[i]->GetItemName() == NewItem->GetItemName())
 			{
 				InventorySlot[i]->AddItemCount(ItemCount); // 수량만 증가
 				return true;
@@ -164,4 +150,23 @@ void ULostArcInventoryComponent::InventorySlotChangeNullptr(int32 Index)
 {
 	InventorySlotEmpty.Broadcast(Index);
 	InventorySlot[Index] = nullptr;
+}
+
+ULostArcAbilityBase* ULostArcInventoryComponent::GetItemData(int32 Index)
+{
+	if (InventorySlot[Index] == nullptr)
+		return nullptr;
+	else
+		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
+}
+
+void ULostArcInventoryComponent::ItemUse(int32 SlotIndex)
+{
+	if (InventorySlot[SlotIndex] != nullptr)
+	{
+		if (!InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템 수량이 바닥날 경우
+		{
+			InventorySlot[SlotIndex] = nullptr;
+		}
+	}
 }

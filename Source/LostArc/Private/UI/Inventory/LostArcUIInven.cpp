@@ -16,6 +16,9 @@ void ULostArcUIInven::NativeConstruct()
 		InvenSlot.Add(Cast<ULostArcUIInvenSlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BPInven_Slot_%d"), i)))));
 		InvenSlot[i]->SetSlotIndex(i);
 	}
+
+	OwnerCharacter->InventoryComponent->InventorySlotUpdate.AddUObject(this, &ULostArcUIInventory::InventorySlotConstruct);
+	OwnerCharacter->InventoryComponent->InventorySlotEmpty.AddUObject(this, &ULostArcUIInventory::InventorySlotClear);
 }
 
 void ULostArcUIInven::BeginDestroy()

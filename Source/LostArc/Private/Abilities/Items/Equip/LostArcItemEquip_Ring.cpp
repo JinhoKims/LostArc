@@ -4,7 +4,7 @@
 
 ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
-    ItemName = FString("Equip_Ring");
+	Name = FString("Equip_Ring");
 	MaxEqiupSlotCount = 2;
 	Type = EAccessoryType::Ring;
 

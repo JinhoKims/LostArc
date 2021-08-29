@@ -19,9 +19,18 @@ ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectI
 
 bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 {
-	if (Super::Use(Character))
+	return Super::Use(Character);
+}
+
+bool ULostArcItemPotionBase::ItemConsumption(ALostArcCharacter* Character)
+{
+	if (--ItemQuantity) // Item이 1이상
 	{
+		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
+		AbilityCDProperty.Value.Broadcast(true);
+		ItemQuantityUpdate.Broadcast();
 		return true;
 	}
-	return false;
+	else
+		return false; // Item이 0
 }

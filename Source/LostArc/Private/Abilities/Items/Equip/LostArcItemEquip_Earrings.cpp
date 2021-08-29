@@ -6,7 +6,7 @@
 
 ULostArcItemEquip_Earrings::ULostArcItemEquip_Earrings(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
-	ItemName = FString("Equip_Earrings");
+	Name = FString("Equip_Earrings");
 	MaxEqiupSlotCount = 2;
 	Type = EAccessoryType::Earring;
 

@@ -32,5 +32,4 @@ protected:
 	UTexture2D* Ability_Icon;
 	float CoolDown;
 	FString Name;
-
 };

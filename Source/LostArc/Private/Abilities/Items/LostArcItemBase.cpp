@@ -24,13 +24,7 @@ void ULostArcItemBase::SetInventorySlotIndex(int32 index)
 
 bool ULostArcItemBase::Use(ALostArcCharacter* Character)
 {
-	if (AbilityStateCheck(Character))
-	{
-		PreCast(Character);
-		return true;
-	}
-	else
-		return false;
+	return AbilityStateCheck(Character);
 }
 
 bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
@@ -49,16 +43,3 @@ void ULostArcItemBase::AddItemCount(int32 Count)
 	ItemQuantityUpdate.Broadcast();
 }
 
-void ULostArcItemBase::PreCast(ALostArcCharacter* Character)
-{
-	if (--ItemQuantity)
-	{
-		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
-		ItemQuantityUpdate.Broadcast();
-		AbilityCDProperty.Value.Broadcast(true);
-	}
-	else // Last Item
-	{
-		Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
-	}
-}
