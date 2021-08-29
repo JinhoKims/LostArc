@@ -143,7 +143,7 @@ ULostArcItemBase* ULostArcInventoryComponent::GetSlotItem(int32 Index)
 		return InventorySlot[Index];
 }
 
-ULostArcAbilityBase* ULostArcInventoryComponent::GetItemData(int32 Index)
+ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
 {
 	if (InventorySlot[Index] == nullptr)
 		return nullptr;

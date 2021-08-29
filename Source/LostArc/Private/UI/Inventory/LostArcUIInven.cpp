@@ -30,7 +30,7 @@ void ULostArcUIInven::ConstructSlot(int32 Index, bool Flag)
 {
 	if (Flag)
 	{
-		InvenSlot[Index]->SetSlotData(OwnerCharacter->InventoryComponent->GetItemData(Index));
+		InvenSlot[Index]->SetSlotData(OwnerCharacter->InventoryComponent->GetSlotData(Index));
 	}
 	else
 	{

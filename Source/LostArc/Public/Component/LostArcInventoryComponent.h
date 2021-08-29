@@ -28,7 +28,7 @@ public:
 	class ULostArcItemBase* GetSlotItem(int32 Index);
 	void InventorySlotChangeNullptr(int32 Index);
 
-	class ULostArcAbilityBase* GetItemData(int32 Index);
+	class ULostArcAbilityBase* GetSlotData(int32 Index);
 
 protected:
 	virtual void BeginPlay() override;
