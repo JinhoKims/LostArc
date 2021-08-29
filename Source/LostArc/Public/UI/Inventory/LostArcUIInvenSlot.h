@@ -17,6 +17,7 @@ class LOSTARC_API ULostArcUIInvenSlot : public ULostArcUISlotBase
 public:
 	virtual void SetNativeTick(bool CD) override;
 	virtual void SetSlotData(ULostArcAbilityBase* NewData) override;
+	virtual void ClearSlotData() override;
 	void UpdateQuantity();
 
 protected:

@@ -32,26 +32,17 @@ public:
 	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
 	
 public:
-	/** Returns if the item is consumable (MaxCount <= 0)*/
-	bool IsConsumable() const;
-
-	EItemType GetItemType() const;
-	int32 GetMaxCount() { return MaxCount; }
-	FString GetItemName() { return Name; }
-	int32 GetItemQuantity() { return ItemQuantity; }
-	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
-	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
-	int32 GetInventorySlotIndex() { return InventorySlotIndex; }
-	void SetInventorySlotIndex(int32 index);
-
 	virtual bool Use(ALostArcCharacter* Character) override;
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
-	void AddItemCount(int32 Count);
+	bool IsConsumable() const;
 
+	int32 GetItemQuantity() { return ItemQuantity; }
+	void SetItemQuantity(int32 Count);
+	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
+	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
 
 protected:
 	int32 MaxCount;
 	int32 ItemQuantity;
 	EItemType ItemType;
-	int32 InventorySlotIndex;
 };

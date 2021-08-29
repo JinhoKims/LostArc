@@ -17,8 +17,7 @@ void ULostArcUIInven::NativeConstruct()
 		InvenSlot[i]->SetSlotIndex(i);
 	}
 
-	OwnerCharacter->InventoryComponent->InventorySlotUpdate.AddUObject(this, &ULostArcUIInventory::InventorySlotConstruct);
-	OwnerCharacter->InventoryComponent->InventorySlotEmpty.AddUObject(this, &ULostArcUIInventory::InventorySlotClear);
+	OwnerCharacter->InventoryComponent->InvenSlotUpdate.AddUObject(this, &ULostArcUIInven::ConstructSlot);
 }
 
 void ULostArcUIInven::BeginDestroy()
@@ -27,7 +26,14 @@ void ULostArcUIInven::BeginDestroy()
 	InvenSlot.Empty();
 }
 
-void ULostArcUIInven::ConstructSlot(int32 Index)
+void ULostArcUIInven::ConstructSlot(int32 Index, bool Flag)
 {
-	InvenSlot[Index]->SetSlotData(OwnerCharacter->InventoryComponent->GetItemData(Index));
+	if (Flag)
+	{
+		InvenSlot[Index]->SetSlotData(OwnerCharacter->InventoryComponent->GetItemData(Index));
+	}
+	else
+	{
+		InvenSlot[Index]->ClearSlotData();
+	}
 }

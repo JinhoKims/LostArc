@@ -24,6 +24,7 @@ public:
 public:
 	virtual bool Use(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::Use, return false;);
 	virtual bool AbilityStateCheck(ALostArcCharacter* Character) PURE_VIRTUAL(ULostArcAbilityBase::AbilityStateCheck, return false;);
+	
 	UTexture2D* GetAbility_Icon() { return Ability_Icon; }
 	float GetCDTime() { return CoolDown; }
 	FString GetName() { return Name; }

@@ -35,6 +35,7 @@ protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void SetSlotData(ULostArcAbilityBase* NewData);
+	virtual void ClearSlotData();
 
 private:
 	bool bEnableTick;

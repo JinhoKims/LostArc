@@ -12,16 +12,6 @@ bool ULostArcItemBase::IsConsumable() const
 	return false;
 }
 
-EItemType ULostArcItemBase::GetItemType() const
-{
-	return ItemType;
-}
-
-void ULostArcItemBase::SetInventorySlotIndex(int32 index)
-{
-	InventorySlotIndex = index;
-}
-
 bool ULostArcItemBase::Use(ALostArcCharacter* Character)
 {
 	return AbilityStateCheck(Character);
@@ -37,7 +27,7 @@ bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
 	return true;
 }
 
-void ULostArcItemBase::AddItemCount(int32 Count)
+void ULostArcItemBase::SetItemQuantity(int32 Count)
 {
 	ItemQuantity += Count;
 	ItemQuantityUpdate.Broadcast();

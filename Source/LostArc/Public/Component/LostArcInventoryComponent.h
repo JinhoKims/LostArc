@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "LostArcInventoryComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventorySlotUpdateDelegate, int32)
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInvenSlotUpdateDelegate, int32, bool)
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -15,9 +14,6 @@ class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	FOnInventorySlotUpdateDelegate InventorySlotUpdate;
-	FOnInventorySlotUpdateDelegate InventorySlotEmpty;
-
 	FOnInvenSlotUpdateDelegate InvenSlotUpdate;
 
 	ULostArcInventoryComponent();

@@ -15,8 +15,8 @@ void ULostArcUIInventory::NativeConstruct()
 	}
 
 	auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
-	Character->InventoryComponent->InventorySlotUpdate.AddUObject(this, &ULostArcUIInventory::InventorySlotConstruct);
-	Character->InventoryComponent->InventorySlotEmpty.AddUObject(this, &ULostArcUIInventory::InventorySlotClear);
+//	Character->InventoryComponent->InventorySlotUpdate.AddUObject(this, &ULostArcUIInventory::InventorySlotConstruct);
+//	Character->InventoryComponent->InventorySlotEmpty.AddUObject(this, &ULostArcUIInventory::InventorySlotClear);
 }
 
 void ULostArcUIInventory::BeginDestroy()

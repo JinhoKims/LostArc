@@ -16,7 +16,6 @@ class LOSTARC_API ULostArcItemPotion_Mana : public ULostArcItemPotionBase
 	
 public:
 	ULostArcItemPotion_Mana(const FObjectInitializer& ObjectInitializer);
-
 	virtual bool Use(ALostArcCharacter* Character) override;
 
 private:

@@ -61,7 +61,7 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 	}
 
 	Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Item->GetItemQuantity())));
-	if (Item->GetMaxCount() <= 0)
+	if (Item->IsConsumable())
 	{
 		Text_Quantity->SetVisibility(ESlateVisibility::Visible);
 	}
@@ -115,8 +115,8 @@ void ULostArcUIInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, 
 	{
 		ULostArcUISlotDrag* oper = NewObject<ULostArcUISlotDrag>();
 		OutOperation = oper;
-		oper->FromNum = Item->GetInventorySlotIndex();
-		oper->SlotType = Item->GetItemType();
+		//oper->FromNum = Item->GetInventorySlotIndex();
+		//oper->SlotType = Item->GetItemType();
 		
 		if (DragVisualClass != nullptr) // 드래그할 때 새로 만들 따라다니는 위젯(기존 위젯은 Hidden 처리)
 		{
@@ -140,7 +140,7 @@ bool ULostArcUIInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FD
 	if (oper != nullptr)
 	{
 		// UE_LOG(LogTemp, Warning, TEXT("%d"), this->Item->GetInventorySlotIndex()); -> 모든 슬롯에 번호 지정 필요!! (지금은 현재 아이템 멤버에 슬롯 번호를 기입함)
-		UE_LOG(LogTemp, Warning, TEXT("%d"), Inven->GetSlotItem(oper->FromNum)->GetInventorySlotIndex()); // 드래그한 슬롯의 번호를 출력(아이템의 멤버를 이용해)
+		// UE_LOG(LogTemp, Warning, TEXT("%d"), Inven->GetSlotItem(oper->FromNum)->GetInventorySlotIndex()); // 드래그한 슬롯의 번호를 출력(아이템의 멤버를 이용해)
 		return true;
 	}
 

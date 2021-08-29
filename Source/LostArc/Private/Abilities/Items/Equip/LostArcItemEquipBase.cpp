@@ -8,7 +8,6 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 	MaxCount = 1;
 	ItemQuantity = 1;
 	CoolDown = 0.f;
-	InventorySlotIndex = 0;
 
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/Ddu8ENAV0AEMKkh.Ddu8ENAV0AEMKkh'"));
 	if (T2D_ICON.Object != NULL)
@@ -21,7 +20,7 @@ bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
 	if (Character->EquipComponent->EquipmentMounts(this, Type))
 	{
-		Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
+		//Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
 		return true;
 	}
 	return false;

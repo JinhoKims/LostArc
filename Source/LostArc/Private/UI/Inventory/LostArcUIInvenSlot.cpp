@@ -2,6 +2,7 @@
 
 
 #include "UI/Inventory/LostArcUIInvenSlot.h"
+#include "Component/LostArcInventoryComponent.h"
 
 void ULostArcUIInvenSlot::NativeConstruct()
 {
@@ -16,7 +17,6 @@ void ULostArcUIInvenSlot::SetNativeTick(bool CD)
 void ULostArcUIInvenSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-
 }
 
 void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
@@ -32,7 +32,7 @@ void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
 		Image_BG->SetVisibility(ESlateVisibility::Visible);
 	}
 
-	if (SlotItem->GetMaxCount() <= 0)
+	if (SlotItem->IsConsumable())
 	{
 		UpdateQuantity();
 		Text_Quantity->SetVisibility(ESlateVisibility::Visible);
@@ -41,6 +41,16 @@ void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
 	NewData->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInvenSlot::SetNativeTick);
 	SlotItem->ItemQuantityUpdate.AddUObject(this, &ULostArcUIInvenSlot::UpdateQuantity);
 }
+
+void ULostArcUIInvenSlot::ClearSlotData()
+{
+	Super::ClearSlotData();
+	SlotItem = nullptr;
+
+	Image_BG->SetVisibility(ESlateVisibility::Hidden);
+	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+}
+
 void ULostArcUIInvenSlot::UpdateQuantity()
 {
 	if (SlotData != nullptr) 

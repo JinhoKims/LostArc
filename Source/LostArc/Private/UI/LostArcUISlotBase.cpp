@@ -48,3 +48,10 @@ void ULostArcUISlotBase::SetSlotData(ULostArcAbilityBase* NewData)
 		Image_Icon->SetVisibility(ESlateVisibility::Visible);
 	}
 }
+
+void ULostArcUISlotBase::ClearSlotData()
+{
+	SlotData = nullptr;
+
+	Image_Icon->SetVisibility(ESlateVisibility::Hidden);
+}
