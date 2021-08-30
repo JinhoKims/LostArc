@@ -28,7 +28,7 @@ bool ULostArcItemPotionBase::ItemConsumption(ALostArcCharacter* Character)
 	{
 		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
 		AbilityCDProperty.Value.Broadcast(true);
-		ItemQuantityUpdate.Broadcast();
+		QuantityUpdate.Broadcast();
 		return true;
 	}
 	else

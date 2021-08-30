@@ -64,21 +64,6 @@ void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickT
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* Item, int32 ItemCount)
-{
-	for (int i = 0; i < 16; i++)
-	{
-		if (InventorySlot[i] == nullptr)
-		{
-			InventorySlot[i] = Item;
-//			InventorySlotUpdate.Broadcast(i);
-			if (Item->IsConsumable())
-				InventorySlot[i]->SetItemQuantity(ItemCount);
-			break;
-		}
-	}
-}
-
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)
 {
 	if (ItemTable.Find(ItemName) == nullptr) return;
@@ -95,8 +80,8 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					if (InventorySlot[i] == nullptr)
 					{
 						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
-						InvenSlotUpdate.Broadcast(i, true);
 						InventorySlot[i]->SetItemQuantity(ItemCount); // 수량 증가
+						InvenSlotUpdate.Broadcast(i);
 						break;
 					}
 				}
@@ -109,7 +94,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				if (InventorySlot[i] == nullptr)
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
-					InvenSlotUpdate.Broadcast(i, true);
+					InvenSlotUpdate.Broadcast(i);
 					break;
 				}
 			}
@@ -148,7 +133,24 @@ void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 		if (!InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템 수량이 바닥날 경우
 		{
 			InventorySlot[SlotIndex] = nullptr;
-			InvenSlotUpdate.Broadcast(SlotIndex, false);
+			InvenSlotUpdate.Broadcast(SlotIndex);
 		}
 	}
+}
+
+void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
+{
+	if (InventorySlot[ownerIndex] == nullptr) return;
+
+	if (InventorySlot[distIndex] == nullptr)
+	{
+		InventorySlot[distIndex] = MoveTemp(InventorySlot[ownerIndex]);
+	}
+	else
+	{
+		Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
+	}
+
+	InvenSlotUpdate.Broadcast(ownerIndex);
+	InvenSlotUpdate.Broadcast(distIndex);
 }

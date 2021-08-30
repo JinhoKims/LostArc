@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "LostArcInventoryComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInvenSlotUpdateDelegate, int32, bool)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnInvenSlotUpdateDelegate, int32)
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
@@ -22,9 +22,11 @@ public:
 
 	void UseItem(int32 SlotInex);	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
-	void MoveItem(class ULostArcItemBase* Item, int32 ItemCount = 1);
+	void SwapSlot(int32 ownerIndex, int32 distIndex);
 	bool ConsumableCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
 	class ULostArcAbilityBase* GetSlotData(int32 Index);
+
+	void MoveItem(class ULostArcItemBase* Item, int32 ItemCount = 1) {} // remove this
 
 protected:
 	virtual void BeginPlay() override;

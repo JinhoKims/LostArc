@@ -29,7 +29,7 @@ public:
 	UTexture2D* BgTexture2D;
 	UTexture2D* ItemTexture2D;
 	
-	FOnItemQuantityUpdateDelegate ItemQuantityUpdate;
+	FOnItemQuantityUpdateDelegate QuantityUpdate;
 	
 public:
 	virtual bool Use(ALostArcCharacter* Character) override;

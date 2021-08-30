@@ -38,21 +38,25 @@ void ULostArcUISlotBase::SetNativeTick(bool CD)
 	}
 }
 
-void ULostArcUISlotBase::SetSlotData(ULostArcAbilityBase* NewData)
+void ULostArcUISlotBase::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
-	SlotData = NewData;
-	if (SlotData == nullptr) return;
-
-	if (SlotData->GetAbility_Icon() != nullptr)
+	if (NewData == nullptr)
 	{
-		Image_Icon->SetBrushFromTexture(SlotData->GetAbility_Icon());
-		Image_Icon->SetVisibility(ESlateVisibility::Visible);
+		SlotData = nullptr;
+		Image_Icon->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		SlotData = NewData;
+		if (SlotData->GetAbility_Icon() != nullptr)
+		{
+			Image_Icon->SetBrushFromTexture(SlotData->GetAbility_Icon());
+			Image_Icon->SetVisibility(ESlateVisibility::Visible);
+		}
 	}
 }
 
-void ULostArcUISlotBase::ClearSlotData()
+void ULostArcUISlotBase::UnBindSlotData()
 {
-	SlotData = nullptr;
-
-	Image_Icon->SetVisibility(ESlateVisibility::Hidden);
+	SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle);
 }

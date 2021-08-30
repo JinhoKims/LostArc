@@ -2,7 +2,9 @@
 
 
 #include "UI/Inventory/LostArcUIInvenSlot.h"
+#include "UI/LostArcUISlotDrag.h"
 #include "Component/LostArcInventoryComponent.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 void ULostArcUIInvenSlot::NativeConstruct()
 {
@@ -19,6 +21,52 @@ void ULostArcUIInvenSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
+void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
+{
+	if (SlotData != nullptr) // Unbinding Delegate
+	{
+		UnBindSlotData();		
+	}
+
+	Super::RefreshSlotData(NewData);
+
+	if (NewData == nullptr)
+	{
+		Image_BG->SetVisibility(ESlateVisibility::Hidden);
+		Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
+		if (SlotItem == nullptr) return;
+		
+		if (SlotItem->GetBgTexture2D() != nullptr)
+		{
+			Image_BG->SetBrushFromTexture(SlotItem->GetBgTexture2D());
+			Image_BG->SetVisibility(ESlateVisibility::Visible);
+		}
+		if (SlotItem->IsConsumable())
+		{
+			UpdateQuantity();
+			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+		}
+
+		AbilityCDHandle = SlotData->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInvenSlot::SetNativeTick);
+		ItemQuantityHandle = SlotItem->QuantityUpdate.AddUObject(this, &ULostArcUIInvenSlot::UpdateQuantity);
+	}
+}
+
+void ULostArcUIInvenSlot::UnBindSlotData()
+{
+	Super::UnBindSlotData();
+	auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
+	
+	if (SlotItem != nullptr)
+	{
+		SlotItem->QuantityUpdate.Remove(ItemQuantityHandle);
+	}
+}
+
 FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
 	FEventReply reply;
@@ -33,10 +81,10 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 			return reply.NativeReply;
 		}
 	}
-	//else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
-	//{
-	//	reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
-	//}
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	{
+		reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+	}
 	return reply.NativeReply;
 }
 
@@ -47,39 +95,13 @@ void ULostArcUIInvenSlot::NativeOnDragDetected(const FGeometry& InGeometry, cons
 
 bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
-	return false;
-}
+	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 
+	ULostArcUISlotDrag* owner = Cast<ULostArcUISlotDrag>(InOperation);
+	auto InvenComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
 
-void ULostArcUIInvenSlot::SetSlotData(ULostArcAbilityBase* NewData)
-{
-	Super::SetSlotData(NewData);
-
-	auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
-	if (SlotItem == nullptr) return;
-
-	if (SlotItem->GetBgTexture2D() != nullptr)
-	{
-		Image_BG->SetBrushFromTexture(SlotItem->GetBgTexture2D());
-		Image_BG->SetVisibility(ESlateVisibility::Visible);
-	}
-
-	if (SlotItem->IsConsumable())
-	{
-		UpdateQuantity();
-		Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-	}
-
-	NewData->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInvenSlot::SetNativeTick);
-	SlotItem->ItemQuantityUpdate.AddUObject(this, &ULostArcUIInvenSlot::UpdateQuantity);
-}
-
-void ULostArcUIInvenSlot::ClearSlotData()
-{
-	Super::ClearSlotData();
-
-	Image_BG->SetVisibility(ESlateVisibility::Hidden);
-	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+	InvenComponent->SwapSlot(owner->SlotIndex, this->SlotIndex);
+	return true;
 }
 
 void ULostArcUIInvenSlot::UpdateQuantity()

@@ -46,7 +46,7 @@ void ULostArcUIInventorySlot::SetNativeTick(bool CD)
 void ULostArcUIInventorySlot::BindItemDelegate()
 {
 	Item->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInventorySlot::SetNativeTick);
-	Item->ItemQuantityUpdate.AddUObject(this, &ULostArcUIInventorySlot::UpdateItemQuantity);
+	Item->QuantityUpdate.AddUObject(this, &ULostArcUIInventorySlot::UpdateItemQuantity);
 
 	if (Item->GetItemTexture2D() != nullptr)
 	{

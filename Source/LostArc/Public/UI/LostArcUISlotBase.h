@@ -20,6 +20,8 @@ class LOSTARC_API ULostArcUISlotBase : public UUserWidget
 
 public:
 	virtual void SetNativeTick(bool CD);
+	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData);
+	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 
 protected:
@@ -32,12 +34,11 @@ protected:
 	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;
 
+	FDelegateHandle AbilityCDHandle;
 	int32 SlotIndex;
 
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	virtual void SetSlotData(ULostArcAbilityBase* NewData);
-	virtual void ClearSlotData();
 
 private:
 	bool bEnableTick;

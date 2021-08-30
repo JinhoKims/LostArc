@@ -30,6 +30,6 @@ bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
 void ULostArcItemBase::SetItemQuantity(int32 Count)
 {
 	ItemQuantity += Count;
-	ItemQuantityUpdate.Broadcast();
+	QuantityUpdate.Broadcast();
 }
 

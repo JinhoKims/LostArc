@@ -16,8 +16,8 @@ class LOSTARC_API ULostArcUIInvenSlot : public ULostArcUISlotBase
 	
 public:
 	virtual void SetNativeTick(bool CD) override;
-	virtual void SetSlotData(ULostArcAbilityBase* NewData) override;
-	virtual void ClearSlotData() override;
+	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData) override;
+	virtual void UnBindSlotData() override;
 	void UpdateQuantity();
 
 protected:
@@ -32,5 +32,8 @@ protected:
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+
+private:
+	FDelegateHandle ItemQuantityHandle;
 };
 

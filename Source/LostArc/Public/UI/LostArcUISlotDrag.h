@@ -16,7 +16,7 @@ class LOSTARC_API ULostArcUISlotDrag : public UDragDropOperation
 	GENERATED_BODY()
 	
 public:
-	int32 FromNum;
+	int32 SlotIndex;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<EItemType> SlotType;

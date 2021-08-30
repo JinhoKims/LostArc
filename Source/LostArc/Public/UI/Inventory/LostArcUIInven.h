@@ -15,7 +15,7 @@ class LOSTARC_API ULostArcUIInven : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void ConstructSlot(int32 Index, bool Flag);
+	void RefreshSlot(int32 Index);
 	
 protected:
 	virtual void NativeConstruct() override;
