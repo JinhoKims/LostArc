@@ -18,8 +18,6 @@ USTRUCT(Atomic, BlueprintType)
 struct FEquipSlot
 {
 	GENERATED_BODY()
-
-public:
 	TArray<class ULostArcItemEquipBase*> EquipArray;
 };
 
@@ -31,12 +29,8 @@ class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
 	FOnEquipSlotUpdateDelegate EquipSlotClear;
-
-	TArray<class ULostArcItemEquipBase*> NecklaceSlot;
-	TArray<class ULostArcItemEquipBase*> EarringSlot;
-	TArray<class ULostArcItemEquipBase*> RingSlot;
+	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TMap<TEnumAsByte<EAccessoryType>, TSubclassOf<class ULostArcItemEquipBase>> EquipTable;
@@ -50,7 +44,9 @@ protected:
 public:	
 	ULostArcCharacterEquipComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	bool EquipmentMounts(class ULostArcItemEquipBase* NewEquip, EAccessoryType Type);
+
+	void DismountEquip(class ULostArcItemEquipBase* OwnerEquip, int32 Index);
+	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
+
 	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 Index);
-	void DismountEquip(EAccessoryType Type, int32 Index);
 };

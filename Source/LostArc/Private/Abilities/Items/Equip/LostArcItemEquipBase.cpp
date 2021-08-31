@@ -18,11 +18,10 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 
 bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
-	if (Character->EquipComponent->EquipmentMounts(this, Type))
-	{
-		//Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
-		return true;
-	}
+	Character->EquipComponent->EquipMounts(this);
+
+	// Character->InventoryComponent->InventorySlotChangeNullptr(GetInventorySlotIndex());
+	
 	return false;
 }
 
@@ -34,5 +33,5 @@ void ULostArcItemEquipBase::SetEquipSlotIndex(int32 index)
 void ULostArcItemEquipBase::Dismount(ALostArcCharacter* Character)
 {
 	auto Component = Character->EquipComponent;
-	Component->DismountEquip(Type, EquipSlotIndex);
+	Component->DismountEquip(this, EquipSlotIndex);
 }

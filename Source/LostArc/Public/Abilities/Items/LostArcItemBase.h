@@ -41,6 +41,8 @@ public:
 	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
 	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
 
+	EItemType GetItemType() { return ItemType; }
+
 protected:
 	int32 MaxCount;
 	int32 ItemQuantity;

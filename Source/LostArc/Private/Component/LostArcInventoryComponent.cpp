@@ -28,7 +28,6 @@ void ULostArcInventoryComponent::InitializeComponent()
 	{
 		ItemTable.Add(ItemClass[i].GetDefaultObject()->GetName(), ItemClass[i]); // 아이템 테이블에 모든 아이템 정보를 넣는다.
 	}
-
 	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
 }
 
@@ -102,29 +101,6 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	}
 }
 
-bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int32 ItemCount)
-{
-	for (int i = 0; i < 16; i++)
-	{
-		if (InventorySlot[i] != nullptr)
-		{
-			if (InventorySlot[i]->GetName() == NewItem->GetName()) // 인벤에 이미 있으면
-			{
-				InventorySlot[i]->SetItemQuantity(ItemCount); // 수량만 증가
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
-{
-	if (InventorySlot[Index] == nullptr)
-		return nullptr;
-	else
-		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
-}
 
 void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 {
@@ -148,9 +124,71 @@ void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
 	}
 	else
 	{
-		Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
+		if (InventorySlot[ownerIndex]->GetName().Equals(InventorySlot[distIndex]->GetName()))
+		{
+			InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
+		}
+		else
+		{
+			Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
+		}
 	}
 
 	InvenSlotUpdate.Broadcast(ownerIndex);
 	InvenSlotUpdate.Broadcast(distIndex);
+}
+
+void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 distIndex)
+{
+	switch (OwnerItem->GetItemType())
+	{
+	case ITEM_Equip:
+		if (distIndex >= 0) // 아이템 슬롯과 장비 슬롯을 스왑
+		{
+			// SwapSlot
+		}
+		else 
+		{
+			for (int i = 0; i < 16; i++)
+			{
+				if (InventorySlot[i] == nullptr)
+				{
+					InventorySlot[i] = OwnerItem;
+					InvenSlotUpdate.Broadcast(i);
+					break;
+				}
+			}
+		}
+		break;
+	case ITEM_Potion:
+		// SwapSlot
+		break;
+	case ITEM_None:
+		break;
+	}
+}
+
+
+bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int32 ItemCount)
+{
+	for (int i = 0; i < 16; i++)
+	{
+		if (InventorySlot[i] != nullptr)
+		{
+			if (InventorySlot[i]->GetName() == NewItem->GetName()) // 인벤에 이미 있으면
+			{
+				InventorySlot[i]->SetItemQuantity(ItemCount); // 수량만 증가
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
+{
+	if (InventorySlot[Index] == nullptr)
+		return nullptr;
+	else
+		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
 }
