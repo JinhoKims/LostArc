@@ -101,7 +101,6 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	}
 }
 
-
 void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
@@ -120,17 +119,21 @@ void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
 
 	if (InventorySlot[distIndex] == nullptr)
 	{
-		InventorySlot[distIndex] = MoveTemp(InventorySlot[ownerIndex]);
+		InventorySlot[distIndex] = InventorySlot[ownerIndex];
+		InventorySlot[ownerIndex] = nullptr;
 	}
 	else
 	{
-		if (InventorySlot[ownerIndex]->GetName().Equals(InventorySlot[distIndex]->GetName()))
+		if (!GetOwner()->GetWorldTimerManager().IsTimerActive(InventorySlot[distIndex]->AbilityCDProperty.Key))
 		{
-			InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
-		}
-		else
-		{
-			Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
+			if (InventorySlot[ownerIndex]->GetName().Equals(InventorySlot[distIndex]->GetName()))
+			{
+				InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
+			}
+			else
+			{
+				Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
+			}
 		}
 	}
 
@@ -145,7 +148,23 @@ void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 dis
 	case ITEM_Equip:
 		if (distIndex >= 0) // 아이템 슬롯과 장비 슬롯을 스왑
 		{
-			// SwapSlot
+			if (InventorySlot[distIndex] == nullptr)
+			{
+				InventorySlot[distIndex] = OwnerItem;
+				InvenSlotUpdate.Broadcast(distIndex);
+			}
+			else // =! nullptr
+			{
+				if (InventorySlot[distIndex]->GetItemType() == ITEM_Equip)
+				{
+					if (dynamic_cast<ULostArcItemEquipBase*>(OwnerItem)->GetType() == dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[distIndex])->GetType())
+					{
+						Swap(OwnerItem, InventorySlot[distIndex]);
+						InvenSlotUpdate.Broadcast(distIndex);
+						(Cast<ALostArcCharacter>(GetOwner()))->EquipComponent->EquipMounts(dynamic_cast<ULostArcItemEquipBase*>(OwnerItem));
+					}
+				}
+			}
 		}
 		else 
 		{
@@ -167,7 +186,6 @@ void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 dis
 		break;
 	}
 }
-
 
 bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int32 ItemCount)
 {

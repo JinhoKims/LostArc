@@ -12,7 +12,8 @@ void ULostArcUIInven::NativeConstruct()
 
 	for (int i = 0; i < 16; i++)
 	{
-		InvenSlot.Add(Cast<ULostArcUIInvenSlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BPInven_Slot_%d"), i))))); InvenSlot[i]->SetSlotIndex(i);
+		InvenSlot.Add(Cast<ULostArcUIInvenSlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_InvenSlot_%d"), i))))); 
+		InvenSlot[i]->SetSlotIndex(i);
 	}
 
 	OwnerCharacter->InventoryComponent->InvenSlotUpdate.AddUObject(this, &ULostArcUIInven::RefreshSlot);

@@ -24,12 +24,17 @@ public:
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 
+
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_Icon;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_CD;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf <UUserWidget> DragVisualClass;
 
 	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;

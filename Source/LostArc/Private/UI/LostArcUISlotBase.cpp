@@ -43,6 +43,7 @@ void ULostArcUISlotBase::RefreshSlotData(ULostArcAbilityBase* NewData)
 	if (NewData == nullptr)
 	{
 		SlotData = nullptr;
+	
 		Image_Icon->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else

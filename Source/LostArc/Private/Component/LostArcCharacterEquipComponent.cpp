@@ -28,19 +28,18 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 	EquipTable의 Key의 Value는 블루프린트(에디터)에서 설정해주는데 Init()는 에디터(블프) 실행 전에도 호출되어서 
 	이 때 EquipTable의 Value를 가져올 수 없기에 직접 클래스정보(StaticClass)를 가져와야 한다. */
 
-	for (int32 i = 0; i < 3; i++)
-	{
-		for (int32 j = 0; j < EquipTable.Find((EAccessoryType)i)->GetDefaultObject()->MaxEqiupSlotCount; j++)
-		{
-			EquipSlot.Find((EAccessoryType)i)->EquipArray.Add(NewObject<ULostArcItemEquipBase>(this, EquipTable.Find((EAccessoryType)i)->Get()));
-		}
-	}
+	
 }
 
 // Called when the game starts
 void ULostArcCharacterEquipComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	for (int32 i = 0; i < 3; i++)
+	{
+		EquipSlot.Find((EAccessoryType)i)->EquipArray.SetNum(EquipTable.Find((EAccessoryType)i)->GetDefaultObject()->MaxEqiupSlotCount);
+	}
 }
 
 // Called every frame
@@ -81,7 +80,4 @@ void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEqui
 	Swap(EquipSlot.Find(NewEquip->GetType())->EquipArray[0], NewEquip);
 	EquipSlotUpdate.Broadcast(NewEquip->GetType(), 0);
 	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(NewEquip);
-
-	
 }	
-

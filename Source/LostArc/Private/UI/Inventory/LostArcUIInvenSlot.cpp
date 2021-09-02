@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Controller/LostArcPlayerController.h"
 #include "UI/Inventory/LostArcUIInvenSlot.h"
 #include "UI/LostArcUISlotDrag.h"
 #include "Component/LostArcInventoryComponent.h"
@@ -83,14 +83,36 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 	}
 	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
 	{
-		reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+		if (SlotData)
+		{
+			if (!GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key)) 
+			{
+				reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+			}
+		}
 	}
 	return reply.NativeReply;
 }
 
 void ULostArcUIInvenSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
 {
+	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
 
+	if (OutOperation == nullptr)
+	{
+		ULostArcUISlotDrag* oper = NewObject<ULostArcUISlotDrag>();
+		UUserWidget* DraggedItem = CreateWidget<UUserWidget>(GetWorld(), DragVisualClass);
+		UImage* ImageBox = Cast<UImage>(DraggedItem->GetWidgetFromName("Image_Item"));
+
+		if (ImageBox != nullptr)
+		{
+			ImageBox->SetBrushFromTexture(SlotData->GetAbility_Icon());
+		}
+
+		oper->DefaultDragVisual = DraggedItem;
+		oper->SlotIndex = this->SlotIndex;
+		OutOperation = oper;
+	}
 }
 
 bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
@@ -98,9 +120,8 @@ bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 
 	ULostArcUISlotDrag* owner = Cast<ULostArcUISlotDrag>(InOperation);
-	auto InvenComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
+	Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent->SwapSlot(owner->SlotIndex, this->SlotIndex);
 
-	InvenComponent->SwapSlot(owner->SlotIndex, this->SlotIndex);
 	return true;
 }
 
