@@ -37,7 +37,7 @@ void ULostArcInventoryComponent::BeginPlay()
 	Super::BeginPlay();
 	
 	AddPickupItem("Potion_Health", 3);
-	AddPickupItem("Potion_Mana", 1);
+	AddPickupItem("Potion_Mana", 3);
 
 	UE_LOG(LogTemp, Warning, TEXT("Item Health : %d"), InventorySlot[0]->GetItemQuantity());
 	UE_LOG(LogTemp, Warning, TEXT("Item Mana : %d"), InventorySlot[1]->GetItemQuantity());
@@ -105,7 +105,7 @@ void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
 	{
-		if (!InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템 수량이 바닥날 경우
+		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
 		{
 			InventorySlot[SlotIndex] = nullptr;
 			InvenSlotUpdate.Broadcast(SlotIndex);

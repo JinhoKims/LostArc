@@ -13,13 +13,10 @@ ULostArcItemPotion_Health::ULostArcItemPotion_Health(const FObjectInitializer& O
 	}
 }
 
-bool ULostArcItemPotion_Health::Use(ALostArcCharacter* Character)
+bool ULostArcItemPotion_Health::Consumed(ALostArcCharacter* Character)
 {
-	if (Super::Use(Character))
-	{
-		auto StatComponent = Character->StatComponent;
-		StatComponent->SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp(StatComponent->GetCurrnetAttributeValue(EAttributeType::HP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
-	}
+	auto StatComponent = Character->StatComponent;
+	StatComponent->SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp(StatComponent->GetCurrnetAttributeValue(EAttributeType::HP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
 
-	return ItemConsumption(Character);
+	return Super::Consumed(Character);
 }

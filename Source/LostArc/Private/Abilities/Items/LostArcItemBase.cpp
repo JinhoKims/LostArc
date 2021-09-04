@@ -24,12 +24,16 @@ bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCDProperty.Key));
 		return false;
 	}
+
 	return true;
 }
 
-void ULostArcItemBase::SetItemQuantity(int32 Count)
+bool ULostArcItemBase::SetItemQuantity(int32 Count)
 {
 	ItemQuantity += Count;
 	QuantityUpdate.Broadcast();
+
+	return bool(FMath::Clamp(ItemQuantity, 0, 1));
 }
+
 

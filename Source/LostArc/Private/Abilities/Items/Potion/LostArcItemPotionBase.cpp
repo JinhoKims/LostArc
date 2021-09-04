@@ -19,18 +19,23 @@ ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectI
 
 bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 {
-	return Super::Use(Character);
+	if (Super::Use(Character))
+	{
+		return Consumed(Character);
+	}
+	return false;
 }
 
-bool ULostArcItemPotionBase::ItemConsumption(ALostArcCharacter* Character)
+bool ULostArcItemPotionBase::Consumed(ALostArcCharacter* Character)
 {
-	if (--ItemQuantity) // Item이 1이상
+	if (Super::SetItemQuantity(-1)) // Item이 1이상 남음
 	{
-		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
+		Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() { AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
 		AbilityCDProperty.Value.Broadcast(true);
-		QuantityUpdate.Broadcast();
-		return true;
+		return false;
 	}
 	else
-		return false; // Item이 0
+	{
+		return true; // Item을 모두 소모
+	}
 }

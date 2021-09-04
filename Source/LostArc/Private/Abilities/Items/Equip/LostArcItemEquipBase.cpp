@@ -8,6 +8,7 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 	MaxCount = 1;
 	ItemQuantity = 1;
 	CoolDown = 0.f;
+	MaxEqiupSlotCount = 0;
 
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/Ddu8ENAV0AEMKkh.Ddu8ENAV0AEMKkh'"));
 	if (T2D_ICON.Object != NULL)
