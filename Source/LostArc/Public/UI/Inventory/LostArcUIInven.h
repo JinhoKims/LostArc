@@ -23,7 +23,7 @@ protected:
 	
 private:
 	UPROPERTY(meta = (AllowPrivateAccess = true))
-	TArray<class ULostArcUIInvenSlot*> InvenSlot;
+	TArray<class ULostArcUISlotBase*> InvenSlot;
 
 	class ALostArcCharacter* OwnerCharacter;
 };

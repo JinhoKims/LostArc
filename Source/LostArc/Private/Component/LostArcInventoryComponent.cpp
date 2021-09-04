@@ -39,8 +39,8 @@ void ULostArcInventoryComponent::BeginPlay()
 	AddPickupItem("Potion_Health", 3);
 	AddPickupItem("Potion_Mana", 3);
 
-	UE_LOG(LogTemp, Warning, TEXT("Item Health : %d"), InventorySlot[0]->GetItemQuantity());
-	UE_LOG(LogTemp, Warning, TEXT("Item Mana : %d"), InventorySlot[1]->GetItemQuantity());
+	AddPickupItem("Potion_Health", 8);
+	AddPickupItem("Potion_Mana", 7);
 	
 	//AddPickupItem("Equip_Ring");
 	//AddPickupItem("Equip_Ring");
@@ -61,6 +61,50 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
+{
+	if (InventorySlot[SlotIndex] != nullptr)
+	{
+		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
+		{
+			InventorySlot[SlotIndex] = nullptr;
+			InvenSlotUpdate.Broadcast(SlotIndex);
+		}
+	}
+}
+
+void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
+{
+	if (InventorySlot[OwnerIndex] == nullptr || OwnerIndex == DistIndex) return;
+
+	if (InventorySlot[DistIndex] == nullptr)
+	{
+		InventorySlot[DistIndex] = InventorySlot[OwnerIndex];
+		InventorySlot[OwnerIndex] = nullptr;
+	}
+	else
+	{
+		if (!GetOwner()->GetWorldTimerManager().IsTimerActive(InventorySlot[DistIndex]->AbilityCDProperty.Key))
+		{
+			if (InventorySlot[OwnerIndex]->GetName().Equals(InventorySlot[DistIndex]->GetName()))
+			{
+				if (EItemType::ITEM_Equip != InventorySlot[OwnerIndex]->GetItemType())
+				{
+					InventorySlot[DistIndex]->SetItemQuantity(InventorySlot[OwnerIndex]->GetItemQuantity());
+					InventorySlot[OwnerIndex] = nullptr;
+				}
+			}
+			else
+			{
+				Swap(InventorySlot[OwnerIndex], InventorySlot[DistIndex]);
+			}
+		}
+	}
+
+	InvenSlotUpdate.Broadcast(OwnerIndex);
+	InvenSlotUpdate.Broadcast(DistIndex);
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)
@@ -115,9 +159,9 @@ void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 
 void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
 {
-	if (InventorySlot[ownerIndex] == nullptr) return;
+	if (InventorySlot[ownerIndex] == nullptr || ownerIndex == distIndex) return;
 
-	if (InventorySlot[distIndex] == nullptr)
+	if (InventorySlot[distIndex] == nullptr )
 	{
 		InventorySlot[distIndex] = InventorySlot[ownerIndex];
 		InventorySlot[ownerIndex] = nullptr;
@@ -128,7 +172,11 @@ void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
 		{
 			if (InventorySlot[ownerIndex]->GetName().Equals(InventorySlot[distIndex]->GetName()))
 			{
-				InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
+				if (EItemType::ITEM_Equip != InventorySlot[ownerIndex]->GetItemType())
+				{
+					InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
+					InventorySlot[ownerIndex] = nullptr;
+				}
 			}
 			else
 			{

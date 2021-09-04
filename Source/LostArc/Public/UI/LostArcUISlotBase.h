@@ -24,8 +24,6 @@ public:
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 
-
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_Icon;
@@ -36,14 +34,16 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf <UUserWidget> DragVisualClass;
 
-	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;
-
 	FDelegateHandle AbilityCDHandle;
+	UActorComponent* SlotComponent;
 	int32 SlotIndex;
 
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 
 private:
 	bool bEnableTick;

@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Component/LostArcCharacterInterface.h"
 #include "LostArcInventoryComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnInvenSlotUpdateDelegate, int32)
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class LOSTARC_API ULostArcInventoryComponent : public UActorComponent
+class LOSTARC_API ULostArcInventoryComponent : public UActorComponent, public ILostArcCharacterInterface
 {
 	GENERATED_BODY()
 	
@@ -19,6 +20,9 @@ public:
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void UseAbility(int32 SlotIndex) override;
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
 
 	void UseItem(int32 SlotInex);	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
