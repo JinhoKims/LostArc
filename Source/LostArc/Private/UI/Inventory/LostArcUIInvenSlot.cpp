@@ -7,7 +7,8 @@
 void ULostArcUIInvenSlot::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
+
+	SlotType = ESlotType::Inven;
 	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
 }
 

@@ -8,6 +8,7 @@ void ULostArcUIEquipSlot::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	SlotType = ESlotType::Equip;
 	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->EquipComponent;
 }
 

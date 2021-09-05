@@ -84,7 +84,7 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 	ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
-
+	
 	if(this->SlotType == Owner->SlotType)
 	{
 		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
@@ -94,7 +94,7 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 		}
 		return true;
 	}
-
+	
 	return false;
 }
 
