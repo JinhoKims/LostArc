@@ -22,9 +22,12 @@ protected:
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual void Dismount(ALostArcCharacter* Character) {}
-	EAccessoryType GetAcType() const { return Type; }
+	virtual bool Equip(ALostArcCharacter* Character, int32 SlotIndex);
 
+	virtual void Dismount(ALostArcCharacter* Character) {}
+	
+	EAccessoryType GetAcType() const { return Type; }
+	
 protected:
 	float Value = 0.f;
 };

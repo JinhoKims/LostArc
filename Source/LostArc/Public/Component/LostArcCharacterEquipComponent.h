@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "LostArcCharacterInterface.h"
+#include "LostArcInventoryComponent.h"
 #include "Components/ActorComponent.h"
 #include "LostArcCharacterEquipComponent.generated.h"
 
@@ -28,7 +29,7 @@ UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, public ILostArcCharacterInterface
 {
 	GENERATED_BODY()
-
+	
 public:	
 	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
 
@@ -38,9 +39,11 @@ protected:
 	
 public:	
 	ULostArcCharacterEquipComponent();
-	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
+	void EquipMounts(class ULostArcItemEquipBase* NewEquip, int32 SlotIndex = -1);
 	virtual void UseAbility(int32 SlotIndex) override; // SlotIndex로 EqiupSlot 찾기(0, 1~2, 3~4)
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
+	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) override;
+	bool SendSlot(int32 OwnerIndex, int32 DistIndex);
 	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
 
 private:

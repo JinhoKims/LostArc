@@ -16,6 +16,7 @@ class LOSTARC_API ULostArcInventoryComponent : public UActorComponent, public IL
 	
 public:
 	FOnInvenSlotUpdateDelegate InvenSlotUpdate;
+	TArray<class ULostArcItemBase*> InventorySlot;
 
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
@@ -23,8 +24,9 @@ public:
 
 	virtual void UseAbility(int32 SlotIndex) override;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
-	virtual bool ReceiveSlot(class ULostArcItemBase* OwnerItem, int32 OwnerIndex = -1, int32 DistIndex = -1) override;
-
+	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) override;
+	bool ReceiveItem(class ULostArcItemBase* OwnerItem);
+	bool ReceiveItem(class ULostArcItemBase* OwnerItem, int32 OwnerIndex, int32 DistIndex);
 	void UseItem(int32 SlotInex);	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 	void MoveItem(class ULostArcItemBase* OwnerItem, int32 distIndex = -1);
@@ -41,7 +43,5 @@ private:
 	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
 	
-	TArray<class ULostArcItemBase*> InventorySlot;
-
 	bool ConsumableCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
 };

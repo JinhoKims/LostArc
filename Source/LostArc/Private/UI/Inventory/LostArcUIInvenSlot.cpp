@@ -12,6 +12,25 @@ void ULostArcUIInvenSlot::NativeConstruct()
 	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
 }
 
+bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
+	{
+		ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
+		
+		if(Owner->SlotType == ESlotType::Equip) // from Equip
+		{
+			auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
+			if (Interface != nullptr)
+			{
+				return Interface->ReceiveSlot(Owner->SlotIndex, this->SlotIndex);
+			}
+		}
+	}
+
+	return false;
+}
+
 void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
 	if (SlotData != nullptr) // Unbinding Delegate

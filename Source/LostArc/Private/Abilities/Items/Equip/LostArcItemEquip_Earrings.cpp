@@ -29,6 +29,18 @@ bool ULostArcItemEquip_Earrings::Use(ALostArcCharacter* Character)
 	return false;
 }
 
+bool ULostArcItemEquip_Earrings::Equip(ALostArcCharacter* Character, int32 SlotIndex)
+{
+	if (Super::Equip(Character, SlotIndex))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->AddBonusAttribute(EAttributeType::ATK, Value);
+		return true;
+	}
+	
+	return false;
+}
+
 void ULostArcItemEquip_Earrings::Dismount(ALostArcCharacter* Character)
 {
 	Super::Dismount(Character);

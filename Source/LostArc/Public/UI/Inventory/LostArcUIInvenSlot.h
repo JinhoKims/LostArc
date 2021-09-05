@@ -27,6 +27,7 @@ protected:
 	class UTextBlock* Text_Quantity;
 
 	virtual void NativeConstruct() override;
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 
 private:
 	FDelegateHandle ItemQuantityHandle;

@@ -26,3 +26,14 @@ bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 
 	return false;
 }
+
+bool ULostArcItemEquipBase::Equip(ALostArcCharacter* Character, int32 SlotIndex)
+{
+	if(Super::Use(Character))
+	{
+		Character->EquipComponent->EquipMounts(this, SlotIndex);
+		return true;
+	}
+
+	return false;
+}

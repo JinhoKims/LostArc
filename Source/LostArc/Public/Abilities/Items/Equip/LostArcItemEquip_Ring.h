@@ -17,5 +17,6 @@ class LOSTARC_API ULostArcItemEquip_Ring : public ULostArcItemEquipBase
 public:
 	ULostArcItemEquip_Ring(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character) override;
+	virtual bool Equip(ALostArcCharacter* Character, int32 SlotIndex) override;
 	virtual void Dismount(ALostArcCharacter* Character) override;
 };

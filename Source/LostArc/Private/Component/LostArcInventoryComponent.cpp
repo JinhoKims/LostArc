@@ -68,6 +68,45 @@ void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 	}
 }
 
+bool ULostArcInventoryComponent::ReceiveItem(ULostArcItemBase* OwnerItem)
+{
+	if(OwnerItem == nullptr) return false;
+	
+	for(int i = 0; i < 16; i++)
+	{
+		if(InventorySlot[i] == nullptr)
+		{
+			InventorySlot[i] = OwnerItem;
+			InvenSlotUpdate.Broadcast(i);
+			return true;
+		}
+	}		
+	
+	return false;
+}
+
+bool ULostArcInventoryComponent::ReceiveItem(ULostArcItemBase* OwnerItem, int32 OwerIndex, int32 DistIndex)
+{
+	if(OwnerItem == nullptr) return false;
+
+	if(InventorySlot[DistIndex] == nullptr)
+	{
+		InventorySlot[DistIndex] = OwnerItem;
+		InvenSlotUpdate.Broadcast(DistIndex);
+		return true;
+	}
+	else
+	{
+		if(OwnerItem->GetItemType() == InventorySlot[DistIndex]->GetItemType())
+		{
+			Cast<ALostArcCharacter>(GetOwner())->EquipComponent->ReceiveSlot(DistIndex, OwerIndex);
+			return false;
+		}
+	}
+
+	return false;
+}
+
 void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
 {
 	if (InventorySlot[OwnerIndex] == nullptr || OwnerIndex == DistIndex) return;
@@ -100,24 +139,9 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
 	InvenSlotUpdate.Broadcast(DistIndex);
 }
 
-bool ULostArcInventoryComponent::ReceiveSlot(ULostArcItemBase* OwnerItem, int32 OwnerIndex, int32 DistIndex)
+bool ULostArcInventoryComponent::ReceiveSlot(int32 OwnerIndex, int32 DistIndex)
 {
-	if(OwnerItem == nullptr) return false;
-
-	if(DistIndex == -1)
-	{
-		for(int i = 0; i < 16; i++)
-		{
-			if(InventorySlot[i] == nullptr)
-			{
-				InventorySlot[i] = OwnerItem;
-				InvenSlotUpdate.Broadcast(i);
-				return true;
-			}
-		}
-	}
-	
-	return false;
+	return Cast<ALostArcCharacter>(GetOwner())->EquipComponent->SendSlot(OwnerIndex, DistIndex);
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)

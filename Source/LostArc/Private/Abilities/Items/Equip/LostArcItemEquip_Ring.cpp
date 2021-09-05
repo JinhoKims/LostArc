@@ -27,6 +27,18 @@ bool ULostArcItemEquip_Ring::Use(ALostArcCharacter* Character)
 	return false;
 }
 
+bool ULostArcItemEquip_Ring::Equip(ALostArcCharacter* Character, int32 SlotIndex)
+{
+	if (Super::Equip(Character, SlotIndex))
+	{
+		auto StatComponent = Character->StatComponent;
+		StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
+		return true;
+	}
+
+	return false;
+}
+
 void ULostArcItemEquip_Ring::Dismount(ALostArcCharacter* Character)
 {
 	Super::Dismount(Character);

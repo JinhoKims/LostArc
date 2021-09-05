@@ -4,6 +4,7 @@
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquip_Earrings.h"
+#include "UI/LostArcUISlotDrag.h"
 
 // Sets default values for this component's properties
 ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
@@ -43,7 +44,7 @@ void ULostArcCharacterEquipComponent::UseAbility(int32 SlotIndex)
 	
 	if(EquipSlot.Find(SlotType)->EquipArray[SlotIndex] != nullptr)
 	{
-		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveSlot(EquipSlot.Find(SlotType)->EquipArray[SlotIndex]))
+		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveItem(EquipSlot.Find(SlotType)->EquipArray[SlotIndex]))
 		{
 			EquipSlot.Find(SlotType)->EquipArray[SlotIndex]->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlot.Find(SlotType)->EquipArray[SlotIndex] = nullptr;
@@ -76,24 +77,80 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 	EquipSlotUpdate.Broadcast(IndexEncoding(DistType,DistIndex));
 }
 
-void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEquip)
+bool ULostArcCharacterEquipComponent::ReceiveSlot(int32 OwnerIndex, int32 DistIndex)
+{
+	auto Inventory = Cast<ALostArcCharacter>(GetOwner())->InventoryComponent;
+	
+	if(Inventory->InventorySlot[OwnerIndex] != nullptr)
+	{
+		if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex]) != nullptr)
+		{
+			if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex])->GetAcType() == IndexDecoding(DistIndex))
+			{
+				if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex])->Equip(Cast<ALostArcCharacter>(GetOwner()), DistIndex))
+				{
+					Inventory->InventorySlot[OwnerIndex] = nullptr;
+					Inventory->InvenSlotUpdate.Broadcast(OwnerIndex);
+					return true;
+				}
+			}
+		}
+	}
+	
+	return false;
+}
+
+bool ULostArcCharacterEquipComponent::SendSlot(int32 OwnerIndex, int32 DistIndex)
+{
+	int32 TempIndex = OwnerIndex;
+	auto EquipType = IndexDecoding(OwnerIndex);
+	
+	if(EquipSlot.Find(EquipType)->EquipArray[OwnerIndex] != nullptr)
+	{
+		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveItem(EquipSlot.Find(EquipType)->EquipArray[OwnerIndex], TempIndex, DistIndex))
+		{
+			
+			EquipSlot.Find(EquipType)->EquipArray[OwnerIndex]->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+			EquipSlot.Find(EquipType)->EquipArray[OwnerIndex] = nullptr;
+			EquipSlotUpdate.Broadcast(IndexEncoding(EquipType, OwnerIndex));
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEquip, int32 SlotIndex)
 {
 	if (NewEquip == nullptr) return;
-	
-	for (int32 i = 0; i < *EquipMaxSlot.Find(NewEquip->GetAcType()); i++) // EquipSlot has Empty
+
+	if(SlotIndex == -1)
 	{
-		if(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i]==nullptr)
+		for (int32 i = SlotIndex = 0; i < *EquipMaxSlot.Find(NewEquip->GetAcType()); i++) // EquipSlot has Empty
 		{
-			EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i] = NewEquip;
-			EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), i));
+			if(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i] == nullptr)
+			{
+				EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i] = NewEquip;
+				EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), i));
+				return;
+			}
+		}
+	}
+	else
+	{
+		if(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[SlotIndex] == nullptr)
+		{
+			EquipSlot.Find(NewEquip->GetAcType())->EquipArray[SlotIndex] = NewEquip;
+			EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), SlotIndex));
 			return;
 		}
 	}
+	
 	// EquipSlot has Fully
-	Swap(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[0], NewEquip);
-	EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), 0));
+	Swap(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[SlotIndex], NewEquip);
+	EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), SlotIndex));
 	NewEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
-	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveSlot(NewEquip);
+	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveItem(NewEquip);
 }
 
 EAccessoryType ULostArcCharacterEquipComponent::IndexDecoding(int32& SlotIndex)
