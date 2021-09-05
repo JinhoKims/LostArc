@@ -31,32 +31,49 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 	}
 }
 
+void ULostArcCharacterEquipComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	EquipSlot.Empty();
+}
+
 void ULostArcCharacterEquipComponent::UseAbility(int32 SlotIndex)
 {
-	EAccessoryType TempType;
-	switch (SlotIndex)
-	{
-	case 0:
-		TempType = EAccessoryType::Necklace;
-		break;
-	case 1:
-	case 2:
-		TempType = EAccessoryType::Earring;
-		SlotIndex-=1;
-		break;
-	case 3:
-	case 4:
-		TempType = EAccessoryType::Ring;
-		SlotIndex-=3;
-		break;
-	}
+	const EAccessoryType SlotType = IndexDecoding(SlotIndex);
 	
-	if(EquipSlot.Find(TempType)->EquipArray[SlotIndex] != nullptr)
+	if(EquipSlot.Find(SlotType)->EquipArray[SlotIndex] != nullptr)
 	{
-		Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(EquipSlot.Find(TempType)->EquipArray[SlotIndex]);
-		EquipSlot.Find(TempType)->EquipArray[SlotIndex] = nullptr;
-		EquipSlotUpdate.Broadcast(TempType, SlotIndex);
+		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveSlot(EquipSlot.Find(SlotType)->EquipArray[SlotIndex]))
+		{
+			EquipSlot.Find(SlotType)->EquipArray[SlotIndex]->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+			EquipSlot.Find(SlotType)->EquipArray[SlotIndex] = nullptr;
+			EquipSlotUpdate.Broadcast(IndexEncoding(SlotType, SlotIndex));
+		}
 	}
+}
+
+void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
+{
+	auto OwnerType = IndexDecoding(OwnerIndex);
+	auto DistType = IndexDecoding(DistIndex);
+	
+	if(EquipSlot.Find(OwnerType)->EquipArray[OwnerIndex] == nullptr || OwnerIndex == DistIndex || OwnerType != DistType ) return;
+	
+	if (EquipSlot.Find(DistType)->EquipArray[DistIndex] == nullptr)
+	{
+		EquipSlot.Find(DistType)->EquipArray[DistIndex] = EquipSlot.Find(OwnerType)->EquipArray[OwnerIndex];
+		EquipSlot.Find(OwnerType)->EquipArray[OwnerIndex] = nullptr;
+		UE_LOG(LogTemp,Warning,TEXT("Move Slot"));
+	}
+	else
+	{
+		Swap(EquipSlot.Find(OwnerType)->EquipArray[OwnerIndex],
+			EquipSlot.Find(DistType)->EquipArray[DistIndex]);
+		UE_LOG(LogTemp,Warning,TEXT("Swap Slot"));
+	}
+
+	EquipSlotUpdate.Broadcast(IndexEncoding(OwnerType,OwnerIndex));
+	EquipSlotUpdate.Broadcast(IndexEncoding(DistType,DistIndex));
 }
 
 void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEquip)
@@ -68,18 +85,52 @@ void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEqui
 		if(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i]==nullptr)
 		{
 			EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i] = NewEquip;
-			EquipSlotUpdate.Broadcast(NewEquip->GetAcType(), i);
+			EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), i));
 			return;
 		}
 	}
-	
 	// EquipSlot has Fully
 	Swap(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[0], NewEquip);
-	EquipSlotUpdate.Broadcast(NewEquip->GetAcType(), 0);
-	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(NewEquip);
+	EquipSlotUpdate.Broadcast(IndexEncoding(NewEquip->GetAcType(), 0));
+	NewEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveSlot(NewEquip);
 }
 
-ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryType Type, int32 SlotIndex)
+EAccessoryType ULostArcCharacterEquipComponent::IndexDecoding(int32& SlotIndex)
 {
-	return EquipSlot.Find(Type)->EquipArray[SlotIndex];
+	switch (SlotIndex)
+	{
+	case 0:
+		return EAccessoryType::Necklace;
+	case 1:
+	case 2:
+		SlotIndex-=1;
+		return EAccessoryType::Earring;
+	case 3:
+	case 4:
+		SlotIndex-=3;
+		return EAccessoryType::Ring;
+	}
+	
+	return EAccessoryType::Necklace;
+}
+
+int32 ULostArcCharacterEquipComponent::IndexEncoding(EAccessoryType AcType, int32 Index)
+{
+	switch (AcType)
+	{
+	case EAccessoryType::Necklace:
+		return Index;
+	case EAccessoryType::Earring:
+		return Index+=1;
+	case EAccessoryType::Ring:
+		return Index+=3;
+	}
+	
+	return -1;
+}
+
+ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(int32 Index)
+{
+	return EquipSlot.Find(IndexDecoding(Index))->EquipArray[Index];
 }

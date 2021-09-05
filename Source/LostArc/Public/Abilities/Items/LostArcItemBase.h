@@ -27,7 +27,6 @@ class LOSTARC_API ULostArcItemBase : public ULostArcAbilityBase
 	
 public:
 	UTexture2D* BgTexture2D;
-	UTexture2D* ItemTexture2D;
 	FOnItemQuantityUpdateDelegate QuantityUpdate;
 	
 public:
@@ -37,7 +36,6 @@ public:
 
 	bool SetItemQuantity(int32 Count);
 	int32 GetItemQuantity() { return ItemQuantity; }
-	UTexture2D* GetItemTexture2D() { return ItemTexture2D; }
 	UTexture2D* GetBgTexture2D() { return BgTexture2D; }
 	EItemType GetItemType() { return ItemType; }
 

@@ -7,12 +7,11 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Abilities/LostArcAbilityBase.h"
-#include "Abilities/Items/LostArcItemBase.h"
+#include "UI/LostArcUISlotDrag.h"
 #include "LostArcUISlotBase.generated.h"
 
-/**
- * 
- */
+enum ESlotType;
+
 UCLASS()
 class LOSTARC_API ULostArcUISlotBase : public UUserWidget
 {
@@ -35,10 +34,10 @@ protected:
 	TSubclassOf <UUserWidget> DragVisualClass;
 
 	class ULostArcAbilityBase* SlotData;
-	FDelegateHandle AbilityCDHandle;
 	UActorComponent* SlotComponent;
+	ESlotType SlotType;
 	int32 SlotIndex;
-
+	
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
@@ -46,5 +45,6 @@ protected:
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 
 private:
+	FDelegateHandle AbilityCDHandle;
 	bool bEnableTick;
 };

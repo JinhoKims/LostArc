@@ -13,7 +13,7 @@ ULostArcItemEquip_Earrings::ULostArcItemEquip_Earrings(const FObjectInitializer&
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/acc_109.acc_109'"));
 	if (T2D_ICON.Object != NULL)
 	{
-		ItemTexture2D = T2D_ICON.Object;
+		Ability_Icon = T2D_ICON.Object;
 	}
 }
 

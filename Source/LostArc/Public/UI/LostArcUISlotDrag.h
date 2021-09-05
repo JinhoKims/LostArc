@@ -7,9 +7,14 @@
 #include "Abilities/Items/LostArcItemBase.h"
 #include "LostArcUISlotDrag.generated.h"
 
-/**
- * 
- */
+UENUM(BlueprintType)
+enum ESlotType
+{
+	Inven UMETA(DisplayName = "Inven"),
+	Equip UMETA(DisplayName = "Equip"),
+	Quick UMETA(DisplayName = "Quick")
+};
+
 UCLASS()
 class LOSTARC_API ULostArcUISlotDrag : public UDragDropOperation
 {
@@ -19,5 +24,5 @@ public:
 	int32 SlotIndex;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TEnumAsByte<EItemType> SlotType;
+	TEnumAsByte<ESlotType> SlotType;
 };

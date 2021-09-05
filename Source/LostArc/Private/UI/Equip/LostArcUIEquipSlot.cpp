@@ -11,17 +11,30 @@ void ULostArcUIEquipSlot::NativeConstruct()
 	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->EquipComponent;
 }
 
-void ULostArcUIEquipSlot::SetNativeTick(bool bCD)
+void ULostArcUIEquipSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
-	Super::SetNativeTick(bCD);
+	if (SlotData != nullptr) // Unbinding Delegate
+	{
+		UnBindSlotData();
+	}
+
+	Super::RefreshSlotData(NewData);
+
+	if (NewData == nullptr)
+	{
+		Image_BG->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	else
+	{
+		auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
+		if (SlotItem == nullptr) return;
+
+		if (SlotItem->GetBgTexture2D() != nullptr)
+		{
+			Image_BG->SetBrushFromTexture(SlotItem->GetBgTexture2D());
+			Image_BG->SetVisibility(ESlateVisibility::Visible);
+		}
+	}
 }
 
-void ULostArcUIEquipSlot::RefreshSlotData(ULostArcAbilityBase* MovieSceneBlends)
-{
-	Super::RefreshSlotData(MovieSceneBlends);
-}
-
-void ULostArcUIEquipSlot::UnBindSlotData()
-{
-	Super::UnBindSlotData();
-}

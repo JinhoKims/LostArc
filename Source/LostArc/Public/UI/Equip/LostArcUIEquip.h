@@ -6,12 +6,21 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIEquip.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcUIEquip : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	void RefreshSlot(int32 Index);
+
+protected:
+	virtual void NativeConstruct() override;
+	virtual void BeginDestroy() override;
 	
+private:
+	UPROPERTY(meta = (AllowPrivateAccess = true))
+	TArray<class ULostArcUISlotBase*> EquipSlot;
+
+	class ALostArcCharacter* OwnerCharacter;
 };

@@ -48,11 +48,11 @@ void ULostArcUIInventorySlot::BindItemDelegate()
 	Item->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInventorySlot::SetNativeTick);
 	Item->QuantityUpdate.AddUObject(this, &ULostArcUIInventorySlot::UpdateItemQuantity);
 
-	if (Item->GetItemTexture2D() != nullptr)
-	{
-		Image_Item->SetBrushFromTexture(Item->GetItemTexture2D());
-		Image_Item->SetVisibility(ESlateVisibility::Visible);
-	}
+	// if (Item->GetItemTexture2D() != nullptr)
+	// {
+	// 	Image_Item->SetBrushFromTexture(Item->GetItemTexture2D());
+	// 	Image_Item->SetVisibility(ESlateVisibility::Visible);
+	// }
 
 	if (Item->GetBgTexture2D() != nullptr)
 	{

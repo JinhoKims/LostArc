@@ -13,15 +13,13 @@ UCLASS()
 class LOSTARC_API ULostArcUIEquipSlot : public ULostArcUISlotBase
 {
 	GENERATED_BODY()
-
+	
+public:
+	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData) override;
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_BG;
 	
 	virtual void NativeConstruct() override;
-	
-public:
-	virtual void SetNativeTick(bool CD) override;
-	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData) override;
-	virtual void UnBindSlotData() override;
 };

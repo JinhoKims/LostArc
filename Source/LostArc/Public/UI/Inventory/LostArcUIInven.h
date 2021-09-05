@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIInven.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcUIInven : public UUserWidget
 {

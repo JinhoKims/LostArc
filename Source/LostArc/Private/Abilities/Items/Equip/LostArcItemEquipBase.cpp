@@ -26,10 +26,3 @@ bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 
 	return false;
 }
-
-
-
-void ULostArcItemEquipBase::Dismount(ALostArcCharacter* Character)
-{
-	// Character->EquipComponent->DismountEquip(this, EquipSlotIndex);
-}

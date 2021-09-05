@@ -22,7 +22,7 @@ struct FEquipSlot
 	TArray<class ULostArcItemEquipBase*> EquipArray;
 };
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquipSlotUpdateDelegate, EAccessoryType, int32);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnEquipSlotUpdateDelegate, int32);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, public ILostArcCharacterInterface
@@ -34,17 +34,20 @@ public:
 
 protected:
 	virtual void InitializeComponent() override;
-
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+	
 public:	
 	ULostArcCharacterEquipComponent();
-	
 	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
 	virtual void UseAbility(int32 SlotIndex) override; // SlotIndex로 EqiupSlot 찾기(0, 1~2, 3~4)
-	
-	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 SlotIndex);
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
+	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TMap<TEnumAsByte<EAccessoryType>, int32> EquipMaxSlot;
 	TMap<EAccessoryType, FEquipSlot> EquipSlot;
+
+	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
+	EAccessoryType IndexDecoding(int32 &SlotIndex);
 };

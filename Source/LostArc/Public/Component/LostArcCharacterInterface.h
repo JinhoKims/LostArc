@@ -24,4 +24,5 @@ class LOSTARC_API ILostArcCharacterInterface
 public:
 	virtual void UseAbility(int32 SlotIndex) = 0;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) {}
+	virtual bool ReceiveSlot(class ULostArcItemBase* OwnerItem, int32 OwnerIndex = -1, int32 DistIndex = -1) { return true; }
 };

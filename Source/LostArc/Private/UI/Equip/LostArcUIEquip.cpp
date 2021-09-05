@@ -2,4 +2,32 @@
 
 
 #include "UI/Equip/LostArcUIEquip.h"
+#include "Character/LostArcCharacter.h"
+#include "Component/LostArcCharacterEquipComponent.h"
+#include "UI/Equip/LostArcUIEquipSlot.h"
+#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 
+void ULostArcUIEquip::NativeConstruct()
+{
+	Super::NativeConstruct();
+	OwnerCharacter = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+
+	for (int i = 0; i < 5; i++)
+	{
+		EquipSlot.Add(Cast<ULostArcUIEquipSlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_EquipSlot_%d"), i))))); 
+		EquipSlot[i]->SetSlotIndex(i);
+	}
+
+	OwnerCharacter->EquipComponent->EquipSlotUpdate.AddUObject(this, &ULostArcUIEquip::RefreshSlot);
+}
+
+void ULostArcUIEquip::BeginDestroy()
+{
+	Super::BeginDestroy();
+	EquipSlot.Empty();
+}
+
+void ULostArcUIEquip::RefreshSlot(int32 Index)
+{
+	EquipSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->EquipComponent->GetEquipItem(Index)));
+}

@@ -4,16 +4,10 @@
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 #include "Component/LostArcCharacterEquipComponent.h"
-#include "UI/LostArcUIMainHUD.h"
 #include "UI/Inventory/LostArcUIInventory.h"
-#include "UI/Inventory/LostArcUIInventorySlot.h"
-#include "Controller/LostArcPlayerController.h"
 
-// Sets default values for this component's properties
 ULostArcInventoryComponent::ULostArcInventoryComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
 
@@ -31,7 +25,6 @@ void ULostArcInventoryComponent::InitializeComponent()
 	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
 }
 
-// Called when the game starts
 void ULostArcInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -42,13 +35,13 @@ void ULostArcInventoryComponent::BeginPlay()
 	AddPickupItem("Potion_Health", 8);
 	AddPickupItem("Potion_Mana", 7);
 	
-	//AddPickupItem("Equip_Ring");
-	//AddPickupItem("Equip_Ring");
-	//AddPickupItem("Equip_Ring");
+	AddPickupItem("Equip_Ring");
+	AddPickupItem("Equip_Ring");
+	AddPickupItem("Equip_Ring");
 
-	//AddPickupItem("Equip_Earrings");
-	//AddPickupItem("Equip_Earrings");
-	//AddPickupItem("Equip_Earrings");
+	AddPickupItem("Equip_Earrings");
+	AddPickupItem("Equip_Earrings");
+	AddPickupItem("Equip_Earrings");
 }
 
 void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -88,11 +81,11 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
 	{
 		if (!GetOwner()->GetWorldTimerManager().IsTimerActive(InventorySlot[DistIndex]->AbilityCDProperty.Key))
 		{
-			if (InventorySlot[OwnerIndex]->GetName().Equals(InventorySlot[DistIndex]->GetName()))
+			if (InventorySlot[OwnerIndex]->GetName().Equals(InventorySlot[DistIndex]->GetName())) // 같은 아이템이 있고
 			{
-				if (EItemType::ITEM_Equip != InventorySlot[OwnerIndex]->GetItemType())
+				if (EItemType::ITEM_Equip != InventorySlot[OwnerIndex]->GetItemType()) // 장비 아이템이 아닌경우
 				{
-					InventorySlot[DistIndex]->SetItemQuantity(InventorySlot[OwnerIndex]->GetItemQuantity());
+					InventorySlot[DistIndex]->SetItemQuantity(InventorySlot[OwnerIndex]->GetItemQuantity()); // 합체
 					InventorySlot[OwnerIndex] = nullptr;
 				}
 			}
@@ -105,6 +98,26 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
 
 	InvenSlotUpdate.Broadcast(OwnerIndex);
 	InvenSlotUpdate.Broadcast(DistIndex);
+}
+
+bool ULostArcInventoryComponent::ReceiveSlot(ULostArcItemBase* OwnerItem, int32 OwnerIndex, int32 DistIndex)
+{
+	if(OwnerItem == nullptr) return false;
+
+	if(DistIndex == -1)
+	{
+		for(int i = 0; i < 16; i++)
+		{
+			if(InventorySlot[i] == nullptr)
+			{
+				InventorySlot[i] = OwnerItem;
+				InvenSlotUpdate.Broadcast(i);
+				return true;
+			}
+		}
+	}
+	
+	return false;
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)
@@ -157,38 +170,6 @@ void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 	}
 }
 
-void ULostArcInventoryComponent::SwapSlot(int32 ownerIndex, int32 distIndex)
-{
-	if (InventorySlot[ownerIndex] == nullptr || ownerIndex == distIndex) return;
-
-	if (InventorySlot[distIndex] == nullptr )
-	{
-		InventorySlot[distIndex] = InventorySlot[ownerIndex];
-		InventorySlot[ownerIndex] = nullptr;
-	}
-	else
-	{
-		if (!GetOwner()->GetWorldTimerManager().IsTimerActive(InventorySlot[distIndex]->AbilityCDProperty.Key))
-		{
-			if (InventorySlot[ownerIndex]->GetName().Equals(InventorySlot[distIndex]->GetName()))
-			{
-				if (EItemType::ITEM_Equip != InventorySlot[ownerIndex]->GetItemType())
-				{
-					InventorySlot[distIndex]->SetItemQuantity(InventorySlot[ownerIndex]->GetItemQuantity());
-					InventorySlot[ownerIndex] = nullptr;
-				}
-			}
-			else
-			{
-				Swap(InventorySlot[ownerIndex], InventorySlot[distIndex]);
-			}
-		}
-	}
-
-	InvenSlotUpdate.Broadcast(ownerIndex);
-	InvenSlotUpdate.Broadcast(distIndex);
-}
-
 void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 distIndex)
 {
 	switch (OwnerItem->GetItemType())
@@ -205,7 +186,7 @@ void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 dis
 			{
 				if (InventorySlot[distIndex]->GetItemType() == ITEM_Equip)
 				{
-					if (dynamic_cast<ULostArcItemEquipBase*>(OwnerItem)->GetType() == dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[distIndex])->GetType())
+					if (dynamic_cast<ULostArcItemEquipBase*>(OwnerItem)->GetAcType() == dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[distIndex])->GetAcType())
 					{
 						Swap(OwnerItem, InventorySlot[distIndex]);
 						InvenSlotUpdate.Broadcast(distIndex);
@@ -251,10 +232,10 @@ bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int3
 	return false;
 }
 
-ULostArcAbilityBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
+ULostArcItemBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
 {
 	if (InventorySlot[Index] == nullptr)
 		return nullptr;
 	else
-		return dynamic_cast<ULostArcAbilityBase*>(InventorySlot[Index]);
+		return InventorySlot[Index];
 }

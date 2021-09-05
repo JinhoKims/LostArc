@@ -15,7 +15,6 @@ class LOSTARC_API ULostArcUIInvenSlot : public ULostArcUISlotBase
 	GENERATED_BODY()
 	
 public:
-	virtual void SetNativeTick(bool CD) override;
 	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData) override;
 	virtual void UnBindSlotData() override;
 	void UpdateQuantity();
@@ -28,9 +27,7 @@ protected:
 	class UTextBlock* Text_Quantity;
 
 	virtual void NativeConstruct() override;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 private:
 	FDelegateHandle ItemQuantityHandle;
 };
-

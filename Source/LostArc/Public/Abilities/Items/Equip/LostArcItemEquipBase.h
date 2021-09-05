@@ -22,7 +22,7 @@ protected:
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual void Dismount(ALostArcCharacter* Character);
+	virtual void Dismount(ALostArcCharacter* Character) {}
 	EAccessoryType GetAcType() const { return Type; }
 
 protected:

@@ -7,18 +7,8 @@
 void ULostArcUIInvenSlot::NativeConstruct()
 {
 	Super::NativeConstruct();
-
+	
 	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
-}
-
-void ULostArcUIInvenSlot::SetNativeTick(bool CD)
-{
-	Super::SetNativeTick(CD);
-}
-
-void ULostArcUIInvenSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
-{
-	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
@@ -29,13 +19,8 @@ void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 	}
 
 	Super::RefreshSlotData(NewData);
-
-	if (NewData == nullptr)
-	{
-		Image_BG->SetVisibility(ESlateVisibility::Hidden);
-		Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
-	}
-	else
+	
+	if (NewData != nullptr)
 	{
 		auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
 		if (SlotItem == nullptr) return;
@@ -50,8 +35,6 @@ void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 			UpdateQuantity();
 			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
 		}
-
-		AbilityCDHandle = SlotData->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIInvenSlot::SetNativeTick);
 		ItemQuantityHandle = SlotItem->QuantityUpdate.AddUObject(this, &ULostArcUIInvenSlot::UpdateQuantity);
 	}
 }
@@ -59,8 +42,11 @@ void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 void ULostArcUIInvenSlot::UnBindSlotData()
 {
 	Super::UnBindSlotData();
-	auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
 	
+	Image_BG->SetVisibility(ESlateVisibility::Hidden);
+	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+
+	auto SlotItem = dynamic_cast<ULostArcItemBase*>(SlotData);
 	if (SlotItem != nullptr)
 	{
 		SlotItem->QuantityUpdate.Remove(ItemQuantityHandle);

@@ -9,9 +9,9 @@ ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectI
 	Value = 10.0f;
 	
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/acc_16.acc_16'"));
-	if (T2D_ICON.Object != NULL)
+	if (T2D_ICON.Object != nullptr)
 	{
-		ItemTexture2D = T2D_ICON.Object;
+		Ability_Icon = T2D_ICON.Object;
 	}
 }
 

@@ -1,7 +1,6 @@
 	// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/LostArcUISlotBase.h"
-#include "UI/LostArcUISlotDrag.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
@@ -38,7 +37,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 		if (SlotData)
 		{
 			auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
-			if (Inter)
+			if (Inter != nullptr)
 			{
 				Inter->UseAbility(SlotIndex);
 				return reply.NativeReply;
@@ -76,6 +75,7 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 
 		oper->DefaultDragVisual = DraggedItem;
 		oper->SlotIndex = this->SlotIndex;
+		oper->SlotType = this->SlotType;
 		OutOperation = oper;
 	}
 }
@@ -83,16 +83,19 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
-
 	ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
-	auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
 
-	if (Inter)
+	if(this->SlotType == Owner->SlotType)
 	{
-		Inter->SwappingSlot(Owner->SlotIndex, this->SlotIndex);
+		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
+		if (Interface != nullptr)
+		{
+			Interface->SwappingSlot(Owner->SlotIndex, this->SlotIndex);
+		}
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 void ULostArcUISlotBase::SetNativeTick(bool CD)
@@ -119,7 +122,7 @@ void ULostArcUISlotBase::RefreshSlotData(ULostArcAbilityBase* NewData)
 	else
 	{
 		SlotData = NewData;
-
+		AbilityCDHandle = SlotData->AbilityCDProperty.Value.AddUObject(this, &ULostArcUISlotBase::SetNativeTick);
 		if (SlotData->GetAbility_Icon() != nullptr)
 		{
 			Image_Icon->SetBrushFromTexture(SlotData->GetAbility_Icon());
