@@ -3,30 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/LostArcUISlotBase.h"
 #include "LostArcUIEquipSlot.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LOSTARC_API ULostArcUIEquipSlot : public UUserWidget
+class LOSTARC_API ULostArcUIEquipSlot : public ULostArcUISlotBase
 {
 	GENERATED_BODY()
-
-protected:
-	virtual void NativeConstruct() override;
-	FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
-
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_bgColor;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Image_Item;
-
-	class ULostArcItemEquipBase* EquipItem;
-
-	void BindEquipDelegate();
-	void ClearEquipDelegate();
+	
 };
