@@ -79,25 +79,7 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 
 bool ULostArcCharacterEquipComponent::ReceiveSlot(int32 OwnerIndex, int32 DistIndex)
 {
-	auto Inventory = Cast<ALostArcCharacter>(GetOwner())->InventoryComponent;
-	
-	if(Inventory->InventorySlot[OwnerIndex] != nullptr)
-	{
-		if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex]) != nullptr)
-		{
-			if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex])->GetAcType() == IndexDecoding(DistIndex))
-			{
-				if(Cast<ULostArcItemEquipBase>(Inventory->InventorySlot[OwnerIndex])->Equip(Cast<ALostArcCharacter>(GetOwner()), DistIndex))
-				{
-					Inventory->InventorySlot[OwnerIndex] = nullptr;
-					Inventory->InvenSlotUpdate.Broadcast(OwnerIndex);
-					return true;
-				}
-			}
-		}
-	}
-	
-	return false;
+	return Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->SendSlot(OwnerIndex, DistIndex);
 }
 
 bool ULostArcCharacterEquipComponent::SendSlot(int32 OwnerIndex, int32 DistIndex)
@@ -109,7 +91,6 @@ bool ULostArcCharacterEquipComponent::SendSlot(int32 OwnerIndex, int32 DistIndex
 	{
 		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->ReceiveItem(EquipSlot.Find(EquipType)->EquipArray[OwnerIndex], TempIndex, DistIndex))
 		{
-			
 			EquipSlot.Find(EquipType)->EquipArray[OwnerIndex]->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlot.Find(EquipType)->EquipArray[OwnerIndex] = nullptr;
 			EquipSlotUpdate.Broadcast(IndexEncoding(EquipType, OwnerIndex));

@@ -44,13 +44,13 @@ public:
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
 	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) override;
 	bool SendSlot(int32 OwnerIndex, int32 DistIndex);
+	
 	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
-
+	EAccessoryType IndexDecoding(int32 &SlotIndex);
+	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
+	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TMap<TEnumAsByte<EAccessoryType>, int32> EquipMaxSlot;
 	TMap<EAccessoryType, FEquipSlot> EquipSlot;
-
-	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
-	EAccessoryType IndexDecoding(int32 &SlotIndex);
 };

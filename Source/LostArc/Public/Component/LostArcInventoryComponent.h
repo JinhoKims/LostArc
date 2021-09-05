@@ -29,6 +29,7 @@ public:
 	bool ReceiveItem(class ULostArcItemBase* OwnerItem, int32 OwnerIndex, int32 DistIndex);
 	void UseItem(int32 SlotInex);	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
+	bool SendSlot(int32 OwnerIndex, int32 DistIndex);
 	void MoveItem(class ULostArcItemBase* OwnerItem, int32 distIndex = -1);
 	
 	class ULostArcItemBase* GetSlotData(int32 Index);

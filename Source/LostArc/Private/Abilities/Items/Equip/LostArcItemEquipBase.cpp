@@ -18,22 +18,14 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 
 bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
-	if(Super::Use(Character))
-	{
-		Character->EquipComponent->EquipMounts(this);
-		return true;
-	}
+	Character->EquipComponent->EquipMounts(this);
 
-	return false;
+	return true;
 }
 
 bool ULostArcItemEquipBase::Equip(ALostArcCharacter* Character, int32 SlotIndex)
 {
-	if(Super::Use(Character))
-	{
-		Character->EquipComponent->EquipMounts(this, SlotIndex);
-		return true;
-	}
+	Character->EquipComponent->EquipMounts(this, SlotIndex);
 
-	return false;
+	return true;
 }

@@ -1,6 +1,7 @@
 	// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/LostArcUISlotBase.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
@@ -31,7 +32,9 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 {
 	FEventReply reply;
 	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-
+	
+	if(ULostArcSkillBase::bAnimationRunning) return reply.NativeReply;
+	
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
 		if (SlotData)

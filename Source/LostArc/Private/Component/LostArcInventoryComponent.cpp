@@ -182,6 +182,27 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	}
 }
 
+bool ULostArcInventoryComponent::SendSlot(int32 OwnerIndex, int32 DistIndex)
+{
+	if(InventorySlot[OwnerIndex] != nullptr)
+	{
+		if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex]) != nullptr)
+		{
+			if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex])->GetAcType() == Cast<ALostArcCharacter>(GetOwner())->EquipComponent->IndexDecoding(DistIndex))
+			{
+				if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex])->Equip(Cast<ALostArcCharacter>(GetOwner()), DistIndex))
+				{
+					InventorySlot[OwnerIndex] = nullptr;
+					InvenSlotUpdate.Broadcast(OwnerIndex);
+					return true;
+				}
+			}
+		}
+	}
+	
+	return false;
+}
+
 void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
