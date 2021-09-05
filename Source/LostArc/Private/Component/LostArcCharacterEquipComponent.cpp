@@ -13,70 +13,73 @@ ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
 
 	for (int i = 0; i < 3; i++)
 	{
-		EquipTable.Add((EAccessoryType)i);
 		EquipSlot.Add((EAccessoryType)i);
+		EquipMaxSlot.Add((EAccessoryType)i);
 	}
 }
 
 void ULostArcCharacterEquipComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-
-	/* EquipSlot.Find(EAccessoryType::Earring)->EquipArray.Add(NewObject<ULostArcItemEquipBase>(this, ULostArcItemEquip_Earrings::StaticClass()));
-	EquipTable의 Key의 Value는 블루프린트(에디터)에서 설정해주는데 Init()는 에디터(블프) 실행 전에도 호출되어서 
-	이 때 EquipTable의 Value를 가져올 수 없기에 직접 클래스정보(StaticClass)를 가져와야 한다. */
-
+	
 	for (int32 i = 0; i < 3; i++)
 	{
-		if (EquipTable.Find((EAccessoryType)i)->GetDefaultObject() != nullptr)
+		if (EquipMaxSlot.Find((EAccessoryType)i) != nullptr)
 		{
-			EquipSlot.Find((EAccessoryType)i)->EquipArray.SetNum(EquipTable.Find((EAccessoryType)i)->GetDefaultObject()->MaxEqiupSlotCount);
+			EquipSlot.Find((EAccessoryType)i)->EquipArray.SetNum(*EquipMaxSlot.Find((EAccessoryType)i));
 		}
 	}
 }
 
-// Called when the game starts
-void ULostArcCharacterEquipComponent::BeginPlay()
+void ULostArcCharacterEquipComponent::UseAbility(int32 SlotIndex)
 {
-	Super::BeginPlay();
-}
-
-// Called every frame
-void ULostArcCharacterEquipComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
-ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryType Type, int32 Index)
-{
-	return EquipSlot.Find(Type)->EquipArray[Index];	
-}
-
-void ULostArcCharacterEquipComponent::DismountEquip(ULostArcItemEquipBase* OwnerEquip, int32 Index)
-{
-	if (EquipSlot.Find(OwnerEquip->GetType())->EquipArray[Index] == nullptr) return;
-
-	EquipSlot.Find(OwnerEquip->GetType())->EquipArray[Index] = nullptr;
-	EquipSlotUpdate.Broadcast(OwnerEquip->GetType(), Index);
-	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(OwnerEquip);
+	EAccessoryType TempType;
+	switch (SlotIndex)
+	{
+	case 0:
+		TempType = EAccessoryType::Necklace;
+		break;
+	case 1:
+	case 2:
+		TempType = EAccessoryType::Earring;
+		SlotIndex-=1;
+		break;
+	case 3:
+	case 4:
+		TempType = EAccessoryType::Ring;
+		SlotIndex-=3;
+		break;
+	}
+	
+	if(EquipSlot.Find(TempType)->EquipArray[SlotIndex] != nullptr)
+	{
+		Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(EquipSlot.Find(TempType)->EquipArray[SlotIndex]);
+		EquipSlot.Find(TempType)->EquipArray[SlotIndex] = nullptr;
+		EquipSlotUpdate.Broadcast(TempType, SlotIndex);
+	}
 }
 
 void ULostArcCharacterEquipComponent::EquipMounts(ULostArcItemEquipBase* NewEquip)
 {
 	if (NewEquip == nullptr) return;
-
-	for (int32 i = 0; i < NewEquip->MaxEqiupSlotCount; i++) // When an empty slot exists
+	
+	for (int32 i = 0; i < *EquipMaxSlot.Find(NewEquip->GetAcType()); i++) // EquipSlot has Empty
 	{
-		if (EquipSlot.Find(NewEquip->GetType())->EquipArray[i] == nullptr)
+		if(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i]==nullptr)
 		{
-			EquipSlot.Find(NewEquip->GetType())->EquipArray[i] = NewEquip;
-			EquipSlotUpdate.Broadcast(NewEquip->GetType(), i);
+			EquipSlot.Find(NewEquip->GetAcType())->EquipArray[i] = NewEquip;
+			EquipSlotUpdate.Broadcast(NewEquip->GetAcType(), i);
 			return;
 		}
 	}
 	
-	// When all slots are fully
-	Swap(EquipSlot.Find(NewEquip->GetType())->EquipArray[0], NewEquip);
-	EquipSlotUpdate.Broadcast(NewEquip->GetType(), 0);
+	// EquipSlot has Fully
+	Swap(EquipSlot.Find(NewEquip->GetAcType())->EquipArray[0], NewEquip);
+	EquipSlotUpdate.Broadcast(NewEquip->GetAcType(), 0);
 	Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->MoveItem(NewEquip);
-}	
+}
+
+ULostArcItemEquipBase* ULostArcCharacterEquipComponent::GetEquipItem(EAccessoryType Type, int32 SlotIndex)
+{
+	return EquipSlot.Find(Type)->EquipArray[SlotIndex];
+}

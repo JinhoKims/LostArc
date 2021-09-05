@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostArcCharacterInterface.h"
 #include "Components/ActorComponent.h"
 #include "LostArcCharacterEquipComponent.generated.h"
 
@@ -24,29 +25,26 @@ struct FEquipSlot
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquipSlotUpdateDelegate, EAccessoryType, int32);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent
+class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, public ILostArcCharacterInterface
 {
 	GENERATED_BODY()
 
 public:	
-	FOnEquipSlotUpdateDelegate EquipSlotClear;
 	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
-	TMap<TEnumAsByte<EAccessoryType>, TSubclassOf<class ULostArcItemEquipBase>> EquipTable;
-
-	TMap<EAccessoryType, FEquipSlot> EquipSlot;
-
 protected:
-	virtual void BeginPlay() override;
 	virtual void InitializeComponent() override;
 
 public:	
 	ULostArcCharacterEquipComponent();
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void DismountEquip(class ULostArcItemEquipBase* OwnerEquip, int32 Index);
+	
 	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
+	virtual void UseAbility(int32 SlotIndex) override; // SlotIndex로 EqiupSlot 찾기(0, 1~2, 3~4)
+	
+	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 SlotIndex);
 
-	class ULostArcItemEquipBase* GetEquipItem(EAccessoryType Type, int32 Index);
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
+	TMap<TEnumAsByte<EAccessoryType>, int32> EquipMaxSlot;
+	TMap<EAccessoryType, FEquipSlot> EquipSlot;
 };

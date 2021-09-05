@@ -23,5 +23,5 @@ class LOSTARC_API ILostArcCharacterInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual void UseAbility(int32 SlotIndex) = 0;
-	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) = 0;
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) {}
 };

@@ -16,18 +16,15 @@ class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 {
 	GENERATED_BODY()
 	
-public:
-	int32 EquipSlotIndex;
-	int32 MaxEqiupSlotCount;
+protected:
 	EAccessoryType Type;
 	
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
-	bool Use(ALostArcCharacter* Character) override;
-	void SetEquipSlotIndex(int32 index);
-	int32 GetEquipSlotIndex() { return EquipSlotIndex; }
+	virtual bool Use(ALostArcCharacter* Character) override;
 	virtual void Dismount(ALostArcCharacter* Character);
-	EAccessoryType GetType() { return Type; }
+	EAccessoryType GetAcType() const { return Type; }
 
-
+protected:
+	float Value = 0.f;
 };

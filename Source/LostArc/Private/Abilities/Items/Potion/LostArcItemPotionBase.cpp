@@ -23,6 +23,7 @@ bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 	{
 		return Consumed(Character);
 	}
+	
 	return false;
 }
 
