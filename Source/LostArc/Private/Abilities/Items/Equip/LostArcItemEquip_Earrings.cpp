@@ -7,7 +7,7 @@
 ULostArcItemEquip_Earrings::ULostArcItemEquip_Earrings(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
 	Name = FString("Equip_Earrings");
-	Type = EAccessoryType::Earring;
+	AcType = EAccessoryType::Earring;
 	Value = 10.0f;
 
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/acc_109.acc_109'"));
@@ -29,16 +29,11 @@ bool ULostArcItemEquip_Earrings::Use(ALostArcCharacter* Character)
 	return false;
 }
 
-bool ULostArcItemEquip_Earrings::Equip(ALostArcCharacter* Character, int32 SlotIndex)
+void ULostArcItemEquip_Earrings::Equipment(ALostArcCharacter* Character)
 {
-	if (Super::Equip(Character, SlotIndex))
-	{
-		auto StatComponent = Character->StatComponent;
-		StatComponent->AddBonusAttribute(EAttributeType::ATK, Value);
-		return true;
-	}
-	
-	return false;
+	Super::Equipment(Character);
+	auto StatComponent = Character->StatComponent;
+	StatComponent->AddBonusAttribute(EAttributeType::ATK, Value);
 }
 
 void ULostArcItemEquip_Earrings::Dismount(ALostArcCharacter* Character)

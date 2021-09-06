@@ -17,14 +17,12 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
 	{
 		ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
+		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
 		
-		if(Owner->SlotType == ESlotType::Inven) // from Inventory
+		if (Interface != nullptr)
 		{
-			auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
-			if (Interface != nullptr)
-			{
-				return Interface->ReceiveSlot(Owner->SlotIndex, this->SlotIndex);
-			}
+			Interface->SwappingSlot(Owner->SlotComponent,Owner->SlotIndex, this->SlotIndex);
+			return true;
 		}
 	}
 	

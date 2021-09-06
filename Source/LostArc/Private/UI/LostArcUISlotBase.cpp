@@ -76,7 +76,9 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 			ImageBox->SetBrushFromTexture(SlotData->GetAbility_Icon());
 		}
 
+		// 드래그 시작 위치의 슬롯 정보를 저장 (OnDrop에서 Owner가 됨)
 		oper->DefaultDragVisual = DraggedItem;
+		oper->SlotComponent = this->SlotComponent;
 		oper->SlotIndex = this->SlotIndex;
 		oper->SlotType = this->SlotType;
 		OutOperation = oper;
@@ -93,7 +95,7 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
 		if (Interface != nullptr)
 		{
-			Interface->SwappingSlot(Owner->SlotIndex, this->SlotIndex);
+			Interface->SwappingSlot(Owner->SlotIndex, this->SlotIndex); // 내수용 스왑
 		}
 		return true;
 	}

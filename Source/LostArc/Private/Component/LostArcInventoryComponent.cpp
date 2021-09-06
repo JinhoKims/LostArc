@@ -51,11 +51,6 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 	ItemTable.Empty();
 }
 
-void ULostArcInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
 void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
@@ -68,43 +63,18 @@ void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 	}
 }
 
-bool ULostArcInventoryComponent::ReceiveItem(ULostArcItemBase* OwnerItem)
+ULostArcAbilityBase* ULostArcInventoryComponent::TransAbil(int32 SlotIndex)
 {
-	if(OwnerItem == nullptr) return false;
-	
-	for(int i = 0; i < 16; i++)
-	{
-		if(InventorySlot[i] == nullptr)
-		{
-			InventorySlot[i] = OwnerItem;
-			InvenSlotUpdate.Broadcast(i);
-			return true;
-		}
-	}		
-	
-	return false;
-}
+	auto TransUnit = GetSlotData(SlotIndex);
 
-bool ULostArcInventoryComponent::ReceiveItem(ULostArcItemBase* OwnerItem, int32 OwerIndex, int32 DistIndex)
-{
-	if(OwnerItem == nullptr) return false;
-
-	if(InventorySlot[DistIndex] == nullptr)
+	if(TransUnit != nullptr)
 	{
-		InventorySlot[DistIndex] = OwnerItem;
-		InvenSlotUpdate.Broadcast(DistIndex);
-		return true;
+		InventorySlot[SlotIndex] = nullptr;
+		InvenSlotUpdate.Broadcast(SlotIndex);
+		return TransUnit;
 	}
-	else
-	{
-		if(OwnerItem->GetItemType() == InventorySlot[DistIndex]->GetItemType())
-		{
-			Cast<ALostArcCharacter>(GetOwner())->EquipComponent->ReceiveSlot(DistIndex, OwerIndex);
-			return false;
-		}
-	}
-
-	return false;
+	
+	return nullptr;
 }
 
 void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
@@ -139,9 +109,25 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex)
 	InvenSlotUpdate.Broadcast(DistIndex);
 }
 
-bool ULostArcInventoryComponent::ReceiveSlot(int32 OwnerIndex, int32 DistIndex)
+void ULostArcInventoryComponent::SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex)
 {
-	return Cast<ALostArcCharacter>(GetOwner())->EquipComponent->SendSlot(OwnerIndex, DistIndex);
+	// 인벤에 장비아이템 삽입
+	ILostArcCharacterInterface * Inter = Cast<ILostArcCharacterInterface>(OwnerComponent); // 나중에 수정하기!!
+	
+	auto EquipComponent = Cast<ULostArcCharacterEquipComponent>(OwnerComponent);
+	if(EquipComponent == nullptr || EquipComponent->GetEquipItem(OwnerIndex) == nullptr) return;
+	
+	if(InventorySlot[DistIndex] == nullptr) // Drop 위치의 슬롯이 null일 때
+	{
+		SetSlotData(Cast<ULostArcItemEquipBase>(EquipComponent->TransAbil(OwnerIndex)), DistIndex);
+	}
+	else if (Cast<ULostArcItemEquipBase>(InventorySlot[DistIndex]) != nullptr)// Drop 위치의 슬롯이 유효하며, EquipSlot일 때
+	{
+		if(Cast<ULostArcItemEquipBase>(InventorySlot[DistIndex])->GetAcType() == EquipComponent->GetEquipItem(OwnerIndex)->GetAcType())
+		{
+			EquipComponent->SwappingSlot(this, DistIndex, OwnerIndex);
+		}
+	}
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)
@@ -152,9 +138,9 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	if (NewItem)
 	{
 		if (NewItem->IsConsumable()) // 소비 아이템
-		{
-			if (!ConsumableCheck(NewItem, ItemCount)) // 인벤에 이미 있는지 체크
 			{
+			if (!ConsumableCheck(NewItem, ItemCount)) // 인벤에 이미 있는지 체크
+				{
 				for (int i = 0; i < 16; i++)
 				{
 					if (InventorySlot[i] == nullptr)
@@ -165,10 +151,10 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 						break;
 					}
 				}
+				}
 			}
-		}
 		else // 장비 아이템
-		{
+			{
 			for (int i = 0; i < 16; i++)
 			{
 				if (InventorySlot[i] == nullptr)
@@ -178,86 +164,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					break;
 				}
 			}
-		}
-	}
-}
-
-bool ULostArcInventoryComponent::SendSlot(int32 OwnerIndex, int32 DistIndex)
-{
-	if(InventorySlot[OwnerIndex] != nullptr)
-	{
-		if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex]) != nullptr)
-		{
-			if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex])->GetAcType() == Cast<ALostArcCharacter>(GetOwner())->EquipComponent->IndexDecoding(DistIndex))
-			{
-				if(Cast<ULostArcItemEquipBase>(InventorySlot[OwnerIndex])->Equip(Cast<ALostArcCharacter>(GetOwner()), DistIndex))
-				{
-					InventorySlot[OwnerIndex] = nullptr;
-					InvenSlotUpdate.Broadcast(OwnerIndex);
-					return true;
-				}
 			}
-		}
-	}
-	
-	return false;
-}
-
-void ULostArcInventoryComponent::UseItem(int32 SlotIndex)
-{
-	if (InventorySlot[SlotIndex] != nullptr)
-	{
-		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
-		{
-			InventorySlot[SlotIndex] = nullptr;
-			InvenSlotUpdate.Broadcast(SlotIndex);
-		}
-	}
-}
-
-void ULostArcInventoryComponent::MoveItem(ULostArcItemBase* OwnerItem, int32 distIndex)
-{
-	switch (OwnerItem->GetItemType())
-	{
-	case ITEM_Equip:
-		if (distIndex >= 0) // 아이템 슬롯과 장비 슬롯을 스왑
-		{
-			if (InventorySlot[distIndex] == nullptr)
-			{
-				InventorySlot[distIndex] = OwnerItem;
-				InvenSlotUpdate.Broadcast(distIndex);
-			}
-			else // =! nullptr
-			{
-				if (InventorySlot[distIndex]->GetItemType() == ITEM_Equip)
-				{
-					if (dynamic_cast<ULostArcItemEquipBase*>(OwnerItem)->GetAcType() == dynamic_cast<ULostArcItemEquipBase*>(InventorySlot[distIndex])->GetAcType())
-					{
-						Swap(OwnerItem, InventorySlot[distIndex]);
-						InvenSlotUpdate.Broadcast(distIndex);
-						(Cast<ALostArcCharacter>(GetOwner()))->EquipComponent->EquipMounts(dynamic_cast<ULostArcItemEquipBase*>(OwnerItem));
-					}
-				}
-			}
-		}
-		else 
-		{
-			for (int i = 0; i < 16; i++)
-			{
-				if (InventorySlot[i] == nullptr)
-				{
-					InventorySlot[i] = OwnerItem;
-					InvenSlotUpdate.Broadcast(i);
-					break;
-				}
-			}
-		}
-		break;
-	case ITEM_Potion:
-		// SwapSlot
-		break;
-	case ITEM_None:
-		break;
 	}
 }
 
@@ -274,6 +181,33 @@ bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int3
 			}
 		}
 	}
+	return false;
+}
+
+bool ULostArcInventoryComponent::SetSlotData(ULostArcItemBase* OwnerItem)
+{
+	for(int i = 0; i < 16; i++)
+	{
+		if(InventorySlot[i] == nullptr)
+		{
+			InventorySlot[i] = OwnerItem;
+			InvenSlotUpdate.Broadcast(i);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ULostArcInventoryComponent::SetSlotData(ULostArcItemBase* OwnerItem, int32 DistIndex)
+{
+	if(InventorySlot[DistIndex] == nullptr)
+	{
+		InventorySlot[DistIndex] = OwnerItem;
+		InvenSlotUpdate.Broadcast(DistIndex);
+		return true;
+	}
+
 	return false;
 }
 

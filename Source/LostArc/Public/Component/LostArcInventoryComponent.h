@@ -20,19 +20,16 @@ public:
 
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	virtual void UseAbility(int32 SlotIndex) override;
+	virtual ULostArcAbilityBase* TransAbil(int32 SlotIndex) override;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
-	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) override;
-	bool ReceiveItem(class ULostArcItemBase* OwnerItem);
-	bool ReceiveItem(class ULostArcItemBase* OwnerItem, int32 OwnerIndex, int32 DistIndex);
-	void UseItem(int32 SlotInex);	
+	virtual void SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex) override;
+	
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
-	bool SendSlot(int32 OwnerIndex, int32 DistIndex);
-	void MoveItem(class ULostArcItemBase* OwnerItem, int32 distIndex = -1);
 	
 	class ULostArcItemBase* GetSlotData(int32 Index);
+	bool SetSlotData(ULostArcItemBase* OwnerItem);
+	bool SetSlotData(ULostArcItemBase* OwnerItem, int32 DistIndex);
 
 protected:
 	static constexpr int32 MaxItemSlot = 16;

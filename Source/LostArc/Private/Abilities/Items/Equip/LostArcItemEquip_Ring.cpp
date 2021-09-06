@@ -5,7 +5,7 @@
 ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
 	Name = FString("Equip_Ring");
-	Type = EAccessoryType::Ring;
+	AcType = EAccessoryType::Ring;
 	Value = 10.0f;
 	
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/acc_16.acc_16'"));
@@ -27,16 +27,11 @@ bool ULostArcItemEquip_Ring::Use(ALostArcCharacter* Character)
 	return false;
 }
 
-bool ULostArcItemEquip_Ring::Equip(ALostArcCharacter* Character, int32 SlotIndex)
+void ULostArcItemEquip_Ring::Equipment(ALostArcCharacter* Character)
 {
-	if (Super::Equip(Character, SlotIndex))
-	{
-		auto StatComponent = Character->StatComponent;
-		StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
-		return true;
-	}
-
-	return false;
+	Super::Equipment(Character);
+	auto StatComponent = Character->StatComponent;
+	StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
 }
 
 void ULostArcItemEquip_Ring::Dismount(ALostArcCharacter* Character)

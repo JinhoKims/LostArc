@@ -32,22 +32,25 @@ class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, publ
 	
 public:	
 	FOnEquipSlotUpdateDelegate EquipSlotUpdate;
+	
+public:	
+	ULostArcCharacterEquipComponent();
+	virtual void UseAbility(int32 SlotIndex) override;
+	virtual ULostArcAbilityBase* TransAbil(int32 SlotIndex) override;
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
+	virtual void SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex) override;
+	
+	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
+	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
+	EAccessoryType IndexDecoding(int32 &SlotIndex);
+	
+	EAccessoryType GetIndexACType(int32 Index); // 인덱스 타입 재설계 요망
+	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
+	bool SetEqiupItem(ULostArcItemBase* OwnerItem, int32 DistIndex);
 
 protected:
 	virtual void InitializeComponent() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
-	
-public:	
-	ULostArcCharacterEquipComponent();
-	void EquipMounts(class ULostArcItemEquipBase* NewEquip, int32 SlotIndex = -1);
-	virtual void UseAbility(int32 SlotIndex) override; // SlotIndex로 EqiupSlot 찾기(0, 1~2, 3~4)
-	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
-	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) override;
-	bool SendSlot(int32 OwnerIndex, int32 DistIndex);
-	
-	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
-	EAccessoryType IndexDecoding(int32 &SlotIndex);
-	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
 	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))

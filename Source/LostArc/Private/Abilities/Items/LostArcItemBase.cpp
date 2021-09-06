@@ -19,10 +19,13 @@ bool ULostArcItemBase::Use(ALostArcCharacter* Character)
 
 bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
 {
-	if (Character->GetWorldTimerManager().IsTimerActive(AbilityCDProperty.Key))
+	if(AbilityCDProperty.Key.IsValid())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCDProperty.Key));
-		return false;
+		if (Character->GetWorldTimerManager().IsTimerActive(AbilityCDProperty.Key))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCDProperty.Key));
+			return false;
+		}
 	}
 
 	return true;

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Abilities/LostArcAbilityBase.h"
 #include "UObject/Interface.h"
 #include "LostArcCharacterInterface.generated.h"
 
@@ -21,5 +22,6 @@ class LOSTARC_API ILostArcCharacterInterface
 public:
 	virtual void UseAbility(int32 SlotIndex) = 0;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) {}
-	virtual bool ReceiveSlot(int32 OwnerIndex, int32 DistIndex) { return true; }
+	virtual void SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex) {}
+	virtual ULostArcAbilityBase* TransAbil(int32 SlotIndex) { return nullptr; }
 };

@@ -22,5 +22,6 @@ class LOSTARC_API ULostArcUISlotDrag : public UDragDropOperation
 	
 public:
 	TEnumAsByte<ESlotType> SlotType;
+	UActorComponent* SlotComponent;
 	int32 SlotIndex;
 };

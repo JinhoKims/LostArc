@@ -17,6 +17,6 @@ class LOSTARC_API ULostArcItemEquip_Earrings : public ULostArcItemEquipBase
 public:
 	ULostArcItemEquip_Earrings(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual bool Equip(ALostArcCharacter* Character, int32 SlotIndex) override;
+	virtual void Equipment(ALostArcCharacter* Character) override;
 	virtual void Dismount(ALostArcCharacter* Character) override;
 };
