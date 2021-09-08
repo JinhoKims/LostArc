@@ -29,7 +29,7 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌트는 컴파일 타임에 생성자가 호출된 후에 같이 호출되는 경향이 있기에 미리 AbilityClass를 초기화해줘야한다.
 {
 	Super::InitializeComponent();
-
+	
 	for (int i = 0; i < 10; i++)
 	{
 		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.

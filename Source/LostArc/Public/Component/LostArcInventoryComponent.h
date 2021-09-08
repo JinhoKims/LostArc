@@ -21,11 +21,12 @@ public:
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
 	virtual void UseAbility(int32 SlotIndex) override;
-	virtual ULostArcAbilityBase* TransAbil(int32 SlotIndex) override;
-	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
-	virtual void SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex) override;
-	
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent = nullptr) override;
+	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
+	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
+
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
+
 	
 	class ULostArcItemBase* GetSlotData(int32 Index);
 	bool SetSlotData(ULostArcItemBase* OwnerItem);

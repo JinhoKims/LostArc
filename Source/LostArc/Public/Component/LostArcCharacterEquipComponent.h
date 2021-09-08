@@ -36,17 +36,18 @@ public:
 public:	
 	ULostArcCharacterEquipComponent();
 	virtual void UseAbility(int32 SlotIndex) override;
-	virtual ULostArcAbilityBase* TransAbil(int32 SlotIndex) override;
-	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex) override;
-	virtual void SwappingSlot(UActorComponent* OwnerComponent, int32 OwnerIndex, int32 DistIndex) override;
+	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent) override;
+	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
+	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
 	
-	void EquipMounts(class ULostArcItemEquipBase* NewEquip);
 	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
 	EAccessoryType IndexDecoding(int32 &SlotIndex);
+	bool EquipMounts(class ULostArcItemEquipBase* NewEquip);
+
 	
-	EAccessoryType GetIndexACType(int32 Index); // 인덱스 타입 재설계 요망
 	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
 	bool SetEqiupItem(ULostArcItemBase* OwnerItem, int32 DistIndex);
+	
 
 protected:
 	virtual void InitializeComponent() override;

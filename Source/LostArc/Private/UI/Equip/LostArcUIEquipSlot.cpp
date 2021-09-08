@@ -21,7 +21,7 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 		
 		if (Interface != nullptr)
 		{
-			Interface->SwappingSlot(Owner->SlotComponent,Owner->SlotIndex, this->SlotIndex);
+			Interface->SwappingSlot(Owner->SlotIndex, this->SlotIndex, Owner->SlotComponent);
 			return true;
 		}
 	}
