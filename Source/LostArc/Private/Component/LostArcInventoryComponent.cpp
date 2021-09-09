@@ -61,7 +61,7 @@ void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 }
 void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent)
 {
-	if(OwnerComponent == nullptr)
+	if(OwnerComponent == nullptr) // 내수 교환
 	{
 		if(GetAbility(OwnerIndex) == nullptr || OwnerIndex == DistIndex) return;
 
@@ -73,24 +73,21 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex,
 		{
 			if (!GetOwner()->GetWorldTimerManager().IsTimerActive(InventorySlot[DistIndex]->AbilityCDProperty.Key))
 			{
-				if (InventorySlot[OwnerIndex]->GetName().Equals(InventorySlot[DistIndex]->GetName())) // 같은 아이템이 있고
-					{
-					if (EItemType::ITEM_Equip != InventorySlot[OwnerIndex]->GetItemType()) // 장비 아이템이 아닌경우
-						{
-						InventorySlot[DistIndex]->SetItemQuantity(InventorySlot[OwnerIndex]->GetItemQuantity()); // 합체
-						InventorySlot[OwnerIndex] = nullptr;
-						}
-					}
-				else
+				if(Cast<ULostArcItemBase>(GetAbility(OwnerIndex))->IsConsumable() && Cast<ULostArcItemBase>(GetAbility(DistIndex))->IsConsumable()) // 같은 소비 아이템일 경우
 				{
-					Swap(InventorySlot[OwnerIndex], InventorySlot[DistIndex]);
+					if(GetAbility(OwnerIndex)->GetName() == GetAbility(DistIndex)->GetName())
+					{
+						InventorySlot[DistIndex]->SetItemQuantity(Cast<ULostArcItemBase>(GetAbility(OwnerIndex,true))->GetItemQuantity());
+						return;
+					}
 				}
+				Swap(InventorySlot[OwnerIndex], InventorySlot[DistIndex]);
 				InvenSlotUpdate.Broadcast(OwnerIndex);
 				InvenSlotUpdate.Broadcast(DistIndex);
 			}
 		}
 	}
-	else
+	else // 외부 슬롯 교환
 	{
 		ILostArcCharacterInterface* Interface = Cast<ILostArcCharacterInterface>(OwnerComponent);
 		if(Interface == nullptr) return;
@@ -100,13 +97,23 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex,
 		
 		if(GetAbility(DistIndex) == nullptr) // Drop 위치의 슬롯이 null일 때
 		{
-			SetAbility(Interface->GetAbility(OwnerIndex,true), DistIndex);
+			SetAbility(Interface->GetAbility(OwnerIndex, true), DistIndex);
 		}
-		else if(Cast<ULostArcItemEquipBase>(InventorySlot[DistIndex]) != nullptr) // null이 아닐 떄
+		else
 		{ // Owner와 this가 소비형 아이템(IsConsumable)일 경우 어빌리티 이름(Name)을 체크하여 같으면 수량 증가
 			// 둘 다 소비형 아이템이 아닐 경우 Interface->SetAbility()를 호출하여 스왑 시도
 			// 둘 중 하나만 소비형일 경우 거래 자체가 불가능하니 슬롯상태 현상유지(리턴)
-			if(Cast<ULostArcItemEquipBase>(InventorySlot[DistIndex])->GetAcType() == Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerIndex))->GetAcType())
+			auto OwnerData = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerIndex));
+			if(OwnerData == nullptr) return;
+
+			if(Cast<ULostArcItemBase>(GetAbility(DistIndex))->IsConsumable() && OwnerData->IsConsumable()) // 같은 소비 아이템일 경우
+			{
+				if(OwnerData->GetName() == GetAbility(DistIndex)->GetName())
+				{
+					InventorySlot[DistIndex]->SetItemQuantity(Cast<ULostArcItemBase>(GetAbility(OwnerIndex,true))->GetItemQuantity());
+				}
+			}
+			else if(Cast<ULostArcItemBase>(GetAbility(DistIndex))->GetItemType() == OwnerData->GetItemType()) // 장비 아이템일 경우
 			{
 				Interface->SwappingSlot(DistIndex, OwnerIndex, this);
 			}
