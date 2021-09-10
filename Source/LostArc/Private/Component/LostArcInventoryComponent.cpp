@@ -2,8 +2,6 @@
 
 #include "Component/LostArcInventoryComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
-#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
-#include "Component/LostArcCharacterEquipComponent.h"
 #include "UI/Inventory/LostArcUIInventory.h"
 
 ULostArcInventoryComponent::ULostArcInventoryComponent()

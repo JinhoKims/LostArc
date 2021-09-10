@@ -143,7 +143,7 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 		// try swapping slot
 		Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
 		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->SetAbility(OwnerEquip)) // 스왑 성공
-		{
+			{ // ※ InventoryComponent 함수가 나오는 대신 OwerEquip의 멤버의 ActorComponent를 인터페이스로 캐스팅하여 InvenComponent의 GetAbility()를 불러오게 한다.
 			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), 0));
 			return true;
