@@ -28,5 +28,5 @@ void ULostArcUIInven::BeginDestroy()
 
 void ULostArcUIInven::RefreshSlot(int32 Index)
 {
-	InvenSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->InventoryComponent->GetSlotData(Index)));
+	InvenSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->InventoryComponent->GetAbility(Index)));
 }

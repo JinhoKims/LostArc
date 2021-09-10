@@ -29,5 +29,5 @@ void ULostArcUIEquip::BeginDestroy()
 
 void ULostArcUIEquip::RefreshSlot(int32 Index)
 {
-	EquipSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->EquipComponent->GetEquipItem(Index)));
+	EquipSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->EquipComponent->GetAbility(Index)));
 }

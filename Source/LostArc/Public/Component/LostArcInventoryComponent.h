@@ -27,11 +27,6 @@ public:
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 
-	
-	class ULostArcItemBase* GetSlotData(int32 Index);
-	bool SetSlotData(ULostArcItemBase* OwnerItem);
-	bool SetSlotData(ULostArcItemBase* OwnerItem, int32 DistIndex);
-
 protected:
 	static constexpr int32 MaxItemSlot = 16;
 	virtual void BeginPlay() override;
@@ -41,6 +36,4 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
-	
-	bool ConsumableCheck(class ULostArcItemBase* NewItem, int32 ItemCount);
 };

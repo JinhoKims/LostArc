@@ -18,6 +18,6 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 
 bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
 {
-	Character->EquipComponent->EquipMounts(this);
+	Character->EquipComponent->SetAbility(this);
 	return true;
 }

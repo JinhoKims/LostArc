@@ -125,7 +125,7 @@ ULostArcAbilityBase* ULostArcInventoryComponent::GetAbility(int32 SlotIndex, boo
 {
 	if(bTrans)
 	{
-		auto TransUnit = GetSlotData(SlotIndex);
+		auto TransUnit = InventorySlot[SlotIndex];
 
 		if(TransUnit != nullptr)
 		{
@@ -184,23 +184,31 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	if (NewItem)
 	{
 		if (NewItem->IsConsumable()) // 소비 아이템
+		{
+			for (int i = 0; i < 16; i++) // 중복
 			{
-			if (!ConsumableCheck(NewItem, ItemCount)) // 인벤에 이미 있는지 체크
+				if (InventorySlot[i] != nullptr)
 				{
-				for (int i = 0; i < 16; i++)
-				{
-					if (InventorySlot[i] == nullptr)
+					if (InventorySlot[i]->GetName() == NewItem->GetName()) // 인벤에 이미 있으면
 					{
-						InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
-						InventorySlot[i]->SetItemQuantity(ItemCount); // 수량 증가
-						InvenSlotUpdate.Broadcast(i);
-						break;
+						InventorySlot[i]->SetItemQuantity(ItemCount); // 수량만 증가
+						return;
 					}
 				}
+			}
+			for (int i = 0; i < 16; i++) // 새로운
+			{
+				if (InventorySlot[i] == nullptr)
+				{
+					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get()); // 새로운 아이템을 인벤에 추가
+					InventorySlot[i]->SetItemQuantity(ItemCount); // 수량 증가
+					InvenSlotUpdate.Broadcast(i);
+					break;
 				}
 			}
+		}
 		else // 장비 아이템
-			{
+		{
 			for (int i = 0; i < 16; i++)
 			{
 				if (InventorySlot[i] == nullptr)
@@ -210,55 +218,6 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					break;
 				}
 			}
-			}
-	}
-}
-bool ULostArcInventoryComponent::ConsumableCheck(ULostArcItemBase* NewItem, int32 ItemCount)
-{
-	for (int i = 0; i < 16; i++)
-	{
-		if (InventorySlot[i] != nullptr)
-		{
-			if (InventorySlot[i]->GetName() == NewItem->GetName()) // 인벤에 이미 있으면
-			{
-				InventorySlot[i]->SetItemQuantity(ItemCount); // 수량만 증가
-				return true;
-			}
 		}
 	}
-	return false;
-}
-
-
-bool ULostArcInventoryComponent::SetSlotData(ULostArcItemBase* OwnerItem)
-{
-	for(int i = 0; i < 16; i++)
-	{
-		if(InventorySlot[i] == nullptr)
-		{
-			InventorySlot[i] = OwnerItem;
-			InvenSlotUpdate.Broadcast(i);
-			return true;
-		}
-	}
-
-	return false;
-}
-bool ULostArcInventoryComponent::SetSlotData(ULostArcItemBase* OwnerItem, int32 DistIndex)
-{
-	if(InventorySlot[DistIndex] == nullptr)
-	{
-		InventorySlot[DistIndex] = OwnerItem;
-		InvenSlotUpdate.Broadcast(DistIndex);
-		return true;
-	}
-
-	return false;
-}
-ULostArcItemBase* ULostArcInventoryComponent::GetSlotData(int32 Index)
-{
-	if (InventorySlot[Index] == nullptr)
-		return nullptr;
-	else
-		return InventorySlot[Index];
 }

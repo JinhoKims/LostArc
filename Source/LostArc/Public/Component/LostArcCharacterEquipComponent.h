@@ -41,14 +41,8 @@ public:
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
 	
 	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
-	EAccessoryType IndexDecoding(int32 &SlotIndex);
-	bool EquipMounts(class ULostArcItemEquipBase* NewEquip);
-
+	EAccessoryType IndexDecoding(int32 &SlotIndex, bool bTrans = true);
 	
-	class ULostArcItemEquipBase* GetEquipItem(int32 Index);
-	bool SetEqiupItem(ULostArcItemBase* OwnerItem, int32 DistIndex);
-	
-
 protected:
 	virtual void InitializeComponent() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
