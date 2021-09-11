@@ -110,32 +110,32 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 	if(SlotIndex == -1)
 	{
 		for (int32 i = 0; i < *EquipMaxSlot.Find(OwnerEquip->GetAcType()); i++) // EquipSlot has Empty
-			{
+		{
 			if(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[i] == nullptr)
 			{
 				EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[i] = OwnerEquip;
 				EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), i));
 				return true;
 			}
-			}
+		}
 		
 		// EquipSlot has Fully
 		Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
 		if(Interface->SetAbility(OwnerEquip)) // 스왑 성공
-			{
+		{
 			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), 0));
 			return true;
-			}
+		}
 		else // 스왑 실패
-			{
+		{
 			Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
 			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			return false;
-			}
+		}
 	}
 	else // 인덱스에 삽입
-		{
+	{
 		if(IndexDecoding(SlotIndex, false) == OwnerEquip->GetAcType())
 		{
 			OwnerEquip->Equipment(Cast<ALostArcCharacter>(GetOwner()));
@@ -143,9 +143,8 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), SlotIndex));
 			return true;
 		}
-		
 		return false;
-		}
+	}
 }
 ULostArcAbilityBase* ULostArcCharacterEquipComponent::GetAbility(int32 SlotIndex, bool bTrans)
 {
