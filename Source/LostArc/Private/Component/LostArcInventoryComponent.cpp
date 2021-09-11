@@ -45,6 +45,7 @@ void ULostArcInventoryComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 	InventorySlot.Empty();
 	ItemTable.Empty();
 }
+
 void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
@@ -98,9 +99,7 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex,
 			SetAbility(Interface->GetAbility(OwnerIndex, true), DistIndex);
 		}
 		else
-		{ // Owner와 this가 소비형 아이템(IsConsumable)일 경우 어빌리티 이름(Name)을 체크하여 같으면 수량 증가
-			// 둘 다 소비형 아이템이 아닐 경우 Interface->SetAbility()를 호출하여 스왑 시도
-			// 둘 중 하나만 소비형일 경우 거래 자체가 불가능하니 슬롯상태 현상유지(리턴)
+		{	// Owner와 this가 소비형 아이템(IsConsumable)일 경우 어빌리티 이름(Name)을 체크하여 같으면 수량 증가
 			auto OwnerData = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerIndex));
 			if(OwnerData == nullptr) return;
 
@@ -118,29 +117,6 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex,
 		}
 	}
 	
-}
-ULostArcAbilityBase* ULostArcInventoryComponent::GetAbility(int32 SlotIndex, bool bTrans)
-{
-	if(bTrans)
-	{
-		auto TransUnit = InventorySlot[SlotIndex];
-
-		if(TransUnit != nullptr)
-		{
-			InventorySlot[SlotIndex] = nullptr;
-			InvenSlotUpdate.Broadcast(SlotIndex);
-			return TransUnit;
-		}
-	
-		return nullptr;
-	}
-	else
-	{
-		if (InventorySlot[SlotIndex] == nullptr)
-			return nullptr;
-		else
-			return InventorySlot[SlotIndex];
-	}
 }
 bool ULostArcInventoryComponent::SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex)
 {
@@ -171,6 +147,29 @@ bool ULostArcInventoryComponent::SetAbility(ULostArcAbilityBase* OwnerAbility, i
 		}
 		
 		return false;
+	}
+}
+ULostArcAbilityBase* ULostArcInventoryComponent::GetAbility(int32 SlotIndex, bool bTrans)
+{
+	if(bTrans)
+	{
+		auto TransUnit = InventorySlot[SlotIndex];
+
+		if(TransUnit != nullptr)
+		{
+			InventorySlot[SlotIndex] = nullptr;
+			InvenSlotUpdate.Broadcast(SlotIndex);
+			return TransUnit;
+		}
+	
+		return nullptr;
+	}
+	else
+	{
+		if (InventorySlot[SlotIndex] == nullptr)
+			return nullptr;
+		else
+			return InventorySlot[SlotIndex];
 	}
 }
 
