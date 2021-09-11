@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,19 +5,21 @@
 #include "Components/ActorComponent.h"
 #include "LostArcQuickSlotComponent.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class LOSTARC_API ULostArcQuickSlotComponent : public UActorComponent, ILostArcCharacterInterface
+class LOSTARC_API ULostArcQuickSlotComponent : public UActorComponent, public ILostArcCharacterInterface
 {
 	GENERATED_BODY()
 
 public:	
 	ULostArcQuickSlotComponent();
+	virtual void UseAbility(int32 SlotIndex) override;
 
-protected:	
+protected:
+	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
 
-public:	
+private:
+	TArray<class ULostArcAbilityBase*> QuickSlot;
 	
-		
+	const int32 MaxSlotCount = 16; 
 };

@@ -26,7 +26,6 @@ public:
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 
 protected:
-	static constexpr int32 MaxItemSlot = 16;
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
@@ -38,4 +37,6 @@ private:
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
 
 	TArray<class ULostArcItemBase*> InventorySlot;
+	
+	const int32 MaxSlotCount = 16;
 };
