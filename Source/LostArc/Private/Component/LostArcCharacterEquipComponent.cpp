@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Component/LostArcCharacterEquipComponent.h"
-
-#include "../../../../Plugins/Developer/RiderLink/Source/RD/thirdparty/spdlog/include/spdlog/fmt/bundled/format.h"
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 
@@ -28,6 +26,8 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 			EquipSlot.Find((EAccessoryType)i)->EquipArray.SetNum(*EquipMaxSlot.Find((EAccessoryType)i));
 		}
 	}
+
+	Interface = Cast<ALostArcCharacter>(GetOwner())->InventoryComponent;
 }
 void ULostArcCharacterEquipComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
@@ -39,7 +39,7 @@ void ULostArcCharacterEquipComponent::UseAbility(int32 SlotIndex)
 	auto Equip = Cast<ULostArcItemEquipBase>(GetAbility(SlotIndex));
 	if(Equip)
 	{
-		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->SetAbility(Equip))
+		if(Interface->SetAbility(Equip))
 		{
 			Equip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlot.Find(IndexDecoding(SlotIndex))->EquipArray[SlotIndex] = nullptr;
@@ -74,25 +74,25 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 	}
 	else // 외부 슬롯 스왑
 	{
-		ILostArcCharacterInterface* Interface = Cast<ILostArcCharacterInterface>(OwnerComponent);
-		if(Interface == nullptr) return;
+		ILostArcCharacterInterface* OwnerInterface = Cast<ILostArcCharacterInterface>(OwnerComponent);
+		if(OwnerInterface == nullptr) return;
 		
-		auto OwnerEquip = Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerIndex));
+		auto OwnerEquip = Cast<ULostArcItemEquipBase>(OwnerInterface->GetAbility(OwnerIndex));
 		if(OwnerEquip == nullptr) return;
 		
 		if(GetAbility(DistIndex) == nullptr) // 이동
 		{
 			if(OwnerEquip->GetAcType() == IndexDecoding(DistIndex))
 			{
-				SetAbility(Interface->GetAbility(OwnerIndex, true), IndexEncoding(OwnerEquip->GetAcType(), DistIndex));
+				SetAbility(OwnerInterface->GetAbility(OwnerIndex, true), IndexEncoding(OwnerEquip->GetAcType(), DistIndex));
 			}
 		}
 		else // 교체
 		{
 			if(Cast<ULostArcItemEquipBase>(GetAbility(DistIndex))->GetAcType() == OwnerEquip->GetAcType()) // 같은 장비류인 경우
 			{
-				auto OwnerData = Interface->GetAbility(OwnerIndex,true);
-				if(OwnerData && Interface->SetAbility(GetAbility(DistIndex), OwnerIndex))
+				auto OwnerData = OwnerInterface->GetAbility(OwnerIndex,true);
+				if(OwnerData && OwnerInterface->SetAbility(GetAbility(DistIndex), OwnerIndex))
 				{
 					Cast<ULostArcItemEquipBase>(GetAbility(DistIndex))->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 					SetAbility(OwnerData, DistIndex);
@@ -142,8 +142,8 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 		// EquipSlot has Fully
 		// try swapping slot
 		Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
-		if(Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->SetAbility(OwnerEquip)) // 스왑 성공
-			{ // ※ InventoryComponent 함수가 나오는 대신 OwerEquip의 멤버의 ActorComponent를 인터페이스로 캐스팅하여 InvenComponent의 GetAbility()를 불러오게 한다.
+		if(Interface->SetAbility(OwnerEquip)) // 스왑 성공
+		{
 			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), 0));
 			return true;

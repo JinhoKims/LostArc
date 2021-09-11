@@ -37,8 +37,8 @@ public:
 	ULostArcCharacterEquipComponent();
 	virtual void UseAbility(int32 SlotIndex) override;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent) override;
-	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
+	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 	
 	int32 IndexEncoding(EAccessoryType AcType, int32 Index);
 	EAccessoryType IndexDecoding(int32 &SlotIndex, bool bTrans = true);
@@ -51,4 +51,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TMap<TEnumAsByte<EAccessoryType>, int32> EquipMaxSlot;
 	TMap<EAccessoryType, FEquipSlot> EquipSlot;
+
+	ILostArcCharacterInterface* Interface;
 };

@@ -16,14 +16,13 @@ class LOSTARC_API ULostArcInventoryComponent : public UActorComponent, public IL
 	
 public:
 	FOnInvenSlotUpdateDelegate InvenSlotUpdate;
-	TArray<class ULostArcItemBase*> InventorySlot;
-
+	
 	ULostArcInventoryComponent();
 	virtual void InitializeComponent() override;
 	virtual void UseAbility(int32 SlotIndex) override;
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent = nullptr) override;
-	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
+	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 
@@ -36,4 +35,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
+
+	TArray<class ULostArcItemBase*> InventorySlot;
 };

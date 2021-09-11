@@ -183,7 +183,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 	{
 		if (NewItem->IsConsumable()) // 소비 아이템
 		{
-			for (int i = 0; i < 16; i++) // 중복
+			for (int i = 0; i < MaxItemSlot; i++) // 중복
 			{
 				if (InventorySlot[i] != nullptr)
 				{
@@ -194,7 +194,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 					}
 				}
 			}
-			for (int i = 0; i < 16; i++) // 새로운
+			for (int i = 0; i < MaxItemSlot; i++) // 새로운
 			{
 				if (InventorySlot[i] == nullptr)
 				{
@@ -207,7 +207,7 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 		}
 		else // 장비 아이템
 		{
-			for (int i = 0; i < 16; i++)
+			for (int i = 0; i < MaxItemSlot; i++)
 			{
 				if (InventorySlot[i] == nullptr)
 				{
