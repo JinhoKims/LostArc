@@ -50,7 +50,6 @@ void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
 	{
-		// 여러번 클릭시 자주 튕기니 글로벌(아이템에도) 쿨타임 필요 
 		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
 		{
 			InventorySlot[SlotIndex] = nullptr;

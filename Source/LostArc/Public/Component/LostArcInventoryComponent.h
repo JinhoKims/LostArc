@@ -34,8 +34,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<class ULostArcItemBase>> ItemClass;
 
+	UPROPERTY()
 	TMap<FString, TSubclassOf<class ULostArcItemBase>> ItemTable;
 
+	UPROPERTY()
 	TArray<class ULostArcItemBase*> InventorySlot;
 	
 	const int32 MaxSlotCount = 16;

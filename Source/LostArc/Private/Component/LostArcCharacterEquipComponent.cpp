@@ -37,15 +37,11 @@ void ULostArcCharacterEquipComponent::EndPlay(EEndPlayReason::Type EndPlayReason
 
 void ULostArcCharacterEquipComponent::UseAbility(int32 SlotIndex)
 {
-	auto Equip = Cast<ULostArcItemEquipBase>(GetAbility(SlotIndex));
-	if(Equip)
+	auto Equip = Cast<ULostArcItemEquipBase>(GetAbility(SlotIndex, true));
+	
+	if(Equip != nullptr)
 	{
-		if(Interface->SetAbility(Equip))
-		{
-			Equip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
-			EquipSlot.Find(IndexDecoding(SlotIndex))->EquipArray[SlotIndex] = nullptr;
-			EquipSlotUpdate.Broadcast(IndexEncoding(Equip->GetAcType(), SlotIndex));
-		}
+		Interface->SetAbility(Equip);
 	}
 }
 void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent)

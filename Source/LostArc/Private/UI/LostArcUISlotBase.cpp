@@ -37,7 +37,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 	
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
-		if (SlotData)
+		if (SlotData != nullptr)
 		{
 			auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
 			if (Inter != nullptr)

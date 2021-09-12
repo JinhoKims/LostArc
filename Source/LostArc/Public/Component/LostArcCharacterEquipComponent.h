@@ -20,6 +20,8 @@ USTRUCT(Atomic, BlueprintType)
 struct FEquipSlot
 {
 	GENERATED_BODY()
+
+	UPROPERTY() // Heap 영역을 가리키는 포인터는 UPROPERTY() 매크로가 필수이다. UPROPERTY()가 없으면 할당된 heap 영역을 담당하는 포인터가 없는 걸로 인식하여 GC가 null로 만들기 때문이다.
 	TArray<class ULostArcItemEquipBase*> EquipArray;
 };
 
@@ -50,7 +52,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = true))
 	TMap<TEnumAsByte<EAccessoryType>, int32> EquipMaxSlot;
 
-	TMap<EAccessoryType, FEquipSlot> EquipSlot;
-
+	UPROPERTY()
+	TMap<TEnumAsByte<EAccessoryType>, FEquipSlot> EquipSlot;
+	
 	ILostArcCharacterInterface* Interface;
 };
