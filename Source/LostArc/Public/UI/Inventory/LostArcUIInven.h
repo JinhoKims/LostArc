@@ -19,7 +19,7 @@ protected:
 	virtual void BeginDestroy() override;
 	
 private:
-	UPROPERTY(meta = (AllowPrivateAccess = true))
+	UPROPERTY()
 	TArray<class ULostArcUISlotBase*> InvenSlot;
 
 	class ALostArcCharacter* OwnerCharacter;

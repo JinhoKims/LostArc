@@ -13,5 +13,7 @@ UCLASS()
 class LOSTARC_API ULostArcUIQuickSlot : public ULostArcUISlotBase
 {
 	GENERATED_BODY()
-	
+
+public:
+		
 };

@@ -33,6 +33,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf <UUserWidget> DragVisualClass;
 
+	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;
 	UActorComponent* SlotComponent;
 	ESlotType SlotType;

@@ -9,6 +9,7 @@
 enum EAbilityType;
 
 DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, EAbilityType)
+DECLARE_DELEGATE_OneParam(FBindQuickSlotDelegate, int32 Slot)
 
 UCLASS(Blueprintable)
 class ALostArcCharacter : public ACharacter
@@ -37,6 +38,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterAbilityComponent* AbilityComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcQuickSlotComponent* QuickSlotComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcInventoryComponent* InventoryComponent;

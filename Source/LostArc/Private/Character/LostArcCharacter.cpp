@@ -8,11 +8,11 @@
 #include "Abilities/Skill/LostArcSkill_BasicAttack.h"
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
+#include "Component/LostArcQuickSlotComponent.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "Component/LineOfSightComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Components/Border.h"
 #include "Components/Image.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -92,6 +92,7 @@ ALostArcCharacter::ALostArcCharacter()
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
 	InventoryComponent = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
 	EquipComponent = CreateDefaultSubobject<ULostArcCharacterEquipComponent>(TEXT("EQUIP"));
+	QuickSlotComponent = CreateDefaultSubobject<ULostArcQuickSlotComponent>(TEXT("Quick"));
 }
 
 void ALostArcCharacter::PostInitializeComponents()
@@ -119,6 +120,11 @@ void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_3);
 	InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_4);
 	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
+
+	for(int i = 0; i < 16; i++)
+	{
+		InputComponent->BindAction<FBindQuickSlotDelegate>(FName(FString::Printf(TEXT("QuickSlot_%d"), i)), IE_Pressed, QuickSlotComponent, &ULostArcQuickSlotComponent::UseAbility, i);
+	}
 }
 
 void ALostArcCharacter::BeginPlay()
