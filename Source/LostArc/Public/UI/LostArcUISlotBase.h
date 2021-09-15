@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UImage* Image_CD;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	class UTextBlock* Text_CD;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf <UUserWidget> DragVisualClass;
 

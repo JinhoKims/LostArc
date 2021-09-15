@@ -15,6 +15,7 @@ void ULostArcQuickSlotComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 	
+	
 }
 
 void ULostArcQuickSlotComponent::BeginPlay()

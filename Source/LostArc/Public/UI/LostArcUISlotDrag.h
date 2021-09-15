@@ -12,6 +12,7 @@ enum ESlotType
 {
 	Inven UMETA(DisplayName = "Inven"),
 	Equip UMETA(DisplayName = "Equip"),
+	Skill UMETA(DisplayName = "Skill"),
 	Quick UMETA(DisplayName = "Quick")
 };
 

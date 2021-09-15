@@ -14,7 +14,10 @@ class LOSTARC_API ULostArcUIQuick : public UUserWidget
 {
 	GENERATED_BODY()
 
+protected:
+	virtual void NativeConstruct() override;
+	
 private:
 	UPROPERTY()
-	TArray<class ULostArcUISlotBase*> QuickSlot;
+	TArray<class ULostArcUIQuickSlot*> QuickSlot;
 };
