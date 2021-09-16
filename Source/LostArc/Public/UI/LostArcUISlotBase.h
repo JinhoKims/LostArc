@@ -22,6 +22,7 @@ public:
 	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData);
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
+	void SetSlotComponent(UActorComponent* Compo){ SlotComponent = Compo; }
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
@@ -34,7 +35,7 @@ protected:
 	class UTextBlock* Text_CD;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf <UUserWidget> DragVisualClass;
+	TSubclassOf<UUserWidget> DragVisualClass;
 
 	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;

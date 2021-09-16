@@ -6,16 +6,28 @@
 #include "UI/LostArcUISlotBase.h"
 #include "LostArcUIQuickSlot.generated.h"
 
+UENUM(BlueprintType)
+enum EQuickSlotType
+{
+	Ability UMETA(DisplayName = "Ability"),
+	Potion UMETA(DisplayName = "Potion"),
+};
+
+
 UCLASS()
 class LOSTARC_API ULostArcUIQuickSlot : public ULostArcUISlotBase
 {
 	GENERATED_BODY()
 
 public:
-	void SetSlot(ULostArcUISlotBase* Owner);
-
+	void SetQuickSlotType(EQuickSlotType Type) { QuickSlotType = Type; }
+	virtual void RefreshSlotData(ULostArcAbilityBase* NewData) override;
+	void UnBindSlotData() override;
+	void UpdateQuantity();
+	
 protected:
 	virtual void NativeConstruct() override;
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
@@ -24,8 +36,13 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class UTextBlock* Text_Key;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
+	class UTextBlock* Text_Quantity;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
 	FText KeyName;
 
-	ULostArcUISlotBase* OwnerSlot;
+	int32 RefIndex;
+	EQuickSlotType QuickSlotType;
+	FDelegateHandle ItemQuantityHandle;
 };

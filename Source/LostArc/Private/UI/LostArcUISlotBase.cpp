@@ -23,7 +23,7 @@ void ULostArcUISlotBase::NativeTick(const FGeometry& MyGeometry, float InDeltaTi
 		if (GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key))
 		{
 			float Value = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(SlotData->AbilityCDProperty.Key) / SlotData->GetCDTime();
-			Image_CD->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Value < 0.002f ? 0.0f : Value);
+			Image_CD->GetDynamicMaterial()->SetScalarParameterValue(FName(TEXT("Progress")), Value < 0.01f ? 0.0f : Value);
 		}
 	}
 }
@@ -67,6 +67,7 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 
 	if (OutOperation == nullptr)
 	{
+		if(SlotType == ESlotType::Quick) return;
 		ULostArcUISlotDrag* oper = NewObject<ULostArcUISlotDrag>();
 		UUserWidget* DraggedItem = CreateWidget<UUserWidget>(GetWorld(), DragVisualClass);
 		UImage* ImageBox = Cast<UImage>(DraggedItem->GetWidgetFromName("Image_Item"));

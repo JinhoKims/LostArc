@@ -19,7 +19,7 @@ protected:
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
 
-private:
+public:
 	UPROPERTY()
 	TArray<class ULostArcAbilityBase*> QuickSlot;
 	

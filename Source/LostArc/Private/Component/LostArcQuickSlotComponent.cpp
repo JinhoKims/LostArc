@@ -28,6 +28,14 @@ void ULostArcQuickSlotComponent::UseAbility(int32 SlotIndex)
 {
 	if (QuickSlot[SlotIndex] != nullptr)
 	{
+		if(SlotIndex < 8)
+		{
+			
+		}
+		else
+		{
+			
+		}
 		QuickSlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()));
 	}
 }
