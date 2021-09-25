@@ -36,7 +36,7 @@ bool ULostArcItemPotionBase::Consumed(ALostArcCharacter* Character)
 		return false;
 	}
 	else
-	{//
+	{
 		return true; // Item을 모두 소모
 		// 퀵 슬롯용 델리게이트 브로드캐스팅 구현하기 (이 클래스에 델리게이트를 선언)
 	}
