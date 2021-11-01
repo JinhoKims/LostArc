@@ -27,9 +27,6 @@ void ULostArcInventoryComponent::BeginPlay()
 	
 	AddPickupItem("Potion_Health", 3);
 	AddPickupItem("Potion_Mana", 3);
-
-	AddPickupItem("Potion_Health", 8);
-	AddPickupItem("Potion_Mana", 7);
 	
 	AddPickupItem("Equip_Ring");
 	AddPickupItem("Equip_Ring");
@@ -210,6 +207,25 @@ void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount
 				if (InventorySlot[i] == nullptr)
 				{
 					InventorySlot[i] = NewObject<ULostArcItemBase>(this, ItemTable.Find(ItemName)->Get());
+					InvenSlotUpdate.Broadcast(i);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void ULostArcInventoryComponent::DeleteItemAfterCheckingQuantity() // 포션 아이템의 수량을 확인하고 0인 아이템이 슬롯에 있으면 삭제한다.
+{
+	for(int i = 0; i < 16; i++)
+	{
+		if(InventorySlot[i] != nullptr)
+		{
+			if(InventorySlot[i]->GetItemType() == EItemType::ITEM_Potion)
+			{
+				if(InventorySlot[i]->GetItemQuantity() <= 0)
+				{
+					InventorySlot[i] = nullptr;
 					InvenSlotUpdate.Broadcast(i);
 					break;
 				}

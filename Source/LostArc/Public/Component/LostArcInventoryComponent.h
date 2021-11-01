@@ -24,7 +24,8 @@ public:
 	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 
 	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
-
+	void DeleteItemAfterCheckingQuantity();
+	
 protected:
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;

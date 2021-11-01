@@ -36,7 +36,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 			ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
 			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
 			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex);
+			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
 		}
 		break;
 	}
@@ -73,6 +73,19 @@ void ULostArcUIQuickSlot::UpdateQuantity()
 {
 	if (SlotData != nullptr) 
 	{
-		Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity())));
+		if(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity()) <=0) // 삭제해도 계속 남아있음(수정필요)
+		{
+			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = nullptr; // 퀵 컴포넌트 삭제하고 UI퀵 클래스로 이전하기
+			// 인벤토리 슬롯의 인덱스 추적 불가
+			
+			Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+			Image_Icon->SetVisibility(ESlateVisibility::Hidden);
+			UnBindSlotData();
+			SlotData = nullptr;
+		}
+		else
+		{
+			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity())));
+		}
 	}
 }
