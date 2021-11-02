@@ -53,7 +53,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 		{
 			if (!GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key))
 			{
-				reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+				reply = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton); // 드래그 시작
 			}
 		}
 	}
@@ -67,7 +67,7 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 
 	if (OutOperation == nullptr)
 	{
-		if(SlotType == ESlotType::Quick) return;
+		// if(SlotType == ESlotType::Quick) return;
 		ULostArcUISlotDrag* oper = NewObject<ULostArcUISlotDrag>();
 		UUserWidget* DraggedItem = CreateWidget<UUserWidget>(GetWorld(), DragVisualClass);
 		UImage* ImageBox = Cast<UImage>(DraggedItem->GetWidgetFromName("Image_Item"));
@@ -76,7 +76,7 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 		{
 			ImageBox->SetBrushFromTexture(SlotData->GetAbility_Icon());
 		}
-
+		
 		// 드래그 시작 위치의 슬롯 정보를 저장 (OnDrop에서 Owner가 됨)
 		oper->DefaultDragVisual = DraggedItem;
 		oper->SlotComponent = this->SlotComponent;

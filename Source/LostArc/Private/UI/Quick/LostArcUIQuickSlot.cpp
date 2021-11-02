@@ -2,6 +2,9 @@
 
 #include "UI/Quick/LostArcUIQuickSlot.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
+#include "Abilities/Items/Potion/LostArcItemPotionBase.h"
+#include "Abilities/Skill/LostArcSkillBase.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Component/LostArcCharacterInterface.h"
 #include "Component/LostArcQuickSlotComponent.h"
 
@@ -17,6 +20,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 {
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
 	if(OwnerDrag == nullptr) return false;
+	if(SlotData && GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key)) return false;
 
 	switch (QuickSlotType)
 	{
@@ -24,6 +28,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 		break;
 
 	case EQuickSlotType::Potion:
+		
 		ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
 		if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
 		
@@ -44,6 +49,8 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	// 그리고 아이템 카운트가 0 될 때 델리게이트로 퀵슬롯의 아이템도 삭제 필요 (퀵 슬롯을 아이템 / 스킬별로 각각 구현) 
 	return false;
 }
+
+
 
 
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
@@ -75,9 +82,8 @@ void ULostArcUIQuickSlot::UpdateQuantity()
 	{
 		if(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity()) <=0) // 삭제해도 계속 남아있음(수정필요)
 		{
-			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = nullptr; // 퀵 컴포넌트 삭제하고 UI퀵 클래스로 이전하기
-			// 인벤토리 슬롯의 인덱스 추적 불가
-			
+			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = nullptr;
+			// 인벤토리 슬롯의 인덱스 추적은 불가
 			Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
 			Image_Icon->SetVisibility(ESlateVisibility::Hidden);
 			UnBindSlotData();
