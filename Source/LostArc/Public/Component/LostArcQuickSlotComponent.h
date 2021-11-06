@@ -23,5 +23,7 @@ public:
 	UPROPERTY()
 	TArray<class ULostArcAbilityBase*> QuickSlot;
 	
-	const int32 MaxSlotCount = 16; 
+	const int32 MaxSlotCount = 16;
+
+	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
 };

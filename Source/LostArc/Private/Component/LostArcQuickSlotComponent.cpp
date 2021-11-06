@@ -14,14 +14,25 @@ ULostArcQuickSlotComponent::ULostArcQuickSlotComponent()
 void ULostArcQuickSlotComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-	
-	
 }
 
 void ULostArcQuickSlotComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+}
+
+ULostArcAbilityBase* ULostArcQuickSlotComponent::GetAbility(int32 SlotIndex, bool bTrans)
+{
+	if(!bTrans)
+	{
+		return QuickSlot[SlotIndex];
+	}
+	else
+	{
+		auto TransUnit = QuickSlot[SlotIndex];
+		QuickSlot[SlotIndex] = nullptr;
+		return TransUnit;
+	}
 }
 
 void ULostArcQuickSlotComponent::UseAbility(int32 SlotIndex)

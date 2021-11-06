@@ -23,6 +23,7 @@ public:
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 	void SetSlotComponent(UActorComponent* Compo){ SlotComponent = Compo; }
+	UActorComponent* GetSlotComponent() {return SlotComponent;}
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))

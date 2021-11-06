@@ -24,10 +24,10 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 
 	switch (QuickSlotType)
 	{
-	case EQuickSlotType::Ability:
+		case EQuickSlotType::Ability:
 		break;
 
-	case EQuickSlotType::Potion:
+		case EQuickSlotType::Potion:
 		
 		ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
 		if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
@@ -43,15 +43,23 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
 			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
 		}
+		
+		if(OwnerDrag->SlotType == ESlotType::Quick)
+		{
+			auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+			RefreshSlotData(OwnerItem);
+
+			RefIndex = OwnerDrag->SlotIndex;
+			ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
+			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
+			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = OwnerItem;
+		}
 		break;
 	}
 	// 퀵 슬롯끼리 교환하려면 결국엔 QuickComponent에서 SappingSlot 오버라이딩이 필요
-	// 그리고 아이템 카운트가 0 될 때 델리게이트로 퀵슬롯의 아이템도 삭제 필요 (퀵 슬롯을 아이템 / 스킬별로 각각 구현) 
 	return false;
 }
-
-
-
 
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
