@@ -21,7 +21,6 @@ ALostArcPlayerController::ALostArcPlayerController()
 	{
 		MainHUDClass = UI_HUD_C.Class;
 	}
-
 }
 
 void ALostArcPlayerController::SetupInputComponent()

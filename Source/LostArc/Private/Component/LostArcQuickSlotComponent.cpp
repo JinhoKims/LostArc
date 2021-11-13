@@ -23,15 +23,15 @@ void ULostArcQuickSlotComponent::BeginPlay()
 
 ULostArcAbilityBase* ULostArcQuickSlotComponent::GetAbility(int32 SlotIndex, bool bTrans)
 {
-	if(!bTrans)
-	{
-		return QuickSlot[SlotIndex];
-	}
-	else
+	if(bTrans)
 	{
 		auto TransUnit = QuickSlot[SlotIndex];
 		QuickSlot[SlotIndex] = nullptr;
 		return TransUnit;
+	}
+	else
+	{
+		return QuickSlot[SlotIndex];
 	}
 }
 
@@ -52,8 +52,4 @@ void ULostArcQuickSlotComponent::UseAbility(int32 SlotIndex)
 			}
 		}
 	}
-}
-
-void ULostArcQuickSlotComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent)
-{
 }

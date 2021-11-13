@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Quick/LostArcUIQuick.h"
 #include "LostArcUIMainHUD.generated.h"
 
 /**
@@ -29,4 +30,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<class ULostArcUIAbilitySlot*> AbilitySlots;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class ULostArcUIQuick* BP_Quick;
 };

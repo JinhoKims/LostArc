@@ -13,7 +13,6 @@ class LOSTARC_API ULostArcQuickSlotComponent : public UActorComponent, public IL
 public:	
 	ULostArcQuickSlotComponent();
 	virtual void UseAbility(int32 SlotIndex) override;
-	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent) override;
 
 protected:
 	virtual void InitializeComponent() override;

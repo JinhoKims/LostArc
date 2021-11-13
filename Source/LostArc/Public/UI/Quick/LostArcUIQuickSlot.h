@@ -24,6 +24,7 @@ public:
 	virtual void RefreshSlotData(ULostArcAbilityBase* NewData) override;
 	void UnBindSlotData() override;
 	void UpdateQuantity();
+	void ClearSlotData();
 	
 protected:
 	virtual void NativeConstruct() override;

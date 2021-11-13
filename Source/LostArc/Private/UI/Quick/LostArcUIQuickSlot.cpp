@@ -7,6 +7,8 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Component/LostArcCharacterInterface.h"
 #include "Component/LostArcQuickSlotComponent.h"
+#include "Controller/LostArcPlayerController.h"
+#include "UI/LostArcUIMainHUD.h"
 
 void ULostArcUIQuickSlot::NativeConstruct()
 {
@@ -46,9 +48,12 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 		
 		if(OwnerDrag->SlotType == ESlotType::Quick)
 		{
+			if(OwnerDrag->SlotIndex == SlotIndex) return false;
+			
 			auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+			Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
 			RefreshSlotData(OwnerItem);
-
+			
 			RefIndex = OwnerDrag->SlotIndex;
 			ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
 			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
@@ -102,4 +107,14 @@ void ULostArcUIQuickSlot::UpdateQuantity()
 			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity())));
 		}
 	}
+}
+
+void ULostArcUIQuickSlot::ClearSlotData()
+{
+	Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
+	Image_Icon->SetVisibility(ESlateVisibility::Hidden);
+	Image_CD->SetVisibility(ESlateVisibility::Hidden);
+
+	SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle); // 엔진에 등록된 AbilityCDHandle 델리게이트 핸들을 삭제
+	SlotData = nullptr;
 }

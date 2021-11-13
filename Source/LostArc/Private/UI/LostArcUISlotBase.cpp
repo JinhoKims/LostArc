@@ -15,7 +15,7 @@ void ULostArcUISlotBase::NativeConstruct()
 
 void ULostArcUISlotBase::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	if (bEnableTick) 
+	if (bEnableTick && SlotData) 
 	{
 		Super::NativeTick(MyGeometry, InDeltaTime);
 		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
@@ -108,7 +108,7 @@ void ULostArcUISlotBase::SetNativeTick(bool CD)
 {
 	bEnableTick = CD;
 
-	if (CD)
+	if (CD && SlotData)
 	{
 		Image_CD->SetVisibility(ESlateVisibility::Visible);
 	}

@@ -15,4 +15,6 @@ void ULostArcUIMainHUD::NativeConstruct()
 	{
 		AbilitySlots.Add(Cast<ULostArcUIAbilitySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_AbilitySlot_%d"), i)))));
 	}
+
+	
 }
