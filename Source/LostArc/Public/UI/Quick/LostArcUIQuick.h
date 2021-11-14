@@ -20,7 +20,7 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 	
-private:
+public:
 	UPROPERTY()
 	TArray<class ULostArcUIQuickSlot*> QuickSlot;
 };

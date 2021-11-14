@@ -5,7 +5,10 @@
 #include "UI/LostArcUIAbilitySlot.h"
 #include "UI/LostArcUIProgressBar.h"
 #include "Character/LostArcCharacter.h"
+#include "Component/LostArcCharacterInterface.h"
 #include "Components/ProgressBar.h"
+#include "UI/LostArcUISlotDrag.h"
+#include "UI/Quick/LostArcUIQuickSlot.h"
 
 void ULostArcUIMainHUD::NativeConstruct()
 {
@@ -15,6 +18,4 @@ void ULostArcUIMainHUD::NativeConstruct()
 	{
 		AbilitySlots.Add(Cast<ULostArcUIAbilitySlot>(GetWidgetFromName(FName(FString::Printf(TEXT("BP_AbilitySlot_%d"), i)))));
 	}
-
-	
 }

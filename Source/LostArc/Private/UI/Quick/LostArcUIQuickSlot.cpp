@@ -21,49 +21,62 @@ void ULostArcUIQuickSlot::NativeConstruct()
 bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
-	if(OwnerDrag == nullptr) return false;
+	if(OwnerDrag == nullptr) return true;
 	if(SlotData && GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key)) return false;
 
 	switch (QuickSlotType)
 	{
 		case EQuickSlotType::Ability:
-		break;
+			break;
 
 		case EQuickSlotType::Potion:
 		
-		ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
-		if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
+			ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
+			if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
 		
-		if(OwnerDrag->SlotType == ESlotType::Inven)
-		{
-			auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex));
-			RefreshSlotData(OwnerItem);
+			if(OwnerDrag->SlotType == ESlotType::Inven)
+			{
+				auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex));
+				RefreshSlotData(OwnerItem);
 			
-			RefIndex = OwnerDrag->SlotIndex;
-			ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
-			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
-			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
-		}
+				RefIndex = OwnerDrag->SlotIndex;
+				ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
+				Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
+				Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+				Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
+			}
 		
-		if(OwnerDrag->SlotType == ESlotType::Quick)
-		{
-			if(OwnerDrag->SlotIndex == SlotIndex) return false;
+			if(OwnerDrag->SlotType == ESlotType::Quick) // 위젯 계층은 하위 위젯에서 상위 위젯(MainHUD)으로 올라가는 방식이다. (false을 반환할 시 MainHUD의 OnDrop을 실행)
+			{
+				if(OwnerDrag->SlotIndex == SlotIndex) return true;
 			
-			auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
-			Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
-			RefreshSlotData(OwnerItem);
+				auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+				Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
+				RefreshSlotData(OwnerItem);
 			
-			RefIndex = OwnerDrag->SlotIndex;
-			ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
-			Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
-			Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = OwnerItem;
-		}
-		break;
+				RefIndex = OwnerDrag->SlotIndex;
+				ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
+				Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
+				Text_Quantity->SetVisibility(ESlateVisibility::Visible);
+				Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = OwnerItem;
+			}
+		
+			return true;
 	}
-	// 퀵 슬롯끼리 교환하려면 결국엔 QuickComponent에서 SappingSlot 오버라이딩이 필요
+	
 	return false;
+}
+
+void ULostArcUIQuickSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
+	ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
+
+	if(OwnerDrag->SlotType == ESlotType::Quick)
+	{
+		auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+		Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
+	}
 }
 
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)

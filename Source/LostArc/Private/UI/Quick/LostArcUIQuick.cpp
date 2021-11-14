@@ -7,7 +7,6 @@
 
 void ULostArcUIQuick::ClearQuickSlot(int32 SlotIndex)
 {
-	Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->GetAbility(SlotIndex,true);
 	QuickSlot[SlotIndex]->ClearSlotData();
 }
 
