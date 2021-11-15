@@ -71,12 +71,9 @@ void ULostArcUIQuickSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDrop
 {
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
 	ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
-
-	if(OwnerDrag->SlotType == ESlotType::Quick)
-	{
-		auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
-		Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
-	}
+	
+	auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+	Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
 }
 
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)

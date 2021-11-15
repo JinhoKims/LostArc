@@ -14,9 +14,9 @@ void ULostArcUIEquipSlot::NativeConstruct()
 
 bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
+	ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
 	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
 	{
-		ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
 		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
 		
 		if (Interface != nullptr)
@@ -25,8 +25,18 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 			return true;
 		}
 	}
+
+	return true;
+}
+
+void ULostArcUIEquipSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
 	
-	return false;
+	if(Inter != nullptr)
+	{
+		Inter->UseAbility(SlotIndex);
+	}
 }
 
 void ULostArcUIEquipSlot::RefreshSlotData(ULostArcAbilityBase* NewData)

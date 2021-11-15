@@ -55,7 +55,6 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 			auto OwnerEquip = Cast<ULostArcItemEquipBase>(GetAbility(OwnerIndex));
 			if(OwnerEquip->GetAcType() != IndexDecoding(DistIndex, false)) return;
 			SetAbility(GetAbility(OwnerIndex,true), DistIndex);
-			UE_LOG(LogTemp,Warning,TEXT("Move Slot"));
 		}
 		else // 교체
 		{
@@ -63,7 +62,6 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 			if(OwnerEquip->GetAcType() != DistEquip->GetAcType()) return;
 			
 			Swap(EquipSlot.Find(IndexDecoding(OwnerIndex))->EquipArray[OwnerIndex], EquipSlot.Find(IndexDecoding(DistIndex))->EquipArray[DistIndex]);
-			UE_LOG(LogTemp,Warning,TEXT("Swap Slot"));
 
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), OwnerIndex));
 			EquipSlotUpdate.Broadcast(IndexEncoding(DistEquip->GetAcType(), DistIndex));
