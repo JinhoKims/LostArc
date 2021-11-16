@@ -16,7 +16,8 @@ ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
-	static ConstructorHelpers::FClassFinder<ULostArcUIMainHUD> UI_HUD_C(TEXT("WidgetBlueprint'/Game/Widget/HUD/BP_MainHUD.BP_MainHUD_C'"));
+	static ConstructorHelpers::FClassFinder<ULostArcUIMainHUD> UI_HUD_C(TEXT("WidgetBlueprint'/Game/UI/HUD/BP_MainHUD.BP_MainHUD_C'"));
+
 	if (UI_HUD_C.Succeeded())
 	{
 		MainHUDClass = UI_HUD_C.Class;
