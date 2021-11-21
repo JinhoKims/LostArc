@@ -1,17 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Component/LostArcCharacterAbilityComponent.h"
-#include "Controller/LostArcPlayerController.h"
 #include "Character/LostArcCharacter.h"
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Abilities/LostArcAbilityBase.h"
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Abilities/Skill/LostArcSkill_BasicAttack.h"
-#include "Abilities/Skill/LostArcSkill_1.h"
-#include "Abilities/Skill/LostArcSkill_2.h"
-#include "Abilities/Skill/LostArcSkill_3.h"
-#include "Abilities/Skill/LostArcSkill_4.h"
-#include "Abilities/Skill/LostArcSkill_Dodge.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 
