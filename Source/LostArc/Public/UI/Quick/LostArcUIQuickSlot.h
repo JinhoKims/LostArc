@@ -25,6 +25,7 @@ public:
 	void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
+	void SetIcon(bool b) { Image_Icon->SetVisibility(b ? ESlateVisibility::Visible : ESlateVisibility::Hidden); }
 	
 protected:
 	virtual void NativeConstruct() override;
@@ -42,8 +43,11 @@ private:
 	class UTextBlock* Text_Quantity;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
-	FText KeyName;
+	class UTexture2D * ThumbTexture2D;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+	FText KeyName;
+	
 	int32 RefIndex;
 	EQuickSlotType QuickSlotType;
 	FDelegateHandle ItemQuantityHandle;

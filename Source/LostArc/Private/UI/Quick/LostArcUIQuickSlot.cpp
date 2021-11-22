@@ -16,6 +16,7 @@ void ULostArcUIQuickSlot::NativeConstruct()
 	
 	SlotType = ESlotType::Quick;
 	Text_Key->SetText(KeyName);
+	Image_Icon->SetBrushFromTexture(ThumbTexture2D);
 }
 
 bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)

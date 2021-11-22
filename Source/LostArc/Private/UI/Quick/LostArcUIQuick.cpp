@@ -25,6 +25,7 @@ void ULostArcUIQuick::NativeConstruct()
 		if(i < 8)
 		{
 			QuickSlot[i]->SetQuickSlotType(EQuickSlotType::Ability);
+			QuickSlot[i]->SetIcon(true);
 		}
 		else
 		{

@@ -53,4 +53,5 @@ protected:
 protected:
 	FDelegateHandle AbilityCDHandle;
 	bool bEnableTick;
+	
 };
