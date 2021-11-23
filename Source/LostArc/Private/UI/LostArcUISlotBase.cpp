@@ -15,7 +15,7 @@ void ULostArcUISlotBase::NativeConstruct()
 
 void ULostArcUISlotBase::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	if (bEnableTick && SlotData) 
+	if (bEnableTick) 
 	{
 		Super::NativeTick(MyGeometry, InDeltaTime);
 		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
@@ -104,14 +104,15 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 	return false;
 }
 
-void ULostArcUISlotBase::SetNativeTick(bool CD)
+void ULostArcUISlotBase::SetNativeTick(bool bCD)
 {
-	bEnableTick = CD;
+	bEnableTick = bCD;
 
-	if (CD && SlotData)
+	if (bCD)
 	{
 		Image_CD->SetVisibility(ESlateVisibility::Visible);
 	}
+	
 	else
 	{
 		Image_CD->SetVisibility(ESlateVisibility::Hidden);
@@ -143,4 +144,10 @@ void ULostArcUISlotBase::UnBindSlotData()
 	{
 		SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle);
 	}
+}
+
+void ULostArcUISlotBase::SetSlotDataFromAbilityCompo(ULostArcAbilityBase* NewData)
+{
+	SlotData = NewData; 
+	Image_Icon->SetVisibility(ESlateVisibility::Visible);
 }

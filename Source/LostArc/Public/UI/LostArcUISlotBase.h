@@ -18,11 +18,12 @@ class LOSTARC_API ULostArcUISlotBase : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	virtual void SetNativeTick(bool CD);
+	virtual void SetNativeTick(bool bCD);
 	virtual void RefreshSlotData(class ULostArcAbilityBase* NewData);
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 	void SetSlotComponent(UActorComponent* Compo){ SlotComponent = Compo; }
+	void SetSlotDataFromAbilityCompo(class ULostArcAbilityBase* NewData);
 	UActorComponent* GetSlotComponent() {return SlotComponent;}
 
 protected:

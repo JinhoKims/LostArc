@@ -25,12 +25,13 @@ public:
 	void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
-	void SetIcon(bool b) { Image_Icon->SetVisibility(b ? ESlateVisibility::Visible : ESlateVisibility::Hidden); }
+	virtual void SetNativeTick(bool CD) override;
 	
 protected:
 	virtual void NativeConstruct() override;
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 	virtual void NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))

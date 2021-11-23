@@ -5,10 +5,23 @@
 #include "Abilities/Items/Potion/LostArcItemPotionBase.h"
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "Component/LostArcCharacterInterface.h"
 #include "Component/LostArcQuickSlotComponent.h"
 #include "Controller/LostArcPlayerController.h"
 #include "UI/LostArcUIMainHUD.h"
+
+void ULostArcUIQuickSlot::SetNativeTick(bool bCD)
+{
+	bEnableTick = bCD;
+	
+	if(QuickSlotType == EQuickSlotType::Ability)
+	{
+		bCD ? Text_CD->SetVisibility(ESlateVisibility::Visible) : Text_CD->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	Super::SetNativeTick(bCD);
+}
 
 void ULostArcUIQuickSlot::NativeConstruct()
 {
@@ -75,6 +88,22 @@ void ULostArcUIQuickSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDrop
 	
 	auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
 	Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
+}
+
+void ULostArcUIQuickSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
+	if(QuickSlotType == EQuickSlotType::Ability)
+	{
+		if(bEnableTick)
+		{
+			auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+			float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(static_cast<EAbilityType>(SlotIndex+1))->AbilityCDProperty.Key);
+	
+			Text_CD->SetText(FText::AsNumber(FMath::FloorToInt(Count)));
+		}
+	}
 }
 
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)

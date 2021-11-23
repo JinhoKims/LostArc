@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/Quick/LostArcUIQuick.h"
+
+#include "Abilities/Skill/LostArcSkillBase.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "UI/Quick/LostArcUIQuickSlot.h"
 #include "Component/LostArcQuickSlotComponent.h"
 #include "Component/LostArcInventoryComponent.h"
@@ -25,7 +28,8 @@ void ULostArcUIQuick::NativeConstruct()
 		if(i < 8)
 		{
 			QuickSlot[i]->SetQuickSlotType(EQuickSlotType::Ability);
-			QuickSlot[i]->SetIcon(true);
+			QuickSlot[i]->SetSlotDataFromAbilityCompo(OwingChar->AbilityComponent->GetAbilites(static_cast<EAbilityType>(i+1)));
+			OwingChar->AbilityComponent->GetAbilites(static_cast<EAbilityType>(i+1))->AbilityCDProperty.Value.AddUObject(QuickSlot[i], &ULostArcUIQuickSlot::SetNativeTick);
 		}
 		else
 		{
