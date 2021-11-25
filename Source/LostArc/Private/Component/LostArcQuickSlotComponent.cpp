@@ -46,8 +46,7 @@ void ULostArcQuickSlotComponent::UseAbility(int32 SlotIndex)
 	{
 		if(QuickSlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner())))
 		{
-			Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->DeleteItemAfterCheckingQuantity();
-			// 인벤토리 전체를 스캔해서 current가 0인 슬롯을 삭제
+			Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->DeleteItemAfterCheckingQuantity(); // 매번 인벤토리 전체를 스캔해서 current가 0인 슬롯을 삭제함
 		}
 	}
 }

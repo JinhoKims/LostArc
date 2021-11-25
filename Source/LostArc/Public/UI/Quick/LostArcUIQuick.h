@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "LostArcUIQuick.generated.h"
 
-
-
-
 UCLASS()
 class LOSTARC_API ULostArcUIQuick : public UUserWidget
 {
@@ -23,4 +20,7 @@ protected:
 public:
 	UPROPERTY()
 	TArray<class ULostArcUIQuickSlot*> QuickSlot;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class ULostArcUIQuickSlot* BP_EvadeSlot;
 };

@@ -2,7 +2,6 @@
 
 #include "UI/Quick/LostArcUIQuickSlot.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
-#include "Abilities/Items/Potion/LostArcItemPotionBase.h"
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
@@ -157,4 +156,14 @@ void ULostArcUIQuickSlot::ClearSlotData()
 
 	SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle); // 엔진에 등록된 AbilityCDHandle 델리게이트 핸들을 삭제
 	SlotData = nullptr;
+}
+
+void ULostArcUIQuickSlot::SetEvadeSlot(ULostArcAbilityBase* EvadeAbility)
+{
+	SetSlotDataFromAbilityCompo(EvadeAbility);
+	SetSlotIndex(static_cast<int32>(EAbilityType::Evade)-1);
+	Image_Tri->SetVisibility(ESlateVisibility::Hidden);
+	SetQuickSlotType(EQuickSlotType::Ability);
+	SetVisibility(ESlateVisibility::Hidden);
+	SetSlotType(ESlotType::Evadeing);
 }

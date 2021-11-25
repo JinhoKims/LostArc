@@ -27,10 +27,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class ULostArcUIProgressBar* BP_EXPBAR;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TArray<class ULostArcUIAbilitySlot*> AbilitySlots;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class ULostArcUIQuick* BP_Quick;
 };

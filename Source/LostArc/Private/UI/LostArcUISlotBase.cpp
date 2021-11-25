@@ -34,7 +34,10 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	
 	if(ULostArcSkillBase::bAnimationRunning) return reply.NativeReply;
-	if(SlotData)
+	if(Cast<ULostArcSkillBase>(SlotData))
+	{
+		return reply.NativeReply;
+	}
 	
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
@@ -112,11 +115,13 @@ void ULostArcUISlotBase::SetNativeTick(bool bCD)
 	if (bCD)
 	{
 		Image_CD->SetVisibility(ESlateVisibility::Visible);
+		if (SlotType == ESlotType::Evadeing) SetVisibility(ESlateVisibility::Visible);
 	}
 	
 	else
 	{
 		Image_CD->SetVisibility(ESlateVisibility::Hidden);
+		if (SlotType == ESlotType::Evadeing) SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 

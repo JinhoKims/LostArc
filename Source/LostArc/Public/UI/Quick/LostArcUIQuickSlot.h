@@ -13,7 +13,6 @@ enum EQuickSlotType
 	Potion UMETA(DisplayName = "Potion"),
 };
 
-
 UCLASS()
 class LOSTARC_API ULostArcUIQuickSlot : public ULostArcUISlotBase
 {
@@ -25,6 +24,7 @@ public:
 	void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
+	void SetEvadeSlot(class ULostArcAbilityBase* EvadeAbility);
 	virtual void SetNativeTick(bool CD) override;
 	
 protected:
