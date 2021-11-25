@@ -34,6 +34,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	
 	if(ULostArcSkillBase::bAnimationRunning) return reply.NativeReply;
+	if(SlotData)
 	
 	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
 	{
