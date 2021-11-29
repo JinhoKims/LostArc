@@ -23,7 +23,7 @@ public:
 	virtual void UnBindSlotData();
 	void SetSlotIndex(int32 Index) { SlotIndex = Index; }
 	void SetSlotComponent(UActorComponent* Compo){ SlotComponent = Compo; }
-	void SetSlotDataFromAbilityCompo(class ULostArcAbilityBase* NewData);
+	
 	void SetSlotType(ESlotType Type) { SlotType = Type; }
 	UActorComponent* GetSlotComponent() {return SlotComponent;}
 
@@ -42,7 +42,10 @@ protected:
 
 	UPROPERTY()
 	class ULostArcAbilityBase* SlotData;
+
+	UPROPERTY()
 	UActorComponent* SlotComponent;
+	
 	ESlotType SlotType;
 	int32 SlotIndex;
 	

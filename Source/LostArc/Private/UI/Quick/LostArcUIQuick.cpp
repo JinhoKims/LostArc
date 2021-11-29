@@ -25,6 +25,7 @@ void ULostArcUIQuick::NativeConstruct()
 		if(i < 8)
 		{
 			QuickSlot[i]->SetQuickSlotType(EQuickSlotType::Ability);
+			
 			QuickSlot[i]->SetSlotDataFromAbilityCompo(OwingChar->AbilityComponent->GetAbilites(static_cast<EAbilityType>(i+1)));
 			OwingChar->AbilityComponent->GetAbilites(static_cast<EAbilityType>(i+1))->AbilityCDProperty.Value.AddUObject(QuickSlot[i], &ULostArcUIQuickSlot::SetNativeTick);
 		}

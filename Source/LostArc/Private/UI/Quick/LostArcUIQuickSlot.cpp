@@ -85,7 +85,7 @@ void ULostArcUIQuickSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDrop
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
 	ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
 	
-	auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
+	Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
 	Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);
 }
 
@@ -156,6 +156,12 @@ void ULostArcUIQuickSlot::ClearSlotData()
 
 	SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle); // 엔진에 등록된 AbilityCDHandle 델리게이트 핸들을 삭제
 	SlotData = nullptr;
+}
+
+void ULostArcUIQuickSlot::SetSlotDataFromAbilityCompo(ULostArcAbilityBase* NewData)
+{
+	SlotData = NewData; 
+	Image_Icon->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ULostArcUIQuickSlot::SetEvadeSlot(ULostArcAbilityBase* EvadeAbility)

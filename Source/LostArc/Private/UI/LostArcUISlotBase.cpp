@@ -71,7 +71,6 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 
 	if (OutOperation == nullptr)
 	{
-		// if(SlotType == ESlotType::Quick) return;
 		ULostArcUISlotDrag* oper = NewObject<ULostArcUISlotDrag>();
 		UUserWidget* DraggedItem = CreateWidget<UUserWidget>(GetWorld(), DragVisualClass);
 		UImage* ImageBox = Cast<UImage>(DraggedItem->GetWidgetFromName("Image_Item"));
@@ -150,10 +149,4 @@ void ULostArcUISlotBase::UnBindSlotData()
 	{
 		SlotData->AbilityCDProperty.Value.Remove(AbilityCDHandle);
 	}
-}
-
-void ULostArcUISlotBase::SetSlotDataFromAbilityCompo(ULostArcAbilityBase* NewData)
-{
-	SlotData = NewData; 
-	Image_Icon->SetVisibility(ESlateVisibility::Visible);
 }

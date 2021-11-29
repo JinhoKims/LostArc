@@ -19,13 +19,14 @@ class LOSTARC_API ULostArcUIQuickSlot : public ULostArcUISlotBase
 	GENERATED_BODY()
 
 public:
+	virtual void SetNativeTick(bool CD) override;
 	void SetQuickSlotType(EQuickSlotType Type) { QuickSlotType = Type; }
 	virtual void RefreshSlotData(ULostArcAbilityBase* NewData) override;
-	void UnBindSlotData() override;
+	virtual void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
+	void SetSlotDataFromAbilityCompo(class ULostArcAbilityBase* NewData);
 	void SetEvadeSlot(class ULostArcAbilityBase* EvadeAbility);
-	virtual void SetNativeTick(bool CD) override;
 	
 protected:
 	virtual void NativeConstruct() override;
