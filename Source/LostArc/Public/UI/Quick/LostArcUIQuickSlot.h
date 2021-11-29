@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Component/LostArcCharacterInterface.h"
 #include "UI/LostArcUISlotBase.h"
 #include "LostArcUIQuickSlot.generated.h"
 
@@ -21,15 +20,12 @@ class LOSTARC_API ULostArcUIQuickSlot : public ULostArcUISlotBase
 
 public:
 	virtual void SetNativeTick(bool CD) override;
+	void SetAbilitySlot(EAbilityType EType, class ULostArcCharacterAbilityComponent* Compo);
 	void SetQuickSlotType(EQuickSlotType Type) { QuickSlotType = Type; }
 	virtual void RefreshSlotData(ULostArcAbilityBase* NewData) override;
 	virtual void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
-	void SetAbilitySlot(EAbilityType EType, class ULostArcCharacterAbilityComponent* Compo);
-	
-	void SetSlotDataFromAbilityCompo(class ULostArcAbilityBase* NewData);
-	void SetEvadeSlot(class ULostArcAbilityBase* EvadeAbility);
 	
 protected:
 	virtual void NativeConstruct() override;

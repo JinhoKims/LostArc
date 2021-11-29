@@ -160,36 +160,16 @@ void ULostArcUIQuickSlot::ClearSlotData()
 
 void ULostArcUIQuickSlot::SetAbilitySlot(EAbilityType EType, ULostArcCharacterAbilityComponent* Compo)
 {
-	if(EType == ESlotType::Evadeing)
+	SlotData = Compo->GetAbilites(EType);
+	Image_Icon->SetVisibility(ESlateVisibility::Visible);
+	Compo->GetAbilites(EType)->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIQuickSlot::SetNativeTick);
+
+	if(EType == EAbilityType::Evade)
 	{
-		SlotData = Compo->GetAbilites(EType);
 		Image_Tri->SetVisibility(ESlateVisibility::Hidden);
+		SetSlotIndex(static_cast<int32>(EAbilityType::Evade)-1);
 		SetQuickSlotType(EQuickSlotType::Ability);
 		SetVisibility(ESlateVisibility::Hidden);
 		SetSlotType(ESlotType::Evadeing);
 	}
-	else
-	{
-		SlotData = Compo->GetAbilites(EType);
-		Image_Icon->SetVisibility(ESlateVisibility::Visible);
-	}
-}
-
-
-
-
-void ULostArcUIQuickSlot::SetSlotDataFromAbilityCompo(ULostArcAbilityBase* NewData)
-{
-	SlotData = NewData; 
-	Image_Icon->SetVisibility(ESlateVisibility::Visible);
-}
-
-void ULostArcUIQuickSlot::SetEvadeSlot(ULostArcAbilityBase* EvadeAbility)
-{
-	SetSlotDataFromAbilityCompo(EvadeAbility);
-	SetSlotIndex(static_cast<int32>(EAbilityType::Evade)-1);
-	Image_Tri->SetVisibility(ESlateVisibility::Hidden);
-	SetQuickSlotType(EQuickSlotType::Ability);
-	SetVisibility(ESlateVisibility::Hidden);
-	SetSlotType(ESlotType::Evadeing);
 }
