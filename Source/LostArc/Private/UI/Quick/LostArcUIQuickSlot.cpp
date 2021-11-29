@@ -158,6 +158,26 @@ void ULostArcUIQuickSlot::ClearSlotData()
 	SlotData = nullptr;
 }
 
+void ULostArcUIQuickSlot::SetAbilitySlot(EAbilityType EType, ULostArcCharacterAbilityComponent* Compo)
+{
+	if(EType == ESlotType::Evadeing)
+	{
+		SlotData = Compo->GetAbilites(EType);
+		Image_Tri->SetVisibility(ESlateVisibility::Hidden);
+		SetQuickSlotType(EQuickSlotType::Ability);
+		SetVisibility(ESlateVisibility::Hidden);
+		SetSlotType(ESlotType::Evadeing);
+	}
+	else
+	{
+		SlotData = Compo->GetAbilites(EType);
+		Image_Icon->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+
+
+
 void ULostArcUIQuickSlot::SetSlotDataFromAbilityCompo(ULostArcAbilityBase* NewData)
 {
 	SlotData = NewData; 

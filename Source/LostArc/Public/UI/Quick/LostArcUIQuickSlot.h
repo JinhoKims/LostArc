@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Component/LostArcCharacterInterface.h"
 #include "UI/LostArcUISlotBase.h"
 #include "LostArcUIQuickSlot.generated.h"
 
@@ -25,6 +26,8 @@ public:
 	virtual void UnBindSlotData() override;
 	void UpdateQuantity();
 	void ClearSlotData();
+	void SetAbilitySlot(EAbilityType EType, class ULostArcCharacterAbilityComponent* Compo);
+	
 	void SetSlotDataFromAbilityCompo(class ULostArcAbilityBase* NewData);
 	void SetEvadeSlot(class ULostArcAbilityBase* EvadeAbility);
 	
