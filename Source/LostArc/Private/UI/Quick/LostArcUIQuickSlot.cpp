@@ -167,7 +167,7 @@ void ULostArcUIQuickSlot::SetAbilitySlot(EAbilityType EType, ULostArcCharacterAb
 	if(EType == EAbilityType::Evade)
 	{
 		Image_Tri->SetVisibility(ESlateVisibility::Hidden);
-		SetSlotIndex(static_cast<int32>(EAbilityType::Evade)-1);
+		SetSlotIndex(static_cast<int32>(EAbilityType::Evade)-1); // NativeTick에서 +1 해주니 미리 SlotIndex을 -1 해준다.
 		SetQuickSlotType(EQuickSlotType::Ability);
 		SetVisibility(ESlateVisibility::Hidden);
 		SetSlotType(ESlotType::Evadeing);
