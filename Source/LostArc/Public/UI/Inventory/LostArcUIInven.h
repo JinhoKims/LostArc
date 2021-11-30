@@ -13,6 +13,7 @@ class LOSTARC_API ULostArcUIInven : public UUserWidget
 
 public:
 	void RefreshSlot(int32 Index);
+	void EnableInventory();
 	
 protected:
 	virtual void NativeConstruct() override;
@@ -23,4 +24,6 @@ private:
 	TArray<class ULostArcUISlotBase*> InvenSlot;
 
 	class ALostArcCharacter* OwnerCharacter;
+
+	bool bEnable = false;
 };

@@ -16,12 +16,12 @@
 #include "Components/Image.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "UI/LostArcUIMainHUD.h"
 
 ALostArcCharacter::ALostArcCharacter()
 {
@@ -49,7 +49,7 @@ ALostArcCharacter::ALostArcCharacter()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->SetUsingAbsoluteRotation(true); // Don't want arm to rotate when character does
 	CameraBoom->TargetArmLength = 900.f;
-	CameraBoom->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
+	CameraBoom->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
 	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
 
 	// Create a camera...
@@ -98,7 +98,6 @@ ALostArcCharacter::ALostArcCharacter()
 void ALostArcCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	
 	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	
 	if (AnimInstance != nullptr)
@@ -113,13 +112,10 @@ void ALostArcCharacter::PostInitializeComponents()
 void ALostArcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	auto PController = Cast<ALostArcPlayerController>(GetController());
 
 	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::BasicAttack);
 	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
-	// InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_1", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_1);
-	// InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_2", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_2);
-	// InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_3", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_3);
-	// InputComponent->BindAction<FBindAbilityDelegate>("MeleeSkill_4", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::MeleeSkill_4);
 	
 	for(int i = 0; i < 16; i++)
 	{

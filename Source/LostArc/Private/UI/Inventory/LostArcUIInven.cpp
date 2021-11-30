@@ -30,3 +30,18 @@ void ULostArcUIInven::RefreshSlot(int32 Index)
 {
 	InvenSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->InventoryComponent->GetAbility(Index)));
 }
+
+void ULostArcUIInven::EnableInventory()
+{
+	bEnable = !bEnable;
+
+	if(bEnable)
+	{
+		this->SetVisibility(ESlateVisibility::Visible);
+	}
+
+	else
+	{
+		this->SetVisibility(ESlateVisibility::Hidden);
+	}
+}

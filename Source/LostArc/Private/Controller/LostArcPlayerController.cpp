@@ -26,8 +26,8 @@ ALostArcPlayerController::ALostArcPlayerController()
 
 void ALostArcPlayerController::SetupInputComponent()
 {
-	// set up gameplay key bindings
 	Super::SetupInputComponent();
+	
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ALostArcPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ALostArcPlayerController::OnSetDestinationReleased);
 
@@ -41,6 +41,8 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 
 	MainHUD = CreateWidget<ULostArcUIMainHUD>(this, MainHUDClass);
 	MainHUD->AddToViewport(1);
+
+	InputComponent->BindAction("Inventory", IE_Pressed, MainHUD->BP_Inven, &ULostArcUIInven::EnableInventory);
 }
 
 void ALostArcPlayerController::BeginPlay()
@@ -122,7 +124,7 @@ void ALostArcPlayerController::CameraPositionChange(bool bWheel)
 	else
 	{
 		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 5.f, 300.f, 900.f);
-		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-50.0f, 0.0f, 0.0f)), 0.03));
+		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-60.0f, 0.0f, 0.0f)), 0.03));
 		ArcCharacter->GetTopDownCameraComponent()->SetFieldOfView(FMath::Clamp(ArcCharacter->GetTopDownCameraComponent()->FieldOfView -= .1f, 90.f, 100.f));
 	}
 }
