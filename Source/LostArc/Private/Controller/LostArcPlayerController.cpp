@@ -42,7 +42,8 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 	MainHUD = CreateWidget<ULostArcUIMainHUD>(this, MainHUDClass);
 	MainHUD->AddToViewport(1);
 
-	InputComponent->BindAction("Inventory", IE_Pressed, MainHUD->BP_Inven, &ULostArcUIInven::EnableInventory);
+	InputComponent->BindAction<FBindWidgetDelegate>("Inventory", IE_Pressed, MainHUD, &ULostArcUIMainHUD::EnableWidget, ESlotType::Inven);
+	InputComponent->BindAction<FBindWidgetDelegate>("Equipment", IE_Pressed, MainHUD, &ULostArcUIMainHUD::EnableWidget, ESlotType::Equip);
 }
 
 void ALostArcPlayerController::BeginPlay()

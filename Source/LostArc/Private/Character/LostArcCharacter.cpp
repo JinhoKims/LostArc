@@ -1,7 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Character/LostArcCharacter.h"
-#include "Engine/World.h"
 #include "Materials/Material.h"
 #include "Controller/LostArcPlayerController.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"

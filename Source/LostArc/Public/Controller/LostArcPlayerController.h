@@ -6,6 +6,10 @@
 #include "GameFramework/PlayerController.h"
 #include "LostArcPlayerController.generated.h"
 
+enum ESlotType;
+
+DECLARE_DELEGATE_OneParam(FBindWidgetDelegate, ESlotType)
+
 UCLASS()
 class ALostArcPlayerController : public APlayerController
 {

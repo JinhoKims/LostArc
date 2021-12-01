@@ -3,14 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostArcUISlotDrag.h"
 #include "Blueprint/UserWidget.h"
+#include "Equip/LostArcUIEquip.h"
 #include "Inventory/LostArcUIInven.h"
 #include "Quick/LostArcUIQuick.h"
 #include "LostArcUIMainHUD.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcUIMainHUD : public UUserWidget
 {
@@ -34,4 +33,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class ULostArcUIInven* BP_Inven;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class ULostArcUIEquip* BP_Equip;
+
+	void EnableWidget(ESlotType EType);
 };
