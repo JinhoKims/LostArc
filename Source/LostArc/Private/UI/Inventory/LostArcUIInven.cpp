@@ -45,3 +45,8 @@ void ULostArcUIInven::EnableInventory()
 		this->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
+
+FReply ULostArcUIInven::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+}
