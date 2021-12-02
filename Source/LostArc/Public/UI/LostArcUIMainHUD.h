@@ -17,6 +17,7 @@ class LOSTARC_API ULostArcUIMainHUD : public UUserWidget
 	
 public:
 	virtual void NativeConstruct() override;
+	virtual void NativePreConstruct() override;
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
@@ -38,4 +39,7 @@ public:
 	class ULostArcUIEquip* BP_Equip;
 
 	void EnableWidget(ESlotType EType);
+
+protected:
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 };

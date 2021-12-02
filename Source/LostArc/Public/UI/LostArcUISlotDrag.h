@@ -14,7 +14,8 @@ enum ESlotType
 	Equip UMETA(DisplayName = "Equip"),
 	Skill UMETA(DisplayName = "Skill"),
 	Quick UMETA(DisplayName = "Quick"),
-	Evadeing UMETA(DisplayName = "Evade")
+	Evadeing UMETA(DisplayName = "Evade"),
+	TitleTab UMETA(DisplayName = "TitleTab")
 };
 
 UCLASS()
@@ -26,4 +27,7 @@ public:
 	TEnumAsByte<ESlotType> SlotType;
 	UActorComponent* SlotComponent;
 	int32 SlotIndex;
+	
+	UUserWidget* WidgetToDrag;
+	FVector2D MouseOffset;
 };

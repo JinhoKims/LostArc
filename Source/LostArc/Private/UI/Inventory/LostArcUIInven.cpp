@@ -5,6 +5,7 @@
 #include "UI/Inventory/LostArcUIInvenSlot.h"
 #include "Character/LostArcCharacter.h"
 #include "Component/LostArcInventoryComponent.h"
+#include "UI/LostArcUITabs.h"
 
 void ULostArcUIInven::NativeConstruct()
 {
@@ -18,6 +19,7 @@ void ULostArcUIInven::NativeConstruct()
 	}
 
 	OwnerCharacter->InventoryComponent->InvenSlotUpdate.AddUObject(this, &ULostArcUIInven::RefreshSlot);
+	TitleBorder->SetUITabsFromParent(this, ETabType::InvenTab);
 }
 
 void ULostArcUIInven::BeginDestroy()
@@ -29,24 +31,4 @@ void ULostArcUIInven::BeginDestroy()
 void ULostArcUIInven::RefreshSlot(int32 Index)
 {
 	InvenSlot[Index]->RefreshSlotData(Cast<ULostArcAbilityBase>(OwnerCharacter->InventoryComponent->GetAbility(Index)));
-}
-
-void ULostArcUIInven::EnableInventory()
-{
-	bEnable = !bEnable;
-
-	if(bEnable)
-	{
-		this->SetVisibility(ESlateVisibility::Visible);
-	}
-
-	else
-	{
-		this->SetVisibility(ESlateVisibility::Hidden);
-	}
-}
-
-FReply ULostArcUIInven::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
-{
-	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }

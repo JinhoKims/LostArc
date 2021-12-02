@@ -5,7 +5,7 @@
 #include "Character/LostArcCharacter.h"
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "UI/Equip/LostArcUIEquipSlot.h"
-#include "Abilities/Items/Equip/LostArcItemEquipBase.h"
+#include "UI/LostArcUITabs.h"
 
 void ULostArcUIEquip::NativeConstruct()
 {
@@ -19,6 +19,7 @@ void ULostArcUIEquip::NativeConstruct()
 	}
 
 	OwnerCharacter->EquipComponent->EquipSlotUpdate.AddUObject(this, &ULostArcUIEquip::RefreshSlot);
+	TitleBorder->SetUITabsFromParent(this, ETabType::EquipTab);
 }
 
 void ULostArcUIEquip::BeginDestroy()

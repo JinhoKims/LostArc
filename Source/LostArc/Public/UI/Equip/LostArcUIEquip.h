@@ -22,5 +22,9 @@ private:
 	UPROPERTY()
 	TArray<class ULostArcUISlotBase*> EquipSlot;
 
+	UPROPERTY()
 	class ALostArcCharacter* OwnerCharacter;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
+	class ULostArcUITabs* TitleBorder;
 };
