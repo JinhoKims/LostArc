@@ -32,16 +32,14 @@ void ULostArcUITabs::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 	if (WidgetDD == nullptr) return;
 
 	WidgetDD->SlotType = ESlotType::TitleTab;
-	WidgetDD->WidgetToDrag = this; // 드래그할 위젯(this)
+	WidgetDD->WidgetToDrag = ParentWidget; // 옮길 위젯(ParentWidget)
+	WidgetDD->DefaultDragVisual = ParentWidget; // 드래그할 때 보일 위젯(ParentWidget)
 	WidgetDD->MouseOffset = InGeometry.AbsoluteToLocal(InMouseEvent.GetScreenSpacePosition()); // 마우스 Offset
-	WidgetDD->DefaultDragVisual = ParentWidget; // 드래그 할 때 보일 위젯(인벤토리 위젯)
 	WidgetDD->Pivot = EDragPivot::MouseDown; // MouseDown한 지점을 기준
-	OutOperation = WidgetDD; // NativeOnDrop 호출
-
-	UE_LOG(LogTemp,Warning,TEXT("Delete"));
+	OutOperation = WidgetDD; // NativeOnDrop 호출 시 인자
 	
 	//this->RemoveFromParent();
-	//ParentWidget->RemoveFromParent(); // 두개의 위젯이 보이지 않게 하기 위해 부모에서 제거한다.
+	ParentWidget->RemoveFromParent(); // 두개의 위젯이 보이지 않게 하기 위해 부모에서 제거한다.
 	
 	
 	// 하지만 부모에서 제거하면 이동 후 드래그를 끝냈을 때 인벤토리 위젯이 Main_HUD(부모)에서 없어져서 안보이게 된다.

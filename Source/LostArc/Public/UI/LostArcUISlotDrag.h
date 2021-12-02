@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostArcUITabs.h"
 #include "Blueprint/DragDropOperation.h"
 #include "Abilities/Items/LostArcItemBase.h"
 #include "LostArcUISlotDrag.generated.h"
@@ -29,5 +30,6 @@ public:
 	int32 SlotIndex;
 	
 	UUserWidget* WidgetToDrag;
+	ULostArcUITabs* TitleTapToDrag;
 	FVector2D MouseOffset;
 };

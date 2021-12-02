@@ -42,7 +42,8 @@ bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	if (WidgetDD == nullptr || WidgetDD->SlotType != ESlotType::TitleTab) return false;
 	
 	// 생성된 위젯 표시
-	
+	BP_Inven = Cast<ULostArcUIInven>(WidgetDD->WidgetToDrag);
+	BP_Inven->AddToViewport(1);
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(WidgetDD->WidgetToDrag->GetParent()->GetFullName()));
 		
 	// 드래그할 위젯의 위치를 마우스 위치로
