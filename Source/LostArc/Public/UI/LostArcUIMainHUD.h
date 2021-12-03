@@ -40,6 +40,6 @@ public:
 
 	void EnableWidget(ESlotType EType);
 
-protected:
+public:
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 };

@@ -15,8 +15,8 @@ void ULostArcUIInvenSlot::NativeConstruct()
 bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
-	if(Owner->SlotType == ESlotType::Quick) return false;
 	
+	if(Owner->SlotType == ESlotType::Quick) return false;
 	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
 	{
 		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);

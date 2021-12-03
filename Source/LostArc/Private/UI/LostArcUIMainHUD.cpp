@@ -28,7 +28,6 @@ void ULostArcUIMainHUD::EnableWidget(ESlotType EType)
 	case ESlotType::Equip:
 		BP_Equip->GetVisibility() == ESlateVisibility::Visible ? BP_Equip->SetVisibility(ESlateVisibility::Hidden) : BP_Equip->SetVisibility(ESlateVisibility::Visible); 
 		break;
-
 	default:
 		break;
 	}
@@ -41,16 +40,6 @@ bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	ULostArcUISlotDrag* WidgetDD = Cast<ULostArcUISlotDrag>(InOperation);
 	if (WidgetDD == nullptr || WidgetDD->SlotType != ESlotType::TitleTab) return false;
 	
-	switch (WidgetDD->DragTabType)
-	{
-	case ETabType::EquipTab:
-		BP_Equip = Cast<ULostArcUIEquip>(WidgetDD->WidgetToDrag);
-		break;
-	case ETabType::InvenTab:
-		BP_Inven = Cast<ULostArcUIInven>(WidgetDD->WidgetToDrag);
-		break;
-	}
-
 	FVector2D NewPosition = InGeometry.AbsoluteToLocal(InDragDropEvent.GetScreenSpacePosition()) - WidgetDD->MouseOffset;
 	WidgetDD->WidgetToDrag->SetPositionInViewport(NewPosition, false);
 	WidgetDD->WidgetToDrag->AddToViewport(1);

@@ -19,7 +19,7 @@ void ULostArcUIEquip::NativeConstruct()
 	}
 
 	OwnerCharacter->EquipComponent->EquipSlotUpdate.AddUObject(this, &ULostArcUIEquip::RefreshSlot);
-	TitleBorder->SetUITabsFromParent(this, ETabType::EquipTab);
+	TitleBorder->SetUITabsFromParent(this);
 }
 
 void ULostArcUIEquip::BeginDestroy()

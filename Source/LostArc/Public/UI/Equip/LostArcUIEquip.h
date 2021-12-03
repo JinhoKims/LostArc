@@ -12,6 +12,9 @@ class LOSTARC_API ULostArcUIEquip : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
+	class ULostArcUITabs* TitleBorder;
+	
 	void RefreshSlot(int32 Index);
 
 protected:
@@ -24,7 +27,4 @@ private:
 
 	UPROPERTY()
 	class ALostArcCharacter* OwnerCharacter;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
-	class ULostArcUITabs* TitleBorder;
 };

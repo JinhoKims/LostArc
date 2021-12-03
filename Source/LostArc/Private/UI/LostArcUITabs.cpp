@@ -5,9 +5,8 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "UI/LostArcUISlotDrag.h"
 
-void ULostArcUITabs::SetUITabsFromParent(UUserWidget* Parent, ETabType ParType)
+void ULostArcUITabs::SetUITabsFromParent(UUserWidget* Parent)
 {
-	TabType = ParType;
 	ParentWidget = Parent;
 }
 
@@ -37,7 +36,6 @@ void ULostArcUITabs::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 	
 	WidgetDD->DefaultDragVisual = ParentWidget; // 드래그할 때 보일 위젯(ParentWidget)
 	WidgetDD->WidgetToDrag = ParentWidget; // 옮길 위젯(ParentWidget)
-	WidgetDD->DragTabType = TabType;
 	
 	OutOperation = WidgetDD; // NativeOnDrop 호출 시 인자
 	ParentWidget->RemoveFromParent(); // 두개의 위젯이 보이지 않게 하기 위해 부모에서 제거한다.

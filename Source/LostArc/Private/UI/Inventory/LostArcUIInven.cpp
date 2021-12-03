@@ -19,7 +19,7 @@ void ULostArcUIInven::NativeConstruct()
 	}
 
 	OwnerCharacter->InventoryComponent->InvenSlotUpdate.AddUObject(this, &ULostArcUIInven::RefreshSlot);
-	TitleBorder->SetUITabsFromParent(this, ETabType::InvenTab);
+	TitleBorder->SetUITabsFromParent(this);
 }
 
 void ULostArcUIInven::BeginDestroy()

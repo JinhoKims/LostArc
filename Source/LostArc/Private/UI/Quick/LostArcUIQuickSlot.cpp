@@ -34,8 +34,8 @@ void ULostArcUIQuickSlot::NativeConstruct()
 bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
-	if(OwnerDrag == nullptr) return true;
 	if(SlotData && GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key)) return false;
+	if(OwnerDrag->SlotType == ESlotType::TitleTab) return false;
 
 	switch (QuickSlotType)
 	{

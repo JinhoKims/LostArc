@@ -4,8 +4,10 @@
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Controller/LostArcPlayerController.h"
+#include "UI/LostArcUIMainHUD.h"
 
-void ULostArcUISlotBase::NativeConstruct()
+	void ULostArcUISlotBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -93,6 +95,13 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 	ULostArcUISlotDrag* Owner = Cast<ULostArcUISlotDrag>(InOperation);
+		
+	if(Owner->SlotType == ESlotType::TitleTab) // 위젯끼리 충돌시
+	{
+		ULostArcUIMainHUD* MainHUD = Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD;
+		MainHUD->NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+		return true;
+	}
 	
 	if(this->SlotType == Owner->SlotType)
 	{

@@ -26,12 +26,10 @@ class LOSTARC_API ULostArcUISlotDrag : public UDragDropOperation
 	
 public:
 	TEnumAsByte<ESlotType> SlotType;
+	
 	UActorComponent* SlotComponent;
 	int32 SlotIndex;
 	
 	UUserWidget* WidgetToDrag;
-	ULostArcUITabs* TitleTapToDrag;
 	FVector2D MouseOffset;
-
-	ETabType DragTabType;
 };
