@@ -35,9 +35,10 @@ void ULostArcUITabs::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 	
 	WidgetDD->WidgetToDrag = ParentWidget; // 옮길 위젯(ParentWidget)
 	
-	WidgetDD->MouseOffset = InGeometry.AbsoluteToLocal(InMouseEvent.GetScreenSpacePosition());; // 누른 마우스 좌표
+	WidgetDD->MouseOffset =  InGeometry.AbsoluteToLocal(InMouseEvent.GetScreenSpacePosition()); // 누른 마우스 좌표
 	
 	WidgetDD->DefaultDragVisual = ParentWidget; // 드래그할 때 보일 위젯(ParentWidget)
+	
 	WidgetDD->Pivot = EDragPivot::MouseDown; // MouseDown한 지점을 기준
 	
 	OutOperation = WidgetDD; // NativeOnDrop 호출 시 인자

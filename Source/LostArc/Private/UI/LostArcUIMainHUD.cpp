@@ -46,8 +46,7 @@ bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	BP_Inven->AddToViewport(1);
 	
 	//FVector2D NewPosition = InGeometry.LocalToAbsolute(InGeometry.GetAbsolutePosition()) - WidgetDD->MouseOffset;
-	BP_Inven->SetPositionInViewport(InDragDropEvent.GetScreenSpacePosition(), false);
-
+	BP_Inven->SetPositionInViewport(InGeometry.AbsoluteToLocal(InDragDropEvent.GetScreenSpacePosition() - WidgetDD->MouseOffset), false);
 	UE_LOG(LogTemp, Warning, TEXT("Target Offset : X: %f, Y: %f"), InDragDropEvent.GetScreenSpacePosition().X, InDragDropEvent.GetScreenSpacePosition().Y);
 	// UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(WidgetDD->WidgetToDrag->GetParent()->GetFullName()));
 	
