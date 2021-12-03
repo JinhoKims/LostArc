@@ -44,11 +44,12 @@ bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	// 생성된 위젯 표시
 	BP_Inven = Cast<ULostArcUIInven>(WidgetDD->WidgetToDrag);
 	BP_Inven->AddToViewport(1);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(WidgetDD->WidgetToDrag->GetParent()->GetFullName()));
-		
-	// 드래그할 위젯의 위치를 마우스 위치로
-	FVector2D NewPosition = InGeometry.AbsoluteToLocal(InDragDropEvent.GetScreenSpacePosition()) - WidgetDD->MouseOffset;
-	BP_Inven->SetPositionInViewport(NewPosition, true);
+	
+	//FVector2D NewPosition = InGeometry.LocalToAbsolute(InGeometry.GetAbsolutePosition()) - WidgetDD->MouseOffset;
+	BP_Inven->SetPositionInViewport(InDragDropEvent.GetScreenSpacePosition(), false);
 
+	UE_LOG(LogTemp, Warning, TEXT("Target Offset : X: %f, Y: %f"), InDragDropEvent.GetScreenSpacePosition().X, InDragDropEvent.GetScreenSpacePosition().Y);
+	// UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(WidgetDD->WidgetToDrag->GetParent()->GetFullName()));
+	
 	return true;
 }

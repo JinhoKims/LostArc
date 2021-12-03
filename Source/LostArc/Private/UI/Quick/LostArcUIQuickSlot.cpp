@@ -43,7 +43,6 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 			break;
 
 		case EQuickSlotType::Potion:
-		
 			ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
 			if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
 		
