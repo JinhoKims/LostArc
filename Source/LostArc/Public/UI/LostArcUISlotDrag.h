@@ -32,4 +32,6 @@ public:
 	UUserWidget* WidgetToDrag;
 	ULostArcUITabs* TitleTapToDrag;
 	FVector2D MouseOffset;
+
+	ETabType DragTabType;
 };

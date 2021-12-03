@@ -30,13 +30,15 @@ void ULostArcUITabs::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 
 	ULostArcUISlotDrag* WidgetDD = Cast<ULostArcUISlotDrag>(UWidgetBlueprintLibrary::CreateDragDropOperation(ULostArcUISlotDrag::StaticClass()));
 	if (WidgetDD == nullptr) return;
-
-	WidgetDD->SlotType = ESlotType::TitleTab;
 	
 	WidgetDD->MouseOffset =  InGeometry.AbsoluteToLocal(InMouseEvent.GetScreenSpacePosition()); // 누른 마우스 좌표
+	WidgetDD->SlotType = ESlotType::TitleTab;
+	WidgetDD->Pivot = EDragPivot::MouseDown; // MouseDown한 지점을 기준
+	
 	WidgetDD->DefaultDragVisual = ParentWidget; // 드래그할 때 보일 위젯(ParentWidget)
 	WidgetDD->WidgetToDrag = ParentWidget; // 옮길 위젯(ParentWidget)
-	WidgetDD->Pivot = EDragPivot::MouseDown; // MouseDown한 지점을 기준
+	WidgetDD->DragTabType = TabType;
+	
 	OutOperation = WidgetDD; // NativeOnDrop 호출 시 인자
 	ParentWidget->RemoveFromParent(); // 두개의 위젯이 보이지 않게 하기 위해 부모에서 제거한다.
 	

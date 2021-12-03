@@ -41,14 +41,19 @@ bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	ULostArcUISlotDrag* WidgetDD = Cast<ULostArcUISlotDrag>(InOperation);
 	if (WidgetDD == nullptr || WidgetDD->SlotType != ESlotType::TitleTab) return false;
 	
-	// Operation 건너온 위젯 표시
-	BP_Inven = Cast<ULostArcUIInven>(WidgetDD->WidgetToDrag);
-	BP_Inven->AddToViewport(1);
-
-	// 건너온 위젯을 마우스 위치로
+	switch (WidgetDD->DragTabType)
+	{
+	case ETabType::EquipTab:
+		BP_Equip = Cast<ULostArcUIEquip>(WidgetDD->WidgetToDrag);
+		break;
+	case ETabType::InvenTab:
+		BP_Inven = Cast<ULostArcUIInven>(WidgetDD->WidgetToDrag);
+		break;
+	}
 
 	FVector2D NewPosition = InGeometry.AbsoluteToLocal(InDragDropEvent.GetScreenSpacePosition()) - WidgetDD->MouseOffset;
-	BP_Inven->SetPositionInViewport(NewPosition, false);
+	WidgetDD->WidgetToDrag->SetPositionInViewport(NewPosition, false);
+	WidgetDD->WidgetToDrag->AddToViewport(1);
 	
 	return true;
 }
