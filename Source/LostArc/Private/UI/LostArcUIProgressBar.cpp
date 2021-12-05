@@ -15,7 +15,7 @@ void ULostArcUIProgressBar::NativeConstruct()
 	ProgressBar->SetRenderShear(BarShearValue);
 	ProgressBar->SetRenderScale(BarRenderScale);
 
-	CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrnetAttributeValue(BarType)));
+	CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentAttributeValue(BarType)));
 	MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));
 
 	Character->StatComponent->OnProgressBarChanged.AddUObject(this, &ULostArcUIProgressBar::UpdateProgressBar);
@@ -33,8 +33,8 @@ void ULostArcUIProgressBar::UpdateProgressBar(EAttributeType OwnerType)
 	if (BarType == OwnerType)
 	{
 		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
-
-		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrnetAttributeValue(BarType)));
+		
+		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentAttributeValue(BarType)));
 		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));
 		ProgressBar->SetPercent(Character->StatComponent->GetCurrentAttributeRatio(BarType));
 	}

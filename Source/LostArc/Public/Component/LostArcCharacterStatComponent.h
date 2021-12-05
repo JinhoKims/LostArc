@@ -32,7 +32,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	void SetDamage(float NewDamage);
-	float GetCurrnetAttributeValue(EAttributeType Type);
+	float GetCurrentAttributeValue(EAttributeType Type);
 	float GetMaxAttributeValue(EAttributeType Type);
 	float GetCurrentAttributeRatio(EAttributeType Type);
 	void SetCurrentAttributeValue(EAttributeType Type, float Value);

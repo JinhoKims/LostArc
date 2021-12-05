@@ -34,9 +34,9 @@ bool ULostArcSkill_Dodge::AbilityStateCheck(ALostArcCharacter* Character)
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCDProperty.Key));
 		return false;
 	}
-	if (Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) < ManaCost)
+	if (Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) < ManaCost)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP));
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP));
 		return false;
 	}
 	return true;

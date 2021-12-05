@@ -24,9 +24,9 @@ bool ULostArcSkillBase::AbilityStateCheck(ALostArcCharacter* Character)
 		UE_LOG(LogTemp, Warning, TEXT("CoolDown Left is : %f"), Character->GetWorldTimerManager().GetTimerRemaining(AbilityCDProperty.Key));
 		return false;
 	}
-	if (Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) < ManaCost)
+	if (Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) < ManaCost)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP));
+		UE_LOG(LogTemp, Warning, TEXT("Current Mana is : %f"), Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP));
 		return false;
 	}
 	if (bAnimationRunning)
@@ -66,7 +66,7 @@ void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 			{
 				if (FVector::DotProduct(direction.GetSafeNormal(), Character->GetActorForwardVector()) > dotValue) // 타겟과 부채꼴 중앙선(밑변)의 코사인 값이 부채꼴 빗변의 코사인 값보다 크면 (= 부채꼴 영역안에 위치함)
 				{
-					hit.Actor->TakeDamage(Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::ATK) * SkillRatio, DamageEvent, Character->GetController(), Character);
+					hit.Actor->TakeDamage(Character->StatComponent->GetCurrentAttributeValue(EAttributeType::ATK) * SkillRatio, DamageEvent, Character->GetController(), Character);
 				}
 			}
 		}
@@ -77,7 +77,7 @@ void ULostArcSkillBase::PreCast(ALostArcCharacter* Character)
 {
 	CharacterRotatetoCursor(Character);
 	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
-	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) - ManaCost);
+	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) - ManaCost);
 	bAnimationRunning = true;
 	AbilityCDProperty.Value.Broadcast(true);
 }

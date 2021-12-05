@@ -18,6 +18,7 @@ void ULostArcInventoryComponent::InitializeComponent()
 	{
 		ItemTable.Add(ItemClass[i].GetDefaultObject()->GetName(), ItemClass[i]); // 아이템 테이블에 모든 아이템 정보를 넣는다.
 	}
+	
 	InventorySlot.SetNum(16); // InvenSlot을 Null로 초기화 
 }
 void ULostArcInventoryComponent::BeginPlay()
@@ -26,6 +27,9 @@ void ULostArcInventoryComponent::BeginPlay()
 	
 	AddPickupItem("Potion_Health", 3);
 	AddPickupItem("Potion_Mana", 3);
+
+	AddPickupItem("Equip_Necklace");
+	AddPickupItem("Equip_Necklace");
 	
 	AddPickupItem("Equip_Ring");
 	AddPickupItem("Equip_Ring");

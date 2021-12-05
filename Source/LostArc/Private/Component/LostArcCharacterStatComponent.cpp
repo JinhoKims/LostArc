@@ -31,7 +31,7 @@ void ULostArcCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick T
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-float ULostArcCharacterStatComponent::GetCurrnetAttributeValue(EAttributeType Type)
+float ULostArcCharacterStatComponent::GetCurrentAttributeValue(EAttributeType Type)
 {
 	switch (Type)
 	{
@@ -64,10 +64,10 @@ float ULostArcCharacterStatComponent::GetMaxAttributeValue(EAttributeType Type)
 	switch (Type)
 	{
 	case HP:
-		return CurrentStatData->Maxhp;
+		return CurrentStatData->Maxhp + BonusMaxHP;
 		break;
 	case MP:
-		return CurrentStatData->Maxmp;
+		return CurrentStatData->Maxmp + BonusMaxMP;
 		break;
 	case EXP:
 		return CurrentStatData->Nextexp;
@@ -83,10 +83,10 @@ float ULostArcCharacterStatComponent::GetCurrentAttributeRatio(EAttributeType Ty
 	switch (Type)
 	{
 	case HP:
-		return CurrentStatData->Maxhp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / CurrentStatData->Maxhp);
+		return CurrentStatData->Maxhp + BonusMaxHP < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / GetMaxAttributeValue(EAttributeType::HP));
 		break;
 	case MP:
-		return CurrentStatData->Maxmp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / CurrentStatData->Maxmp);
+		return CurrentStatData->Maxmp + BonusMaxMP < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / GetMaxAttributeValue(EAttributeType::MP));
 		break;
 	case EXP:
 		return CurrentStatData->Nextexp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentEXP / CurrentStatData->Nextexp);
@@ -102,7 +102,7 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 	switch (Type)
 	{
 	case HP:
-		CurrentHP = Value + BonusMaxHP;
+		CurrentHP = Value;
 		OnProgressBarChanged.Broadcast(Type);
 		if (CurrentHP < KINDA_SMALL_NUMBER)
 		{
@@ -111,7 +111,7 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 		}
 		break;
 	case MP:
-		CurrentMP = Value + BonusMaxMP;
+		CurrentMP = Value;
 		OnProgressBarChanged.Broadcast(Type);
 		break;
 	case ATK:
@@ -153,9 +153,11 @@ void ULostArcCharacterStatComponent::AddBonusAttribute(EAttributeType Type, floa
 	{
 	case HP:
 		BonusMaxHP += Value;
+		UE_LOG(LogTemp, Warning, TEXT("Add Bonous MaxHP(%d) : %f"), Type, BonusMaxHP);
 		break;
 	case MP:
 		BonusMaxMP += Value;
+		UE_LOG(LogTemp, Warning, TEXT("Add Bonous MaxMP(%d) : %f"), Type, BonusMaxMP);
 		break;
 	case ATK:
 		BonusATK += Value;
@@ -169,7 +171,7 @@ void ULostArcCharacterStatComponent::AddBonusAttribute(EAttributeType Type, floa
 		break;
 	}
 
-	SetCurrentAttributeValue(Type, GetCurrnetAttributeValue(Type));
+	SetCurrentAttributeValue(Type, GetCurrentAttributeValue(Type));
 }
 
 void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
@@ -194,10 +196,10 @@ void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 
 void ULostArcCharacterStatComponent::SetDamage(float NewDamage)
 {
-	SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp<float>(CurrentHP - NewDamage, 0.0f, CurrentStatData->Maxhp));
+	SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp<float>(CurrentHP - NewDamage, 0.0f, GetMaxAttributeValue(EAttributeType::HP)));
 }
 
 void ULostArcCharacterStatComponent::ManaRegenerationPerSecond(float Amount)
 {
-	SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp<float>(CurrentMP + Amount, 0, CurrentStatData->Maxmp));
+	SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp<float>(CurrentMP + Amount, 0, GetMaxAttributeValue(EAttributeType::HP)));
 }

@@ -16,7 +16,7 @@ ULostArcItemPotion_Mana::ULostArcItemPotion_Mana(const FObjectInitializer& Objec
 bool ULostArcItemPotion_Mana::Consumed(ALostArcCharacter* Character)
 {
 	auto StatComponent = Character->StatComponent;
-	StatComponent->SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp(StatComponent->GetCurrnetAttributeValue(EAttributeType::MP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
+	StatComponent->SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp(StatComponent->GetCurrentAttributeValue(EAttributeType::MP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));
 
 	return Super::Consumed(Character);
 }
