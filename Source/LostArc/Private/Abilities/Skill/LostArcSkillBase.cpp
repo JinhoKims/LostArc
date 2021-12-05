@@ -66,6 +66,7 @@ void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 			{
 				if (FVector::DotProduct(direction.GetSafeNormal(), Character->GetActorForwardVector()) > dotValue) // 타겟과 부채꼴 중앙선(밑변)의 코사인 값이 부채꼴 빗변의 코사인 값보다 크면 (= 부채꼴 영역안에 위치함)
 				{
+					UE_LOG(LogTemp,Warning,TEXT("Taking Damage : %f"), Character->StatComponent->GetCurrentAttributeValue(EAttributeType::ATK) * SkillRatio);
 					hit.Actor->TakeDamage(Character->StatComponent->GetCurrentAttributeValue(EAttributeType::ATK) * SkillRatio, DamageEvent, Character->GetController(), Character);
 				}
 			}

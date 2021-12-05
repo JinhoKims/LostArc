@@ -83,10 +83,10 @@ float ULostArcCharacterStatComponent::GetCurrentAttributeRatio(EAttributeType Ty
 	switch (Type)
 	{
 	case HP:
-		return CurrentStatData->Maxhp + BonusMaxHP < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / GetMaxAttributeValue(EAttributeType::HP));
+		return GetMaxAttributeValue(EAttributeType::HP) < KINDA_SMALL_NUMBER ? 0.0f : (CurrentHP / GetMaxAttributeValue(EAttributeType::HP));
 		break;
 	case MP:
-		return CurrentStatData->Maxmp + BonusMaxMP < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / GetMaxAttributeValue(EAttributeType::MP));
+		return GetMaxAttributeValue(EAttributeType::MP) < KINDA_SMALL_NUMBER ? 0.0f : (CurrentMP / GetMaxAttributeValue(EAttributeType::MP));
 		break;
 	case EXP:
 		return CurrentStatData->Nextexp < KINDA_SMALL_NUMBER ? 0.0f : (CurrentEXP / CurrentStatData->Nextexp);
@@ -115,10 +115,10 @@ void ULostArcCharacterStatComponent::SetCurrentAttributeValue(EAttributeType Typ
 		OnProgressBarChanged.Broadcast(Type);
 		break;
 	case ATK:
-		CurrentATK = Value + BonusATK;
+		CurrentATK = CurrentStatData->Attack + BonusATK;
 		break;
 	case DEF:
-		CurrentDEF = Value + BonusDEF;
+		CurrentDEF = CurrentStatData->Defense + BonusDEF;
 		break;
 	case EXP:
 		SetCurrentAttributeValueToInt32(Type, FMath::FloorToInt(Value));
@@ -164,7 +164,7 @@ void ULostArcCharacterStatComponent::AddBonusAttribute(EAttributeType Type, floa
 		UE_LOG(LogTemp, Warning, TEXT("Add Bonous ATK(%d) : %f"), Type, BonusATK);
 		break;
 	case DEF:
-		BonusDEF += Value;
+		BonusDEF += Value; 
 		UE_LOG(LogTemp, Warning, TEXT("Add Bonous DEF(%d) : %f"), Type, BonusDEF);
 		break;
 	default:
@@ -196,7 +196,7 @@ void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 
 void ULostArcCharacterStatComponent::SetDamage(float NewDamage)
 {
-	SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp<float>(CurrentHP - NewDamage, 0.0f, GetMaxAttributeValue(EAttributeType::HP)));
+	SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp<float>(CurrentHP - FMath::Clamp<float>(NewDamage - (GetCurrentAttributeValue(EAttributeType::DEF)),1.f,NewDamage), 0.0f, GetMaxAttributeValue(EAttributeType::HP)));
 }
 
 void ULostArcCharacterStatComponent::ManaRegenerationPerSecond(float Amount)

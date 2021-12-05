@@ -6,7 +6,7 @@ ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectI
 {
 	Name = FString("Equip_Ring");
 	AcType = EAccessoryType::Ring;
-	Value = 10.0f;
+	Value = 2.f;
 	
 	static ConstructorHelpers::FObjectFinder<UTexture2D> T2D_ICON(TEXT("Texture2D'/Game/Icons/Item/Equip/acc_16.acc_16'"));
 	if (T2D_ICON.Object != nullptr)
