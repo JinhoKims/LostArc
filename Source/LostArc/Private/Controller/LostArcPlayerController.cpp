@@ -47,7 +47,8 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 }
 
 void ALostArcPlayerController::BeginPlay()
-{	
+{
+	Super::BeginPlay();
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)
@@ -118,13 +119,13 @@ void ALostArcPlayerController::CameraPositionChange(bool bWheel)
 	if (ArcCharacter == nullptr) return;
 	if (bWheel)
 	{
-		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength -= 5.f, 300.f, 900.f);
+		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength -= 5.f, 300.f, 1000.f);
 		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-20.0f, 0.0f, 0.0f)), 0.03));
 		ArcCharacter->GetTopDownCameraComponent()->SetFieldOfView(FMath::Clamp(ArcCharacter->GetTopDownCameraComponent()->FieldOfView += .1f, 90.f, 100.f));
 	}
 	else
 	{
-		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 5.f, 300.f, 900.f);
+		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 5.f, 300.f, 1000.f);
 		ArcCharacter->GetCameraBoom()->SetRelativeRotation(FMath::Lerp(FQuat(ArcCharacter->GetCameraBoom()->GetRelativeRotation()), FQuat(FRotator(-60.0f, 0.0f, 0.0f)), 0.03));
 		ArcCharacter->GetTopDownCameraComponent()->SetFieldOfView(FMath::Clamp(ArcCharacter->GetTopDownCameraComponent()->FieldOfView -= .1f, 90.f, 100.f));
 	}
