@@ -2,12 +2,12 @@
 
 
 #include "Character/LostArcPlayerCharacter.h"
-
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DecalComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ALostArcPlayerCharacter::ALostArcPlayerCharacter()
 {
@@ -66,8 +66,6 @@ void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-
-
 void ALostArcPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -77,6 +75,8 @@ void ALostArcPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UE_LOG(LogTemp,Warning,TEXT("Speed : %f"), UKismetMathLibrary::VSize(GetVelocity()));
+	
 	if (CursorToWorld != nullptr)
 	{
 		if (APlayerController* PC = Cast<APlayerController>(GetController()))
