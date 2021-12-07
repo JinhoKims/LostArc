@@ -61,6 +61,13 @@ void ALostArcPlayerCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
+void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+
+
 void ALostArcPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -69,10 +76,18 @@ void ALostArcPlayerCharacter::BeginPlay()
 void ALostArcPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
 
-void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	if (CursorToWorld != nullptr)
+	{
+		if (APlayerController* PC = Cast<APlayerController>(GetController()))
+		{
+			FHitResult TraceHitResult;
+			PC->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+			FVector CursorFV = TraceHitResult.ImpactNormal;
+			FRotator CursorR = CursorFV.Rotation();
+			CursorToWorld->SetWorldLocation(TraceHitResult.Location);
+			CursorToWorld->SetWorldRotation(CursorR);
+		}
+	}
 }
 
