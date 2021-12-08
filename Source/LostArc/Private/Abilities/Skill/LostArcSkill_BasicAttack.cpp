@@ -52,7 +52,7 @@ void ULostArcSkill_BasicAttack::BasicAttackStartComboState()
 {
 	bCanNextCombo = true;
 	bIsComboInputOn = false;
-	//check(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
+	check(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
 	CurrentCombo = FMath::Clamp<int32>(CurrentCombo + 1, 1, MaxCombo);
 }
 
