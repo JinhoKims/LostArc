@@ -11,6 +11,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Character/LostArcPlayerCharacter.h"
 
 ALostArcPlayerController::ALostArcPlayerController()
 {
@@ -115,7 +116,7 @@ void ALostArcPlayerController::MouseWheelDown()
 
 void ALostArcPlayerController::CameraPositionChange(bool bWheel)
 {
-	auto ArcCharacter = Cast<ALostArcCharacter>(GetPawn());
+	auto ArcCharacter = Cast<ALostArcPlayerCharacter>(GetPawn());
 	if (ArcCharacter == nullptr) return;
 	if (bWheel)
 	{
