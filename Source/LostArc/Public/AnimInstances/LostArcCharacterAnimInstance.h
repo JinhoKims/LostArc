@@ -11,9 +11,6 @@ enum EAbilityType;
 DECLARE_MULTICAST_DELEGATE(FOnNextBasicAttackCheckDelegate);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMeleeSkillHitCheckDelegate, EAbilityType);
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcCharacterAnimInstance : public UAnimInstance
 {
@@ -59,7 +56,7 @@ public:
 	UFUNCTION()
 	void AnimNotify_MeleeSkill_4_HitCheck();
 
-	void NativeUpdateAnimation(float DeltaSeconds) override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	void JumpToBasicAttackMontageSection(int32 NewSection);
 	void SetDeadAnim() { bIsDead = true; }
 };

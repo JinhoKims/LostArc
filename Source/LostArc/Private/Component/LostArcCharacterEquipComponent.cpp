@@ -27,7 +27,7 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 		}
 	}
 
-	Interface = Cast<ALostArcCharacter>(GetOwner())->InventoryComponent;
+	//Interface = Cast<ALostArcPlayerCharacter>(GetOwner())->InventoryComponent;
 }
 void ULostArcCharacterEquipComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
@@ -89,7 +89,7 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 				auto OwnerData = OwnerInterface->GetAbility(OwnerIndex,true);
 				if(OwnerData && OwnerInterface->SetAbility(GetAbility(DistIndex), OwnerIndex))
 				{
-					Cast<ULostArcItemEquipBase>(GetAbility(DistIndex))->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+					Cast<ULostArcItemEquipBase>(GetAbility(DistIndex))->Dismount(Cast<ALostArcPlayerCharacter>(GetOwner()));
 					SetAbility(OwnerData, DistIndex);
 				}
 			}
@@ -117,14 +117,14 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 		Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
 		if(Interface->SetAbility(OwnerEquip)) // 스왑 성공
 		{
-			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+			OwnerEquip->Dismount(Cast<ALostArcPlayerCharacter>(GetOwner()));
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), 0));
 			return true;
 		}
 		else // 스왑 실패
 		{
 			Swap(EquipSlot.Find(OwnerEquip->GetAcType())->EquipArray[0], OwnerEquip);
-			OwnerEquip->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+			OwnerEquip->Dismount(Cast<ALostArcPlayerCharacter>(GetOwner()));
 			return false;
 		}
 	}
@@ -132,7 +132,7 @@ bool ULostArcCharacterEquipComponent::SetAbility(ULostArcAbilityBase* OwnerAbili
 	{
 		if(IndexDecoding(SlotIndex, false) == OwnerEquip->GetAcType())
 		{
-			OwnerEquip->Equipment(Cast<ALostArcCharacter>(GetOwner()));
+			OwnerEquip->Equipment(Cast<ALostArcPlayerCharacter>(GetOwner()));
 			EquipSlot.Find(IndexDecoding(SlotIndex))->EquipArray[SlotIndex] = OwnerEquip;
 			EquipSlotUpdate.Broadcast(IndexEncoding(OwnerEquip->GetAcType(), SlotIndex));
 			return true;
@@ -148,7 +148,7 @@ ULostArcAbilityBase* ULostArcCharacterEquipComponent::GetAbility(int32 SlotIndex
 		
 		if(TransUnit != nullptr)
 		{
-			TransUnit->Dismount(Cast<ALostArcCharacter>(GetOwner()));
+			TransUnit->Dismount(Cast<ALostArcPlayerCharacter>(GetOwner()));
 			EquipSlot.Find(IndexDecoding(SlotIndex))->EquipArray[SlotIndex] = nullptr;
 			EquipSlotUpdate.Broadcast(IndexEncoding(TransUnit->GetAcType(), SlotIndex));
 			return TransUnit;

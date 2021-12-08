@@ -39,14 +39,14 @@ void ULostArcQuickSlotComponent::UseAbility(int32 SlotIndex)
 {
 	if(SlotIndex < 8) // Skills
 	{
-		Cast<ALostArcCharacter>(GetOwner())->AbilityComponent->AbilityCast(static_cast<EAbilityType>(SlotIndex+1));
+		Cast<ALostArcPlayerCharacter>(GetOwner())->AbilityComponent->AbilityCast(static_cast<EAbilityType>(SlotIndex+1));
 	}
 
 	else if (QuickSlot[SlotIndex] != nullptr)
 	{
-		if(QuickSlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner())))
+		if(QuickSlot[SlotIndex]->Use(Cast<ALostArcPlayerCharacter>(GetOwner())))
 		{
-			Cast<ALostArcCharacter>(GetOwner())->InventoryComponent->DeleteItemAfterCheckingQuantity(); // 매번 인벤토리 전체를 스캔해서 current가 0인 슬롯을 삭제함
+			Cast<ALostArcPlayerCharacter>(GetOwner())->InventoryComponent->DeleteItemAfterCheckingQuantity(); // 매번 인벤토리 전체를 스캔해서 current가 0인 슬롯을 삭제함
 		}
 	}
 }

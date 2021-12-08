@@ -13,7 +13,7 @@ ULostArcSkill_3::ULostArcSkill_3(const FObjectInitializer& ObjectInitializer) : 
 	Name = "Skill_3";
 }
 
-bool ULostArcSkill_3::Use(ALostArcCharacter* Character)
+bool ULostArcSkill_3::Use(ALostArcPlayerCharacter* Character)
 {
 	if (Super::Use(Character))
 	{

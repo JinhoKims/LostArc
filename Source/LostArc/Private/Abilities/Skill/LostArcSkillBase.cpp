@@ -6,7 +6,7 @@
 
 bool ULostArcSkillBase::bAnimationRunning = false;
 
-bool ULostArcSkillBase::Use(ALostArcCharacter* Character)
+bool ULostArcSkillBase::Use(ALostArcPlayerCharacter* Character)
 {
 	if (AbilityStateCheck(Character))
 	{
@@ -17,7 +17,7 @@ bool ULostArcSkillBase::Use(ALostArcCharacter* Character)
 		return false;
 }
 
-bool ULostArcSkillBase::AbilityStateCheck(ALostArcCharacter* Character)
+bool ULostArcSkillBase::AbilityStateCheck(ALostArcPlayerCharacter* Character)
 {
 	if (Character->GetWorldTimerManager().IsTimerActive(AbilityCDProperty.Key))
 	{
@@ -36,7 +36,7 @@ bool ULostArcSkillBase::AbilityStateCheck(ALostArcCharacter* Character)
 	return true;
 }
 
-void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcCharacter* Character)
+void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcPlayerCharacter* Character)
 {
 	FHitResult Hit;
 	Cast<APlayerController>(Character->GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
@@ -47,7 +47,7 @@ void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcCharacter* Character)
 	UAIBlueprintHelperLibrary::SimpleMoveToActor(Character->GetController(), Character);
 }
 
-void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
+void ULostArcSkillBase::HitDetection(ALostArcPlayerCharacter* Character)
 {
 	TPair<FCollisionQueryParams, TArray<FHitResult>> HitResultProperty(FCollisionQueryParams(NAME_None, false, Character), TArray<FHitResult>());
 	float dotValue = FMath::Cos(((PI * 2) / 360) * (SkillRadius.Value / 2));;
@@ -74,7 +74,7 @@ void ULostArcSkillBase::HitDetection(ALostArcCharacter* Character)
 	}
 }
 
-void ULostArcSkillBase::PreCast(ALostArcCharacter* Character)
+void ULostArcSkillBase::PreCast(ALostArcPlayerCharacter* Character)
 {
 	CharacterRotatetoCursor(Character);
 	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);

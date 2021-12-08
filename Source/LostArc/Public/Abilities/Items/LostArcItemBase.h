@@ -30,8 +30,8 @@ public:
 	FOnItemQuantityUpdateDelegate QuantityUpdate;
 	
 public:
-	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character) override;
 	bool IsConsumable() const;
 
 	bool SetItemQuantity(int32 Count);

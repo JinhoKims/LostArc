@@ -18,7 +18,7 @@ public:
 	ULostArcItemPotion_Health(const FObjectInitializer& ObjectInitializer);
 
 protected:
-	virtual bool Consumed(ALostArcCharacter* Character) override;
+	virtual bool Consumed(ALostArcPlayerCharacter* Character) override;
 
 private:
 	float Value = 100.f;

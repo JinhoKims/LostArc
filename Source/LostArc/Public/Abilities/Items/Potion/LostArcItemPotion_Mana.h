@@ -16,7 +16,7 @@ class LOSTARC_API ULostArcItemPotion_Mana : public ULostArcItemPotionBase
 	
 public:
 	ULostArcItemPotion_Mana(const FObjectInitializer& ObjectInitializer);
-	virtual bool Consumed(ALostArcCharacter* Character) override;
+	virtual bool Consumed(ALostArcPlayerCharacter* Character) override;
 
 private:
 	float Value = 100.f;

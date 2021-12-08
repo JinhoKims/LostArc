@@ -16,6 +16,6 @@ class LOSTARC_API ULostArcSkill_Dodge : public ULostArcSkillBase
 	
 public:
 	ULostArcSkill_Dodge(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character) override;
 };

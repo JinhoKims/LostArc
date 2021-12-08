@@ -18,9 +18,9 @@ class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 	
 public:
 	ULostArcItemEquipBase(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual void Equipment(ALostArcCharacter* Character) {}
-	virtual void Dismount(ALostArcCharacter* Character) {}
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual void Equipment(ALostArcPlayerCharacter* Character) {}
+	virtual void Dismount(ALostArcPlayerCharacter* Character) {}
 	
 	EAccessoryType GetAcType() const { return AcType; }
 	

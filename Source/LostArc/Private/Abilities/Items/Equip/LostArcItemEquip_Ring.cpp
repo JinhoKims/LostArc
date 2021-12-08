@@ -15,7 +15,7 @@ ULostArcItemEquip_Ring::ULostArcItemEquip_Ring(const FObjectInitializer& ObjectI
 	}
 }
 
-bool ULostArcItemEquip_Ring::Use(ALostArcCharacter* Character)
+bool ULostArcItemEquip_Ring::Use(ALostArcPlayerCharacter* Character)
 {
 	if (Super::Use(Character))
 	{
@@ -27,14 +27,14 @@ bool ULostArcItemEquip_Ring::Use(ALostArcCharacter* Character)
 	return false;
 }
 
-void ULostArcItemEquip_Ring::Equipment(ALostArcCharacter* Character)
+void ULostArcItemEquip_Ring::Equipment(ALostArcPlayerCharacter* Character)
 {
 	Super::Equipment(Character);
 	auto StatComponent = Character->StatComponent;
 	StatComponent->AddBonusAttribute(EAttributeType::DEF, Value);
 }
 
-void ULostArcItemEquip_Ring::Dismount(ALostArcCharacter* Character)
+void ULostArcItemEquip_Ring::Dismount(ALostArcPlayerCharacter* Character)
 {
 	Super::Dismount(Character);
 	auto StatComponent = Character->StatComponent;

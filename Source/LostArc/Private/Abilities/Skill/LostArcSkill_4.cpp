@@ -14,7 +14,7 @@ ULostArcSkill_4::ULostArcSkill_4(const FObjectInitializer& ObjectInitializer) : 
 	Name = "Skill_4";
 }
 
-bool ULostArcSkill_4::Use(ALostArcCharacter* Character)
+bool ULostArcSkill_4::Use(ALostArcPlayerCharacter* Character)
 {
 	if (Super::Use(Character))
 	{
@@ -26,7 +26,7 @@ bool ULostArcSkill_4::Use(ALostArcCharacter* Character)
 		return false;
 }
 
-void ULostArcSkill_4::HitDetection(ALostArcCharacter* Character)
+void ULostArcSkill_4::HitDetection(ALostArcPlayerCharacter* Character)
 {
 	Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 

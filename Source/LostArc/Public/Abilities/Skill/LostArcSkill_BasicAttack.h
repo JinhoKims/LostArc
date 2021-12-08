@@ -16,15 +16,15 @@ class LOSTARC_API ULostArcSkill_BasicAttack : public ULostArcSkillBase
 	
 public:
 	ULostArcSkill_BasicAttack(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use(ALostArcCharacter* Character) override;
-	virtual bool AbilityStateCheck(ALostArcCharacter* Character) override;
-	void BasicAttackNextComboCheck(ALostArcCharacter* Character);
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character) override;
+	void BasicAttackNextComboCheck(ALostArcPlayerCharacter* Character);
 	void BasicAttackEndComboState();
 	bool GetBasicAttacking() { return bBasicAttacking; }
 	void SetBasicAttacking(bool bAttack) { bBasicAttacking = bAttack; }
 
 protected:
-	virtual void PreCast(ALostArcCharacter* Character) override;
+	virtual void PreCast(ALostArcPlayerCharacter* Character) override;
 
 private:
 	bool bBasicAttacking;

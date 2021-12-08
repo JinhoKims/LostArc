@@ -13,7 +13,7 @@ ULostArcItemPotion_Health::ULostArcItemPotion_Health(const FObjectInitializer& O
 	}
 }
 
-bool ULostArcItemPotion_Health::Consumed(ALostArcCharacter* Character)
+bool ULostArcItemPotion_Health::Consumed(ALostArcPlayerCharacter* Character)
 {
 	auto StatComponent = Character->StatComponent;
 	StatComponent->SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp(StatComponent->GetCurrentAttributeValue(EAttributeType::HP) + Value, 1.f, StatComponent->GetMaxAttributeValue(EAttributeType::HP)));

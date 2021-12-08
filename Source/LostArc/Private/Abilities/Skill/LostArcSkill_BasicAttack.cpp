@@ -16,7 +16,7 @@ ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& O
 	Name = "Skill_BasicAttack";
 }
 
-bool ULostArcSkill_BasicAttack::Use(ALostArcCharacter* Character)
+bool ULostArcSkill_BasicAttack::Use(ALostArcPlayerCharacter* Character)
 {
 	if (bBasicAttacking) // stack up the combo and waiting for next section
 	{
@@ -38,7 +38,7 @@ bool ULostArcSkill_BasicAttack::Use(ALostArcCharacter* Character)
 	return false;
 }
 
-bool ULostArcSkill_BasicAttack::AbilityStateCheck(ALostArcCharacter* Character)
+bool ULostArcSkill_BasicAttack::AbilityStateCheck(ALostArcPlayerCharacter* Character)
 {
 	if (bAnimationRunning)
 	{
@@ -52,7 +52,7 @@ void ULostArcSkill_BasicAttack::BasicAttackStartComboState()
 {
 	bCanNextCombo = true;
 	bIsComboInputOn = false;
-	check(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
+	//check(FMath::IsWithinInclusive<int32>(CurrentCombo, 0, MaxCombo - 1));
 	CurrentCombo = FMath::Clamp<int32>(CurrentCombo + 1, 1, MaxCombo);
 }
 
@@ -63,7 +63,7 @@ void ULostArcSkill_BasicAttack::BasicAttackEndComboState()
 	CurrentCombo = 0;
 }
 
-void ULostArcSkill_BasicAttack::BasicAttackNextComboCheck(ALostArcCharacter* Character)
+void ULostArcSkill_BasicAttack::BasicAttackNextComboCheck(ALostArcPlayerCharacter* Character)
 {
 	if (bIsComboInputOn)
 	{
@@ -72,7 +72,7 @@ void ULostArcSkill_BasicAttack::BasicAttackNextComboCheck(ALostArcCharacter* Cha
 	}
 }
 
-void ULostArcSkill_BasicAttack::PreCast(ALostArcCharacter* Character)
+void ULostArcSkill_BasicAttack::PreCast(ALostArcPlayerCharacter* Character)
 {
 	check(CurrentCombo == 0);
 	BasicAttackStartComboState();

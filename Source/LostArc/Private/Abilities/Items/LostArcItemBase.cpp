@@ -12,12 +12,12 @@ bool ULostArcItemBase::IsConsumable() const
 	return false;
 }
 
-bool ULostArcItemBase::Use(ALostArcCharacter* Character)
+bool ULostArcItemBase::Use(ALostArcPlayerCharacter* Character)
 {
 	return AbilityStateCheck(Character);
 }
 
-bool ULostArcItemBase::AbilityStateCheck(ALostArcCharacter* Character)
+bool ULostArcItemBase::AbilityStateCheck(ALostArcPlayerCharacter* Character)
 {
 	if(AbilityCDProperty.Key.IsValid())
 	{

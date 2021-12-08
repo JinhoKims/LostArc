@@ -24,11 +24,11 @@ protected:
 	float ManaCost;
 
 public:
-	virtual bool Use(ALostArcCharacter* Character);
-	virtual bool AbilityStateCheck(ALostArcCharacter* Character);
-	virtual void CharacterRotatetoCursor(ALostArcCharacter* Character);
-	virtual void HitDetection(ALostArcCharacter* Character);
+	virtual bool Use(ALostArcPlayerCharacter* Character);
+	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character);
+	virtual void CharacterRotatetoCursor(ALostArcPlayerCharacter* Character);
+	virtual void HitDetection(ALostArcPlayerCharacter* Character);
 
 protected:
-	virtual void PreCast(ALostArcCharacter* Character);
+	virtual void PreCast(ALostArcPlayerCharacter* Character);
 };

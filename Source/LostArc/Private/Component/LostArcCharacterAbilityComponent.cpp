@@ -51,12 +51,12 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 
 void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
-	Abilities[Type]->Use(Cast<ALostArcCharacter>(GetOwner()));
+	Abilities[Type]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
 void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
-	Abilities[Type]->HitDetection(Cast<ALostArcCharacter>(GetOwner()));
+	Abilities[Type]->HitDetection(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
 ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)

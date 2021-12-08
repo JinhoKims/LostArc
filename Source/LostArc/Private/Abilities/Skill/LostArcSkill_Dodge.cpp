@@ -14,7 +14,7 @@ ULostArcSkill_Dodge::ULostArcSkill_Dodge(const FObjectInitializer& ObjectInitial
 	Name = "Skill_Dodge";
 }
 
-bool ULostArcSkill_Dodge::Use(ALostArcCharacter* Character)
+bool ULostArcSkill_Dodge::Use(ALostArcPlayerCharacter* Character)
 {
 	if (AbilityStateCheck(Character))
 	{
@@ -27,7 +27,7 @@ bool ULostArcSkill_Dodge::Use(ALostArcCharacter* Character)
 		return false;
 }
 
-bool ULostArcSkill_Dodge::AbilityStateCheck(ALostArcCharacter* Character)
+bool ULostArcSkill_Dodge::AbilityStateCheck(ALostArcPlayerCharacter* Character)
 {
 	if (Character->GetWorldTimerManager().IsTimerActive(AbilityCDProperty.Key))
 	{

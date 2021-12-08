@@ -16,8 +16,8 @@ class LOSTARC_API ULostArcItemPotionBase : public ULostArcItemBase
 	
 public:
 	ULostArcItemPotionBase(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use(ALostArcCharacter* Character) override;
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
 
 protected:
-	virtual bool Consumed(ALostArcCharacter* Character);
+	virtual bool Consumed(ALostArcPlayerCharacter* Character);
 };

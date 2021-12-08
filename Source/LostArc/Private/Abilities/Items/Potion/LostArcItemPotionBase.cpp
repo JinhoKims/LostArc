@@ -17,7 +17,7 @@ ULostArcItemPotionBase::ULostArcItemPotionBase(const FObjectInitializer& ObjectI
 	}
 }
 
-bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
+bool ULostArcItemPotionBase::Use(ALostArcPlayerCharacter* Character)
 {
 	if (Super::Use(Character))
 	{
@@ -27,7 +27,7 @@ bool ULostArcItemPotionBase::Use(ALostArcCharacter* Character)
 	return false;
 }
 
-bool ULostArcItemPotionBase::Consumed(ALostArcCharacter* Character)
+bool ULostArcItemPotionBase::Consumed(ALostArcPlayerCharacter* Character)
 {
 	if (Super::SetItemQuantity(-1)) // Item이 1이상 남음
 	{

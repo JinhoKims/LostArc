@@ -2,9 +2,17 @@
 
 
 #include "Character/LostArcPlayerCharacter.h"
+#include "Abilities/Skill/LostArcSkill_BasicAttack.h"
+#include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "Camera/CameraComponent.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
+#include "Component/LostArcCharacterEquipComponent.h"
+#include "Component/LostArcCharacterStatComponent.h"
+#include "Component/LostArcInventoryComponent.h"
+#include "Component/LostArcQuickSlotComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DecalComponent.h"
+#include "Controller/LostArcPlayerController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -47,23 +55,42 @@ ALostArcPlayerCharacter::ALostArcPlayerCharacter()
 	}
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
-
-	// Attach the Grey skeletal mesh...
+	
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_GREY(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (SK_GREY.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SK_GREY.Object);
 	}
+
+	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
+	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
+	InventoryComponent = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
+	EquipComponent = CreateDefaultSubobject<ULostArcCharacterEquipComponent>(TEXT("EQUIP"));
+	QuickSlotComponent = CreateDefaultSubobject<ULostArcQuickSlotComponent>(TEXT("Quick"));
 }
 
 void ALostArcPlayerCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	AnimInstance = Cast<ULostArcCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance != nullptr)
+	{
+		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcSkill_BasicAttack>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
+		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitDetection(Type); });
+		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
+	}
 }
 
 void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	auto PController = Cast<ALostArcPlayerController>(GetController());
+	
+	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::BasicAttack);
+	//InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
 }
 
 void ALostArcPlayerCharacter::BeginPlay()
@@ -74,8 +101,6 @@ void ALostArcPlayerCharacter::BeginPlay()
 void ALostArcPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	UE_LOG(LogTemp,Warning,TEXT("Speed : %f"), UKismetMathLibrary::VSize(GetVelocity()));
 	
 	if (CursorToWorld != nullptr)
 	{

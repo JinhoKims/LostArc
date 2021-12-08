@@ -44,5 +44,6 @@ void ULostArcCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 void ULostArcCharacterAnimInstance::JumpToBasicAttackMontageSection(int32 NewSection)
 {
 	//Montage_JumpToSectionsEnd(TEXT("Skill_A")); // 현재 몽타주 애니메이션을 즉각 중단한다.
+	
 	Montage_JumpToSection(FName(*FString::Printf(TEXT("BasicAttack_%d"), NewSection)), BasicAttack_Montage);
 }

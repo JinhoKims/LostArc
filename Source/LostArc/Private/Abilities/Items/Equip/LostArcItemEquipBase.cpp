@@ -16,7 +16,7 @@ ULostArcItemEquipBase::ULostArcItemEquipBase(const FObjectInitializer& ObjectIni
 	}
 }
 
-bool ULostArcItemEquipBase::Use(ALostArcCharacter* Character)
+bool ULostArcItemEquipBase::Use(ALostArcPlayerCharacter* Character)
 {
 	Character->EquipComponent->SetAbility(this);
 	return true;

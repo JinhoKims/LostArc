@@ -16,5 +16,5 @@ class LOSTARC_API ULostArcSkill_1 : public ULostArcSkillBase
 
 public:
 	ULostArcSkill_1(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use( ALostArcCharacter* Character) override;
+	virtual bool Use( ALostArcPlayerCharacter* Character) override;
 };

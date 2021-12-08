@@ -50,7 +50,7 @@ void ULostArcInventoryComponent::UseAbility(int32 SlotIndex)
 {
 	if (InventorySlot[SlotIndex] != nullptr)
 	{
-		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
+		if (InventorySlot[SlotIndex]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()))) // 아이템을 모두 소모했을 경우
 		{
 			InventorySlot[SlotIndex] = nullptr;
 			InvenSlotUpdate.Broadcast(SlotIndex);

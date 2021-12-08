@@ -6,6 +6,11 @@
 #include "GameFramework/Character.h"
 #include "LostArcPlayerCharacter.generated.h"
 
+enum EAbilityType;
+
+DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, EAbilityType)
+DECLARE_DELEGATE_OneParam(FBindQuickSlotDelegate, int32 Slot)
+
 UCLASS(Blueprintable)
 class LOSTARC_API ALostArcPlayerCharacter : public ACharacter
 {
@@ -22,9 +27,25 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
-protected:
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcCharacterStatComponent* StatComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcCharacterAbilityComponent* AbilityComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ULostArcCharacterAnimInstance* AnimInstance;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcQuickSlotComponent* QuickSlotComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcInventoryComponent* InventoryComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
+	class ULostArcCharacterEquipComponent* EquipComponent;
+	
+protected:
 	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -35,4 +56,6 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
+
+	
 };
