@@ -55,7 +55,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 				ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
 				Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
 				Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-				Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
+				Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = Interface->GetAbility(OwnerDrag->SlotIndex); // 컴포넌트에 데이터 복사
 			}
 		
 			if(OwnerDrag->SlotType == ESlotType::Quick) // 위젯 계층은 하위 위젯에서 상위 위젯(MainHUD)으로 올라가는 방식이다. (false을 반환할 시 MainHUD의 OnDrop을 실행)
@@ -70,7 +70,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 				ItemQuantityHandle = OwnerItem->QuantityUpdate.AddUObject(this, &ULostArcUIQuickSlot::UpdateQuantity);
 				Text_Quantity->SetText(FText::AsNumber(FMath::FloorToInt(OwnerItem->GetItemQuantity())));
 				Text_Quantity->SetVisibility(ESlateVisibility::Visible);
-				Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = OwnerItem;
+				Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = OwnerItem;
 			}
 		
 			return true;
@@ -96,7 +96,7 @@ void ULostArcUIQuickSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	{
 		if(bEnableTick)
 		{
-			auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+			auto Character = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 			float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(static_cast<EAbilityType>(SlotIndex+1))->AbilityCDProperty.Key);
 	
 			Text_CD->SetText(FText::AsNumber(FMath::FloorToInt(Count)));
@@ -133,7 +133,7 @@ void ULostArcUIQuickSlot::UpdateQuantity()
 	{
 		if(FMath::FloorToInt(Cast<ULostArcItemBase>(SlotData)->GetItemQuantity()) <=0) // 삭제해도 계속 남아있음(수정필요)
 		{
-			Cast<ALostArcCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = nullptr;
+			Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn())->QuickSlotComponent->QuickSlot[SlotIndex] = nullptr;
 			// 인벤토리 슬롯의 인덱스 추적은 불가
 			Text_Quantity->SetVisibility(ESlateVisibility::Hidden);
 			Image_Icon->SetVisibility(ESlateVisibility::Hidden);

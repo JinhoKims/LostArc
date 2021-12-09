@@ -27,7 +27,7 @@ void ULostArcCharacterEquipComponent::InitializeComponent()
 		}
 	}
 
-	//Interface = Cast<ALostArcPlayerCharacter>(GetOwner())->InventoryComponent;
+	Interface = Cast<ALostArcPlayerCharacter>(GetOwner())->InventoryComponent;
 }
 void ULostArcCharacterEquipComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 {

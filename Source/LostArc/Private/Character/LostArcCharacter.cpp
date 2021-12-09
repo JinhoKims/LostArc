@@ -87,12 +87,6 @@ ALostArcCharacter::ALostArcCharacter()
 		}
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}
-
-	StatComponent = CreateDefaultSubobject<ULostArcCharacterStatComponent>(TEXT("STAT"));
-	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
-	InventoryComponent = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
-	EquipComponent = CreateDefaultSubobject<ULostArcCharacterEquipComponent>(TEXT("EQUIP"));
-	QuickSlotComponent = CreateDefaultSubobject<ULostArcQuickSlotComponent>(TEXT("Quick"));
 }
 
 void ALostArcCharacter::PostInitializeComponents()

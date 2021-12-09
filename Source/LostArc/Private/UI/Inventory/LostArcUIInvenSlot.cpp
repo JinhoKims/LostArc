@@ -9,7 +9,7 @@ void ULostArcUIInvenSlot::NativeConstruct()
 	Super::NativeConstruct();
 
 	SlotType = ESlotType::Inven;
-	SlotComponent = Cast<ALostArcCharacter>(GetOwningPlayerPawn())->InventoryComponent;
+	SlotComponent = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn())->InventoryComponent;
 }
 
 bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)

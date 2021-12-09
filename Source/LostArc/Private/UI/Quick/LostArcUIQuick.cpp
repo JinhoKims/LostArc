@@ -13,7 +13,7 @@ void ULostArcUIQuick::ClearQuickSlot(int32 SlotIndex)
 void ULostArcUIQuick::NativeConstruct()
 {
 	Super::NativeConstruct();
-	auto OwingChar = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+	auto OwingChar = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 
 	for (int i = 0; i < 16; i++)
 	{

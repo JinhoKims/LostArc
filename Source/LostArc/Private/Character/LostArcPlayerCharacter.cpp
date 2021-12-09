@@ -81,6 +81,7 @@ void ALostArcPlayerCharacter::PostInitializeComponents()
 		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitDetection(Type); });
 		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
+	StatComponent->OnHPIsZero.AddLambda([this]()->void {AnimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); });
 }
 
 void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -90,7 +91,12 @@ void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 	auto PController = Cast<ALostArcPlayerController>(GetController());
 	
 	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::BasicAttack);
-	//InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
+	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);
+
+	for(int i = 0; i < 16; i++)
+	{
+		InputComponent->BindAction<FBindQuickSlotDelegate>(FName(FString::Printf(TEXT("QuickSlot_%d"), i)), IE_Pressed, QuickSlotComponent, &ULostArcQuickSlotComponent::UseAbility, i);
+	}
 }
 
 void ALostArcPlayerCharacter::BeginPlay()

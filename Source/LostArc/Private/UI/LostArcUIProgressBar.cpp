@@ -2,6 +2,7 @@
 
 #include "UI/LostArcUIProgressBar.h"
 #include "Character/LostArcCharacter.h"
+#include "Character/LostArcPlayerCharacter.h"
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
@@ -9,7 +10,7 @@
 void ULostArcUIProgressBar::NativeConstruct()
 {
 	Super::NativeConstruct();
-	auto Character = GetOwningPlayerPawn<ALostArcCharacter>();
+	auto Character = GetOwningPlayerPawn<ALostArcPlayerCharacter>();
 
 	ProgressBar->SetFillColorAndOpacity(FLinearColor(BarColor.R, BarColor.G, BarColor.B));
 	ProgressBar->SetRenderShear(BarShearValue);
@@ -32,7 +33,7 @@ void ULostArcUIProgressBar::UpdateProgressBar(EAttributeType OwnerType)
 {
 	if (BarType == OwnerType)
 	{
-		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+		auto Character = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 		
 		CurrentText->SetText(FText::AsNumber(Character->StatComponent->GetCurrentAttributeValue(BarType)));
 		MaxText->SetText(FText::AsNumber(Character->StatComponent->GetMaxAttributeValue(BarType)));

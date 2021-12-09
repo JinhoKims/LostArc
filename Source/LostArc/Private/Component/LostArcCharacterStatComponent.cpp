@@ -201,5 +201,5 @@ void ULostArcCharacterStatComponent::SetDamage(float NewDamage)
 
 void ULostArcCharacterStatComponent::ManaRegenerationPerSecond(float Amount)
 {
-	SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp<float>(CurrentMP + Amount, 0, GetMaxAttributeValue(EAttributeType::HP)));
+	SetCurrentAttributeValue(EAttributeType::MP, FMath::Clamp<float>(CurrentMP + Amount, 0, GetMaxAttributeValue(EAttributeType::MP)));
 }

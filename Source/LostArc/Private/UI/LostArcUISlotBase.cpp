@@ -20,7 +20,7 @@ void ULostArcUISlotBase::NativeTick(const FGeometry& MyGeometry, float InDeltaTi
 	if (bEnableTick) 
 	{
 		Super::NativeTick(MyGeometry, InDeltaTime);
-		auto Character = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+		auto Character = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 
 		if (GetOwningPlayer()->GetWorldTimerManager().IsTimerActive(SlotData->AbilityCDProperty.Key))
 		{

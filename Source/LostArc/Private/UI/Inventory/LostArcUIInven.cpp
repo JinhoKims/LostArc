@@ -10,7 +10,7 @@
 void ULostArcUIInven::NativeConstruct()
 {
 	Super::NativeConstruct();
-	OwnerCharacter = Cast<ALostArcCharacter>(GetOwningPlayerPawn());
+	OwnerCharacter = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 
 	for (int i = 0; i < 16; i++)
 	{

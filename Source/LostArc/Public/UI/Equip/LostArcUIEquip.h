@@ -26,5 +26,5 @@ private:
 	TArray<class ULostArcUISlotBase*> EquipSlot;
 
 	UPROPERTY()
-	class ALostArcCharacter* OwnerCharacter;
+	class ALostArcPlayerCharacter* OwnerCharacter;
 };
