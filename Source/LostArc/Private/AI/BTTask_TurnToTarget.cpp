@@ -6,6 +6,7 @@
 #include "Character/CorpseCharacter.h"
 #include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Character/LostArcPlayerCharacter.h"
 
 UBTTask_TurnToTarget::UBTTask_TurnToTarget()
 {
@@ -19,7 +20,7 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	auto CorpseCharacter = Cast<ACorpseCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	if (CorpseCharacter == nullptr) return EBTNodeResult::Failed;
 
-	auto Target = Cast<ALostArcCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ACorpseAIController::TargetKey));
+	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ACorpseAIController::TargetKey));
 	if (Target == nullptr) return EBTNodeResult::Failed;
 
 	FVector LookVector = Target->GetActorLocation() - CorpseCharacter->GetActorLocation();

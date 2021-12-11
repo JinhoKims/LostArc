@@ -9,7 +9,7 @@ ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& O
 	ManaCost = 0.f;
 	SkillRatio = 0.5f;
 	SkillRadius.Key = 200.0f;
-	SkillRadius.Value = 90.f;
+	SkillRadius.Value = 100.f;
 	bBasicAttacking = false;
 	CurrentCombo = 0;
 	MaxCombo = 3;

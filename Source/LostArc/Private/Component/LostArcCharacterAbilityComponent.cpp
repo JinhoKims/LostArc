@@ -84,7 +84,7 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))
 	{
-		Cast<ALostArcCharacter>(GetOwner())->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
+		Cast<ALostArcPlayerCharacter>(GetOwner())->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
 		ULostArcSkillBase::bAnimationRunning = false;
 	}
 

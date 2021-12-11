@@ -4,7 +4,6 @@
 #include "Controller/CorpseAIController.h"
 #include "Character/CorpseCharacter.h"
 #include "AnimInstances/CorpseAnimInstance.h"
-#include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_CorpseAttack::UBTTask_CorpseAttack()

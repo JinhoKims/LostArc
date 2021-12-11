@@ -5,7 +5,7 @@
 #include "Controller/CorpseAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
-#include "Character/LostArcCharacter.h"
+#include "Character/LostArcPlayerCharacter.h"
 
 UBTService_Detect::UBTService_Detect()
 {
@@ -33,7 +33,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	{
 		for (auto OverlapResult : OverlapResults)
 		{
-			auto Player = Cast<ALostArcCharacter>(OverlapResult.GetActor());
+			auto Player = Cast<ALostArcPlayerCharacter>(OverlapResult.GetActor());
 			if (Player && Player->GetController()->IsPlayerController())
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACorpseAIController::TargetKey, Player); // set target value to player actor

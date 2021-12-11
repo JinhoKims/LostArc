@@ -2,8 +2,8 @@
 
 #include "AI/BTDecorator_IsInAttackRange.h"
 #include "Controller/CorpseAIController.h"
-#include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Character/LostArcPlayerCharacter.h"
 
 UBTDecorator_IsInAttackRange::UBTDecorator_IsInAttackRange()
 {
@@ -17,7 +17,7 @@ bool UBTDecorator_IsInAttackRange::CalculateRawConditionValue(UBehaviorTreeCompo
 	auto ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (ControllingPawn == nullptr) return false;
 
-	auto Target = Cast<ALostArcCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ACorpseAIController::TargetKey));
+	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ACorpseAIController::TargetKey));
 	if (Target == nullptr) return false;
 
 	bResult = (Target->GetDistanceTo(ControllingPawn) <= 200.0f); 
