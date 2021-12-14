@@ -11,7 +11,7 @@
 UBTTask_TurnToTarget::UBTTask_TurnToTarget()
 {
 	NodeName = TEXT("Trun");
-}
+} 
 
 EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
