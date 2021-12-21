@@ -29,4 +29,5 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	CorpseCharacter->SetActorRotation(FMath::RInterpTo(CorpseCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 2.0f));
 
 	return EBTNodeResult::Succeeded;
+	
 }
