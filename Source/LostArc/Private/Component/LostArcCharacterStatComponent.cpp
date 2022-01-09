@@ -196,6 +196,7 @@ void ULostArcCharacterStatComponent::SetCurrentLevel(int32 NewLevel)
 
 void ULostArcCharacterStatComponent::SetDamage(float NewDamage)
 {
+	UE_LOG(LogTemp,Warning,TEXT("%f"), NewDamage);
 	SetCurrentAttributeValue(EAttributeType::HP, FMath::Clamp<float>(CurrentHP - FMath::Clamp<float>(NewDamage - (GetCurrentAttributeValue(EAttributeType::DEF)),1.f,NewDamage), 0.0f, GetMaxAttributeValue(EAttributeType::HP)));
 }
 
