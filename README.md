@@ -1,4 +1,4 @@
-# LostArc
+# LostArcs
  Top-Down Hack & Slash RPG
  
 # Thumbnail
