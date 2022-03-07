@@ -1,15 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Controller/LostArcPlayerController.h"
-#include "Engine/World.h"
-#include "Character/LostArcCharacter.h"
-#include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "UI/LostArcUIMainHUD.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Character/LostArcPlayerCharacter.h"
 
@@ -96,6 +91,20 @@ void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation); // Requires placement of NevmeshboundsVolume in level
 		}
 	}
+}
+
+void ALostArcPlayerController::OnSetDestinationPressed()
+{
+	if(!bOnSlotClick)
+	{
+		bMoveToMouseCursor = true;
+	}
+}
+
+void ALostArcPlayerController::OnSetDestinationReleased()
+{
+	bMoveToMouseCursor = false;
+	bOnSlotClick = false;
 }
 
 void ALostArcPlayerController::MouseWheelUp()

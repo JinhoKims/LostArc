@@ -26,6 +26,8 @@ public:
 	UPROPERTY()
 	class ULostArcUIMainHUD* MainHUD;
 
+	bool bOnSlotClick = false;
+
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -40,8 +42,9 @@ protected:
 	void SetNewMoveDestination(const FVector DestLocation);
 
 	/** Input handlers for SetDestination action. */
-	void OnSetDestinationPressed() { bMoveToMouseCursor = true; }  // set flag to keep updating destination until released
-	void OnSetDestinationReleased() { bMoveToMouseCursor = false; }; // clear flag to indicate we should stop updating the destination
+	void OnSetDestinationPressed();
+	// set flag to keep updating destination until released
+	void OnSetDestinationReleased();
 
 	/* Mouse Wheel Scroll */
 	void MouseWheelUp();

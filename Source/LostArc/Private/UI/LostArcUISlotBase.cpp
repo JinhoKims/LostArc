@@ -41,8 +41,10 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 		return reply.NativeReply;
 	}
 	
-	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton))
+	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) // Right Mouse Clicked
 	{
+		Cast<ALostArcPlayerController>(GetOwningPlayer())->bOnSlotClick = true;
+		
 		if (SlotData != nullptr)
 		{
 			auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
