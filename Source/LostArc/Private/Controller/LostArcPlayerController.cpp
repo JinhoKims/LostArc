@@ -11,12 +11,18 @@
 ALostArcPlayerController::ALostArcPlayerController()
 {
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	DefaultMouseCursor = EMouseCursor::Default;
 	static ConstructorHelpers::FClassFinder<ULostArcUIMainHUD> UI_HUD_C(TEXT("WidgetBlueprint'/Game/UI/HUD/BP_MainHUD.BP_MainHUD_C'"));
 
 	if (UI_HUD_C.Succeeded())
 	{
 		MainHUDClass = UI_HUD_C.Class;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Cursor(TEXT("Blueprint'/Game/Magic_Circle_Creator/Blueprints/BP_MagicCircleCreator_Skill_A.BP_MagicCircleCreator_Skill_A'"));
+	if (BP_Cursor.Object)
+	{
+		SpawnActor = (UClass*)BP_Cursor.Object->GeneratedClass;
 	}
 }
 
@@ -45,6 +51,9 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 void ALostArcPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+	MagicActor = GetWorld()->SpawnActor<AActor>(SpawnActor, GetPawn()->GetActorTransform());
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)
@@ -60,6 +69,11 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 	{
 		CameraPositionChange(bCameraSit.Value);
 	}
+
+	FHitResult TraceHitResult;
+	GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+	FVector CursorFV = TraceHitResult.ImpactNormal;
+	MagicActor->SetActorLocation(TraceHitResult.Location);
 }
 
 void ALostArcPlayerController::MoveToMouseCursor()
