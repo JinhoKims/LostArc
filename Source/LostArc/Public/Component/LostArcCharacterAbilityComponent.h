@@ -21,6 +21,14 @@ enum EAbilityType
 	Evade		  UMETA(DisplayName = "Evade")
 };
 
+
+UENUM(BlueprintType)
+enum EAbilityState
+{
+	Standard  UMETA(DisplayName = "Stand"),
+	Focus     UMETA(DisplayName = "Focus")
+};
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LOSTARC_API ULostArcCharacterAbilityComponent : public UActorComponent
 {

@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Component/LostArcCharacterAbilityComponent.h"
-#include "Character/LostArcCharacter.h"
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Abilities/LostArcAbilityBase.h"
 #include "Abilities/Skill/LostArcSkillBase.h"

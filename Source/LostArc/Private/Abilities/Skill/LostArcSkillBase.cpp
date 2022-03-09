@@ -77,8 +77,8 @@ void ULostArcSkillBase::HitDetection(ALostArcPlayerCharacter* Character)
 void ULostArcSkillBase::PreCast(ALostArcPlayerCharacter* Character)
 {
 	CharacterRotatetoCursor(Character);
-	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false);
-	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) - ManaCost);
+	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false); // 쿨타임 계산
+	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) - ManaCost); // 마나 계산
 	bAnimationRunning = true;
 	AbilityCDProperty.Value.Broadcast(true);
 }
