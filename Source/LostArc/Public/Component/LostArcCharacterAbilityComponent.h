@@ -62,3 +62,4 @@ private:
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<ULostArcSkillBase*> Abilities;
 };
+//
