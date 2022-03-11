@@ -3,7 +3,6 @@
 
 #include "UI/Inventory/LostArcUIInven.h"
 #include "UI/Inventory/LostArcUIInvenSlot.h"
-#include "Character/LostArcCharacter.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "UI/LostArcUITabs.h"
 

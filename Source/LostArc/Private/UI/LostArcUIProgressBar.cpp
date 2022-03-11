@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/LostArcUIProgressBar.h"
-#include "Character/LostArcCharacter.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Component/LostArcCharacterStatComponent.h"
 #include "Components/ProgressBar.h"

@@ -4,7 +4,6 @@
 #include "AI/BTTask_TurnToTarget.h"
 #include "Controller/CorpseAIController.h"
 #include "Character/CorpseCharacter.h"
-#include "Character/LostArcCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
 

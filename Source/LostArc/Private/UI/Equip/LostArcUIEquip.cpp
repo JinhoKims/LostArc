@@ -2,7 +2,6 @@
 
 
 #include "UI/Equip/LostArcUIEquip.h"
-#include "Character/LostArcCharacter.h"
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "UI/Equip/LostArcUIEquipSlot.h"
 #include "UI/LostArcUITabs.h"

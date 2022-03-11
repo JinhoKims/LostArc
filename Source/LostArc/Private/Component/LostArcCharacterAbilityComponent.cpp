@@ -19,7 +19,7 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 	AbilityClass.Init(ULostArcSkillBase::StaticClass(), 10);
 }
 
-void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌트는 컴파일 타임에 생성자가 호출된 후에 같이 호출되는 경향이 있기에 미리 AbilityClass를 초기화해줘야한다.
+void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌트는 컴파일 타임에 생성자가 호출된 후에 바로 호출되는 경향이 있기에 미리 AbilityClass를 초기화해줘야한다.
 {
 	Super::InitializeComponent();
 	
