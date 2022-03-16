@@ -7,6 +7,7 @@
 #include "Abilities/Skill/LostArcSkill_BasicAttack.h"
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Abilities/Skill/LostArcSkillBase_RangedBase.h"
 
 // Sets default values for this component's properties
 ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
@@ -91,5 +92,17 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 	{
 		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
 		ULostArcSkillBase::bAnimationRunning = false;
+	}
+}
+
+void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState()
+{
+	for(int i = 5; i < 8; i++)
+	{
+		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[i]);
+		if(IsValid(Ability))
+		{
+			Ability->ActivityRangedCursor(false, Cast<ALostArcPlayerCharacter>(GetOwner()));
+		}
 	}
 }

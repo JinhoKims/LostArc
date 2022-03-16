@@ -54,6 +54,7 @@ void ALostArcPlayerController::BeginPlay()
 
 
 	MagicActor = GetWorld()->SpawnActor<AActor>(SpawnActor, GetPawn()->GetActorTransform());
+	MagicActor->SetActorHiddenInGame(true);
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)

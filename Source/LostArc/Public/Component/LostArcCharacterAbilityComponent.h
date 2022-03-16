@@ -38,6 +38,8 @@ public:
 
 	UFUNCTION()
 	void AbilityMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
+	
+	void ResetRangedAbilitiesState();
 
 protected:
 	// Called when the game starts
@@ -53,6 +55,4 @@ private:
 	
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<ULostArcSkillBase*> Abilities;
-
-	TEnumAsByte<EAbilityType> CurrentType;
 };

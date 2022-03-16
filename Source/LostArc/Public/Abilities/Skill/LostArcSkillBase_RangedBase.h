@@ -20,10 +20,12 @@ class LOSTARC_API ULostArcSkillBase_RangedBase : public ULostArcSkillBase
 
 public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
 
 protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> Skill_Circle;
 
 	TEnumAsByte<EAbilityState> Skill_State;
+	TEnumAsByte<EAbilityType> Skill_Type;
 };

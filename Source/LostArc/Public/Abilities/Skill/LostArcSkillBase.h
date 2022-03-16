@@ -31,4 +31,5 @@ public:
 
 protected:
 	virtual void PreCast(ALostArcPlayerCharacter* Character);
+	
 };
