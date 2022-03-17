@@ -50,8 +50,6 @@ protected:
 	void MouseWheelUp();
 	void MouseWheelDown();
 
-	void SetAbilityCirclePointer(AActor* Pointer) {Circle_Pointer = Pointer;}
-
 private:
 	/* Changing the Camera position according to the mouse wheel */
 	TPair<bool, bool> bCameraSit;
@@ -63,10 +61,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	AActor* MagicActor;
-
-
+	
 	UPROPERTY()
-	AActor* Circle_Pointer;
+	AActor* AbilityRangedCursor;
 };
 
 
