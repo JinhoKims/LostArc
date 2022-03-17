@@ -12,6 +12,7 @@ ULostArcSkill_4::ULostArcSkill_4(const FObjectInitializer& ObjectInitializer) : 
 	SkillRatio = 2.f;
 	SkillRadius.Key = 600.f;
 	SkillRadius.Value = 360.f;
+	Skill_Type = EAbilityType::MeleeSkill_4;
 	Name = "Skill_4";
 
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Earth(TEXT("Blueprint'/Game/Luos8Elements/Blueprints/Earth/BP_Earth_Def_01_Life.BP_Earth_Def_01_Life'"));

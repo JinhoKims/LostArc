@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/LostArcAbilityBase.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "LostArcSkillBase.generated.h"
 
@@ -22,6 +23,8 @@ protected:
 	TPair<float, float> SkillRadius; // distance, angle
 	float SkillRatio;
 	float ManaCost;
+
+	TEnumAsByte<EAbilityType> Skill_Type;
 
 public:
 	virtual bool Use(ALostArcPlayerCharacter* Character);

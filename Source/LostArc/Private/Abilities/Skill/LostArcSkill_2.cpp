@@ -10,6 +10,7 @@ ULostArcSkill_2::ULostArcSkill_2(const FObjectInitializer& ObjectInitializer) : 
 	SkillRatio = 1.2f;
 	SkillRadius.Key = 300.f;
 	SkillRadius.Value = 160.f;
+	Skill_Type = EAbilityType::MeleeSkill_2;
 	Name = "Skill_2";
 }
 

@@ -11,6 +11,7 @@ ULostArcSkill_Dodge::ULostArcSkill_Dodge(const FObjectInitializer& ObjectInitial
 	SkillRatio = 0.f;
 	SkillRadius.Key = 0.f;
 	SkillRadius.Value = 0.f;
+	Skill_Type = EAbilityType::Evade;
 	Name = "Skill_Dodge";
 }
 

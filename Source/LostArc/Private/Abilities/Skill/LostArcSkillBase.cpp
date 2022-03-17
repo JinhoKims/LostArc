@@ -82,5 +82,5 @@ void ULostArcSkillBase::PreCast(ALostArcPlayerCharacter* Character)
 	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) - ManaCost); // 마나 계산
 	bAnimationRunning = true;
 	AbilityCDProperty.Value.Broadcast(true);
-	Character->AbilityComponent->ResetRangedAbilitiesState();
+	Character->AbilityComponent->ResetRangedAbilitiesState(Skill_Type);
 }

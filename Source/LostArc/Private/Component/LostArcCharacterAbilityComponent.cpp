@@ -51,6 +51,19 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 
 void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
+	if(Type == EAbilityType::BasicAttack) // 마우스 클릭으로 원거리 스킬 실행
+	{
+		if((int32)LastRangedType.GetValue() >= 5 && (int32)LastRangedType.GetValue() <= 8)
+		{
+			auto Skill = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
+			if(Skill->GetState() == EAbilityState::Focusing)
+			{
+				Abilities[LastRangedType]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()));
+				return;
+			}
+		}
+	}
+	
 	Abilities[Type]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
@@ -95,8 +108,10 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 	}
 }
 
-void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState()
+void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState(EAbilityType CurrentType)
 {
+	LastRangedType = CurrentType;
+	
 	for(int i = 5; i < 8; i++)
 	{
 		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[i]);

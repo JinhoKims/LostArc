@@ -2,6 +2,7 @@
 
 #include "Abilities/Skill/LostArcSkillBase_RangedBase.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
+#include "Controller/LostArcPlayerController.h"
 
 bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 {
@@ -28,22 +29,21 @@ bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 void ULostArcSkillBase_RangedBase::ActivityRangedCursor(bool bUse, ALostArcPlayerCharacter* Character)
 {
 	auto PController = Character->GetNetOwningPlayer()->GetPlayerController(GetWorld());
+	auto ArcPController = Cast<ALostArcPlayerController>(PController);
 	auto AComponent = Character->AbilityComponent;
 	
 	if(bUse)
 	{
-		AComponent->ResetRangedAbilitiesState(); // 다른 스킬 상태 초기화
-		PController->bShowMouseCursor = false;
+		AComponent->ResetRangedAbilitiesState(Skill_Type); // 다른 스킬 상태 초기화
 		Skill_State = EAbilityState::Focusing;
-		// 스킬 커서 변환
+		ArcPController->ChangeCursor(CircleActor); // 스킬 커서 변환
 	}
 	else
 	{
 		if(Skill_State == EAbilityState::Focusing)
 		{
-			PController->bShowMouseCursor = true;
 			Skill_State = EAbilityState::Stand;
-			// 스킬 커서 원래대로 변환
+			ArcPController->ChangeCursor(nullptr);
 		}
 	}
 }

@@ -18,12 +18,6 @@ ALostArcPlayerController::ALostArcPlayerController()
 	{
 		MainHUDClass = UI_HUD_C.Class;
 	}
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Cursor(TEXT("Blueprint'/Game/Magic_Circle_Creator/Blueprints/BP_MagicCircleCreator_Skill_A.BP_MagicCircleCreator_Skill_A'"));
-	if (BP_Cursor.Object)
-	{
-		SpawnActor = (UClass*)BP_Cursor.Object->GeneratedClass;
-	}
 }
 
 void ALostArcPlayerController::SetupInputComponent()
@@ -51,10 +45,6 @@ void ALostArcPlayerController::OnPossess(APawn* aPawn)
 void ALostArcPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-
-	MagicActor = GetWorld()->SpawnActor<AActor>(SpawnActor, GetPawn()->GetActorTransform());
-	MagicActor->SetActorHiddenInGame(true);
 }
 
 void ALostArcPlayerController::PlayerTick(float DeltaTime)
@@ -71,10 +61,29 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 		CameraPositionChange(bCameraSit.Value);
 	}
 
-	FHitResult TraceHitResult;
-	GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
-	FVector CursorFV = TraceHitResult.ImpactNormal;
-	MagicActor->SetActorLocation(TraceHitResult.Location);
+	if(bShowRangedAbilCursor)
+	{
+		FHitResult TraceHitResult;
+		GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+		RangedAbilityCursor->SetActorLocation(TraceHitResult.Location);
+	}
+}
+
+void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
+{
+	if(IsValid(NewCursor))
+	{
+		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
+		bShowRangedAbilCursor = true;
+		bShowMouseCursor = false;
+	}
+
+	else // ResetCursor
+	{
+		RangedAbilityCursor->Destroy();
+		bShowRangedAbilCursor = false;
+		bShowMouseCursor = true;
+	}
 }
 
 void ALostArcPlayerController::MoveToMouseCursor()

@@ -19,6 +19,8 @@ public:
 	ALostArcPlayerController();
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void BeginPlay() override;
+	void ChangeCursor(TSubclassOf<AActor> NewCursor = nullptr);
+	
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class ULostArcUIMainHUD> MainHUDClass;
@@ -56,14 +58,16 @@ private:
 	FTimerHandle CameraZoomTimer;
 	void CameraPositionChange(bool bWheel);
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> SpawnActor;
-
-	UPROPERTY(VisibleAnywhere)
-	AActor* MagicActor;
+	// UPROPERTY(EditAnywhere)
+	// TSubclassOf<class AActor> SpawnActor;
+	//
+	// UPROPERTY(VisibleAnywhere)
+	// AActor* MagicActor;
 	
 	UPROPERTY()
-	AActor* AbilityRangedCursor;
+	AActor* RangedAbilityCursor;
+
+	bool bShowRangedAbilCursor;
 };
 
 
