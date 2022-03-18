@@ -41,6 +41,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability)
 	UAnimMontage* PlayerMeleeSkill_4_Montage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability)
+	UAnimMontage* PlayerRangedSkill_1_Montage;
+	
 
 	UFUNCTION()
 	void AnimNotify_Next_BasicAttackCheck();
@@ -55,6 +58,8 @@ public:
 	void AnimNotify_MeleeSkill_3_HitCheck();
 	UFUNCTION()
 	void AnimNotify_MeleeSkill_4_HitCheck();
+	UFUNCTION()
+	void AnimNotify_RangedSkill_1_HitCheck();
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	void JumpToBasicAttackMontageSection(int32 NewSection);

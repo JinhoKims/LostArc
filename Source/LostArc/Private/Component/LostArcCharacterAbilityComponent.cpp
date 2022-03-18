@@ -28,6 +28,8 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌�
 	{
 		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
+
+	
 }
 
 // Called when the game starts

@@ -31,4 +31,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> SpawnActor;
+
+	UPROPERTY(VisibleAnywhere)
+	AActor* SkileActor;
 };

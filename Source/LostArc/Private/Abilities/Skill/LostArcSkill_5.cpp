@@ -42,8 +42,8 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 		Transform.SetRotation(FQuat(0.f,0.f,0.f,0.f));
 		Transform.SetScale3D(FVector(1.f,1.f,1.f));
 		
-		GetWorld()->SpawnActor<AActor>(SpawnActor, Transform);
-
+		SkileActor = GetWorld()->SpawnActor<AActor>(SpawnActor, Transform);
+		
 		return true;
 	}
 
