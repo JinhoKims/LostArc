@@ -73,16 +73,16 @@ void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
 {
 	if(IsValid(NewCursor))
 	{
+		SetShowMouseCursor(false);
 		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
 		bShowRangedAbilCursor = true;
-		bShowMouseCursor = false;
-	}
 
+	}
 	else // ResetCursor
 	{
+		SetShowMouseCursor(true);
 		RangedAbilityCursor->Destroy();
 		bShowRangedAbilCursor = false;
-		bShowMouseCursor = true;
 	}
 }
 
@@ -121,6 +121,8 @@ void ALostArcPlayerController::OnSetDestinationPressed()
 {
 	if(!bOnSlotClick)
 	{
+		auto Char = Cast<ALostArcPlayerCharacter>(GetCharacter());
+		Char->AbilityComponent->AbilityCancel();
 		bMoveToMouseCursor = true;
 	}
 }

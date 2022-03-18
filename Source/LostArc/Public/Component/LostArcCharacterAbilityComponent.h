@@ -38,8 +38,10 @@ public:
 
 	UFUNCTION()
 	void AbilityMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
-	
 	void ResetRangedAbilitiesState(EAbilityType CurrentType);
+	EAbilityType GetLastType() { return LastRangedType; }
+	void AbilityCancel();
+
 
 protected:
 	// Called when the game starts
@@ -47,6 +49,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<ULostArcSkillBase>> AbilityClass;
 

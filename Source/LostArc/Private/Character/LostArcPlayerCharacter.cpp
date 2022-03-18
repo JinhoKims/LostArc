@@ -77,8 +77,6 @@ void ALostArcPlayerCharacter::PostInitializeComponents()
 void ALostArcPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	auto PController = Cast<ALostArcPlayerController>(GetController());
 	
 	InputComponent->BindAction<FBindAbilityDelegate>("BasicAttack", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::BasicAttack);
 	InputComponent->BindAction<FBindAbilityDelegate>("Evade", IE_Pressed, AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityCast, EAbilityType::Evade);

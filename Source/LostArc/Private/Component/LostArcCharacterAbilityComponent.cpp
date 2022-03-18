@@ -49,6 +49,18 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 	Abilities.Empty();
 }
 
+void ULostArcCharacterAbilityComponent::AbilityCancel()
+{
+	auto Skill = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
+	if(IsValid(Skill))
+	{
+		if(Skill->GetState() == EAbilityState::Focusing)
+		{
+			ResetRangedAbilitiesState(LastRangedType);
+		}
+	}
+}
+
 void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
 	if(Type == EAbilityType::BasicAttack) // 마우스 클릭으로 원거리 스킬 실행

@@ -57,16 +57,10 @@ private:
 	TPair<bool, bool> bCameraSit;
 	FTimerHandle CameraZoomTimer;
 	void CameraPositionChange(bool bWheel);
-
-	// UPROPERTY(EditAnywhere)
-	// TSubclassOf<class AActor> SpawnActor;
-	//
-	// UPROPERTY(VisibleAnywhere)
-	// AActor* MagicActor;
 	
 	UPROPERTY()
 	AActor* RangedAbilityCursor;
-
+	
 	bool bShowRangedAbilCursor;
 };
 
