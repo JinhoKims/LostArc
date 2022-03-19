@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Character/LostArcPlayerCharacter.h"
 #include "Abilities/Skill/LostArcSkill_BasicAttack.h"
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
@@ -95,8 +94,6 @@ void ALostArcPlayerCharacter::BeginPlay()
 void ALostArcPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	
 }
 
 float ALostArcPlayerCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -107,4 +104,3 @@ float ALostArcPlayerCharacter::TakeDamage(float Damage, FDamageEvent const& Dama
 
 	return FinalDamage;
 }
-

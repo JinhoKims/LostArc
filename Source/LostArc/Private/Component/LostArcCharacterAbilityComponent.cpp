@@ -117,8 +117,16 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 
 	for (int i = 1; i < 5; i++)
 	{
-		Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i)));
-		ULostArcSkillBase::bAnimationRunning = false;
+		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i))))
+		{
+			ULostArcSkillBase::bAnimationRunning = false;
+			break;
+		}
+		else if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("RangedSkill_%d"), i))))
+		{
+			ULostArcSkillBase::bAnimationRunning = false;
+			break;
+		}
 	}
 }
 

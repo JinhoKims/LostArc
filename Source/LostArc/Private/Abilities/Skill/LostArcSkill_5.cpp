@@ -30,7 +30,7 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 {
 	if(Super::Use(Character))
 	{
-		bAnimationRunning = false;
+		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerRangedSkill_1_Montage, 1.f);
 		
 		FHitResult TraceHitResult;
 		auto PController = Character->GetNetOwningPlayer()->GetPlayerController(GetWorld());

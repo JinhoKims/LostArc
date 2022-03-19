@@ -61,6 +61,7 @@ void ULostArcSkill_BasicAttack::BasicAttackEndComboState()
 {
 	bCanNextCombo = false;
 	bIsComboInputOn = false;
+	bAnimationRunning = false;
 	CurrentCombo = 0;
 }
 
