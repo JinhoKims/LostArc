@@ -47,3 +47,18 @@ void ULostArcSkillBase_RangedBase::ActivityRangedCursor(bool bUse, ALostArcPlaye
 		}
 	}
 }
+
+void ULostArcSkillBase_RangedBase::SpawnSkillActor(ALostArcPlayerCharacter* Character)
+{
+	FTransform Transform;
+	Transform.SetLocation(SpawnLocation);
+	Transform.SetRotation(FQuat(0.f,0.f,0.f,0.f));
+	Transform.SetScale3D(FVector(1.f,1.f,1.f));
+	
+	SkillActor = GetWorld()->SpawnActor<AActor>(SpawnActor, Transform);
+}
+
+void ULostArcSkillBase_RangedBase::HitDetection(ALostArcPlayerCharacter* Character)
+{
+	
+}

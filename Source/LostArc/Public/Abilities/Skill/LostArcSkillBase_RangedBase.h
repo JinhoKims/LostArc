@@ -22,6 +22,10 @@ public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
 	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
+	
+	virtual void SpawnSkillActor(class ALostArcPlayerCharacter* Character);
+
+	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 protected:
 	TEnumAsByte<EAbilityState> Skill_State;
@@ -33,5 +37,7 @@ protected:
 	TSubclassOf<class AActor> SpawnActor;
 
 	UPROPERTY(VisibleAnywhere)
-	AActor* SkileActor;
+	AActor* SkillActor;
+
+	FVector SpawnLocation;
 };

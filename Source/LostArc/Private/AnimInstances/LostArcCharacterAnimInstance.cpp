@@ -38,6 +38,11 @@ void ULostArcCharacterAnimInstance::AnimNotify_RangedSkill_1_HitCheck()
 	OnMeleeSkillHitCheck.Broadcast(EAbilityType::RangedSpell_1);
 }
 
+void ULostArcCharacterAnimInstance::AnimNotify_RangedSkill_1_EffectCheck()
+{
+	OnRangedSkillEffectCheck.Broadcast(EAbilityType::RangedSpell_1);
+}
+
 void ULostArcCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);

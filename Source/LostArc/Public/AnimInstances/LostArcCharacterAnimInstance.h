@@ -10,6 +10,7 @@ enum EAbilityType;
 
 DECLARE_MULTICAST_DELEGATE(FOnNextBasicAttackCheckDelegate);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMeleeSkillHitCheckDelegate, EAbilityType);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnRangedSkillEffectCheckDelegate, EAbilityType);
 
 UCLASS()
 class LOSTARC_API ULostArcCharacterAnimInstance : public UAnimInstance
@@ -19,6 +20,7 @@ class LOSTARC_API ULostArcCharacterAnimInstance : public UAnimInstance
 public:
 	FOnNextBasicAttackCheckDelegate OnNextBasicAttackCheck;
 	FOnMeleeSkillHitCheckDelegate OnMeleeSkillHitCheck;
+	FOnRangedSkillEffectCheckDelegate OnRangedSkillEffectCheck;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	bool bIsDead;
@@ -60,6 +62,9 @@ public:
 	void AnimNotify_MeleeSkill_4_HitCheck();
 	UFUNCTION()
 	void AnimNotify_RangedSkill_1_HitCheck();
+
+	UFUNCTION()
+	void AnimNotify_RangedSkill_1_EffectCheck();
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	void JumpToBasicAttackMontageSection(int32 NewSection);

@@ -28,8 +28,6 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌�
 	{
 		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
-
-	
 }
 
 // Called when the game starts
@@ -84,6 +82,11 @@ void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
 	Abilities[Type]->HitDetection(Cast<ALostArcPlayerCharacter>(GetOwner()));
+}
+
+void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)
+{
+	Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnSkillActor(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
 ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)

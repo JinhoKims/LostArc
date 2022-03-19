@@ -68,6 +68,7 @@ void ALostArcPlayerCharacter::PostInitializeComponents()
 	{
 		AnimInstance->OnNextBasicAttackCheck.AddLambda([this]()->void { Cast<ULostArcSkill_BasicAttack>(AbilityComponent->GetAbilites(EAbilityType::BasicAttack))->BasicAttackNextComboCheck(this); });
 		AnimInstance->OnMeleeSkillHitCheck.AddLambda([this](EAbilityType Type)->void { AbilityComponent->AbilityHitDetection(Type); });
+		AnimInstance->OnRangedSkillEffectCheck.AddUObject(AbilityComponent, &ULostArcCharacterAbilityComponent::RangedSkillEffect);
 		AnimInstance->OnMontageEnded.AddDynamic(AbilityComponent, &ULostArcCharacterAbilityComponent::AbilityMontageEnded); // ※ AddDynamic 매크로의 바인딩은 해당 클래스 내의 멤버 함수를 대상으로 해야한다. (자주 끊어져서)
 	}
 	StatComponent->OnHPIsZero.AddLambda([this]()->void {AnimInstance->SetDeadAnim(); SetActorEnableCollision(false); Cast<ALostArcPlayerController>(GetController())->SetInputMode(FInputModeUIOnly()); });

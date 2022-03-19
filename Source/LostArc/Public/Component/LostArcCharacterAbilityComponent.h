@@ -34,6 +34,7 @@ public:
 
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitDetection(EAbilityType Type);
+	void RangedSkillEffect(EAbilityType Type);
 	class ULostArcSkillBase* GetAbilites(EAbilityType Type);
 
 	UFUNCTION()
@@ -41,7 +42,7 @@ public:
 	void ResetRangedAbilitiesState(EAbilityType CurrentType);
 	EAbilityType GetLastType() { return LastRangedType; }
 	void AbilityCancel();
-
+	
 
 protected:
 	// Called when the game starts
