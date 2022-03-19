@@ -62,3 +62,8 @@ void ULostArcSkillBase_RangedBase::HitDetection(ALostArcPlayerCharacter* Charact
 {
 	
 }
+
+void ULostArcSkillBase_RangedBase::RangedSkillHit(ALostArcPlayerCharacter* Character)
+{
+	UE_LOG(LogTemp,Warning,TEXT(" HIT! "));
+}

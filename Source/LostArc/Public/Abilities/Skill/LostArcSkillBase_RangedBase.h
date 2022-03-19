@@ -13,19 +13,20 @@ enum EAbilityState
 	Focusing UMETA(DisplayName = "Focusing")
 };
 
-UCLASS()
+UCLASS(Blueprintable)
 class LOSTARC_API ULostArcSkillBase_RangedBase : public ULostArcSkillBase
 {
 	GENERATED_BODY()
 
 public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
-	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
-	
+	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
 	virtual void SpawnSkillActor(class ALostArcPlayerCharacter* Character);
-
 	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void RangedSkillHit(ALostArcPlayerCharacter* Character);
 
 protected:
 	TEnumAsByte<EAbilityState> Skill_State;

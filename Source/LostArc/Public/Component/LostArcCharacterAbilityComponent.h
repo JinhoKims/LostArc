@@ -35,6 +35,8 @@ public:
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitDetection(EAbilityType Type);
 	void RangedSkillEffect(EAbilityType Type);
+
+	UFUNCTION(BlueprintCallable)
 	class ULostArcSkillBase* GetAbilites(EAbilityType Type);
 
 	UFUNCTION()
