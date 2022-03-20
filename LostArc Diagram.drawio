@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T07:04:57.330Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="CYZyg6ARG0zGBtbC-Lkm" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T07:05:01.230Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="lvt3P9PRp5YWTa9D7Oaa" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1185" dy="655" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -423,12 +423,12 @@
           <mxGeometry y="30" width="160" height="56" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-17" value="FEquipSlot" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=25;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="2111" y="796" width="214" height="66" as="geometry">
+          <mxGeometry x="2111" y="796" width="214" height="59" as="geometry">
             <mxRectangle x="1867" y="520" width="131" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-18" value="+ TArray&lt;ItemEquipBase&gt; EquipArray&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="YSDak38a_ha7a5uqhopo-17">
-          <mxGeometry y="25" width="214" height="41" as="geometry" />
+          <mxGeometry y="25" width="214" height="34" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-21" value="EAbilityState" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=21;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="22" y="664" width="134" height="58" as="geometry" />
