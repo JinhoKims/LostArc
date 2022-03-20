@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T07:05:02.926Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="rUCz6EDD3Jl-OeW8JV1P" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T07:15:02.042Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="Xi_zQqBhWLUabHEF-6T2" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1185" dy="655" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -435,6 +435,23 @@
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-22" value="+ Stand&#xa;+ Focusing" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="YSDak38a_ha7a5uqhopo-21">
           <mxGeometry y="21" width="134" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="YSDak38a_ha7a5uqhopo-53" value="&lt;p style=&quot;margin: 0px ; margin-top: 6px ; text-align: center&quot;&gt;&lt;b&gt;StatComponent&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px ; margin-left: 8px&quot;&gt;+ CurrentStatData: CharacterData&lt;br&gt;+ BonusStat: float&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 8px&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 8px&quot;&gt;+ SetDamage(float): void&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 8px&quot;&gt;+ AddBonusAttribute(EAttributeType, float)&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 8px&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="align=left;overflow=fill;html=1;dropTarget=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="2111" y="875" width="241" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="YSDak38a_ha7a5uqhopo-54" value="" style="shape=component;jettyWidth=8;jettyHeight=4;" vertex="1" parent="YSDak38a_ha7a5uqhopo-53">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YSDak38a_ha7a5uqhopo-62" value="&lt;pre style=&quot;background-color: #262626 ; color: #d0d0d0 ; font-family: &amp;quot;jetbrains mono&amp;quot; , monospace ; font-size: 9.8pt&quot;&gt;EAttributeType&lt;/pre&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1595.8333333333335" y="1220.8333333333335" width="118" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="YSDak38a_ha7a5uqhopo-66" value="" style="endArrow=none;html=1;rounded=0;exitX=-0.001;exitY=0.601;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="YSDak38a_ha7a5uqhopo-53">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1946" y="818" as="sourcePoint" />
+            <mxPoint x="2353" y="944" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
