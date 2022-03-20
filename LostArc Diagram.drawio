@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T09:57:35.770Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="E4sHI2oSc0khEh7mgKqV" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T11:18:32.420Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="EPj3kvcQDox6PJ-meCnl" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1385" dy="683" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="1662" dy="820" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -438,7 +438,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-80" value="UIMainHUD" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="249" y="1213" width="224" height="216" as="geometry" />
+          <mxGeometry x="302" y="2394" width="224" height="216" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-81" value="+ BP_HPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" parent="YSDak38a_ha7a5uqhopo-80" vertex="1">
           <mxGeometry y="26" width="224" height="26" as="geometry" />
@@ -465,12 +465,12 @@
           <mxGeometry y="190" width="224" height="26" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-93" value="UISlotBase" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="191" y="1468" width="330" height="372" as="geometry" />
+          <mxGeometry x="193" y="1301" width="330" height="372" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-94" value="+ DragVisualClass: TSubclassOf&lt;UserWidget&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" parent="YSDak38a_ha7a5uqhopo-93" vertex="1">
           <mxGeometry y="26" width="330" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="YSDak38a_ha7a5uqhopo-97" value="+ SlotData: TSubclassOf&lt;UserWidget&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" parent="YSDak38a_ha7a5uqhopo-93" vertex="1">
+        <mxCell id="YSDak38a_ha7a5uqhopo-97" value="+ SlotData: AbilityBase" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" parent="YSDak38a_ha7a5uqhopo-93" vertex="1">
           <mxGeometry y="52" width="330" height="26" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-98" value="+ SlotComponent: ActorComponent" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;fontStyle=0" parent="YSDak38a_ha7a5uqhopo-93" vertex="1">
@@ -510,7 +510,7 @@
           <mxGeometry y="346" width="330" height="26" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-110" value="ESlotType" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="567" y="1487" width="160" height="113" as="geometry" />
+          <mxGeometry x="569" y="1320" width="160" height="113" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-111" value="+ Inven&#xa;+ Equip&#xa;+ Quick&#xa;+ Evade&#xa;+ Title" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="YSDak38a_ha7a5uqhopo-110" vertex="1">
           <mxGeometry y="30" width="160" height="83" as="geometry" />
@@ -519,7 +519,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-112" value="UIQuickSlot" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="32" y="1912" width="238" height="268" as="geometry" />
+          <mxGeometry x="34" y="1745" width="238" height="268" as="geometry" />
         </mxCell>
         <mxCell id="YSDak38a_ha7a5uqhopo-113" value="+ RefIndex: int32" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" parent="YSDak38a_ha7a5uqhopo-112" vertex="1">
           <mxGeometry y="26" width="238" height="26" as="geometry" />
@@ -555,7 +555,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-0" value="UIInvenSlot" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="291" y="1912" width="238" height="190" as="geometry" />
+          <mxGeometry x="293" y="1745" width="238" height="190" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-2" value="+ Text_Quantity: TextBlock" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-0">
           <mxGeometry y="26" width="238" height="26" as="geometry" />
@@ -581,13 +581,13 @@
         <mxCell id="iLHH-iY-4nvDPkFptMbu-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="iLHH-iY-4nvDPkFptMbu-10" target="YSDak38a_ha7a5uqhopo-93">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="680" y="1876" />
-              <mxPoint x="356" y="1876" />
+              <mxPoint x="682" y="1709" />
+              <mxPoint x="358" y="1709" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-10" value="UIEquipSlot" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="553" y="1912" width="238" height="138" as="geometry" />
+          <mxGeometry x="555" y="1745" width="238" height="138" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-13" value="+ Image_BG: UImage&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-10">
           <mxGeometry y="26" width="238" height="26" as="geometry" />
@@ -792,6 +792,87 @@
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-124" value="+ SetDeadAnim(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-114">
           <mxGeometry y="190" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-128" value="UIMainHUD" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="48" y="2657" width="224" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-129" value="+ BP_HPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="26" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-130" value="+ BP_MPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="52" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-131" value="+ BP_Inven: UIInven" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="78" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-132" value="+ BP_Equip: UIEquip" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="104" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-133" value="+ BP_Quick: UIQuick" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="130" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-134" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="156" width="224" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-135" value="+ EnableWidget(ESlotType Type): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="164" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-136" value="+ NativeOnDrop(...): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-128">
+          <mxGeometry y="190" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-137" value="UIMainHUD" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="302" y="2657" width="224" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-138" value="+ BP_HPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="26" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-139" value="+ BP_MPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="52" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-140" value="+ BP_Inven: UIInven" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="78" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-141" value="+ BP_Equip: UIEquip" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="104" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-142" value="+ BP_Quick: UIQuick" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="130" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-143" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="156" width="224" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-144" value="+ EnableWidget(ESlotType Type): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="164" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-145" value="+ NativeOnDrop(...): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-137">
+          <mxGeometry y="190" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-146" value="UIMainHUD" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;dashed=1;dashPattern=1 1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="557" y="2657" width="224" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-147" value="+ BP_HPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="26" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-148" value="+ BP_MPBAR: UIProgressBar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="52" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-149" value="+ BP_Inven: UIInven" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="78" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-150" value="+ BP_Equip: UIEquip" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="104" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-151" value="+ BP_Quick: UIQuick" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="130" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-152" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="156" width="224" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-153" value="+ EnableWidget(ESlotType Type): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="164" width="224" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-154" value="+ NativeOnDrop(...): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-146">
+          <mxGeometry y="190" width="224" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
