@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T07:04:04.695Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="MAVASUkv8w1CvO10cqPW" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T07:04:14.387Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="5Y2kNe3l4hM5PR3SvFQy" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1185" dy="655" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -313,7 +313,9 @@
           <mxGeometry y="284" width="423" height="24" as="geometry" />
         </mxCell>
         <mxCell id="L7j_BJLLFzNBsJzs4OP5-37" value="&lt;&lt;Interface&gt;&gt;&#xa;CharacterInterface" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=43;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="1101" y="295" width="421" height="301" as="geometry" />
+          <mxGeometry x="1101" y="295" width="421" height="301" as="geometry">
+            <mxRectangle x="1101" y="295" width="133" height="43" as="alternateBounds" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="L7j_BJLLFzNBsJzs4OP5-38" value="+ ItemClass: TArray&lt;TSubclassOf&lt;cItemBase&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="L7j_BJLLFzNBsJzs4OP5-37" vertex="1">
           <mxGeometry y="43" width="421" height="26" as="geometry" />
