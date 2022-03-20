@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T08:12:44.795Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="FsX-XDao5HVCo4zg1NJq" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T08:17:42.071Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="t2oBuEffS5FRyw9VzPUX" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1293" dy="715" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -223,7 +223,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="BHlRyTZ24oTFOobA_APQ-0" value="AbilityComponent" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="835" y="11" width="504" height="256" as="geometry" />
+          <mxGeometry x="980" y="21" width="504" height="256" as="geometry" />
         </mxCell>
         <mxCell id="L7j_BJLLFzNBsJzs4OP5-15" value="+ AbilityClass: TArray&lt;TSubclassOf&lt;SkillBase&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="BHlRyTZ24oTFOobA_APQ-0" vertex="1">
           <mxGeometry y="26" width="504" height="26" as="geometry" />
@@ -603,6 +603,30 @@
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-16" value="+ RefreshSlotData(AbilityBase): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dashed=1;dashPattern=1 1;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-10">
           <mxGeometry y="112" width="238" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-28" value="CharacterAnimInstance" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="939" y="1222" width="380" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-29" value="+ OnNextBasicAttackCheck: FOnNextBasicAttackCheckDelegate" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="26" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-33" value="+ OnRangedSkillEffectCheck: FOnRangedSkillEffectCheckDelegate" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="52" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-32" value="+ OnMeleeSkillHitCheck: FOnMeleeSkillHitCheckDelegate" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="78" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-34" value="+ PlayerAbilityMontage: UAnimMontage" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="104" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-30" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="130" width="380" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-35" value="+ NativeUpdateAnimation(float Delta): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="138" width="380" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="iLHH-iY-4nvDPkFptMbu-31" value="+ PlayerSkillHitCheck(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-28">
+          <mxGeometry y="164" width="380" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
