@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-20T09:40:04.001Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="7zxEa3-yHudoJCytb9HW" version="17.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-20T09:40:14.537Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36" etag="qk2I1FKpmOZJar3WHjtY" version="17.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1422" dy="786" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -635,7 +635,7 @@
           <mxGeometry y="216" width="380" height="26" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-64" value="PlayerCharacter" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="939" y="1463" width="295" height="217" as="geometry" />
+          <mxGeometry x="939" y="1507" width="295" height="217" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-65" value="+ CameraComponent: CameraComponent" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-64">
           <mxGeometry y="26" width="295" height="26" as="geometry" />
@@ -662,7 +662,7 @@
           <mxGeometry y="191" width="295" height="26" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-73" value="PlayerController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="1265" y="1463" width="319" height="294" as="geometry" />
+          <mxGeometry x="1265" y="1507" width="319" height="294" as="geometry" />
         </mxCell>
         <mxCell id="iLHH-iY-4nvDPkFptMbu-74" value="+ MainHUDClass: TSubclassOf&lt;UIMainHUD&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="iLHH-iY-4nvDPkFptMbu-73">
           <mxGeometry y="26" width="319" height="26" as="geometry" />
