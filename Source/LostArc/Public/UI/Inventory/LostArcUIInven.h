@@ -12,10 +12,10 @@ class LOSTARC_API ULostArcUIInven : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void RefreshSlot(int32 Index);
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = true))
 	class ULostArcUITabs* TitleBorder;
+	
+	void RefreshSlot(int32 Index);
 
 protected:
 	virtual void NativeConstruct() override;

@@ -23,10 +23,9 @@ public:
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
 	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
 	virtual void SpawnSkillActor(class ALostArcPlayerCharacter* Character);
-	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void RangedSkillHit(ALostArcPlayerCharacter* Character);
+	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 protected:
 	TEnumAsByte<EAbilityState> Skill_State;
@@ -41,4 +40,5 @@ protected:
 	AActor* SkillActor;
 
 	FVector SpawnLocation;
+	FVector HitLocation;
 };

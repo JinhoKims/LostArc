@@ -21,7 +21,6 @@ public:
 	virtual void BeginPlay() override;
 	void ChangeCursor(TSubclassOf<AActor> NewCursor = nullptr);
 	
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class ULostArcUIMainHUD> MainHUDClass;
 

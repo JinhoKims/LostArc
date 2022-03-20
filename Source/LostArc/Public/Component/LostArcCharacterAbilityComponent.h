@@ -55,9 +55,6 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<ULostArcSkillBase>> AbilityClass;
-
-	UPROPERTY(meta = (AllowPrivateAccess = true))
-	TMap<FString, class ULostArcItemBase*> DataTable;
 	
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<ULostArcSkillBase*> Abilities;

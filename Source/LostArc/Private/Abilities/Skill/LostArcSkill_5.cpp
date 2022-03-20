@@ -5,9 +5,11 @@
 
 ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 {
-	CoolDown = 10.f;
+	CoolDown = 5.f;
 	ManaCost = 30.f;
-	SkillRatio = 1.f;
+	SkillRatio = 0.3f;
+	SkillRadius.Key = 400.f;
+	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
 	
@@ -31,6 +33,7 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 		FHitResult TraceHitResult;
 		auto PController = Character->GetNetOwningPlayer()->GetPlayerController(GetWorld());
 		PController->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+		HitLocation = TraceHitResult.Location;
 		SpawnLocation = FVector(TraceHitResult.Location.X, TraceHitResult.Location.Y, TraceHitResult.Location.Z + 1000.f);
 
 		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerRangedSkill_1_Montage, 1.f);
