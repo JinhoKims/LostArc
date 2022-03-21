@@ -36,7 +36,7 @@ void ULostArcSkillBase_RangedBase::ActivityRangedCursor(bool bUse, ALostArcPlaye
 	{
 		AComponent->ResetRangedAbilitiesState(Skill_Type); // 다른 스킬 상태 초기화
 		Skill_State = EAbilityState::Focusing;
-		ArcPController->ChangeCursor(CircleActor); // 스킬 커서 변환
+		ArcPController->ChangeCursor(Skill_Indicator); // 스킬 커서 변환
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void ULostArcSkillBase_RangedBase::SpawnSkillActor(ALostArcPlayerCharacter* Char
 {
 	FTransform Transform;
 	Transform.SetLocation(SpawnLocation);
-	GetWorld()->SpawnActor<AActor>(SkillActor, Transform);
+	GetWorld()->SpawnActor<AActor>(Skill_Actor, Transform);
 }
 
 void ULostArcSkillBase_RangedBase::ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character)

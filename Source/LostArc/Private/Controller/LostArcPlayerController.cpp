@@ -76,7 +76,6 @@ void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
 		SetShowMouseCursor(false);
 		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
 		bShowRangedAbilCursor = true;
-
 	}
 	else // ResetCursor
 	{

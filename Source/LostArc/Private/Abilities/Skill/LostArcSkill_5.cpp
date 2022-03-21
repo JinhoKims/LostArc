@@ -16,13 +16,13 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_Ranged_IceAtk.BP_Ranged_IceAtk'"));
 	if (BP_ICE_ATK.Object)
 	{
-		SkillActor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
+		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
 	}
 
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_CIRCLE_5(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
 	if (BP_CIRCLE_5.Object)
 	{
-		CircleActor = (UClass*)BP_CIRCLE_5.Object->GeneratedClass;
+		Skill_Indicator = (UClass*)BP_CIRCLE_5.Object->GeneratedClass;
 	}
 }
 

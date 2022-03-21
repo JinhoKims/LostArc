@@ -39,7 +39,7 @@ protected:
 	TSubclassOf<class AActor> Skill_Indicator;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> SkillActor;
+	TSubclassOf<class AActor> Skill_Actor;
 	
 	FVector SpawnLocation;
 	FVector HitLocation;
