@@ -34,6 +34,7 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 		auto PController = Character->GetNetOwningPlayer()->GetPlayerController(GetWorld());
 		PController->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
 		HitLocation = TraceHitResult.Location;
+		
 		SpawnLocation = FVector(TraceHitResult.Location.X, TraceHitResult.Location.Y, TraceHitResult.Location.Z + 1000.f);
 
 		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerRangedSkill_1_Montage, 1.f);

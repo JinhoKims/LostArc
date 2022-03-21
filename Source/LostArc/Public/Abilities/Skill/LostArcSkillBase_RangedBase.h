@@ -36,7 +36,7 @@ protected:
 	TEnumAsByte<EAbilityState> Skill_State;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> CircleActor;
+	TSubclassOf<class AActor> Skill_Indicator;
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> SkillActor;

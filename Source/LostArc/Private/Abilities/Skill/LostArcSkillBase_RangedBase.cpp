@@ -52,9 +52,6 @@ void ULostArcSkillBase_RangedBase::SpawnSkillActor(ALostArcPlayerCharacter* Char
 {
 	FTransform Transform;
 	Transform.SetLocation(SpawnLocation);
-	Transform.SetRotation(FQuat(0.f,0.f,0.f,0.f));
-	Transform.SetScale3D(FVector(1.f,1.f,1.f));
-	
 	GetWorld()->SpawnActor<AActor>(SkillActor, Transform);
 }
 
