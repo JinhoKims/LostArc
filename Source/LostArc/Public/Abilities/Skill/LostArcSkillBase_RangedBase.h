@@ -6,6 +6,8 @@
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "LostArcSkillBase_RangedBase.generated.h"
 
+
+
 UENUM(BlueprintType)
 enum EAbilityState
 {
@@ -25,6 +27,9 @@ public:
 	virtual void SpawnSkillActor(class ALostArcPlayerCharacter* Character);
 
 	UFUNCTION(BlueprintCallable)
+	void ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 protected:
@@ -35,10 +40,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> SpawnActor;
-
-	UPROPERTY(VisibleAnywhere)
-	AActor* SkillActor;
-
+	
 	FVector SpawnLocation;
 	FVector HitLocation;
 };

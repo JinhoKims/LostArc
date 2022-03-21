@@ -8,7 +8,7 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	CoolDown = 5.f;
 	ManaCost = 30.f;
 	SkillRatio = 0.3f;
-	SkillRadius.Key = 400.f;
+	SkillRadius.Key = 300.f;
 	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
