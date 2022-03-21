@@ -39,7 +39,7 @@ protected:
 	TSubclassOf<class AActor> CircleActor;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> SpawnActor;
+	TSubclassOf<class AActor> SkillActor;
 	
 	FVector SpawnLocation;
 	FVector HitLocation;

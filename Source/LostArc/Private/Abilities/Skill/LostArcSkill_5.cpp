@@ -8,18 +8,18 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	CoolDown = 5.f;
 	ManaCost = 30.f;
 	SkillRatio = 0.3f;
-	SkillRadius.Key = 300.f;
+	SkillRadius.Key = 350.f;
 	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
 	
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/BP_4E_Ice_Atk_Unit.BP_4E_Ice_Atk_Unit'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_Ranged_IceAtk.BP_Ranged_IceAtk'"));
 	if (BP_ICE_ATK.Object)
 	{
-		SpawnActor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
+		SkillActor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_CIRCLE_5(TEXT("Blueprint'/Game/UI/Ability/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_CIRCLE_5(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
 	if (BP_CIRCLE_5.Object)
 	{
 		CircleActor = (UClass*)BP_CIRCLE_5.Object->GeneratedClass;
