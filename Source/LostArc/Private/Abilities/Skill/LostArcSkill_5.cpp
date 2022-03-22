@@ -13,13 +13,13 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
 	
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_Ranged_IceAtk.BP_Ranged_IceAtk'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_Ranged_Ice_Atk.BP_Ranged_Ice_Atk'"));
 	if (BP_ICE_ATK.Object)
 	{
 		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_RangedSkill_Indicator_1.BP_RangedSkill_Indicator_1'"));
 	if (BP_Indicator.Object)
 	{
 		Skill_Indicator = (UClass*)BP_Indicator.Object->GeneratedClass;
