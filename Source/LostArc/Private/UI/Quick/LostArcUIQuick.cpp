@@ -5,11 +5,6 @@
 #include "UI/Quick/LostArcUIQuickSlot.h"
 #include "Component/LostArcQuickSlotComponent.h"
 
-void ULostArcUIQuick::ClearQuickSlot(int32 SlotIndex)
-{
-	QuickSlot[SlotIndex]->ClearSlotData();
-}
-
 void ULostArcUIQuick::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -33,4 +28,9 @@ void ULostArcUIQuick::NativeConstruct()
 	}
 
 	BP_EvadeSlot->SetAbilitySlot(EAbilityType::Evade, OwingChar->AbilityComponent);
+}
+
+void ULostArcUIQuick::ClearQuickSlot(int32 SlotIndex)
+{
+	QuickSlot[SlotIndex]->ClearSlotData();
 }

@@ -31,7 +31,9 @@ public:
 	FString GetName() { return Name; }
 
 protected:
+	UPROPERTY()
 	UTexture2D* Ability_Icon;
+
 	float CoolDown;
 	FString Name;
 };

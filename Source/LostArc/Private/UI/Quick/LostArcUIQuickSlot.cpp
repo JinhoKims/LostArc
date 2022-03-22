@@ -28,7 +28,7 @@ void ULostArcUIQuickSlot::NativeConstruct()
 	
 	SlotType = ESlotType::Quick;
 	Text_Key->SetText(KeyName);
-	Image_Icon->SetBrushFromTexture(ThumbTexture2D);
+	Image_Icon->SetBrushFromTexture(ThumbTexture2D); // 텍스트와 이미지를 블루프린트에서 가져옴
 }
 
 bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
@@ -161,8 +161,9 @@ void ULostArcUIQuickSlot::SetAbilitySlot(EAbilityType EType, ULostArcCharacterAb
 {
 	SlotData = Compo->GetAbilites(EType);
 	Image_Icon->SetVisibility(ESlateVisibility::Visible);
+	
 	Compo->GetAbilites(EType)->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIQuickSlot::SetNativeTick);
-
+	
 	if(EType == EAbilityType::Evade)
 	{
 		Image_Tri->SetVisibility(ESlateVisibility::Hidden);

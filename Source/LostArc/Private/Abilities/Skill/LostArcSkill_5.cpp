@@ -19,10 +19,10 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_CIRCLE_5(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
-	if (BP_CIRCLE_5.Object)
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_MagicCircle_Skill_5.BP_MagicCircle_Skill_5'"));
+	if (BP_Indicator.Object)
 	{
-		Skill_Indicator = (UClass*)BP_CIRCLE_5.Object->GeneratedClass;
+		Skill_Indicator = (UClass*)BP_Indicator.Object->GeneratedClass;
 	}
 }
 
