@@ -73,13 +73,11 @@ void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
 {
 	if(IsValid(NewCursor))
 	{
-		SetShowMouseCursor(false);
 		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
 		bShowRangedAbilCursor = true;
 	}
 	else // ResetCursor
 	{
-		SetShowMouseCursor(true);
 		RangedAbilityCursor->Destroy();
 		bShowRangedAbilCursor = false;
 	}
@@ -109,7 +107,7 @@ void ALostArcPlayerController::SetNewMoveDestination(const FVector DestLocation)
 		float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
 
 		// We need to issue move command only if far enough in order for walk animation to play correctly
-		if ((Distance > 120.0f))
+		if ((Distance > 100.0f))
 		{
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation); // Requires placement of NevmeshboundsVolume in level
 		}
