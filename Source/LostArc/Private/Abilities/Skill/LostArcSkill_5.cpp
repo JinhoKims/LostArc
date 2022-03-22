@@ -17,6 +17,7 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	if (BP_ICE_ATK.Object)
 	{
 		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
+		
 	}
 
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_RangedSkill_Indicator_1.BP_RangedSkill_Indicator_1'"));

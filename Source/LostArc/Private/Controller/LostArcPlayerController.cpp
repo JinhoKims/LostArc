@@ -61,12 +61,12 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 		CameraPositionChange(bCameraSit.Value);
 	}
 
-	if(bShowRangedAbilCursor)
-	{
-		FHitResult TraceHitResult;
-		GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
-		RangedAbilityCursor->SetActorLocation(TraceHitResult.Location);
-	}
+	// if(bShowRangedAbilCursor) 레인지 스킬 1 전용 코드(수정 필요)
+	// {
+	// 	FHitResult TraceHitResult;
+	// 	GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+	// 	RangedAbilityCursor->SetActorLocation(TraceHitResult.Location);
+	// }
 }
 
 void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
@@ -74,12 +74,12 @@ void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
 	if(IsValid(NewCursor))
 	{
 		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
-		bShowRangedAbilCursor = true;
+		// bShowRangedAbilCursor = true;
 	}
 	else // ResetCursor
 	{
-		RangedAbilityCursor->Destroy();
-		bShowRangedAbilCursor = false;
+		//RangedAbilityCursor->Destroy();
+		// bShowRangedAbilCursor = false;
 	}
 }
 

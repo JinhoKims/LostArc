@@ -45,6 +45,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability)
 	UAnimMontage* PlayerRangedSkill_1_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability)
+	UAnimMontage* PlayerRangedSkill_2_Montage;
 	
 
 	UFUNCTION()
@@ -66,6 +69,9 @@ public:
 	UFUNCTION()
 	void AnimNotify_RangedSkill_1_EffectCheck();
 
+	UFUNCTION()
+	void AnimNotify_RangedSkill_2_EffectCheck();
+	
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	void JumpToBasicAttackMontageSection(int32 NewSection);
 	void SetDeadAnim() { bIsDead = true; }
