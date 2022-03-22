@@ -4,8 +4,8 @@
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Component/LostArcAbilityInterface.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
-#include "Component/LostArcCharacterInterface.h"
 #include "Component/LostArcQuickSlotComponent.h"
 #include "Controller/LostArcPlayerController.h"
 #include "UI/LostArcUIMainHUD.h"
@@ -43,7 +43,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 			break;
 
 		case EQuickSlotType::Potion:
-			ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
+			ILostArcAbilityInterface * Interface = Cast<ILostArcAbilityInterface>(OwnerDrag->SlotComponent);
 			if(Cast<ULostArcItemEquipBase>(Interface->GetAbility(OwnerDrag->SlotIndex))) return false;
 		
 			if(OwnerDrag->SlotType == ESlotType::Inven)
@@ -82,7 +82,7 @@ bool ULostArcUIQuickSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 void ULostArcUIQuickSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	auto OwnerDrag = Cast<ULostArcUISlotDrag>(InOperation);
-	ILostArcCharacterInterface * Interface = Cast<ILostArcCharacterInterface>(OwnerDrag->SlotComponent);
+	ILostArcAbilityInterface * Interface = Cast<ILostArcAbilityInterface>(OwnerDrag->SlotComponent);
 	
 	Cast<ULostArcItemBase>(Interface->GetAbility(OwnerDrag->SlotIndex,true));
 	Cast<ALostArcPlayerController>(GetOwningPlayer())->MainHUD->BP_Quick->ClearQuickSlot(OwnerDrag->SlotIndex);

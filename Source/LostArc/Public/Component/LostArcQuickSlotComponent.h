@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LostArcCharacterInterface.h"
+#include "LostArcAbilityInterface.h"
 #include "Components/ActorComponent.h"
 #include "LostArcQuickSlotComponent.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class LOSTARC_API ULostArcQuickSlotComponent : public UActorComponent, public ILostArcCharacterInterface
+class LOSTARC_API ULostArcQuickSlotComponent : public UActorComponent, public ILostArcAbilityInterface
 {
 	GENERATED_BODY()
 

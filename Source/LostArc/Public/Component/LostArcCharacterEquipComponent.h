@@ -1,8 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LostArcCharacterInterface.h"
-#include "LostArcInventoryComponent.h"
+#include "LostArcAbilityInterface.h"
 #include "Components/ActorComponent.h"
 #include "LostArcCharacterEquipComponent.generated.h"
 
@@ -26,7 +25,7 @@ struct FEquipSlot
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnEquipSlotUpdateDelegate, int32);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, public ILostArcCharacterInterface
+class LOSTARC_API ULostArcCharacterEquipComponent : public UActorComponent, public ILostArcAbilityInterface
 {
 	GENERATED_BODY()
 	
@@ -53,5 +52,5 @@ private:
 	UPROPERTY()
 	TMap<TEnumAsByte<EAccessoryType>, FEquipSlot> EquipSlot;
 	
-	ILostArcCharacterInterface* Interface;
+	ILostArcAbilityInterface* Interface;
 };

@@ -3,6 +3,7 @@
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
 #include "Abilities/Items/Equip/LostArcItemEquipBase.h"
+#include "Component/LostArcAbilityInterface.h"
 
 ULostArcCharacterEquipComponent::ULostArcCharacterEquipComponent()
 {
@@ -69,7 +70,7 @@ void ULostArcCharacterEquipComponent::SwappingSlot(int32 OwnerIndex, int32 DistI
 	}
 	else // 외부 슬롯 스왑
 	{
-		ILostArcCharacterInterface* OwnerInterface = Cast<ILostArcCharacterInterface>(OwnerComponent);
+		ILostArcAbilityInterface* OwnerInterface = Cast<ILostArcAbilityInterface>(OwnerComponent);
 		if(OwnerInterface == nullptr) return;
 		
 		auto OwnerEquip = Cast<ULostArcItemEquipBase>(OwnerInterface->GetAbility(OwnerIndex));

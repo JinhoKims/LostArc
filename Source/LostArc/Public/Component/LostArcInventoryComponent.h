@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostArcAbilityInterface.h"
 #include "Components/ActorComponent.h"
-#include "Component/LostArcCharacterInterface.h"
 #include "LostArcInventoryComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnInvenSlotUpdateDelegate, int32)
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class LOSTARC_API ULostArcInventoryComponent : public UActorComponent, public ILostArcCharacterInterface
+class LOSTARC_API ULostArcInventoryComponent : public UActorComponent, public ILostArcAbilityInterface
 {
 	GENERATED_BODY()
 	

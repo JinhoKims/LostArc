@@ -2,6 +2,8 @@
 
 
 #include "UI/Inventory/LostArcUIInvenSlot.h"
+
+#include "Component/LostArcAbilityInterface.h"
 #include "Component/LostArcInventoryComponent.h"
 
 void ULostArcUIInvenSlot::NativeConstruct()
@@ -19,7 +21,7 @@ bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	if(Owner->SlotType == ESlotType::Quick) return false;
 	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
 	{
-		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
+		auto Interface = Cast<ILostArcAbilityInterface>(SlotComponent);
 		
 		if (Interface != nullptr)
 		{

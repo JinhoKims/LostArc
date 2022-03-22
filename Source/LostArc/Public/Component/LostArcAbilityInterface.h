@@ -5,16 +5,19 @@
 #include "CoreMinimal.h"
 #include "Abilities/LostArcAbilityBase.h"
 #include "UObject/Interface.h"
-#include "LostArcCharacterInterface.generated.h"
+#include "LostArcAbilityInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class ULostArcCharacterInterface : public UInterface
+class ULostArcAbilityInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class LOSTARC_API ILostArcCharacterInterface
+/**
+ * 
+ */
+class LOSTARC_API ILostArcAbilityInterface
 {
 	GENERATED_BODY()
 

@@ -2,6 +2,7 @@
 
 #include "Component/LostArcInventoryComponent.h"
 #include "Abilities/Items/LostArcItemBase.h"
+#include "Component/LostArcAbilityInterface.h"
 
 ULostArcInventoryComponent::ULostArcInventoryComponent()
 {
@@ -87,7 +88,7 @@ void ULostArcInventoryComponent::SwappingSlot(int32 OwnerIndex, int32 DistIndex,
 	}
 	else // 외부 슬롯 교환
 	{
-		ILostArcCharacterInterface* Interface = Cast<ILostArcCharacterInterface>(OwnerComponent);
+		ILostArcAbilityInterface* Interface = Cast<ILostArcAbilityInterface>(OwnerComponent);
 		if(Interface == nullptr) return;
 		
 		auto OwnerItem = Cast<ULostArcItemBase>(Interface->GetAbility(OwnerIndex));

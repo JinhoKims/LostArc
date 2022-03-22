@@ -2,6 +2,8 @@
 
 
 #include "UI/Equip/LostArcUIEquipSlot.h"
+
+#include "Component/LostArcAbilityInterface.h"
 #include "Component/LostArcCharacterEquipComponent.h"
 
 void ULostArcUIEquipSlot::NativeConstruct()
@@ -18,7 +20,7 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	
 	if(!Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation))
 	{
-		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
+		auto Interface = Cast<ILostArcAbilityInterface>(SlotComponent);
 		
 		if (Interface != nullptr)
 		{
@@ -35,7 +37,7 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 
 void ULostArcUIEquipSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
-	auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
+	auto Inter = Cast<ILostArcAbilityInterface>(SlotComponent);
 
 	if(Inter != nullptr)
 	{

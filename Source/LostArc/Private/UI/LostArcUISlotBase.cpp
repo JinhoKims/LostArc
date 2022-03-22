@@ -4,6 +4,7 @@
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Component/LostArcInventoryComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Component/LostArcAbilityInterface.h"
 #include "Controller/LostArcPlayerController.h"
 #include "UI/LostArcUIMainHUD.h"
 
@@ -47,7 +48,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 		
 		if (SlotData != nullptr)
 		{
-			auto Inter = Cast<ILostArcCharacterInterface>(SlotComponent);
+			auto Inter = Cast<ILostArcAbilityInterface>(SlotComponent);
 			if (Inter != nullptr)
 			{
 				Inter->UseAbility(SlotIndex);
@@ -107,7 +108,7 @@ bool ULostArcUISlotBase::NativeOnDrop(const FGeometry& InGeometry, const FDragDr
 	
 	if(this->SlotType == Owner->SlotType)
 	{
-		auto Interface = Cast<ILostArcCharacterInterface>(SlotComponent);
+		auto Interface = Cast<ILostArcAbilityInterface>(SlotComponent);
 		if (Interface != nullptr)
 		{
 			Interface->SwappingSlot(Owner->SlotIndex, this->SlotIndex); // 내수용 스왑
