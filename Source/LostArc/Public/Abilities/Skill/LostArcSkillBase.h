@@ -19,20 +19,18 @@ class LOSTARC_API ULostArcSkillBase : public ULostArcAbilityBase
 public:
 	static bool bAnimationRunning;
 	
-protected:
-	TPair<float, float> SkillRadius; // distance, angle
-	float SkillRatio;
-	float ManaCost;
-
-	TEnumAsByte<EAbilityType> Skill_Type;
-
-public:
 	virtual bool Use(ALostArcPlayerCharacter* Character);
 	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character);
 	virtual void CharacterRotatetoCursor(ALostArcPlayerCharacter* Character);
 	virtual void HitDetection(ALostArcPlayerCharacter* Character);
+	TEnumAsByte<EAbilityType> GetSkillType() {return Skill_Type;}
 
 protected:
+	TPair<float, float> SkillRadius; // distance, angle
+	TEnumAsByte<EAbilityType> Skill_Type;
+	float SkillRatio;
+	float ManaCost;
+	
 	virtual void PreCast(ALostArcPlayerCharacter* Character);
 	
 };

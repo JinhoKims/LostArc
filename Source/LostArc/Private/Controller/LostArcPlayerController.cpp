@@ -69,19 +69,7 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 	// }
 }
 
-void ALostArcPlayerController::ChangeCursor(TSubclassOf<AActor> NewCursor)
-{
-	if(IsValid(NewCursor))
-	{
-		RangedAbilityCursor = GetWorld()->SpawnActor<AActor>(NewCursor, GetPawn()->GetActorTransform());
-		// bShowRangedAbilCursor = true;
-	}
-	else // ResetCursor
-	{
-		//RangedAbilityCursor->Destroy();
-		// bShowRangedAbilCursor = false;
-	}
-}
+
 
 void ALostArcPlayerController::MoveToMouseCursor()
 {

@@ -10,7 +10,6 @@ enum EAbilityType;
 
 DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, EAbilityType)
 DECLARE_DELEGATE_OneParam(FBindQuickSlotDelegate, int32 Slot)
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRangedEffectCheckDelegate);
 
 UCLASS(Blueprintable)
 class LOSTARC_API ALostArcPlayerCharacter : public ACharacter
@@ -45,9 +44,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterEquipComponent* EquipComponent;
-
-	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
-	FOnRangedEffectCheckDelegate OnRangedEffectCheck;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

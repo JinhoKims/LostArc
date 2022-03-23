@@ -6,14 +6,14 @@
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "LostArcSkillBase_RangedBase.generated.h"
 
-
-
 UENUM(BlueprintType)
 enum EAbilityState
 {
 	Stand    UMETA(DisplayName = "Stand"),
 	Focusing UMETA(DisplayName = "Focusing")
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRangedEffectCheckDelegate, EAbilityType, Type);
 
 UCLASS(Blueprintable)
 class LOSTARC_API ULostArcSkillBase_RangedBase : public ULostArcSkillBase
@@ -23,8 +23,10 @@ class LOSTARC_API ULostArcSkillBase_RangedBase : public ULostArcSkillBase
 public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
-	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
-	virtual void SpawnEffect(class ALostArcPlayerCharacter* Character) {}
+	void SetState(TEnumAsByte<EAbilityState> NewState) { Skill_State = NewState; }
+	
+	void ActivityIndicator(class ALostArcPlayerCharacter* Character);
+	virtual void SpawnEffect(class ALostArcPlayerCharacter* Character);
 
 	UFUNCTION(BlueprintCallable)
 	void ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character);
@@ -40,6 +42,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> Skill_Actor;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
+	FOnRangedEffectCheckDelegate OnRangedEffectCheck;
 	
 	FVector SpawnLocation;
 	FVector HitLocation;

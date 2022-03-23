@@ -31,20 +31,21 @@ public:
 	ULostArcCharacterAbilityComponent();
 	virtual void InitializeComponent() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	
 	void AbilityCast(EAbilityType Type);
 	void AbilityHitDetection(EAbilityType Type);
 	void RangedSkillEffect(EAbilityType Type);
-
+	void SpawnIndicator(TSubclassOf<AActor> Spawner); // 나중에 블루프린트 등록으로 바꾸기
+	void ResetRangedAbilitiesState(EAbilityType CurrentType);
+	void SetHiddenIndicator();
+	void AbilityCancel();
+	EAbilityType GetLastType() { return LastRangedType; }
+	
 	UFUNCTION(BlueprintCallable)
-	class ULostArcSkillBase* GetAbilites(EAbilityType Type);
+	class ULostArcSkillBase* GetAbilities(EAbilityType Type);
 
 	UFUNCTION()
 	void AbilityMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
-	void ResetRangedAbilitiesState(EAbilityType CurrentType);
-	EAbilityType GetLastType() { return LastRangedType; }
-	void AbilityCancel();
-	
 
 protected:
 	// Called when the game starts
@@ -52,7 +53,6 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<ULostArcSkillBase>> AbilityClass;
 	
@@ -60,4 +60,7 @@ private:
 	TArray<ULostArcSkillBase*> Abilities;
 
 	TEnumAsByte<EAbilityType> LastRangedType;
+
+	UPROPERTY()
+	AActor* Indicator;
 };

@@ -6,19 +6,23 @@
 
 bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 {
+	auto AComponent = Character->AbilityComponent;
+	
 	switch (Skill_State)
 	{
 	case EAbilityState::Stand:
 		if(AbilityStateCheck(Character))
 		{
-			ActivityRangedCursor(true, Character);
+			ActivityIndicator(Character);
 			return false;
 		}
 		break;
 	case EAbilityState::Focusing:
 		if(AbilityStateCheck(Character))
 		{
-			return Super::Use(Character); // 스킬 실행
+			AComponent->SetHiddenIndicator();
+			SetState(EAbilityState::Stand);
+			return Super::Use(Character); // 스킬 시전
 		}
 		break;
 	}
@@ -26,26 +30,18 @@ bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 	return false;
 }
 
-void ULostArcSkillBase_RangedBase::ActivityRangedCursor(bool bUse, ALostArcPlayerCharacter* Character)
+void ULostArcSkillBase_RangedBase::ActivityIndicator(ALostArcPlayerCharacter* Character)
 {
-	auto PController = Character->GetNetOwningPlayer()->GetPlayerController(GetWorld());
-	auto ArcPController = Cast<ALostArcPlayerController>(PController);
 	auto AComponent = Character->AbilityComponent;
 	
-	if(bUse)
-	{
-		AComponent->ResetRangedAbilitiesState(Skill_Type); // 다른 스킬 상태 초기화
-		Skill_State = EAbilityState::Focusing;
-		ArcPController->ChangeCursor(Skill_Indicator); // 스킬 커서 변환
-	}
-	else
-	{
-		if(Skill_State == EAbilityState::Focusing)
-		{
-			Skill_State = EAbilityState::Stand;
-			ArcPController->ChangeCursor(nullptr);
-		}
-	}
+	Skill_State = EAbilityState::Focusing;
+	AComponent->ResetRangedAbilitiesState(Skill_Type); // 다른 스킬 상태 초기화
+	AComponent->SpawnIndicator(Skill_Indicator); // 스킬 커서 변환
+}
+
+void ULostArcSkillBase_RangedBase::SpawnEffect(ALostArcPlayerCharacter* Character)
+{
+	OnRangedEffectCheck.Broadcast(Skill_Type);
 }
 
 void ULostArcSkillBase_RangedBase::ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character)

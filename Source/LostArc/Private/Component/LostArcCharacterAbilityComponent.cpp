@@ -51,13 +51,22 @@ void ULostArcCharacterAbilityComponent::EndPlay(const EEndPlayReason::Type EndPl
 
 void ULostArcCharacterAbilityComponent::AbilityCancel()
 {
-	auto Skill = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
-	if(IsValid(Skill))
+	auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
+	if(IsValid(Ability))
 	{
-		if(Skill->GetState() == EAbilityState::Focusing)
+		if(Ability->GetState() == EAbilityState::Focusing && IsValid(Indicator))
 		{
-			ResetRangedAbilitiesState(LastRangedType);
+			Ability->SetState(EAbilityState::Stand);
+			Indicator->Destroy();
 		}
+	}
+}
+
+void ULostArcCharacterAbilityComponent::SpawnIndicator(TSubclassOf<AActor> Spawner)
+{
+	if(IsValid(Spawner))
+	{
+		Indicator = GetWorld()->SpawnActor<AActor>(Spawner, GetOwner()->GetActorTransform());
 	}
 }
 
@@ -65,17 +74,17 @@ void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 {
 	if(Type == EAbilityType::BasicAttack) // 마우스 클릭으로 원거리 스킬 실행
 	{
-		if((int32)LastRangedType.GetValue() >= 5 && (int32)LastRangedType.GetValue() <= 8)
+		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
+
+		if(IsValid(Ability)) // 캐스팅이 되면
 		{
-			auto Skill = Cast<ULostArcSkillBase_RangedBase>(Abilities[LastRangedType]);
-			if(Skill->GetState() == EAbilityState::Focusing)
+			if(Ability->GetState() == EAbilityState::Focusing) // 포커싱 상태일 시
 			{
-				Abilities[LastRangedType]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()));
+				Abilities[LastRangedType]->Use(Cast<ALostArcPlayerCharacter>(GetOwner())); // 캐스팅
 				return;
 			}
 		}
 	}
-	
 	Abilities[Type]->Use(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
@@ -86,17 +95,16 @@ void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 
 void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)
 {
-	auto Char = Cast<ALostArcPlayerCharacter>(GetOwner());
+	auto Character = Cast<ALostArcPlayerCharacter>(GetOwner());
 	auto RangedSkill = Cast<ULostArcSkillBase_RangedBase>(Abilities[Type]);
 
 	if(RangedSkill)
 	{
-		Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnEffect(Char);
-		Char->OnRangedEffectCheck.Broadcast();
+		Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnEffect(Character);
 	}
 }
 
-ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)
+ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilities(EAbilityType Type)
 {
 	return Abilities[Type];
 }
@@ -107,16 +115,16 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 	{
 		if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 		{
-			Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
-			Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
+			Cast<ULostArcSkill_BasicAttack>(GetAbilities(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+			Cast<ULostArcSkill_BasicAttack>(GetAbilities(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 		}
 		return;
 	}
 
 	if (Montage->IsValidSectionName(TEXT("BasicAttack_1")))
 	{
-		Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->SetBasicAttacking(false);
-		Cast<ULostArcSkill_BasicAttack>(GetAbilites(EAbilityType::BasicAttack))->BasicAttackEndComboState();
+		Cast<ULostArcSkill_BasicAttack>(GetAbilities(EAbilityType::BasicAttack))->SetBasicAttacking(false);
+		Cast<ULostArcSkill_BasicAttack>(GetAbilities(EAbilityType::BasicAttack))->BasicAttackEndComboState();
 	}
 
 	if (Montage->IsValidSectionName(TEXT("Evade")))
@@ -142,14 +150,29 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 
 void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState(EAbilityType CurrentType)
 {
-	LastRangedType = CurrentType;
+	if(LastRangedType != CurrentType)
+	{
+		if(IsValid(Indicator))
+		{
+			Indicator->Destroy();
+		}
+	}
 	
 	for(int i = 5; i < 8; i++)
 	{
 		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[i]);
-		if(IsValid(Ability))
+
+		if(IsValid(Ability) && Ability->GetSkillType() != CurrentType)
 		{
-			Ability->ActivityRangedCursor(false, Cast<ALostArcPlayerCharacter>(GetOwner()));
+			Ability->SetState(EAbilityState::Stand);
 		}
 	}
+	
+	LastRangedType = CurrentType;
+}
+
+void ULostArcCharacterAbilityComponent::SetHiddenIndicator()
+{
+	Indicator->SetActorHiddenInGame(true);
+	Indicator->SetActorTickEnabled(false);
 }

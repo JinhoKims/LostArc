@@ -97,7 +97,7 @@ void ULostArcUIQuickSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 		if(bEnableTick)
 		{
 			auto Character = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
-			float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilites(static_cast<EAbilityType>(SlotIndex+1))->AbilityCDProperty.Key);
+			float Count = GetOwningPlayer()->GetWorldTimerManager().GetTimerRemaining(Character->AbilityComponent->GetAbilities(static_cast<EAbilityType>(SlotIndex+1))->AbilityCDProperty.Key);
 	
 			Text_CD->SetText(FText::AsNumber(FMath::FloorToInt(Count)));
 		}
@@ -159,10 +159,10 @@ void ULostArcUIQuickSlot::ClearSlotData()
 
 void ULostArcUIQuickSlot::SetAbilitySlot(EAbilityType EType, ULostArcCharacterAbilityComponent* Compo)
 {
-	SlotData = Compo->GetAbilites(EType);
+	SlotData = Compo->GetAbilities(EType);
 	Image_Icon->SetVisibility(ESlateVisibility::Visible);
 	
-	Compo->GetAbilites(EType)->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIQuickSlot::SetNativeTick);
+	Compo->GetAbilities(EType)->AbilityCDProperty.Value.AddUObject(this, &ULostArcUIQuickSlot::SetNativeTick);
 	
 	if(EType == EAbilityType::Evade)
 	{
