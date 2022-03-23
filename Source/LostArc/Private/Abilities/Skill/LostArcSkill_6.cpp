@@ -39,5 +39,5 @@ bool ULostArcSkill_6::Use(ALostArcPlayerCharacter* Character)
 
 void ULostArcSkill_6::SpawnEffect(ALostArcPlayerCharacter* Character)
 {
-	
+	DeleOnTEst.Broadcast();
 }
