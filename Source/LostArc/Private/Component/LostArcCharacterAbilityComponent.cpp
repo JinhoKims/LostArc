@@ -86,7 +86,7 @@ void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 
 void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)
 {
-	Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnSkillActor(Cast<ALostArcPlayerCharacter>(GetOwner()));
+	Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->Spawn_SkillActor(Cast<ALostArcPlayerCharacter>(GetOwner()));
 }
 
 ULostArcSkillBase* ULostArcCharacterAbilityComponent::GetAbilites(EAbilityType Type)

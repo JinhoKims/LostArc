@@ -3,6 +3,8 @@
 
 #include "Abilities/Skill/LostArcSkill_6.h"
 
+#include "Components/ArrowComponent.h"
+
 ULostArcSkill_6::ULostArcSkill_6(const FObjectInitializer& ObjectInitializer)
 {
 	CoolDown = 3.f;
@@ -35,4 +37,9 @@ bool ULostArcSkill_6::Use(ALostArcPlayerCharacter* Character)
 	}
 
 	return false;
+}
+
+void ULostArcSkill_6::Spawn_SkillActor(ALostArcPlayerCharacter* Character)
+{
+	
 }

@@ -48,16 +48,6 @@ void ULostArcSkillBase_RangedBase::ActivityRangedCursor(bool bUse, ALostArcPlaye
 	}
 }
 
-void ULostArcSkillBase_RangedBase::SpawnSkillActor(ALostArcPlayerCharacter* Character)
-{
-	// FTransform Transform;
-	// Transform.SetLocation(SpawnLocation);
-	//
-	//
-	// GetWorld()->SpawnActor<AActor>(Skill_Actor, Transform);
-	//
-}
-
 void ULostArcSkillBase_RangedBase::ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character)
 {
 	HitLocation = Location;

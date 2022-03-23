@@ -14,6 +14,8 @@ class LOSTARC_API ULostArcSkill_6 : public ULostArcSkillBase_RangedBase
 {
 	GENERATED_BODY()
 
+public:
 	ULostArcSkill_6(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual void Spawn_SkillActor(ALostArcPlayerCharacter* Character) override;
 };
