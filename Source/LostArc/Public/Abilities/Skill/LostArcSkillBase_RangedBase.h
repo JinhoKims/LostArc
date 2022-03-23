@@ -24,7 +24,7 @@ public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
 	void ActivityRangedCursor(bool bUse, class ALostArcPlayerCharacter* Character);
-	virtual void Spawn_SkillActor(class ALostArcPlayerCharacter* Character) {}
+	virtual void SpawnEffect(class ALostArcPlayerCharacter* Character) {}
 
 	UFUNCTION(BlueprintCallable)
 	void ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character);

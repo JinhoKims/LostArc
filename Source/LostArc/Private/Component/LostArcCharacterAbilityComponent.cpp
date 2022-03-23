@@ -91,7 +91,7 @@ void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)
 
 	if(RangedSkill)
 	{
-		Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->Spawn_SkillActor(Char);
+		Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnEffect(Char);
 		Char->OnRangedEffectCheck.Broadcast();
 	}
 }

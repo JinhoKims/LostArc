@@ -13,14 +13,13 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
 	
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_Ranged_Ice_Atk.BP_Ranged_Ice_Atk'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_1/BP_Ranged_Ice_Atk.BP_Ranged_Ice_Atk'"));
 	if (BP_ICE_ATK.Object)
 	{
 		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
-		
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_1/BP_RangedSkill_Indicator_1.BP_RangedSkill_Indicator_1'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_1/BP_RangedSkill_Indicator_1.BP_RangedSkill_Indicator_1'"));
 	if (BP_Indicator.Object)
 	{
 		Skill_Indicator = (UClass*)BP_Indicator.Object->GeneratedClass;
@@ -45,7 +44,7 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 	return false;
 }
 
-void ULostArcSkill_5::Spawn_SkillActor(ALostArcPlayerCharacter* Character)
+void ULostArcSkill_5::SpawnEffect(ALostArcPlayerCharacter* Character)
 {
 	FTransform Transform;
 	Transform.SetLocation(SpawnLocation);

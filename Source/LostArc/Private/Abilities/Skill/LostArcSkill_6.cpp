@@ -3,8 +3,6 @@
 
 #include "Abilities/Skill/LostArcSkill_6.h"
 
-#include "Components/ArrowComponent.h"
-
 ULostArcSkill_6::ULostArcSkill_6(const FObjectInitializer& ObjectInitializer)
 {
 	CoolDown = 3.f;
@@ -15,13 +13,13 @@ ULostArcSkill_6::ULostArcSkill_6(const FObjectInitializer& ObjectInitializer)
 	Skill_Type = EAbilityType::RangedSpell_2;
 	Name = "Skill_6";
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_2/BP_Ranged_Wind_Unit.BP_Ranged_Wind_Unit'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_2/BP_Ranged_Wind_Unit.BP_Ranged_Wind_Unit'"));
 	if (BP_ICE_ATK.Object)
 	{
 		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/UI/Ability/RangedSkill/Ranged_2/BP_RangedSkill_Indicator_2.BP_RangedSkill_Indicator_2'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_2/BP_RangedSkill_Indicator_2.BP_RangedSkill_Indicator_2'"));
 	if (BP_Indicator.Object)
 	{
 		Skill_Indicator = (UClass*)BP_Indicator.Object->GeneratedClass;
@@ -39,7 +37,7 @@ bool ULostArcSkill_6::Use(ALostArcPlayerCharacter* Character)
 	return false;
 }
 
-void ULostArcSkill_6::Spawn_SkillActor(ALostArcPlayerCharacter* Character)
+void ULostArcSkill_6::SpawnEffect(ALostArcPlayerCharacter* Character)
 {
 	
 }
