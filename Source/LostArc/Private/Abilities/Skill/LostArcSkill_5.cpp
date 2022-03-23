@@ -8,7 +8,7 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	CoolDown = 5.f;
 	ManaCost = 30.f;
 	SkillRatio = 0.3f;
-	SkillRadius.Key = 350.f;
+	SkillRadius.Key = 300.f;
 	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
@@ -35,7 +35,7 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 		PController->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
 		HitLocation = TraceHitResult.Location;
 		
-		SpawnLocation = FVector(TraceHitResult.Location.X, TraceHitResult.Location.Y, TraceHitResult.Location.Z + 1000.f);
+		SpawnLocation = FVector(TraceHitResult.Location.X, TraceHitResult.Location.Y, TraceHitResult.Location.Z);
 
 		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerRangedSkill_1_Montage, 1.f);
 		return true;

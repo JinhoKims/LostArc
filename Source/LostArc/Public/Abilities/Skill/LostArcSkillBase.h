@@ -8,9 +8,6 @@
 #include "AnimInstances/LostArcCharacterAnimInstance.h"
 #include "LostArcSkillBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcSkillBase : public ULostArcAbilityBase
 {

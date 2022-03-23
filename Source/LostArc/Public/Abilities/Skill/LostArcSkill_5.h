@@ -6,9 +6,6 @@
 #include "Abilities/Skill/LostArcSkillBase_RangedBase.h"
 #include "LostArcSkill_5.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcSkill_5 : public ULostArcSkillBase_RangedBase
 {
