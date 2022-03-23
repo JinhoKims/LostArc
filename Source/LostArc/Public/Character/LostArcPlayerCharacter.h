@@ -10,6 +10,7 @@ enum EAbilityType;
 
 DECLARE_DELEGATE_OneParam(FBindAbilityDelegate, EAbilityType)
 DECLARE_DELEGATE_OneParam(FBindQuickSlotDelegate, int32 Slot)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRangedEffectCheckDelegate);
 
 UCLASS(Blueprintable)
 class LOSTARC_API ALostArcPlayerCharacter : public ACharacter
@@ -23,6 +24,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
@@ -44,8 +46,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class ULostArcCharacterEquipComponent* EquipComponent;
 
-	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-	
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
+	FOnRangedEffectCheckDelegate OnRangedEffectCheck;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* TopDownCameraComponent;

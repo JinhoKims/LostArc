@@ -26,7 +26,7 @@ class LOSTARC_API ULostArcCharacterAbilityComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	ULostArcCharacterAbilityComponent();
 	virtual void InitializeComponent() override;
