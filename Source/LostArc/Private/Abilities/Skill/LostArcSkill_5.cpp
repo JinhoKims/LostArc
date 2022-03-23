@@ -43,10 +43,3 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 
 	return false;
 }
-
-void ULostArcSkill_5::SpawnEffect(ALostArcPlayerCharacter* Character)
-{
-	FTransform Transform;
-	Transform.SetLocation(SpawnLocation);
-	GetWorld()->SpawnActor<AActor>(Skill_Actor, Transform);
-}
