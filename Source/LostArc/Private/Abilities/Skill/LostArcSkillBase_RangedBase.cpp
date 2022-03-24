@@ -24,6 +24,8 @@ bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 			return Super::Use(Character); // 스킬 시전
 		}
 		break;
+	default:
+		break;
 	}
 	
 	return false;

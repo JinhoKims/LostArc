@@ -22,7 +22,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY()
-	class UCorpseAnimInstance* Corpseanim;
+	class UCorpseAnimInstance* CorpseAnim;
 	FOnAttackEndDelegate OnAttackEnd;
 
 	void Attack();
@@ -32,8 +32,8 @@ public:
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Line of Sight", meta = (AllowPrivateAccess = "true"))
-	class ULineOfSightComponent* LOSComponent;
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Line of Sight", meta = (AllowPrivateAccess = "true"))
+	// class ULineOfSightComponent* LOSComponent;
 
 private:
 	float MonsterHP;

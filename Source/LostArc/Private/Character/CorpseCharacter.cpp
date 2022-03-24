@@ -28,8 +28,8 @@ ACorpseCharacter::ACorpseCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 
-	LOSComponent = CreateDefaultSubobject<ULineOfSightComponent>(TEXT("LineOfSightComponent"));
-	LOSComponent->SetupAttachment(RootComponent);
+	// LOSComponent = CreateDefaultSubobject<ULineOfSightComponent>(TEXT("LineOfSightComponent"));
+	// LOSComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -48,10 +48,10 @@ void ACorpseCharacter::Tick(float DeltaTime)
 void ACorpseCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	Corpseanim = Cast<UCorpseAnimInstance>(GetMesh()->GetAnimInstance());
-	if (Corpseanim == nullptr) return;
-	Corpseanim->OnMontageEnded.AddDynamic(this, &ACorpseCharacter::OnAttackMontageEnded);
-	Corpseanim->OnAttackHitCheck.AddUObject(this, &ACorpseCharacter::AttackHitCheck);
+	CorpseAnim = Cast<UCorpseAnimInstance>(GetMesh()->GetAnimInstance());
+	if (CorpseAnim == nullptr) return;
+	CorpseAnim->OnMontageEnded.AddDynamic(this, &ACorpseCharacter::OnAttackMontageEnded);
+	CorpseAnim->OnAttackHitCheck.AddUObject(this, &ACorpseCharacter::AttackHitCheck);
 }
 
 // Called to bind functionality to input
@@ -62,20 +62,20 @@ void ACorpseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 float ACorpseCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	float FInalDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	float FFinalDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 
-	if (FInalDamage > 0.f)
+	if (FFinalDamage > 0.f)
 	{
-		MonsterHP -= FInalDamage;
-		Corpseanim->PlayCorpseDamageHandlingMontage(MonsterHP);
+		MonsterHP -= FFinalDamage;
+		CorpseAnim->PlayCorpseDamageHandlingMontage(MonsterHP);
 	}
-	return FInalDamage;
+	return FFinalDamage;
 }
 
 void ACorpseCharacter::Attack()
 {
-	if (!Corpseanim->Montage_IsPlaying(Corpseanim->CorpseAttackMontage)) { // 같은 몽타주의 중복 재생을 방지하기 위해 한번만 실행되도록 한다.
-		Corpseanim->PlayAttackMontage();
+	if (!CorpseAnim->Montage_IsPlaying(CorpseAnim->CorpseAttackMontage)) { // 같은 몽타주의 중복 재생을 방지하기 위해 한번만 실행되도록 한다.
+		CorpseAnim->PlayAttackMontage();
 	}
 }
 
@@ -116,13 +116,10 @@ void ACorpseCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterru
 	{
 		AActor::Destroy();
 	}
-
-
+	
 	if (Montage->IsValidSectionName(TEXT("Attack"))) 
 	{
 		OnAttackEnd.Broadcast();
 	}
-
-
 }
 

@@ -29,5 +29,4 @@ protected:
 	float ManaCost;
 	
 	virtual void PreCast(ALostArcPlayerCharacter* Character);
-	
 };
