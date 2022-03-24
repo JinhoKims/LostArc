@@ -48,6 +48,11 @@ void ULostArcCharacterAnimInstance::AnimNotify_RangedSkill_3_EffectCheck()
 	OnRangedSkillEffectCheck.Broadcast(EAbilityType::RangedSpell_3);
 }
 
+void ULostArcCharacterAnimInstance::AnimNotify_RangedSkill_4_EffectCheck()
+{
+	OnRangedSkillEffectCheck.Broadcast(EAbilityType::RangedSpell_4);
+}
+
 void ULostArcCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);

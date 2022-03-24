@@ -6,7 +6,6 @@
 bool ULostArcSkillBase_RangedBase::Use(ALostArcPlayerCharacter* Character)
 {
 	auto AComponent = Character->AbilityComponent;
-	
 	switch (Skill_State)
 	{
 	case EAbilityState::Stand:

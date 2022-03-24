@@ -98,7 +98,7 @@ void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)
 	auto Character = Cast<ALostArcPlayerCharacter>(GetOwner());
 	auto RangedSkill = Cast<ULostArcSkillBase_RangedBase>(Abilities[Type]);
 
-	if(RangedSkill)
+	if(IsValid(RangedSkill))
 	{
 		Cast<ULostArcSkillBase_RangedBase>(Abilities[Type])->SpawnEffect(Character);
 	}
@@ -158,7 +158,7 @@ void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState(EAbilityType C
 		}
 	}
 	
-	for(int i = 5; i < 8; i++)
+	for(int i = 5; i < 9; i++)
 	{
 		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[i]);
 
