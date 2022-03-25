@@ -16,5 +16,10 @@ class LOSTARC_API ULostArcSkill_2 : public ULostArcSkillBase
 	
 public:
 	ULostArcSkill_2(const FObjectInitializer& ObjectInitializer);
-	virtual bool Use( ALostArcPlayerCharacter* Character) override;
+	virtual bool Use(ALostArcPlayerCharacter* Character) override;
+	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
+
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> Skill_Actor;
 };

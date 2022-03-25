@@ -20,6 +20,8 @@ class LOSTARC_API ULostArcAbilityBase : public UObject
 
 public:
 	TPair<FTimerHandle, FOnAbilityCDDelegate> AbilityCDProperty;
+	
+	UPROPERTY()
 	UActorComponent* OwnerComponent;
 	
 public:

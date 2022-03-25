@@ -12,6 +12,13 @@ ULostArcSkill_2::ULostArcSkill_2(const FObjectInitializer& ObjectInitializer) : 
 	SkillRadius.Value = 160.f;
 	Skill_Type = EAbilityType::MeleeSkill_2;
 	Name = "Skill_2";
+
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_AQUA_SHIELD(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Shield_1/BP_Shield_Aqua.BP_Shield_Aqua'"));
+	if (BP_AQUA_SHIELD.Object)
+	{
+		Skill_Actor = (UClass*)BP_AQUA_SHIELD.Object->GeneratedClass;
+	}
 }
 
 bool ULostArcSkill_2::Use(ALostArcPlayerCharacter* Character)
@@ -23,4 +30,9 @@ bool ULostArcSkill_2::Use(ALostArcPlayerCharacter* Character)
 	}
 	else
 		return false;
+}
+
+void ULostArcSkill_2::HitDetection(ALostArcPlayerCharacter* Character)
+{
+	GetWorld()->SpawnActor<AActor>(Skill_Actor, Character->GetActorTransform());
 }
