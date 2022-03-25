@@ -7,7 +7,7 @@ ULostArcSkill_3::ULostArcSkill_3(const FObjectInitializer& ObjectInitializer) : 
 {
 	CoolDown = 6.f;
 	ManaCost = 15.f;
-	SkillRatio = 1.25f;
+	SkillRatio = 1.1f;
 	SkillRadius.Key = 480.f;
 	SkillRadius.Value = 270.f;
 	Skill_Type = EAbilityType::MeleeSkill_3;

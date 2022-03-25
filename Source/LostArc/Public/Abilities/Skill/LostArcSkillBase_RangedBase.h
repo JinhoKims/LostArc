@@ -24,15 +24,12 @@ public:
 	virtual bool Use(ALostArcPlayerCharacter* Character) override;
 	TEnumAsByte<EAbilityState> GetState() { return Skill_State; }
 	void SetState(TEnumAsByte<EAbilityState> NewState) { Skill_State = NewState; }
-	
 	void ActivityIndicator(class ALostArcPlayerCharacter* Character);
 	virtual void SpawnEffect(class ALostArcPlayerCharacter* Character);
+	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 	UFUNCTION(BlueprintCallable)
 	void ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character);
-
-	UFUNCTION(BlueprintCallable)
-	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 protected:
 	TEnumAsByte<EAbilityState> Skill_State;

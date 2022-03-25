@@ -22,4 +22,7 @@ public:
 protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> Skill_Actor;
+
+	UPROPERTY()
+	AActor* EffectState;
 };
