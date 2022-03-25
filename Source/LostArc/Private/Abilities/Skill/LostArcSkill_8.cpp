@@ -5,7 +5,7 @@
 
 ULostArcSkill_8::ULostArcSkill_8(const FObjectInitializer& ObjectInitializer)
 {
-	CoolDown = 3.f;
+	CoolDown = 4.f;
 	ManaCost = 20.f;
 	SkillRatio = 1.25f;
 	SkillRadius.Key = 420.f;
