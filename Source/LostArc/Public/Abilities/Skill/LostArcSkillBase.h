@@ -18,7 +18,7 @@ public:
 	
 	virtual bool Use(ALostArcPlayerCharacter* Character);
 	virtual bool AbilityStateCheck(ALostArcPlayerCharacter* Character);
-	virtual void CharacterRotatetoCursor(ALostArcPlayerCharacter* Character);
+	virtual void CharacterRotateToCursor(ALostArcPlayerCharacter* Character);
 	TEnumAsByte<EAbilityType> GetSkillType() {return Skill_Type;}
 	
 	UFUNCTION(BlueprintCallable)

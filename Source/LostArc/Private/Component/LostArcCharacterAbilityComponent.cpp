@@ -137,7 +137,7 @@ void ULostArcCharacterAbilityComponent::AbilityMontageEnded(UAnimMontage* Montag
 		ULostArcSkillBase::bAnimationRunning = false;
 	}
 
-	for (int i = 1; i < 5; i++)
+	for (int i = 1; i < 5; i++) // melee skill
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("MeleeSkill_%d"), i))))
 		{
@@ -162,7 +162,7 @@ void ULostArcCharacterAbilityComponent::ResetRangedAbilitiesState(EAbilityType C
 		}
 	}
 	
-	for(int i = 5; i < 9; i++)
+	for(int i = 5; i < 9; i++) // ranged skill
 	{
 		auto Ability = Cast<ULostArcSkillBase_RangedBase>(Abilities[i]);
 

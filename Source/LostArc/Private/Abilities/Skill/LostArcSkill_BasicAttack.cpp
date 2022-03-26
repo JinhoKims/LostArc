@@ -78,7 +78,7 @@ void ULostArcSkill_BasicAttack::PreCast(ALostArcPlayerCharacter* Character)
 {
 	check(CurrentCombo == 0);
 	BasicAttackStartComboState();
-	CharacterRotatetoCursor(Character);
+	CharacterRotateToCursor(Character);
 	bBasicAttacking = true;
 	bAnimationRunning = true;
 }

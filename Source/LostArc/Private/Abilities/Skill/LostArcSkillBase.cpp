@@ -36,7 +36,7 @@ bool ULostArcSkillBase::AbilityStateCheck(ALostArcPlayerCharacter* Character)
 	return true;
 }
 
-void ULostArcSkillBase::CharacterRotatetoCursor(ALostArcPlayerCharacter* Character)
+void ULostArcSkillBase::CharacterRotateToCursor(ALostArcPlayerCharacter* Character)
 {
 	FHitResult Hit;
 	Cast<APlayerController>(Character->GetController())->GetHitResultUnderCursor(ECC_Visibility, false, Hit);
@@ -94,7 +94,7 @@ void ULostArcSkillBase::ConstructSkillSubActors(TArray<ULostArcSkillBase*> BaseA
 
 void ULostArcSkillBase::PreCast(ALostArcPlayerCharacter* Character)
 {
-	CharacterRotatetoCursor(Character);
+	CharacterRotateToCursor(Character);
 	Character->GetWorldTimerManager().SetTimer(AbilityCDProperty.Key, FTimerDelegate::CreateLambda([=]() {AbilityCDProperty.Value.Broadcast(false); }), CoolDown, false); // 쿨타임 계산
 	Character->StatComponent->SetCurrentAttributeValue(EAttributeType::MP, Character->StatComponent->GetCurrentAttributeValue(EAttributeType::MP) - ManaCost); // 마나 계산
 	bAnimationRunning = true;
