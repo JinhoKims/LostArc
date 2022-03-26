@@ -18,6 +18,8 @@ ULostArcCharacterAbilityComponent::ULostArcCharacterAbilityComponent()
 	bWantsInitializeComponent = true;
 	
 	AbilityClass.Init(ULostArcSkillBase::StaticClass(), 10);
+	IndicatorClass.Init(NULL, 10);
+	EffectClass.Init(NULL, 10);
 }
 
 void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌트는 컴파일 타임에 생성자가 호출된 후에 바로 호출되는 경향이 있기에 미리 AbilityClass를 초기화해줘야한다.
@@ -28,6 +30,8 @@ void ULostArcCharacterAbilityComponent::InitializeComponent() // Init 컴포넌�
 	{
 		Abilities.Add(NewObject<ULostArcSkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
+	
+	ULostArcSkillBase::ConstructSkillSubActors(Abilities, IndicatorClass, EffectClass);
 }
 
 // Called when the game starts

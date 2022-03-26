@@ -27,22 +27,15 @@ public:
 	void ActivityIndicator(class ALostArcPlayerCharacter* Character);
 	virtual void SpawnEffect(class ALostArcPlayerCharacter* Character);
 	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
-
+	
 	UFUNCTION(BlueprintCallable)
 	void ActorHitDetection(FVector Location, ALostArcPlayerCharacter* Character);
 
 protected:
 	TEnumAsByte<EAbilityState> Skill_State;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> Skill_Indicator;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> Skill_Actor;
-
-	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
-	FOnRangedEffectCheckDelegate OnRangedEffectCheck;
-	
 	FVector SpawnLocation;
 	FVector HitLocation;
+	
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
+	FOnRangedEffectCheckDelegate OnRangedEffectCheck;
 };

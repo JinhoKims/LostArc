@@ -20,9 +20,6 @@ public:
 	virtual void HitDetection(ALostArcPlayerCharacter* Character) override;
 
 protected:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> Skill_Actor;
-
 	UPROPERTY()
-	AActor* EffectState;
+	AActor* isEffect;
 };

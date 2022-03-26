@@ -12,18 +12,6 @@ ULostArcSkill_5::ULostArcSkill_5(const FObjectInitializer& ObjectInitializer)
 	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::RangedSpell_1;
 	Name = "Skill_5";
-	
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_ICE_ATK(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_1/BP_Ranged_Ice_Atk.BP_Ranged_Ice_Atk'"));
-	if (BP_ICE_ATK.Object)
-	{
-		Skill_Actor = (UClass*)BP_ICE_ATK.Object->GeneratedClass;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Indicator(TEXT("Blueprint'/Game/BluePrint/Ability/RangedSkill/Ranged_1/BP_RangedSkill_Indicator_1.BP_RangedSkill_Indicator_1'"));
-	if (BP_Indicator.Object)
-	{
-		Skill_Indicator = (UClass*)BP_Indicator.Object->GeneratedClass;
-	}
 }
 
 bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
@@ -40,6 +28,6 @@ bool ULostArcSkill_5::Use(ALostArcPlayerCharacter* Character)
 		Character->AnimInstance->Montage_Play(Character->AnimInstance->PlayerRangedSkill_1_Montage, 1.f);
 		return true;
 	}
-
+	
 	return false;
 }

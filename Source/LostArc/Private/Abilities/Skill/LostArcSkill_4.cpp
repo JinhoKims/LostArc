@@ -13,12 +13,6 @@ ULostArcSkill_4::ULostArcSkill_4(const FObjectInitializer& ObjectInitializer) : 
 	SkillRadius.Value = 360.f;
 	Skill_Type = EAbilityType::MeleeSkill_4;
 	Name = "Skill_4";
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BP_Earth(TEXT("Blueprint'/Game/Luos8Elements/Blueprints/Earth/BP_Earth_Def_01_Life.BP_Earth_Def_01_Life'"));
-	if (BP_Earth.Object)
-	{
-		SpawnActor = (UClass*)BP_Earth.Object->GeneratedClass;
-	}
 }
 
 bool ULostArcSkill_4::Use(ALostArcPlayerCharacter* Character)
@@ -35,14 +29,13 @@ bool ULostArcSkill_4::Use(ALostArcPlayerCharacter* Character)
 
 void ULostArcSkill_4::HitDetection(ALostArcPlayerCharacter* Character)
 {
-	Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
-	
-	auto SpawnLocation = FVector(Character->GetActorTransform().GetLocation().X, Character->GetActorTransform().GetLocation().Y, Character->GetActorTransform().GetLocation().Z - 70);
-	FTransform Transform;
-	Transform.SetLocation(SpawnLocation);
-	Transform.SetRotation(Character->GetActorTransform().GetRotation());
-	
-	GetWorld()->SpawnActor<AActor>(SpawnActor, Transform);
-	
-	Super::HitDetection(Character);
+	if(!IsValid(isEffect))
+	{
+		Character->GetCapsuleComponent()->SetCollisionProfileName(TEXT("ArcCharacter"));
+		isEffect = GetWorld()->SpawnActor<AActor>(Skill_Effect, Character->GetActorTransform());
+	}
+	else
+	{
+		Super::HitDetection(Character);
+	}
 }

@@ -74,6 +74,24 @@ void ULostArcSkillBase::HitDetection(ALostArcPlayerCharacter* Character)
 	}
 }
 
+void ULostArcSkillBase::ConstructSkillSubActors(TArray<ULostArcSkillBase*> BaseAbility, TArray<TSubclassOf<AActor>> Indicator, TArray<TSubclassOf<AActor>> Effect)
+{
+	for(int i = 0; i < 10; i++)
+	{
+		if(BaseAbility[i] != nullptr)
+		{
+			if(Indicator[i] != nullptr)
+			{
+				BaseAbility[i]->Skill_Indicator = Indicator[i];
+			}
+			if(Effect[i] != nullptr)
+			{
+				BaseAbility[i]->Skill_Effect = Effect[i];
+			}
+		}
+	}
+}
+
 void ULostArcSkillBase::PreCast(ALostArcPlayerCharacter* Character)
 {
 	CharacterRotatetoCursor(Character);

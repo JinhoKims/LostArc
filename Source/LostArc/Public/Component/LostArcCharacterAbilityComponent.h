@@ -59,6 +59,12 @@ private:
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<ULostArcSkillBase*> Abilities;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	TArray<TSubclassOf<AActor>> IndicatorClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	TArray<TSubclassOf<AActor>> EffectClass;
+
 	TEnumAsByte<EAbilityType> LastRangedType;
 
 	UPROPERTY()

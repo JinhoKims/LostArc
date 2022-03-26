@@ -23,12 +23,20 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	virtual void HitDetection(ALostArcPlayerCharacter* Character);
+	
+	static void ConstructSkillSubActors(TArray<ULostArcSkillBase*> BaseAbility, TArray<TSubclassOf<AActor>> Indicator, TArray<TSubclassOf<AActor>> Effect);
 
 protected:
 	TPair<float, float> SkillRadius; // distance, angle
 	TEnumAsByte<EAbilityType> Skill_Type;
 	float SkillRatio;
 	float ManaCost;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> Skill_Indicator;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> Skill_Effect;
 	
 	virtual void PreCast(ALostArcPlayerCharacter* Character);
 };
