@@ -40,7 +40,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 				//DrawDebugSphere(World, Center, DetectRadius, 32, FColor::Green, false, 0.2f);
 				//DrawDebugPoint(World, Player->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
-				DrawDebugLine(World, ControllingPawn->GetActorLocation(), Player->GetActorLocation(), FColor::Blue, false, 0.2f);
+				//DrawDebugLine(World, ControllingPawn->GetActorLocation(), Player->GetActorLocation(), FColor::Blue, false, 0.2f);
 				return;
 			}
 			else
@@ -53,5 +53,5 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	{
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACorpseAIController::TargetKey, nullptr);
 	}
-	DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
+	//DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
 }
