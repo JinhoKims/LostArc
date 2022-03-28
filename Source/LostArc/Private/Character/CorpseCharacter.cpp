@@ -74,7 +74,8 @@ float ACorpseCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent
 
 void ACorpseCharacter::Attack()
 {
-	if (!CorpseAnim->Montage_IsPlaying(CorpseAnim->CorpseAttackMontage)) { // 같은 몽타주의 중복 재생을 방지하기 위해 한번만 실행되도록 한다.
+	if (!CorpseAnim->Montage_IsPlaying(CorpseAnim->CorpseAttackMontage)) // 같은 몽타주의 중복 재생을 방지하기 위해 한번만 실행되도록 한다.
+	{
 		CorpseAnim->PlayAttackMontage();
 	}
 }

@@ -13,5 +13,7 @@ UCLASS()
 class LOSTARC_API UBossMonsterAnimInstance : public UMonsterAnimInstanceBase
 {
 	GENERATED_BODY()
-	
+
+public:
+
 };

@@ -13,5 +13,10 @@ UCLASS()
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ABossMonsterCharacter();
+	virtual void PostInitializeComponents() override;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 };

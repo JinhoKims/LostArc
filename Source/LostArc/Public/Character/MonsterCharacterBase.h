@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "MonsterCharacterBase.generated.h"
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
 
 UCLASS()
 class LOSTARC_API AMonsterCharacterBase : public ACharacter
@@ -12,18 +13,31 @@ class LOSTARC_API AMonsterCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	UPROPERTY()
+	class UMonsterAnimInstanceBase* MonsterAnim;
+	FOnAttackEndDelegate OnAttackEnd;
+	
 	AMonsterCharacterBase();
+	virtual void PostInitializeComponents() override;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+	virtual void MonsterAttack();
+	virtual void MonsterAttackHitCheck();
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	UFUNCTION()
+	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float MonsterHP;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float AttackRange;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float AttackRadius;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float MonsterSpeed;
 };
