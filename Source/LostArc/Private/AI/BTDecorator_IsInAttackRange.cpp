@@ -3,7 +3,7 @@
 #include "AI/BTDecorator_IsInAttackRange.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
-#include "Controller/MonsterAIControllerBase.h"
+#include "Controller/MonsterBaseAIController.h"
 
 UBTDecorator_IsInAttackRange::UBTDecorator_IsInAttackRange()
 {
@@ -17,7 +17,7 @@ bool UBTDecorator_IsInAttackRange::CalculateRawConditionValue(UBehaviorTreeCompo
 	auto ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (ControllingPawn == nullptr) return false;
 
-	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(AMonsterAIControllerBase::TargetKey)); // 타겟키 정보를 Owner 비헤비어트리의 블랙보드에서 가져옴
+	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(AMonsterBaseAIController::TargetKey)); // 타겟키 정보를 Owner 비헤비어트리의 블랙보드에서 가져옴
 	if (Target == nullptr) return false;
 
 	bResult = (Target->GetDistanceTo(ControllingPawn) <= 300.0f); 

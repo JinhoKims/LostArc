@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "MonsterAnimInstanceBase.generated.h"
+#include "MonsterBaseAnimInstance.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnMonsterAttackHitCheckDelegate)
 DECLARE_MULTICAST_DELEGATE(FOnMonsterDeadCheckDelegate)
 
 UCLASS()
-class LOSTARC_API UMonsterAnimInstanceBase : public UAnimInstance
+class LOSTARC_API UMonsterBaseAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-
+	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, meta = (AllowPrivateAccess = true))
 	bool bMonsterIsDead;

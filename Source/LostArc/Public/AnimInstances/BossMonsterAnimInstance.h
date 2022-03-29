@@ -3,17 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimInstances/MonsterAnimInstanceBase.h"
+#include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "BossMonsterAnimInstance.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class LOSTARC_API UBossMonsterAnimInstance : public UMonsterAnimInstanceBase
+class LOSTARC_API UBossMonsterAnimInstance : public UMonsterBaseAnimInstance
 {
 	GENERATED_BODY()
-
+	
 public:
-
+	
 };

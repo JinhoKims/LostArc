@@ -4,7 +4,7 @@
 #include "AI/BTTask_MonsterAttack.h"
 
 #include "AIController.h"
-#include "AnimInstances/MonsterAnimInstanceBase.h"
+#include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Character/MonsterCharacterBase.h"
 
 UBTTask_MonsterAttack::UBTTask_MonsterAttack()
@@ -18,7 +18,7 @@ EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& O
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	auto MonsterCharacter = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
-	auto MonsterAnim = Cast<UMonsterAnimInstanceBase>(MonsterCharacter->GetMesh()->GetAnimInstance());
+	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
 
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
@@ -33,7 +33,7 @@ EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& O
 void UBTTask_MonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	auto MonsterChar = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
-	auto MonsterAnim = Cast<UMonsterAnimInstanceBase>(MonsterChar->GetMesh()->GetAnimInstance());
+	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterChar->GetMesh()->GetAnimInstance());
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage))
 	{
 		bIsAttacking = false;

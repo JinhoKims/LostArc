@@ -41,5 +41,5 @@ protected:
 
 protected:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	class UMonsterAnimInstanceBase* MonsterAnim;
+	class UMonsterBaseAnimInstance* MonsterAnim;
 };

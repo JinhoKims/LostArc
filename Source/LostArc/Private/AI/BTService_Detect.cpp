@@ -5,7 +5,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Character/LostArcPlayerCharacter.h"
-#include "Controller/MonsterAIControllerBase.h"
+#include "Controller/MonsterBaseAIController.h"
 
 UBTService_Detect::UBTService_Detect()
 {
@@ -36,7 +36,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			auto Player = Cast<ALostArcPlayerCharacter>(OverlapResult.GetActor());
 			if (Player && Player->GetController()->IsPlayerController())
 			{
-				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterAIControllerBase::TargetKey, Player); // TargetKey에 Player 정보를 저장한다. (Value로)
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, Player); // TargetKey에 Player 정보를 저장한다. (Value로)
 
 				//DrawDebugSphere(World, Center, DetectRadius, 32, FColor::Green, false, 0.2f);
 				//DrawDebugPoint(World, Player->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
@@ -45,7 +45,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			}
 			else
 			{
-				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterAIControllerBase::TargetKey, nullptr);
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, nullptr);
 				// 주변 스캔 결과 플레이어가 없을 경우 TargetKey 값을 null로 초기화해 플레이어를 쫓아가지 않게 한다.
 				// (Target Key가 Set되면 Target On 데코레이터가 작동하여 기존의 Target 값을 대상으로 계속 플레이어를 추적하니깐)
 			}
@@ -53,7 +53,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	}
 	else
 	{
-		OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterAIControllerBase::TargetKey, nullptr);
+		OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, nullptr);
 	}
 	DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
 }

@@ -5,7 +5,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Character/MonsterCharacterBase.h"
-#include "Controller/MonsterAIControllerBase.h"
+#include "Controller/MonsterBaseAIController.h"
 
 UBTTask_TurnToTarget::UBTTask_TurnToTarget()
 {
@@ -19,7 +19,7 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	auto MonsterCharacter = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 
-	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(AMonsterAIControllerBase::TargetKey));
+	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(AMonsterBaseAIController::TargetKey));
 	if (Target == nullptr) return EBTNodeResult::Failed;
 
 	FVector LookVector = Target->GetActorLocation() - MonsterCharacter->GetActorLocation();

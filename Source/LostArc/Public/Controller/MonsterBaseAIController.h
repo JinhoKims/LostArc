@@ -4,21 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "MonsterAIControllerBase.generated.h"
+#include "MonsterBaseAIController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LOSTARC_API AMonsterAIControllerBase : public AAIController
+class LOSTARC_API AMonsterBaseAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
 public:
 	static const FName HomePosKey;
 	static const FName TargetKey;
 	
-	AMonsterAIControllerBase();
+	AMonsterBaseAIController();
 	virtual void OnPossess(APawn* InPawn) override;
 
 protected:

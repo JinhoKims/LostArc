@@ -2,10 +2,9 @@
 
 
 #include "Character/MonsterCharacterBase.h"
-
-#include "AnimInstances/MonsterAnimInstanceBase.h"
+#include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Components/CapsuleComponent.h"
-#include "Controller/MonsterAIControllerBase.h"
+#include "Controller/MonsterBaseAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -14,7 +13,7 @@ AMonsterCharacterBase::AMonsterCharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
 
-	AIControllerClass = AMonsterAIControllerBase::StaticClass();
+	AIControllerClass = AMonsterBaseAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	bUseControllerRotationYaw = false;
@@ -26,7 +25,7 @@ void AMonsterCharacterBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	MonsterAnim = Cast<UMonsterAnimInstanceBase>(GetMesh()->GetAnimInstance());
+	MonsterAnim = Cast<UMonsterBaseAnimInstance>(GetMesh()->GetAnimInstance());
 	if (MonsterAnim != nullptr)
 	{
 		MonsterAnim->OnMontageEnded.AddDynamic(this, &AMonsterCharacterBase::OnAttackMontageEnded);
