@@ -4,23 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTask_CorpseAttack.generated.h"
+#include "BTTask_MonsterAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LOSTARC_API UBTTask_CorpseAttack : public UBTTaskNode
+class LOSTARC_API UBTTask_MonsterAttack : public UBTTaskNode
 {
 	GENERATED_BODY()
-
-public:
-	UBTTask_CorpseAttack();
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	
+public:
+	UBTTask_MonsterAttack();
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+    	
 protected:
 	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
-
+    
 private:
 	bool bIsAttacking;
 };
