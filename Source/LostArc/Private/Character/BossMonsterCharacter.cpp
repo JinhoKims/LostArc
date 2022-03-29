@@ -11,9 +11,9 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	MonsterHP = 1000.f;
 	AttackRange = 500.f;
 	AttackRadius = 160.f;
+	
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
-
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
 }
 

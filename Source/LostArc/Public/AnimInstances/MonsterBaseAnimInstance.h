@@ -29,10 +29,10 @@ public:
 	
 	FOnMonsterAttackHitCheckDelegate OnMonsterAttackHitCheck;
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
-	
+
+	virtual void PlayMonsterDamageHandlingMontage(float MonsterHP);
 	void PlayAttackMontage();
 	void PlayDeathMontage();
-	void PlayMonsterDamageHandlingMontage(float MonsterHP);
 	void SetDeadAnim();
 
 	UFUNCTION()

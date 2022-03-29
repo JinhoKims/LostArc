@@ -2,8 +2,7 @@
 
 
 #include "AI/BTTask_MonsterAttack.h"
-
-#include "AIController.h"
+#include "Controller/MonsterBaseAIController.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Character/MonsterCharacterBase.h"
 
@@ -45,3 +44,4 @@ void UBTTask_MonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* N
 		// 태스크가 Succeeded를 반환하지 못하면 ExecuteTask에서 InProgress를 반환하여 기다리게한다. bIsAttacking이 false라면 Succeeded를 반환한다.
 	}
 }
+

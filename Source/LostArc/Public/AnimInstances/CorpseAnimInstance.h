@@ -23,7 +23,7 @@ public:
 	void PlayDeathMontage();
 	void PlayCorpseFlyawayMontage(float MonsterHP);
 	void PlayCorpseDamageHandlingMontage(float MonsterHP);
-	void NativeUpdateAnimation(float DeltaSeconds) override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UFUNCTION()
 	void AnimNotify_CorpseAttackHitCheck();
