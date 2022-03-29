@@ -3,3 +3,7 @@
 
 #include "Controller/BossMonsterAIController.h"
 
+void ABossMonsterAIController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+}

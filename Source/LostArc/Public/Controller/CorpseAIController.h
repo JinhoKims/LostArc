@@ -24,7 +24,7 @@ public:
 	static const FName TargetKey;
 
 private:
-	void OnRepeatTimer();
+	void OnRepeatTimer(); // 패트롤 함수
 
 	UPROPERTY()
 	class UBehaviorTree* BTAsset;

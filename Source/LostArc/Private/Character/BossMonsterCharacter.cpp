@@ -2,7 +2,8 @@
 
 
 #include "Character/BossMonsterCharacter.h"
-
+#include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Controller/BossMonsterAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
@@ -12,11 +13,20 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	AttackRadius = 160.f;
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+
+	AIControllerClass = ABossMonsterAIController::StaticClass();
 }
 
 void ABossMonsterCharacter::PostInitializeComponents()
 {
-	Super::PostInitializeComponents();
+	Super::Super::PostInitializeComponents();
+
+	MonsterAnim = Cast<UBossMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (MonsterAnim != nullptr)
+	{
+		MonsterAnim->OnMontageEnded.AddDynamic(this, &ABossMonsterCharacter::OnAttackMontageEnded);
+		MonsterAnim->OnMonsterAttackHitCheck.AddUObject(this, &ABossMonsterCharacter::MonsterAttackHitCheck);
+	}
 }
 
 void ABossMonsterCharacter::BeginPlay()

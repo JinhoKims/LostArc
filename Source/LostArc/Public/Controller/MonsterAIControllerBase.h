@@ -14,4 +14,17 @@ class LOSTARC_API AMonsterAIControllerBase : public AAIController
 {
 	GENERATED_BODY()
 	
+public:
+	static const FName HomePosKey;
+	static const FName TargetKey;
+	
+	AMonsterAIControllerBase();
+	virtual void OnPossess(APawn* InPawn) override;
+
+protected:
+	UPROPERTY()
+	class UBehaviorTree* BTAsset; // 비헤비어 트리 포인터 
+
+	UPROPERTY()
+	class UBlackboardData* BBAsset; // 블랙보드 포인터
 };

@@ -13,5 +13,7 @@ UCLASS()
 class LOSTARC_API ABossMonsterAIController : public AMonsterAIControllerBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void OnPossess(APawn* InPawn) override;
 };

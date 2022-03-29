@@ -5,6 +5,7 @@
 
 #include "AnimInstances/MonsterAnimInstanceBase.h"
 #include "Components/CapsuleComponent.h"
+#include "Controller/MonsterAIControllerBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -12,6 +13,9 @@ AMonsterCharacterBase::AMonsterCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
+
+	AIControllerClass = AMonsterAIControllerBase::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;

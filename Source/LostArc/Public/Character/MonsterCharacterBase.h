@@ -13,8 +13,6 @@ class LOSTARC_API AMonsterCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
-	class UMonsterAnimInstanceBase* MonsterAnim;
 	FOnAttackEndDelegate OnAttackEnd;
 	
 	AMonsterCharacterBase();
@@ -40,4 +38,8 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float MonsterSpeed;
+
+protected:
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
+	class UMonsterAnimInstanceBase* MonsterAnim;
 };
