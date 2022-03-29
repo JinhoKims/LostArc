@@ -9,7 +9,7 @@
 
 const FName ACorpseAIController::HomePosKey(TEXT("HomePos"));
 const FName ACorpseAIController::PatrolPosKey(TEXT("PatrolPos"));
-const FName ACorpseAIController::TargetKey(TEXT("Target"));
+const FName ACorpseAIController::TargetKey(TEXT("Target")); // 블랙보드와 연동할 키를 컨트롤러에서 정의해 줌
 
 ACorpseAIController::ACorpseAIController()
 {
@@ -41,9 +41,9 @@ void ACorpseAIController::OnUnPossess()
 void ACorpseAIController::OnRepeatTimer()
 {
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-	FNavLocation NavLoctaion;
-	if (NavSystem->GetRandomPointInNavigableRadius(FVector::ZeroVector, 500.0f, NavLoctaion))
+	FNavLocation NavLocation;
+	if (NavSystem->GetRandomPointInNavigableRadius(FVector::ZeroVector, 500.0f, NavLocation))
 	{
-		UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, NavLoctaion.Location);
+		UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, NavLocation.Location);
 	}
 }
