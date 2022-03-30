@@ -1,23 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AI/BTTask_MonsterAttack.h"
-#include "Controller/MonsterBaseAIController.h"
-#include "AnimInstances/MonsterBaseAnimInstance.h"
-#include "Character/MonsterCharacterBase.h"
+#include "AI/BTTask_BossMonsterAttack.h"
 
-UBTTask_MonsterAttack::UBTTask_MonsterAttack()
+#include "Controller/BossMonsterAIController.h"
+#include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Character/BossMonsterCharacter.h"
+
+UBTTask_BossMonsterAttack::UBTTask_BossMonsterAttack()
 {
 	bNotifyTick = true;
 	bIsAttacking = false;
 }
 
-EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
-	auto MonsterCharacter = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
-	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
+	auto MonsterCharacter = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
+	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
 
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
@@ -30,10 +31,10 @@ EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& O
 	return EBTNodeResult::InProgress; // When the task is first run
 }
 
-void UBTTask_MonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTTask_BossMonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	auto MonsterChar = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
-	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterChar->GetMesh()->GetAnimInstance());
+	auto MonsterChar = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
+	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterChar->GetMesh()->GetAnimInstance());
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage))
 	{
 		bIsAttacking = false;
@@ -45,4 +46,3 @@ void UBTTask_MonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* N
 		// 태스크가 Succeeded를 반환하지 못하면 ExecuteTask에서 InProgress를 반환하여 기다리게한다. bIsAttacking이 false라면 Succeeded를 반환한다.
 	}
 }
-

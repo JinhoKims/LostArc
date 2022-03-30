@@ -31,7 +31,7 @@ public:
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
 
 	virtual void PlayMonsterDamageHandlingMontage(float MonsterHP);
-	void PlayAttackMontage();
+	virtual void PlayAttackMontage();
 	void PlayDeathMontage();
 	void SetDeadAnim();
 

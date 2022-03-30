@@ -25,6 +25,7 @@ public:
 
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	float GetMonsterAttackRange() { return AttackRange; }
 
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))

@@ -38,3 +38,29 @@ void ABossMonsterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+void ABossMonsterCharacter::MonsterAttack()
+{
+	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
+
+	for(int i = 0; i < BossMonsterAnim->GetBasicAttackStep(); i++)
+	{
+		if(!BossMonsterAnim->Montage_IsPlaying(BossMonsterAnim->GetBossBasicAttackMontages()[i]))
+		{
+			BossMonsterAnim->PlayAttackMontage();
+		}
+	}
+}
+
+void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
+	
+	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackStep(); i++)
+	{
+		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
+		{
+			OnAttackEnd.Broadcast();
+		}
+	}
+}
