@@ -3,6 +3,7 @@
 
 #include "Character/BossMonsterCharacter.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Component/AIAbilityComponent.h"
 #include "Controller/BossMonsterAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -41,15 +42,7 @@ void ABossMonsterCharacter::Tick(float DeltaTime)
 
 void ABossMonsterCharacter::MonsterAttack()
 {
-	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
-
-	for(int i = 0; i < BossMonsterAnim->GetBasicAttackStep(); i++)
-	{
-		if(!BossMonsterAnim->Montage_IsPlaying(BossMonsterAnim->GetBossBasicAttackMontages()[i]))
-		{
-			BossMonsterAnim->PlayAttackMontage();
-		}
-	}
+	AbilityComponent->BasicAttack(this);
 }
 
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
@@ -61,6 +54,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{
 			OnAttackEnd.Broadcast();
+			UAISkillBase::bAnimationRunning = false;
 		}
 	}
 }

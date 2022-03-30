@@ -1,0 +1,33 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Abilities/AI/AISkill_BasicAttack.h"
+#include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Character/MonsterCharacterBase.h"
+
+UAISkill_BasicAttack::UAISkill_BasicAttack(const FObjectInitializer& ObjectInitializer)
+{
+	SkillRadius.Key = 400.0f;
+	SkillRadius.Value = 120.f;
+	DamageRatio = 1.f;
+}
+
+bool UAISkill_BasicAttack::Use(AMonsterCharacterBase* Monster)
+{
+	if(Super::Use(Monster))
+	{
+		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
+		if(!IsValid(BossMonsterAnim)) return false;
+		for(int i = 0; i < BossMonsterAnim->GetBasicAttackStep(); i++)
+		{
+			if(!BossMonsterAnim->Montage_IsPlaying(BossMonsterAnim->GetBossBasicAttackMontages()[i]))
+			{
+				BossMonsterAnim->PlayAttackMontage();
+				return bAnimationRunning = true;
+			}
+		}
+	}
+	return false;
+}
+
+

@@ -21,7 +21,6 @@ EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& O
 
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
-
 	
 	MonsterCharacter->MonsterAttack();
 	bIsAttacking = true;

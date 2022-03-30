@@ -19,15 +19,13 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 
 	auto MonsterCharacter = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
-
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
-
 	
 	MonsterCharacter->MonsterAttack();
 	bIsAttacking = true;
 	MonsterCharacter->OnAttackEnd.AddLambda([this]() -> void { bIsAttacking = false; }); // 몽타주가 끝나 브로드캐스팅 시 false로 전환
-
+	
 	return EBTNodeResult::InProgress; // When the task is first run
 }
 

@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Character/MonsterCharacterBase.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
+#include "Component/AIAbilityComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Controller/MonsterBaseAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -19,6 +19,8 @@ AMonsterCharacterBase::AMonsterCharacterBase()
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	
+	AbilityComponent = CreateDefaultSubobject<UAIAbilityComponent>(TEXT("ABILITY"));
 }
 
 void AMonsterCharacterBase::PostInitializeComponents()
@@ -37,12 +39,6 @@ void AMonsterCharacterBase::PostInitializeComponents()
 void AMonsterCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-// Called every frame
-void AMonsterCharacterBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 void AMonsterCharacterBase::MonsterAttack()
@@ -65,4 +61,3 @@ void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		OnAttackEnd.Broadcast();
 	}
 }
-
