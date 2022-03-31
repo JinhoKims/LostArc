@@ -16,8 +16,7 @@ public:
 	virtual void PlayAttackMontage() override;
 	TArray<UAnimMontage*> GetBossBasicAttackMontages();
 	int32 GetBasicAttackStep();
-
-protected:
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	TArray<UAnimMontage*> BossBasicAttackMontages;
 

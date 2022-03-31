@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AI/BTTask_BossMonsterAttack.h"
-#include "TimerManager.h"
 #include "Abilities/AI/AISkillBase.h"
 #include "Controller/BossMonsterAIController.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
@@ -17,18 +16,19 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 {
 	auto MonsterCharacter = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
-
+	
 	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
-	
-	auto AITimer = MonsterCharacter->GetAbilityComponent()->AIPatternTimer;
-	if(!MonsterCharacter->GetWorldTimerManager().IsTimerActive(AITimer))
+
+	auto AbilityComp = MonsterCharacter->GetAbilityComponent();
+	if(AbilityComp->GetCDProperty())
 	{
-		MonsterCharacter->MonsterAttack(EAbilityType::MeleeSkill_1);
+		AbilityComp->AIAbilityCast(MonsterCharacter, EAbilityType::MeleeSkill_1);
+
 		return EBTNodeResult::InProgress;
 	}
-	else
-		return EBTNodeResult::Failed;
+	
+	return EBTNodeResult::Failed;
 }
 
 void UBTTask_BossMonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)

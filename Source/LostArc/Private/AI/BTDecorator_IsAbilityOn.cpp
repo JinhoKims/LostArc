@@ -2,4 +2,18 @@
 
 
 #include "AI/BTDecorator_IsAbilityOn.h"
+#include "AIController.h"
+#include "Character/MonsterCharacterBase.h"
+#include "Component/AIAbilityComponent.h"
 
+UBTDecorator_IsAbilityOn::UBTDecorator_IsAbilityOn()
+{
+	NodeName = TEXT("IsCharge");
+}
+
+bool UBTDecorator_IsAbilityOn::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
+{
+	auto Monster = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
+	
+	return Monster->GetAbilityComponent()->GetCDProperty();
+}

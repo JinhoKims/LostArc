@@ -2,6 +2,8 @@
 
 
 #include "Abilities/AI/AISkill_1.h"
+#include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Character/MonsterCharacterBase.h"
 
 UAISkill_1::UAISkill_1(const FObjectInitializer& ObjectInitializer)
 {
@@ -15,7 +17,8 @@ bool UAISkill_1::Use(AMonsterCharacterBase* Monster)
 {
 	if(Super::Use(Monster))
 	{
-
+		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
+		BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_1_Montage, 1.f);
 		return true;
 	}
 	else

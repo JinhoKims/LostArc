@@ -7,7 +7,6 @@
 #include "Components/ActorComponent.h"
 #include "AIAbilityComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnAIAbilityCDDelegate);
 enum EAbilityType;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -17,10 +16,10 @@ class LOSTARC_API UAIAbilityComponent : public UActorComponent
 
 public:	
 	UAIAbilityComponent();
-	void BasicAttack(class ABossMonsterCharacter* Monster);
-	void AIAbilityCast(class ABossMonsterCharacter* Monster, EAbilityType Type);
-	FTimerHandle AIPatternTimer;
-
+	void AIAbilityCast(class AMonsterCharacterBase* Monster, EAbilityType Type = EAbilityType::BasicAttack);
+	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
+	void ResetCDTimer(class AMonsterCharacterBase* Monster);
+	
 protected:
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
@@ -33,5 +32,5 @@ private:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	TArray<UAISkillBase*> Abilities;
 
-	TPair<FTimerHandle, FOnAIAbilityCDDelegate> AIAbilityCDProperty;
+	TPair<FTimerHandle, bool> AIAbilityCDProperty;
 };

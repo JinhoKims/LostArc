@@ -42,7 +42,7 @@ void ABossMonsterCharacter::Tick(float DeltaTime)
 
 void ABossMonsterCharacter::MonsterAttack()
 {
-	AbilityComponent->BasicAttack(this);
+	AbilityComponent->AIAbilityCast(this);
 }
 
 void ABossMonsterCharacter::MonsterAttack(EAbilityType Type)
@@ -53,13 +53,15 @@ void ABossMonsterCharacter::MonsterAttack(EAbilityType Type)
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
-	
+
 	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackStep(); i++)
 	{
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{
 			OnAttackEnd.Broadcast();
 			UAISkillBase::bAnimationRunning = false;
+			AbilityComponent->ResetCDTimer(this); // 기본 공격하면 계속 초기화되니 수정 필요
+			break;
 		}
 	}
 
@@ -67,7 +69,9 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
+			OnAttackEnd.Broadcast();
 			UAISkillBase::bAnimationRunning = false;
+			AbilityComponent->ResetCDTimer(this);
 			break;
 		}
 	}

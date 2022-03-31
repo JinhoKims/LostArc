@@ -23,8 +23,9 @@ bool UAISkill_BasicAttack::Use(AMonsterCharacterBase* Monster)
 		{
 			if(!BossMonsterAnim->Montage_IsPlaying(BossMonsterAnim->GetBossBasicAttackMontages()[i]))
 			{
+				bAnimationRunning = true;
 				BossMonsterAnim->PlayAttackMontage();
-				return bAnimationRunning = true;
+				return true;
 			}
 		}
 	}

@@ -6,9 +6,6 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "BTDecorator_IsInAttackRange.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UBTDecorator_IsInAttackRange : public UBTDecorator
 {

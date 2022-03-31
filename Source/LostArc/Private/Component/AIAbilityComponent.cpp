@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Component/AIAbilityComponent.h"
+#include "TimerManager.h"
 #include "Character/BossMonsterCharacter.h"
+#include "Character/LostArcPlayerCharacter.h"
+#include "Controller/BossMonsterAIController.h"
 
 // Sets default values for this component's properties
 UAIAbilityComponent::UAIAbilityComponent()
@@ -20,7 +23,8 @@ void UAIAbilityComponent::InitializeComponent()
 		Abilities.Add(NewObject<UAISkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
 
-	
+	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
+	ResetCDTimer(Monster);
 }
 
 void UAIAbilityComponent::BeginPlay()
@@ -35,13 +39,15 @@ void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Abilities.Empty();
 }
 
-void UAIAbilityComponent::BasicAttack(ABossMonsterCharacter* Monster)
+void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
-	Abilities[EAbilityType::BasicAttack]->Use(Monster);
+	AIAbilityCDProperty.Value = false;
+	auto FTimeScale = FMath::RandRange(3.f, 8.f);
+	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
 }
 
-void UAIAbilityComponent::AIAbilityCast(class ABossMonsterCharacter* Monster, EAbilityType Type)
+void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, EAbilityType Type)
 {
+	AIAbilityCDProperty.Value = false;
 	Abilities[Type]->Use(Monster);
 }
-

@@ -5,6 +5,7 @@
 #include "Controller/MonsterBaseAIController.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Character/MonsterCharacterBase.h"
+#include "Component/AIAbilityComponent.h"
 
 UBTTask_MonsterAttack::UBTTask_MonsterAttack()
 {
@@ -14,18 +15,18 @@ UBTTask_MonsterAttack::UBTTask_MonsterAttack()
 
 EBTNodeResult::Type UBTTask_MonsterAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
-
 	auto MonsterCharacter = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
-	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
-
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
+	
+	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
 	
-	MonsterCharacter->MonsterAttack();
+	auto AbilityComp = MonsterCharacter->GetAbilityComponent();
+	AbilityComp->AIAbilityCast(MonsterCharacter);
+	
 	bIsAttacking = true;
-	MonsterCharacter->OnAttackEnd.AddLambda([this]() -> void { bIsAttacking = false; }); // 몽타주가 끝나 브로드캐스팅 시 false로 전환
-
+	MonsterCharacter->OnAttackEnd.AddLambda([this]() -> void { bIsAttacking = false; });
+	
 	return EBTNodeResult::InProgress; // When the task is first run
 }
 
@@ -33,15 +34,16 @@ void UBTTask_MonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* N
 {
 	auto MonsterChar = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
 	auto MonsterAnim = Cast<UMonsterBaseAnimInstance>(MonsterChar->GetMesh()->GetAnimInstance());
-	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage))
+
+	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterAttackMontage))
 	{
+		UE_LOG(LogTemp,Warning,TEXT("aaa"));
 		bIsAttacking = false;
 	}
-
+	
 	if (!bIsAttacking)
 	{
-		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // Task end condition (wait for Succeeded)
-		// 태스크가 Succeeded를 반환하지 못하면 ExecuteTask에서 InProgress를 반환하여 기다리게한다. bIsAttacking이 false라면 Succeeded를 반환한다.
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // 태스크가 Succeeded를 반환하지 못하면 ExecuteTask에서 InProgress를 반환하여 기다리게한다. bIsAttacking이 false라면 Succeeded를 반환한다.
 	}
 }
 

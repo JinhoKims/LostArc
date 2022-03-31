@@ -14,8 +14,6 @@ UBTTask_TurnToTarget::UBTTask_TurnToTarget()
 
 EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
-
 	auto MonsterCharacter = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 
@@ -26,6 +24,6 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	LookVector.Z = 0.0f;
 	FRotator TargetRot = FRotationMatrix::MakeFromX(LookVector).Rotator();
 	MonsterCharacter->SetActorRotation(FMath::RInterpTo(MonsterCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 10.f));
-
+	
 	return EBTNodeResult::Succeeded;
 }
