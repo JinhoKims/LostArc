@@ -2,6 +2,8 @@
 
 
 #include "AI/BTTask_TurnToTarget.h"
+
+#include "Abilities/AI/AISkillBase.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Character/MonsterCharacterBase.h"
@@ -23,7 +25,8 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	FVector LookVector = Target->GetActorLocation() - MonsterCharacter->GetActorLocation();
 	LookVector.Z = 0.0f;
 	FRotator TargetRot = FRotationMatrix::MakeFromX(LookVector).Rotator();
-	MonsterCharacter->SetActorRotation(FMath::RInterpTo(MonsterCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 10.f));
-	
+	MonsterCharacter->SetActorRotation(FMath::RInterpTo(MonsterCharacter->GetActorRotation(), TargetRot, GetWorld()->GetDeltaSeconds(), 5.f));
+
 	return EBTNodeResult::Succeeded;
 }
+

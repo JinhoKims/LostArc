@@ -56,8 +56,5 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	if (Montage->IsValidSectionName(TEXT("Attack"))) 
-	{
-		OnAttackEnd.Broadcast();
-	}
+	
 }
