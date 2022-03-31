@@ -19,6 +19,8 @@ void UAIAbilityComponent::InitializeComponent()
 	{
 		Abilities.Add(NewObject<UAISkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
+
+	
 }
 
 void UAIAbilityComponent::BeginPlay()
@@ -36,5 +38,10 @@ void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UAIAbilityComponent::BasicAttack(ABossMonsterCharacter* Monster)
 {
 	Abilities[EAbilityType::BasicAttack]->Use(Monster);
+}
+
+void UAIAbilityComponent::AIAbilityCast(class ABossMonsterCharacter* Monster, EAbilityType Type)
+{
+	Abilities[Type]->Use(Monster);
 }
 

@@ -20,4 +20,7 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	TArray<UAnimMontage*> BossBasicAttackMontages;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_1_Montage;
 };

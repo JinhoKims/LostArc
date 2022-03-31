@@ -13,7 +13,7 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	AttackRange = 500.f;
 	AttackRadius = 160.f;
 	
-	GetCharacterMovement()->MaxWalkSpeed = 400.f;
+	GetCharacterMovement()->MaxWalkSpeed = 50.f; // 400.f
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
 }
@@ -45,6 +45,11 @@ void ABossMonsterCharacter::MonsterAttack()
 	AbilityComponent->BasicAttack(this);
 }
 
+void ABossMonsterCharacter::MonsterAttack(EAbilityType Type)
+{
+	AbilityComponent->AIAbilityCast(this, Type);
+}
+
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
@@ -55,6 +60,15 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		{
 			OnAttackEnd.Broadcast();
 			UAISkillBase::bAnimationRunning = false;
+		}
+	}
+
+	for (int i = 1; i <= 5; i++)
+	{
+		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
+		{
+			UAISkillBase::bAnimationRunning = false;
+			break;
 		}
 	}
 }

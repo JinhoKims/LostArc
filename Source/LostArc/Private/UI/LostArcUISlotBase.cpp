@@ -8,7 +8,7 @@
 #include "Controller/LostArcPlayerController.h"
 #include "UI/LostArcUIMainHUD.h"
 
-	void ULostArcUISlotBase::NativeConstruct()
+void ULostArcUISlotBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 

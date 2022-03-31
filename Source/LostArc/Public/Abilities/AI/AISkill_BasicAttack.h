@@ -6,9 +6,6 @@
 #include "Abilities/AI/AISkillBase.h"
 #include "AISkill_BasicAttack.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UAISkill_BasicAttack : public UAISkillBase
 {

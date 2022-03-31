@@ -6,9 +6,7 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "BTTask_BossMonsterAttack.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class LOSTARC_API UBTTask_BossMonsterAttack : public UBTTaskNode
 {
@@ -20,7 +18,4 @@ public:
     	
 protected:
 	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
-    
-private:
-	bool bIsAttacking;
 };

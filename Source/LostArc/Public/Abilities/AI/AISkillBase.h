@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Templates/SubclassOf.h"
 #include "UObject/NoExportTypes.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "AISkillBase.generated.h"
 
 UCLASS()
@@ -23,4 +25,6 @@ protected:
 
 	TPair<float, float> SkillRadius; // Distance, Angle
 	float DamageRatio;
+
+	TEnumAsByte<EAbilityType> SkillType;
 };

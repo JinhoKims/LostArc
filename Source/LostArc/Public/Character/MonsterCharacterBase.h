@@ -22,6 +22,7 @@ public:
 	virtual void MonsterAttackHitCheck();
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	class UMonsterBaseAnimInstance* GetMonsterAnim() { return MonsterAnim; }
+	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
 
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);

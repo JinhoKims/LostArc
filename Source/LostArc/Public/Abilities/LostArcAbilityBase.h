@@ -10,9 +10,6 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilityCDDelegate, bool);
 
-/**
- * 
- */
 UCLASS(Abstract)
 class LOSTARC_API ULostArcAbilityBase : public UObject
 {

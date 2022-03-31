@@ -10,6 +10,7 @@ UAISkill_BasicAttack::UAISkill_BasicAttack(const FObjectInitializer& ObjectIniti
 	SkillRadius.Key = 400.0f;
 	SkillRadius.Value = 120.f;
 	DamageRatio = 1.f;
+	SkillType = EAbilityType::BasicAttack;
 }
 
 bool UAISkill_BasicAttack::Use(AMonsterCharacterBase* Monster)
