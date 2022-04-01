@@ -6,9 +6,6 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "BTDecorator_IsAbilityOn.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UBTDecorator_IsAbilityOn : public UBTDecorator
 {
