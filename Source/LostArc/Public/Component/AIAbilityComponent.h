@@ -33,4 +33,8 @@ private:
 	TArray<UAISkillBase*> Abilities;
 
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
+
+	FTimerHandle AbilityTimer;
+
+	bool bAbilityCharging;
 };
