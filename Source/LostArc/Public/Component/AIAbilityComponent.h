@@ -19,6 +19,7 @@ public:
 	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bCharging = false);
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
+	void BackupReset(class AMonsterCharacterBase* Monster);
 	
 protected:
 	virtual void InitializeComponent() override;
@@ -33,4 +34,6 @@ private:
 	TArray<UAISkillBase*> Abilities;
 
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
+	FTimerHandle BackupProperty;
+	FTimerDelegate dd;
 };

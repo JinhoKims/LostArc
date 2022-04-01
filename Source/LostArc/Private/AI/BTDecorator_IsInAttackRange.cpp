@@ -19,11 +19,10 @@ bool UBTDecorator_IsInAttackRange::CalculateRawConditionValue(UBehaviorTreeCompo
 
 	auto Target = Cast<ALostArcPlayerCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(AMonsterBaseAIController::TargetKey)); // 타겟키 정보를 Owner 비헤비어트리의 블랙보드에서 가져옴
 	if (Target == nullptr) return false;
-
+	
 	auto OwnerMonster = Cast<AMonsterCharacterBase>(ControllingPawn);
 	if(OwnerMonster == nullptr) return false;
-
-	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetAttackRange());
 	
+	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetAttackRange());
 	return bResult;
 }
