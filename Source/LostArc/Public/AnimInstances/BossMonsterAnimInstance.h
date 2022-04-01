@@ -22,4 +22,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* BossSkill_1_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_2_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_3_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_4_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_5_Montage;
 };

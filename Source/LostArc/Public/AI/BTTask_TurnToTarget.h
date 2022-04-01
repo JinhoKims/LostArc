@@ -6,9 +6,6 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "BTTask_TurnToTarget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UBTTask_TurnToTarget : public UBTTaskNode
 {
