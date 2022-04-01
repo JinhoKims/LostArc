@@ -29,6 +29,7 @@ void UAIAbilityComponent::BeginPlay()
 	Super::BeginPlay();
 	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
 	ResetCDTimer(Monster);
+	BackupTimer(Monster);
 }
 
 void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -40,20 +41,17 @@ void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
-	UE_LOG(LogTemp,Warning,TEXT("Rest Timer"));
 	AIAbilityCDProperty.Value = false;
 	
 	auto FTimeScale = FMath::RandRange(3.f, 8.f);
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
-	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateUObject(this, &UAIAbilityComponent::BackupReset, Monster), 15.f, false);
+	BackupTimer(Monster);
 }
 
-void UAIAbilityComponent::BackupReset(AMonsterCharacterBase* Monster)
+void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
 {
-	UE_LOG(LogTemp,Warning,TEXT("BackuP Timer"))
-	AIAbilityCDProperty.Value = true;
+	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true;}), 15.f, true);
 }
-
 
 void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCharging)
 {
