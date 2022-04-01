@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/AI/AISkillBase.h"
+#include "Abilities/Skill/AI/AISkillBase.h"
 #include "Components/ActorComponent.h"
 #include "AIAbilityComponent.generated.h"
 

@@ -6,9 +6,6 @@
 #include "AIController.h"
 #include "MonsterBaseAIController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API AMonsterBaseAIController : public AAIController
 {

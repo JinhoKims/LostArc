@@ -2,8 +2,7 @@
 
 
 #include "AI/BTTask_TurnToTarget.h"
-
-#include "Abilities/AI/AISkillBase.h"
+#include "Abilities/Skill/AI/AISkillBase.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Character/MonsterCharacterBase.h"

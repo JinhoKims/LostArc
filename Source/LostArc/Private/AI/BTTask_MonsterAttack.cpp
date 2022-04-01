@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "AI/BTTask_MonsterAttack.h"
+#include "Abilities/Skill/AI/AISkillBase.h"
 #include "Controller/MonsterBaseAIController.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Character/MonsterCharacterBase.h"

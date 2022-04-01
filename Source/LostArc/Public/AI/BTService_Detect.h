@@ -6,9 +6,6 @@
 #include "BehaviorTree/BTService.h"
 #include "BTService_Detect.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UBTService_Detect : public UBTService
 {

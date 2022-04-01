@@ -6,7 +6,6 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "BTTask_BossMonsterAttack.generated.h"
 
-
 UCLASS()
 class LOSTARC_API UBTTask_BossMonsterAttack : public UBTTaskNode
 {
