@@ -59,7 +59,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{
 			UAISkillBase::bAnimationRunning = false;
-			AbilityComponent->ResetCDTimer(this); // 기본 공격하면 계속 초기화되니 수정 필요
+			//AbilityComponent->ResetCDTimer(this); // 기본 공격하면 계속 초기화되니 수정 필요
 			break;
 		}
 	}

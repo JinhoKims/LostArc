@@ -4,6 +4,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Character/MonsterCharacterBase.h"
+#include "Component/AIAbilityComponent.h"
 #include "Controller/MonsterBaseAIController.h"
 
 UBTDecorator_IsInAttackRange::UBTDecorator_IsInAttackRange()
@@ -22,6 +23,7 @@ bool UBTDecorator_IsInAttackRange::CalculateRawConditionValue(UBehaviorTreeCompo
 	auto OwnerMonster = Cast<AMonsterCharacterBase>(ControllingPawn);
 	if(OwnerMonster == nullptr) return false;
 
-	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetAttackRange()); 
+	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetAttackRange());
+	
 	return bResult;
 }
