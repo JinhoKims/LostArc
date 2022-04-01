@@ -21,6 +21,4 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
-	virtual void MonsterAttack() override;
-	void MonsterAttack(EAbilityType Type);
 };

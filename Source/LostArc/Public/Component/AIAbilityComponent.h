@@ -16,7 +16,7 @@ class LOSTARC_API UAIAbilityComponent : public UActorComponent
 
 public:	
 	UAIAbilityComponent();
-	void AIAbilityCast(class AMonsterCharacterBase* Monster, EAbilityType Type = EAbilityType::BasicAttack);
+	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bCharging = false);
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
 	
@@ -33,8 +33,4 @@ private:
 	TArray<UAISkillBase*> Abilities;
 
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
-
-	FTimerHandle AbilityTimer;
-
-	bool bAbilityCharging;
 };

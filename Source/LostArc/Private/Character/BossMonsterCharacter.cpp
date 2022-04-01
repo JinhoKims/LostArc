@@ -40,16 +40,6 @@ void ABossMonsterCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ABossMonsterCharacter::MonsterAttack()
-{
-	AbilityComponent->AIAbilityCast(this);
-}
-
-void ABossMonsterCharacter::MonsterAttack(EAbilityType Type)
-{
-	AbilityComponent->AIAbilityCast(this, Type);
-}
-
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);

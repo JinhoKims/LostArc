@@ -41,10 +41,6 @@ void AMonsterCharacterBase::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AMonsterCharacterBase::MonsterAttack()
-{
-}
-
 void AMonsterCharacterBase::MonsterAttackHitCheck()
 {
 }

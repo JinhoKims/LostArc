@@ -16,7 +16,6 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 {
 	auto MonsterCharacter = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
-	UE_LOG(LogTemp,Warning,TEXT("Effects"));
 	
 	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
@@ -24,8 +23,7 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 	auto AbilityComp = MonsterCharacter->GetAbilityComponent();
 	if(AbilityComp->GetCDProperty())
 	{
-		AbilityComp->AIAbilityCast(MonsterCharacter, EAbilityType::MeleeSkill_1);
-
+		AbilityComp->AIAbilityCast(MonsterCharacter,true);
 		return EBTNodeResult::InProgress;
 	}
 	

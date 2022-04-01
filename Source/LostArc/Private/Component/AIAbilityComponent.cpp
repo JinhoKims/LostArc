@@ -22,14 +22,13 @@ void UAIAbilityComponent::InitializeComponent()
 	{
 		Abilities.Add(NewObject<UAISkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 	}
-
-	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
-	ResetCDTimer(Monster);
 }
 
 void UAIAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
+	ResetCDTimer(Monster);
 }
 
 void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -46,8 +45,17 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
 }
 
-void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, EAbilityType Type)
+void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCharging)
 {
 	AIAbilityCDProperty.Value = false;
-	Abilities[Type]->Use(Monster);
+	
+	if(bCharging)
+	{
+		int32 Type = FMath::RandRange(1, 4);
+		Abilities[Type]->Use(Monster);
+	}
+	else
+	{
+		Abilities[EAbilityType::BasicAttack]->Use(Monster);
+	}
 }
