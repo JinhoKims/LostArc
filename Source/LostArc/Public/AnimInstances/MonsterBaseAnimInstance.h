@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "MonsterBaseAnimInstance.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnMonsterAttackHitCheckDelegate)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMonsterAttackHitCheckDelegate, EAbilityType)
 DECLARE_MULTICAST_DELEGATE(FOnMonsterDeadCheckDelegate)
 
 UCLASS()
@@ -30,7 +31,6 @@ public:
 	FOnMonsterAttackHitCheckDelegate OnMonsterAttackHitCheck;
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
 
-	virtual void PlayMonsterDamageHandlingMontage(float MonsterHP);
 	virtual void PlayAttackMontage();
 	void PlayDeathMontage();
 	void SetDeadAnim();

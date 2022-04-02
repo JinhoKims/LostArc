@@ -31,7 +31,7 @@ void AMonsterCharacterBase::PostInitializeComponents()
 	if (MonsterAnim != nullptr)
 	{
 		MonsterAnim->OnMontageEnded.AddDynamic(this, &AMonsterCharacterBase::OnAttackMontageEnded);
-		MonsterAnim->OnMonsterAttackHitCheck.AddUObject(this, &AMonsterCharacterBase::MonsterAttackHitCheck);
+		MonsterAnim->OnMonsterAttackHitCheck.AddUObject(AbilityComponent, &UAIAbilityComponent::AIAbilityHitDetection);
 	}
 }
 
@@ -39,10 +39,6 @@ void AMonsterCharacterBase::PostInitializeComponents()
 void AMonsterCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-void AMonsterCharacterBase::MonsterAttackHitCheck()
-{
 }
 
 float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

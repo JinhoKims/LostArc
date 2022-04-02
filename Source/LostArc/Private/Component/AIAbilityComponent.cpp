@@ -50,7 +50,17 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 
 void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
 {
-	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true;}), 15.f, true);
+	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 15.f, true);
+}
+
+void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
+{
+	
+}
+
+float UAIAbilityComponent::GetBasicAttackRange()
+{
+	return Abilities[EAbilityType::BasicAttack]->GetSkillRadius().Key;
 }
 
 void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCharging)

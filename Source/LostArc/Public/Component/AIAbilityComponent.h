@@ -20,6 +20,8 @@ public:
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
 	void BackupTimer(class AMonsterCharacterBase* Monster);
+	void AIAbilityHitDetection(EAbilityType Type);
+	float GetBasicAttackRange();
 	
 protected:
 	virtual void InitializeComponent() override;

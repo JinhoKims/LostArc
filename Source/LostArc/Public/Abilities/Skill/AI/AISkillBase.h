@@ -18,6 +18,7 @@ public:
 	
 	virtual bool Use(class AMonsterCharacterBase* Monster);
 	virtual bool AbilityStateCheck(class AMonsterCharacterBase* Monster);
+	TPair<float, float> GetSkillRadius() {return SkillRadius;}
 
 protected:
 	UPROPERTY(EditAnywhere)

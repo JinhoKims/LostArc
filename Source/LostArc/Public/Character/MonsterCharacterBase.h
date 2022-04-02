@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Component/AIAbilityComponent.h"
 #include "GameFramework/Character.h"
 #include "MonsterCharacterBase.generated.h"
-DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
 
 UCLASS()
 class LOSTARC_API AMonsterCharacterBase : public ACharacter
@@ -13,35 +13,30 @@ class LOSTARC_API AMonsterCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-	FOnAttackEndDelegate OnAttackEnd;
-	
 	AMonsterCharacterBase();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
-	virtual void MonsterAttackHitCheck();
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	class UMonsterBaseAnimInstance* GetMonsterAnim() { return MonsterAnim; }
 	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
+	float GetBasicAttackRange() { return AbilityComponent->GetBasicAttackRange(); }
 
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	float GetAttackRange() { return AttackRange; }
 
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float MonsterHP;
 	
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	float AttackRadius;
+	float MonsterSpeed;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	float MonsterSpeed;
+	float BasicAttackRange;
 	
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	class UMonsterBaseAnimInstance* MonsterAnim;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component, meta = (AllowPrivateAccess = true))
 	class UAIAbilityComponent* AbilityComponent;
-	
-	float AttackRange;
 };

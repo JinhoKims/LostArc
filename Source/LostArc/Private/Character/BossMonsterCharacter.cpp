@@ -10,9 +10,6 @@
 ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 {
 	MonsterHP = 1000.f;
-	AttackRange = 500.f;
-	AttackRadius = 160.f;
-	
 	GetCharacterMovement()->MaxWalkSpeed = 400.f; // 400.f
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
@@ -20,24 +17,19 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 
 void ABossMonsterCharacter::PostInitializeComponents()
 {
-	Super::Super::PostInitializeComponents();
+	Super::PostInitializeComponents();
 
-	MonsterAnim = Cast<UBossMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-	if (MonsterAnim != nullptr)
-	{
-		MonsterAnim->OnMontageEnded.AddDynamic(this, &ABossMonsterCharacter::OnAttackMontageEnded);
-		MonsterAnim->OnMonsterAttackHitCheck.AddUObject(this, &ABossMonsterCharacter::MonsterAttackHitCheck);
-	}
+	// MonsterAnim = Cast<UBossMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	// if (MonsterAnim != nullptr)
+	// {
+	// 	MonsterAnim->OnMontageEnded.AddDynamic(this, &ABossMonsterCharacter::OnAttackMontageEnded);
+	// 	MonsterAnim->OnMonsterAttackHitCheck.AddUObject(this, &ABossMonsterCharacter::MonsterAttackHitCheck);
+	// }
 }
 
 void ABossMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-void ABossMonsterCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)

@@ -23,6 +23,6 @@ bool UBTDecorator_IsInAttackRange::CalculateRawConditionValue(UBehaviorTreeCompo
 	auto OwnerMonster = Cast<AMonsterCharacterBase>(ControllingPawn);
 	if(OwnerMonster == nullptr) return false;
 	
-	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetAttackRange());
+	bool bResult = (Target->GetDistanceTo(ControllingPawn) < OwnerMonster->GetBasicAttackRange());
 	return bResult;
 }

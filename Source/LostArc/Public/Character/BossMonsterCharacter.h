@@ -7,9 +7,6 @@
 #include "Component/LostArcCharacterAbilityComponent.h"
 #include "BossMonsterCharacter.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
@@ -19,6 +16,5 @@ public:
 	ABossMonsterCharacter();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 };

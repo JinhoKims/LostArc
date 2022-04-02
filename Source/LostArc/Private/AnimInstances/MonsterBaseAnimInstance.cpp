@@ -15,13 +15,9 @@ void UMonsterBaseAnimInstance::PlayDeathMontage()
 	// MonsterBase에서 NotifyCheck로 Destroy하기
 }
 
-void UMonsterBaseAnimInstance::PlayMonsterDamageHandlingMontage(float MonsterHP)
-{
-}
-
 void UMonsterBaseAnimInstance::AnimNotify_MonsterAttackHitCheck()
 {
-	OnMonsterAttackHitCheck.Broadcast();
+	OnMonsterAttackHitCheck.Broadcast(EAbilityType::BasicAttack);
 }
 
 void UMonsterBaseAnimInstance::AnimNotify_MonsterDeadCheck()

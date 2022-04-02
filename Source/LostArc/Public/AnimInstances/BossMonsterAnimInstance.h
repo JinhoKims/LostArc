@@ -12,11 +12,6 @@ class LOSTARC_API UBossMonsterAnimInstance : public UMonsterBaseAnimInstance
 	GENERATED_BODY()
 	
 public:
-	UBossMonsterAnimInstance();
-	virtual void PlayAttackMontage() override;
-	TArray<UAnimMontage*> GetBossBasicAttackMontages();
-	int32 GetBasicAttackStep();
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	TArray<UAnimMontage*> BossBasicAttackMontages;
 
@@ -34,4 +29,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* Overdrive_Montage;
+
+	UBossMonsterAnimInstance();
+	virtual void PlayAttackMontage() override;
+	TArray<UAnimMontage*> GetBossBasicAttackMontages();
+	int32 GetBasicAttackStep();
 };
