@@ -13,7 +13,7 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	AttackRange = 500.f;
 	AttackRadius = 160.f;
 	
-	GetCharacterMovement()->MaxWalkSpeed = 50.f; // 400.f
+	GetCharacterMovement()->MaxWalkSpeed = 400.f; // 400.f
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
 }

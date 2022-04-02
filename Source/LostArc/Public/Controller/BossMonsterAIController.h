@@ -13,5 +13,5 @@ class LOSTARC_API ABossMonsterAIController : public AMonsterBaseAIController
 	GENERATED_BODY()
 
 public:
-	virtual void OnPossess(APawn* InPawn) override;
+	ABossMonsterAIController();
 };
