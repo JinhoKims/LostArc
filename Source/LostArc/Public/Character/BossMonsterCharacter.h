@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Character/MonsterCharacterBase.h"
-#include "Component/LostArcCharacterAbilityComponent.h"
 #include "BossMonsterCharacter.generated.h"
 
 UCLASS()
