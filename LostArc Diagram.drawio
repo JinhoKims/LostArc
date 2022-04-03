@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-04-03T03:08:04.421Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="SdcPuMZTT6xZ1KyHkfhV" version="17.4.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-04-03T03:30:38.217Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="5Gd3uYZHbEQmauXI9QBS" version="17.4.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="981" dy="526" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -1025,6 +1025,9 @@
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-44" value="+ GetCDProperty(): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-35">
           <mxGeometry y="234" width="423" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-49" value="물어뜯기 스킬에 부채꼴 슬라이드 패턴 적용" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="939" y="3284" width="456" height="93" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
