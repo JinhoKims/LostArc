@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-04-03T02:40:15.258Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="xniwZSGSIlTgqkSINWjE" version="17.4.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-04-03T02:51:59.859Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="VxPYp4B-pDWph6CRg1ft" version="17.4.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2370" dy="1270" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -947,6 +947,51 @@
         </mxCell>
         <mxCell id="JIlmRn7kdJUl1s28WsXn-0" value="5~10초 마다 랜덤 스킬 적용&lt;br&gt;근접 시 평타 지속&lt;br&gt;멀리 시 접근하면서 5-10초 마다 랜덤 스킬 적용&lt;br&gt;&lt;br&gt;자주 쓴 스킬은 가중치 낮추기" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="939" y="3174" width="456" height="93" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-0" value="MonsterCharacter" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1019.5" y="2387" width="295" height="218" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-1" value="+ float: MonsterHP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="26" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-2" value="+ float: MonsterSpeed" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="52" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-3" value="+ float: AttackRange" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="78" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-4" value="+ MonsterAnim: MonsterAnimInstance" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="104" width="295" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-24" value="+ MonsterAbility: AIAbilitycomponent" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="131" width="295" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="158" width="295" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-8" value="+ TakeDamage(...): float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="166" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-11" value="+ OnAttackMontageEnded(AnimMontage, bool): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry y="192" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="qa0ByjECdFoH68icfagM-25" target="qa0ByjECdFoH68icfagM-0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-25" value="MonsterCharacter" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1019.5" y="2658" width="295" height="113" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-29" value="+ " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-25">
+          <mxGeometry y="26" width="295" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-31" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-25">
+          <mxGeometry y="53" width="295" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-32" value="+ TakeDamage(...): float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-25">
+          <mxGeometry y="61" width="295" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qa0ByjECdFoH68icfagM-33" value="+ OnAttackMontageEnded(AnimMontage, bool): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-25">
+          <mxGeometry y="87" width="295" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
