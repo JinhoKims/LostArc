@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-04-03T03:06:40.339Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="R3PnezCNpMiT3OnU9lVO" version="17.4.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-04-03T03:08:04.421Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="SdcPuMZTT6xZ1KyHkfhV" version="17.4.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -948,7 +948,7 @@
         <mxCell id="JIlmRn7kdJUl1s28WsXn-0" value="5~10초 마다 랜덤 스킬 적용&lt;br&gt;근접 시 평타 지속&lt;br&gt;멀리 시 접근하면서 5-10초 마다 랜덤 스킬 적용&lt;br&gt;&lt;br&gt;자주 쓴 스킬은 가중치 낮추기" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="939" y="3174" width="456" height="93" as="geometry" />
         </mxCell>
-        <mxCell id="qa0ByjECdFoH68icfagM-0" value="MonsterCharacter" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="qa0ByjECdFoH68icfagM-0" value="MonsterCharacterBase" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="1019.5" y="2387" width="295" height="218" as="geometry" />
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-1" value="+ float: MonsterHP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-0">
@@ -978,7 +978,7 @@
         <mxCell id="qa0ByjECdFoH68icfagM-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="qa0ByjECdFoH68icfagM-25" target="qa0ByjECdFoH68icfagM-0">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="qa0ByjECdFoH68icfagM-25" value="MonsterCharacter" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="qa0ByjECdFoH68icfagM-25" value="BossMonster" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="1019.5" y="2658" width="295" height="113" as="geometry" />
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-29" value="+ " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-25">
@@ -994,7 +994,7 @@
           <mxGeometry y="87" width="295" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-35" value="AIAbilityComponent" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="955.5" y="2834" width="423" height="282" as="geometry" />
+          <mxGeometry x="955.5" y="2834" width="423" height="258" as="geometry" />
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-36" value="+ AbilityClass: TArray&lt;TSubclassOf&lt;AISkillBase&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-35">
           <mxGeometry y="26" width="423" height="26" as="geometry" />
@@ -1025,9 +1025,6 @@
         </mxCell>
         <mxCell id="qa0ByjECdFoH68icfagM-44" value="+ GetCDProperty(): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-35">
           <mxGeometry y="234" width="423" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="qa0ByjECdFoH68icfagM-45" value="+ AnimMontageEnded(class UAnimMontage* Montage, bool bInterrupted): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="qa0ByjECdFoH68icfagM-35">
-          <mxGeometry y="258" width="423" height="24" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
