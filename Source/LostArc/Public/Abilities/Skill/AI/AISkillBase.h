@@ -28,4 +28,6 @@ protected:
 	float DamageRatio;
 
 	TEnumAsByte<EAbilityType> SkillType;
+
+	
 };

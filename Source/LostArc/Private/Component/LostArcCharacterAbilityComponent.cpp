@@ -95,6 +95,7 @@ void ULostArcCharacterAbilityComponent::AbilityCast(EAbilityType Type)
 void ULostArcCharacterAbilityComponent::AbilityHitDetection(EAbilityType Type)
 {
 	Abilities[Type]->HitDetection(Cast<ALostArcPlayerCharacter>(GetOwner()));
+	
 }
 
 void ULostArcCharacterAbilityComponent::RangedSkillEffect(EAbilityType Type)

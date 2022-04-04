@@ -54,7 +54,7 @@ ALostArcPlayerCharacter::ALostArcPlayerCharacter()
 	AbilityComponent = CreateDefaultSubobject<ULostArcCharacterAbilityComponent>(TEXT("ABILITY"));
 	InventoryComponent = CreateDefaultSubobject<ULostArcInventoryComponent>(TEXT("INVENTORY"));
 	EquipComponent = CreateDefaultSubobject<ULostArcCharacterEquipComponent>(TEXT("EQUIP"));
-	QuickSlotComponent = CreateDefaultSubobject<ULostArcQuickSlotComponent>(TEXT("Quick"));
+	QuickSlotComponent = CreateDefaultSubobject<ULostArcQuickSlotComponent>(TEXT("QUICK"));
 }
 
 void ALostArcPlayerCharacter::PostInitializeComponents()

@@ -8,7 +8,15 @@ bool UAISkillBase::bAnimationRunning = false;
 
 bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 {
-	return AbilityStateCheck(Monster);
+	if(AbilityStateCheck(Monster))
+	{
+		
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool UAISkillBase::AbilityStateCheck(AMonsterCharacterBase* Monster)
