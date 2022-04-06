@@ -12,7 +12,11 @@ bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 	{
 		if(Skill_Indicator != nullptr)
 		{
-			GetWorld()->SpawnActor<AActor>(Skill_Indicator, Monster->GetMesh()->GetComponentTransform());
+			auto Transform = Monster->GetMesh()->GetComponentTransform();
+			Transform.SetRotation(Monster->GetActorRotation().Quaternion());
+			
+			
+			GetWorld()->SpawnActor<AActor>(Skill_Indicator, Transform);
 		}
 		return true;
 	}
