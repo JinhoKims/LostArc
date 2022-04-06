@@ -53,7 +53,7 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 
 void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
 {
-	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 10.f, true);
+	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 12.f, true);
 }
 
 void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
@@ -73,7 +73,7 @@ void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCh
 	if(bCharging)
 	{
 		int32 Type = FMath::RandRange(1, 4);
-		Abilities[EAbilityType::MeleeSkill_1]->Use(Monster);
+		Abilities[Type]->Use(Monster);
 	}
 	else
 	{
