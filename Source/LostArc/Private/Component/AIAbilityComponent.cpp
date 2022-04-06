@@ -12,6 +12,7 @@ UAIAbilityComponent::UAIAbilityComponent()
 	bWantsInitializeComponent = true;
 	PrimaryComponentTick.bCanEverTick = false;
 	AbilityClass.Init(UAISkillBase::StaticClass(),5);
+	IndicatorClass.Init(NULL, 5);
 }
 
 void UAIAbilityComponent::InitializeComponent()
@@ -21,7 +22,9 @@ void UAIAbilityComponent::InitializeComponent()
 	for (int i = 0; i < 5; i++)
 	{
 		Abilities.Add(NewObject<UAISkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
+		Abilities[i]->SetIndicator(IndicatorClass[i].Get());
 	}
+	
 }
 
 void UAIAbilityComponent::BeginPlay()
@@ -70,7 +73,7 @@ void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCh
 	if(bCharging)
 	{
 		int32 Type = FMath::RandRange(1, 4);
-		Abilities[Type]->Use(Monster);
+		Abilities[EAbilityType::MeleeSkill_3]->Use(Monster);
 	}
 	else
 	{

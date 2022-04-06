@@ -18,9 +18,6 @@ public:
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true, bindwidget))
-	class USceneComponent* IndicatorComponent;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;
 };

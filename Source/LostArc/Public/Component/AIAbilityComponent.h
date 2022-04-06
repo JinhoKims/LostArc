@@ -32,8 +32,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<UAISkillBase>> AbilityClass;
 	
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
+	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<UAISkillBase*> Abilities;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Indicator, meta = (AllowPrivateAccess = true))
+	TArray<TSubclassOf<AActor>> IndicatorClass;
 
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
 	FTimerHandle BackupProperty;

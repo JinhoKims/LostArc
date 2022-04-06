@@ -8,7 +8,7 @@
 #include "Component/LostArcCharacterAbilityComponent.h"
 #include "AISkillBase.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class LOSTARC_API UAISkillBase : public UObject
 {
 	GENERATED_BODY()
@@ -19,15 +19,13 @@ public:
 	virtual bool Use(class AMonsterCharacterBase* Monster);
 	virtual bool AbilityStateCheck(class AMonsterCharacterBase* Monster);
 	TPair<float, float> GetSkillRadius() {return SkillRadius;}
+	void SetIndicator(TSubclassOf<AActor> Indicator);
 
 protected:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> Skill_Effect;
-
+	TEnumAsByte<EAbilityType> SkillType;
 	TPair<float, float> SkillRadius; // Distance, Angle
 	float DamageRatio;
-
-	TEnumAsByte<EAbilityType> SkillType;
-
 	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> Skill_Indicator;
 };

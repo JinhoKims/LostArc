@@ -13,8 +13,6 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	GetCharacterMovement()->MaxWalkSpeed = 400.f; // 400.f
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
-
-	IndicatorComponent = CreateDefaultSubobject<USceneComponent>(TEXT("INDICATOR"));
 	IndicatorClass.Init(NULL, 4);
 }
 
