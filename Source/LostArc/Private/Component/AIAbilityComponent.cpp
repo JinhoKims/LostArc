@@ -73,7 +73,7 @@ void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCh
 	if(bCharging)
 	{
 		int32 Type = FMath::RandRange(1, 4);
-		Abilities[EAbilityType::MeleeSkill_3]->Use(Monster);
+		Abilities[EAbilityType::MeleeSkill_1]->Use(Monster);
 	}
 	else
 	{
