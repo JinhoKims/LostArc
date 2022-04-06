@@ -15,7 +15,6 @@ bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 			auto Transform = Monster->GetMesh()->GetComponentTransform();
 			Transform.SetRotation(Monster->GetActorRotation().Quaternion());
 			
-			
 			GetWorld()->SpawnActor<AActor>(Skill_Indicator, Transform);
 		}
 		return true;
