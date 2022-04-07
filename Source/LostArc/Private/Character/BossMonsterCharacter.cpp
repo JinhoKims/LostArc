@@ -39,7 +39,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		}
 	}
 
-	for (int i = 1; i <= 5; i++)
+	for (int i = 1; i < 5; i++)
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{

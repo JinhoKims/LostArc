@@ -21,8 +21,9 @@ public:
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
 	void BackupTimer(class AMonsterCharacterBase* Monster);
 	void AIAbilityHitDetection(EAbilityType Type);
+	void AnimNotifyEffectCheck(EAbilityType Type);
 	float GetBasicAttackRange();
-	
+
 protected:
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;

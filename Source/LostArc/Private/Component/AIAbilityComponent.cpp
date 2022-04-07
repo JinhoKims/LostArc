@@ -24,7 +24,6 @@ void UAIAbilityComponent::InitializeComponent()
 		Abilities.Add(NewObject<UAISkillBase>(this, AbilityClass[i].Get())); // Get()은 UClass 원본 데이터(파생형)를 반환한다.
 		Abilities[i]->SetIndicator(IndicatorClass[i].Get());
 	}
-	
 }
 
 void UAIAbilityComponent::BeginPlay()
@@ -61,6 +60,11 @@ void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
 	
 }
 
+void UAIAbilityComponent::AnimNotifyEffectCheck(EAbilityType Type)
+{
+	Abilities[Type]->AbilityEffect(Cast<AMonsterCharacterBase>(GetOwner()));
+}
+
 float UAIAbilityComponent::GetBasicAttackRange()
 {
 	return Abilities[EAbilityType::BasicAttack]->GetSkillRadius().Key;
@@ -72,7 +76,7 @@ void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCh
 	
 	if(bCharging)
 	{
-		int32 Type = FMath::RandRange(1, 4);
+		int32 Type = FMath::RandRange(4, 4);
 		Abilities[Type]->Use(Monster);
 	}
 	else

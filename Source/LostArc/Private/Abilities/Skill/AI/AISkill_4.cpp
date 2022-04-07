@@ -23,3 +23,8 @@ bool UAISkill_4::Use(AMonsterCharacterBase* Monster)
 	else
 		return false;
 }
+
+void UAISkill_4::AbilityEffect(AMonsterCharacterBase* Monster)
+{
+	
+}

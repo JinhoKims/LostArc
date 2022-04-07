@@ -2,6 +2,7 @@
 
 
 #include "Abilities/Skill/AI/AISkillBase.h"
+#include "NavigationSystem.h"
 #include "Character/MonsterCharacterBase.h"
 
 bool UAISkillBase::bAnimationRunning = false;
@@ -34,6 +35,11 @@ bool UAISkillBase::AbilityStateCheck(AMonsterCharacterBase* Monster)
 		return false;
 	}
 	return true;
+}
+
+void UAISkillBase::AbilityEffect(AMonsterCharacterBase* Monster)
+{
+	
 }
 
 void UAISkillBase::SetIndicator(TSubclassOf<AActor> Indicator)

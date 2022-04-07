@@ -6,7 +6,9 @@
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "BossMonsterAnimInstance.generated.h"
 
-UCLASS()
+
+
+UCLASS(Blueprintable)
 class LOSTARC_API UBossMonsterAnimInstance : public UMonsterBaseAnimInstance
 {
 	GENERATED_BODY()
@@ -26,10 +28,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* BossSkill_4_Montage;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* BossSkill_4_2_Montage;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* Overdrive_Montage;
-
+	
 	UBossMonsterAnimInstance();
 	virtual void PlayAttackMontage() override;
 	TArray<UAnimMontage*> GetBossBasicAttackMontages();
