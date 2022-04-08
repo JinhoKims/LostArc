@@ -45,14 +45,14 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
 	AIAbilityCDProperty.Value = false;
 	
-	auto FTimeScale = FMath::RandRange(3.f, 8.f);
+	auto FTimeScale = FMath::RandRange(3.f, 5.f);
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
 	BackupTimer(Monster);
 }
 
 void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
 {
-	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 12.f, true);
+	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 5.f, true);
 }
 
 void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
