@@ -9,9 +9,6 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate)
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API UCorpseAnimInstance : public UAnimInstance
 {

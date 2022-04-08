@@ -25,6 +25,7 @@ void UMonsterBaseAnimInstance::AnimNotify_MonsterDeadCheck()
 	OnMonsterDeadCheck.Broadcast();
 }
 
+
 void UMonsterBaseAnimInstance::SetDeadAnim()
 {
 	bMonsterIsDead = true;

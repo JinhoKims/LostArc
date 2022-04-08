@@ -18,6 +18,12 @@ int32 UBossMonsterAnimInstance::GetBasicAttackStep()
 	return BossBasicAttackMontages.Num();
 }
 
+void UBossMonsterAnimInstance::AnimNotify_MonsterJumpCheck()
+{
+	UE_LOG(LogTemp,Warning,TEXT("AAASD"));
+	OnMonsterEffectCheckDelegate.Broadcast(EAbilityType::MeleeSkill_4);
+}
+
 TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()
 {
 	return BossBasicAttackMontages;

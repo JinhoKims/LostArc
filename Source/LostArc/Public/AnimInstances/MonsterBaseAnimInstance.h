@@ -31,13 +31,13 @@ public:
 	FOnMonsterAttackHitCheckDelegate OnMonsterAttackHitCheck;
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
 
-	virtual void PlayAttackMontage();
-	void PlayDeathMontage();
-	void SetDeadAnim();
-
 	UFUNCTION()
 	void AnimNotify_MonsterAttackHitCheck();
 
 	UFUNCTION()
 	void AnimNotify_MonsterDeadCheck();
+
+	virtual void PlayAttackMontage();
+	void PlayDeathMontage();
+	void SetDeadAnim();
 };
