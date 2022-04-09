@@ -74,7 +74,7 @@ void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCh
 	
 	if(bCharging)
 	{
-		int32 Type = FMath::RandRange(4, 4);
+		int32 Type = FMath::RandRange(1, 4);
 		Abilities[Type]->Use(Monster);
 	}
 	else
