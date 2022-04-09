@@ -46,6 +46,9 @@ public:
 	UFUNCTION()
 	virtual void AnimNotify_Skill_2_EffectCheck();
 
+	UFUNCTION()
+	virtual void AnimNotify_Skill_3_EffectCheck();
+
 private:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	FOnMonsterEffectCheckDelegate OnMonsterEffectCheckDelegate;

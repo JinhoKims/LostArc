@@ -29,7 +29,13 @@ void UBossMonsterAnimInstance::AnimNotify_MonsterJumpCheck()
 void UBossMonsterAnimInstance::AnimNotify_Skill_2_EffectCheck()
 {
     auto BossMonster = Cast<ABossMonsterCharacter>(GetOwningActor());
-	BossMonster->MonsterJumpEffect();
+	BossMonster->MonsterMeteorEffect();
+}
+
+void UBossMonsterAnimInstance::AnimNotify_Skill_3_EffectCheck()
+{
+	auto BossMonster = Cast<ABossMonsterCharacter>(GetOwningActor());
+	BossMonster->MonsterBreathEffect();
 }
 
 TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()
