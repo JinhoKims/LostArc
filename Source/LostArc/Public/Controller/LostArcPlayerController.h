@@ -49,12 +49,14 @@ protected:
 	/* Mouse Wheel Scroll */
 	void MouseWheelUp();
 	void MouseWheelDown();
+	void MonsterJumpCameraEffect(class ABossMonsterCharacter* BossMonster);
 
 private:
 	/* Changing the Camera position according to the mouse wheel */
 	TPair<bool, bool> bCameraSit;
 	FTimerHandle CameraZoomTimer;
 	void CameraPositionChange(bool bWheel);
+	bool bMonsterEffect;
 };
 
 

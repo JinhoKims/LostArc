@@ -4,6 +4,7 @@
 #include "Abilities/Skill/AI/AISkillBase.h"
 #include "Controller/BossMonsterAIController.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Character/BossMonsterCharacter.h"
 #include "Component/AIAbilityComponent.h"
 
@@ -21,6 +22,7 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
 
 	auto AbilityComp = MonsterCharacter->GetAbilityComponent();
+
 	if(AbilityComp->GetCDProperty())
 	{
 		AbilityComp->AIAbilityCast(MonsterCharacter,true);

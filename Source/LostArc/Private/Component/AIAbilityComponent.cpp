@@ -43,9 +43,8 @@ void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
 	AIAbilityCDProperty.Value = false;
-	auto FTimeScale = 7.f;
-
-	UE_LOG(LogTemp,Warning,TEXT("RESET"));
+	auto FTimeScale = FMath::FRandRange(4.f, 7.f);
+	UE_LOG(LogTemp,Warning,TEXT("Rest Time : %f"), FTimeScale);
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, true); // 쿨타임 계산
 }
 

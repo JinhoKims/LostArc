@@ -2,6 +2,7 @@
 
 #include "Abilities/Skill/AI/AISkill_4.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
+#include "Character/BossMonsterCharacter.h"
 #include "Character/MonsterCharacterBase.h"
 #include "Components/CapsuleComponent.h"
 
@@ -18,7 +19,10 @@ bool UAISkill_4::Use(AMonsterCharacterBase* Monster)
 	if(Super::Use(Monster))
 	{
 		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
-		Monster->GetCapsuleComponent()->SetCollisionProfileName(TEXT("Spectator"));
+		auto BossMonster = Cast<ABossMonsterCharacter>(Monster);
+		Monster->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		CameraEffectDelegate.Broadcast();
+		BossMonster->bBossJump = true;
 		BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_4_Montage, 1.f);
 		return true;
 	}

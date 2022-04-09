@@ -4,12 +4,13 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/MonsterCharacterBase.h"
 #include "Component/AIAbilityComponent.h"
+#include "Controller/BossMonsterAIController.h"
 #include "Controller/MonsterBaseAIController.h"
 
 UBTService_Charger::UBTService_Charger()
 {
 	NodeName = TEXT("Charger");
-	Interval = 1.0f; // 서비스 호출 주기
+	Interval = 0.1f; // 서비스 호출 주기
 }
 
 void UBTService_Charger::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
@@ -20,4 +21,5 @@ void UBTService_Charger::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 	if(Monster == nullptr) return;
 	
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMonsterBaseAIController::ChargeKey,  Monster->GetAbilityComponent()->GetCDProperty());
+	OwnerComp.GetBlackboardComponent()->SetValueAsBool(ABossMonsterAIController::IsAirKey, UAISkillBase::bIsAir);
 }

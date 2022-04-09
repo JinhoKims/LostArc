@@ -14,6 +14,8 @@ class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 	GENERATED_BODY()
 
 public:
+	bool bBossJump;
+	
 	ABossMonsterCharacter();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;

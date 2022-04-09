@@ -3,6 +3,7 @@
 #include "AI/BTService_Detect.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Character/BossMonsterCharacter.h"
 #include "Character/LostArcPlayerCharacter.h"
 #include "Controller/MonsterBaseAIController.h"
 
@@ -18,7 +19,18 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (ControllingPawn == nullptr) return;
+	
+	ECollisionChannel PawnChannel = ECollisionChannel::ECC_GameTraceChannel4;
 
+	auto IsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
+	if(IsBoss != nullptr)
+	{
+		if(IsBoss->bBossJump)
+		{
+			PawnChannel = ECollisionChannel::ECC_GameTraceChannel5;
+		}
+	}
+	
 	UWorld* World = ControllingPawn->GetWorld();
 	FVector Center = ControllingPawn->GetActorLocation();
 	float DetectRadius = 2048.0f;
@@ -26,7 +38,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	TArray<FOverlapResult> OverlapResults;
 	FCollisionQueryParams CollisionQueryParams(NAME_None, false, ControllingPawn);
-	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel4, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
+	
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, PawnChannel, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
 
 	if (bResult)
 	{
