@@ -28,7 +28,8 @@ void UBossMonsterAnimInstance::AnimNotify_MonsterJumpCheck()
 
 void UBossMonsterAnimInstance::AnimNotify_Skill_2_EffectCheck()
 {
-	UE_LOG(LogTemp,Warning,TEXT("CHECK"));
+    auto BossMonster = Cast<ABossMonsterCharacter>(GetOwningActor());
+	BossMonster->MonsterJumpEffect();
 }
 
 TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()

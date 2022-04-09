@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void MonsterJumpEffect();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void MonsterMeteorEffect();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;
