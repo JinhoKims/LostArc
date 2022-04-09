@@ -2,6 +2,8 @@
 
 #include "AnimInstances/BossMonsterAnimInstance.h"
 
+#include "Character/BossMonsterCharacter.h"
+
 UBossMonsterAnimInstance::UBossMonsterAnimInstance()
 {
 	BossBasicAttackMontages.Init(NULL, 3);
@@ -20,7 +22,8 @@ int32 UBossMonsterAnimInstance::GetBasicAttackStep()
 
 void UBossMonsterAnimInstance::AnimNotify_MonsterJumpCheck()
 {
-	UE_LOG(LogTemp,Warning,TEXT("Monster Jump"));
+	auto BossMonster = Cast<ABossMonsterCharacter>(GetOwningActor());
+	BossMonster->MonsterJumpEffect();
 }
 
 TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()
