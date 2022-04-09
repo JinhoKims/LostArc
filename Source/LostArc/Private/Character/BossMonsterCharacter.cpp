@@ -44,6 +44,13 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
+			// if(i == 4)
+			// {
+			// 	BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_5_Montage, 1.f);
+			// 	break;
+			// }
+			
+			UE_LOG(LogTemp,Warning,TEXT("END"));	
 			UAISkillBase::bAnimationRunning = false;
 			bBossJump = false;
 			AbilityComponent->ResetCDTimer(this);
