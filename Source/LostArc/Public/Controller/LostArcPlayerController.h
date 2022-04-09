@@ -16,10 +16,6 @@ class ALostArcPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	ALostArcPlayerController();
-	virtual void OnPossess(APawn* aPawn) override;
-	virtual void BeginPlay() override;
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class ULostArcUIMainHUD> MainHUDClass;
 
@@ -27,6 +23,10 @@ public:
 	class ULostArcUIMainHUD* MainHUD;
 
 	bool bOnSlotClick = false;
+	
+	ALostArcPlayerController();
+	virtual void OnPossess(APawn* aPawn) override;
+	virtual void BeginPlay() override;
 
 protected:
 	/* True if the controlled character should navigate to the mouse cursor. */
@@ -49,14 +49,12 @@ protected:
 	/* Mouse Wheel Scroll */
 	void MouseWheelUp();
 	void MouseWheelDown();
-	void MonsterJumpCameraEffect(class ABossMonsterCharacter* BossMonster);
 
 private:
 	/* Changing the Camera position according to the mouse wheel */
 	TPair<bool, bool> bCameraSit;
 	FTimerHandle CameraZoomTimer;
 	void CameraPositionChange(bool bWheel);
-	bool bMonsterEffect;
 };
 
 

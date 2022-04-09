@@ -6,8 +6,6 @@
 #include "Abilities/Skill/AI/AISkillBase.h"
 #include "AISkill_4.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCameraEffectDelegate);
-
 UCLASS()
 class LOSTARC_API UAISkill_4 : public UAISkillBase
 {
@@ -17,6 +15,4 @@ public:
 	UAISkill_4(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(AMonsterCharacterBase* Monster) override;
 	virtual void AbilityEffect(AMonsterCharacterBase* Monster) override;
-
-	FOnCameraEffectDelegate CameraEffectDelegate;
 };

@@ -61,16 +61,7 @@ void ALostArcPlayerController::PlayerTick(float DeltaTime)
 	{
 		CameraPositionChange(bCameraSit.Value);
 	}
-	
-	// if(bShowRangedAbilCursor) 레인지 스킬 1 전용 코드(수정 필요)
-	// {
-	// 	FHitResult TraceHitResult;
-	// 	GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
-	// 	RangedAbilityCursor->SetActorLocation(TraceHitResult.Location);
-	// }
 }
-
-
 
 void ALostArcPlayerController::MoveToMouseCursor()
 {
@@ -133,15 +124,6 @@ void ALostArcPlayerController::MouseWheelDown()
 	bCameraSit.Value = false;
 	GetWorldTimerManager().ClearTimer(CameraZoomTimer);
 	GetWorldTimerManager().SetTimer(CameraZoomTimer, FTimerDelegate::CreateLambda([&]() { bCameraSit.Key = false; }), 3.5f, false);
-}
-
-void ALostArcPlayerController::MonsterJumpCameraEffect(ABossMonsterCharacter* BossMonster)
-{
-	if(BossMonster->bBossJump)
-	{
-		auto ArcCharacter = Cast<ALostArcPlayerCharacter>(GetPawn());
-		ArcCharacter->GetCameraBoom()->TargetArmLength = FMath::Clamp(ArcCharacter->GetCameraBoom()->TargetArmLength += 7.f, 300.f, 2250.f);
-	}
 }
 
 void ALostArcPlayerController::CameraPositionChange(bool bWheel)

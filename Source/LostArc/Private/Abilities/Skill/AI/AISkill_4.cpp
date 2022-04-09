@@ -21,7 +21,6 @@ bool UAISkill_4::Use(AMonsterCharacterBase* Monster)
 		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
 		auto BossMonster = Cast<ABossMonsterCharacter>(Monster);
 		Monster->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		CameraEffectDelegate.Broadcast();
 		BossMonster->bBossJump = true;
 		BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_4_Montage, 1.f);
 		return true;

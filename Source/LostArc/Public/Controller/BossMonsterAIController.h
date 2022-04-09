@@ -15,5 +15,4 @@ public:
 	static const FName IsAirKey;
 	
 	ABossMonsterAIController();
-	
 };
