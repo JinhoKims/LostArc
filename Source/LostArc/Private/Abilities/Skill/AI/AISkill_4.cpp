@@ -3,6 +3,7 @@
 #include "Abilities/Skill/AI/AISkill_4.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
 #include "Character/MonsterCharacterBase.h"
+#include "Components/CapsuleComponent.h"
 
 UAISkill_4::UAISkill_4(const FObjectInitializer& ObjectInitializer)
 {
@@ -17,6 +18,7 @@ bool UAISkill_4::Use(AMonsterCharacterBase* Monster)
 	if(Super::Use(Monster))
 	{
 		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
+		Monster->GetCapsuleComponent()->SetCollisionProfileName(TEXT("Spectator"));
 		BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_4_Montage, 1.f);
 		return true;
 	}

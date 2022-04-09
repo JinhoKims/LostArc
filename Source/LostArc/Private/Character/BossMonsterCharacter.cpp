@@ -4,6 +4,7 @@
 #include "Character/BossMonsterCharacter.h"
 #include "AnimInstances/BossMonsterAnimInstance.h"
 #include "Component/AIAbilityComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Controller/BossMonsterAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -43,7 +44,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
-			UE_LOG(LogTemp,Warning,TEXT("END!"));
+			GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
 			UAISkillBase::bAnimationRunning = false;
 			AbilityComponent->ResetCDTimer(this);
 			break;

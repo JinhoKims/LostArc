@@ -31,7 +31,6 @@ void UAIAbilityComponent::BeginPlay()
 	Super::BeginPlay();
 	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
 	ResetCDTimer(Monster);
-	BackupTimer(Monster);
 }
 
 void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -44,10 +43,10 @@ void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
 	AIAbilityCDProperty.Value = false;
-	
 	auto FTimeScale = 7.f;
-	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
-	BackupTimer(Monster);
+
+	UE_LOG(LogTemp,Warning,TEXT("RESET"));
+	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, true); // 쿨타임 계산
 }
 
 void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
