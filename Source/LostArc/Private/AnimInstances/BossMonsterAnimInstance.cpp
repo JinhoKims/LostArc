@@ -20,8 +20,7 @@ int32 UBossMonsterAnimInstance::GetBasicAttackStep()
 
 void UBossMonsterAnimInstance::AnimNotify_MonsterJumpCheck()
 {
-	UE_LOG(LogTemp,Warning,TEXT("AAASD"));
-	OnMonsterEffectCheckDelegate.Broadcast(EAbilityType::MeleeSkill_4);
+	UE_LOG(LogTemp,Warning,TEXT("Monster Jump"));
 }
 
 TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()

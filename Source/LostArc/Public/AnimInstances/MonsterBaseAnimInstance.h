@@ -36,7 +36,7 @@ public:
 
 	UFUNCTION()
 	void AnimNotify_MonsterDeadCheck();
-
+	
 	virtual void PlayAttackMontage();
 	void PlayDeathMontage();
 	void SetDeadAnim();

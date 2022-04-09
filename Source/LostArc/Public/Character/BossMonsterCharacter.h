@@ -19,6 +19,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void MonsterJumpEffect();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;

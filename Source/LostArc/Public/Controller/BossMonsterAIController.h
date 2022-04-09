@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BlackboardData.h"
 #include "Controller/MonsterBaseAIController.h"
 #include "BossMonsterAIController.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class LOSTARC_API ABossMonsterAIController : public AMonsterBaseAIController
 {
 	GENERATED_BODY()
@@ -16,13 +15,5 @@ public:
 	static const FName IsAirKey;
 	
 	ABossMonsterAIController();
-	void Tets()
-	{
-		auto Key = BBAsset->Keys;
-		auto Type = Key.FindByKey(IsAirKey);
-		B
-		
-		
-	}
 	
 };

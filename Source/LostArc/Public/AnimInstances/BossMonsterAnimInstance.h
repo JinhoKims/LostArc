@@ -28,7 +28,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* BossSkill_4_Montage;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* Overdrive_Montage;
 	
@@ -38,7 +38,7 @@ public:
 	int32 GetBasicAttackStep();
 
 	UFUNCTION()
-	void AnimNotify_MonsterJumpCheck();
+	virtual void AnimNotify_MonsterJumpCheck();
 
 private:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, meta = (AllowPrivateAccess = true))

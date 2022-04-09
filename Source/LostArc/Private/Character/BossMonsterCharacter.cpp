@@ -43,6 +43,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
+			UE_LOG(LogTemp,Warning,TEXT("END!"));
 			UAISkillBase::bAnimationRunning = false;
 			AbilityComponent->ResetCDTimer(this);
 			break;

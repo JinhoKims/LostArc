@@ -45,7 +45,7 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 {
 	AIAbilityCDProperty.Value = false;
 	
-	auto FTimeScale = FMath::RandRange(3.f, 5.f);
+	auto FTimeScale = 7.f;
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, false); // 쿨타임 계산
 	BackupTimer(Monster);
 }

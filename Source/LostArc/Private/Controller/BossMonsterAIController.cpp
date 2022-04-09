@@ -2,6 +2,8 @@
 
 #include "Controller/BossMonsterAIController.h"
 
+#include "BehaviorTree/BehaviorTree.h"
+
 const FName ABossMonsterAIController::IsAirKey(TEXT("IsAir"));
 
 ABossMonsterAIController::ABossMonsterAIController()
