@@ -25,6 +25,7 @@ void ABossMonsterCharacter::PostInitializeComponents()
 void ABossMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
@@ -45,10 +46,26 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
 			UAISkillBase::bAnimationRunning = false;
-			bisBossJumping = false;
+			bBossIsDisable = false;
 			AbilityComponent->ResetCDTimer(this);
 			GetCapsuleComponent()->SetCollisionProfileName(FName("Monster"));
 			break;
 		}
 	}
+}
+
+float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float FFinalDamage = Super::Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if(bIsAbsent)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Shit!"));
+	}
+	else
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Nope"));
+	}
+	
+	return FFinalDamage;
 }

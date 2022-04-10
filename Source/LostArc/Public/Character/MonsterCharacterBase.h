@@ -7,7 +7,7 @@
 #include "GameFramework/Character.h"
 #include "MonsterCharacterBase.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class LOSTARC_API AMonsterCharacterBase : public ACharacter
 {
 	GENERATED_BODY()

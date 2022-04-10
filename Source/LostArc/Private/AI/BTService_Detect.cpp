@@ -25,7 +25,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	auto IsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
 	if(IsBoss != nullptr)
 	{
-		if(IsBoss->bisBossJumping)
+		if(IsBoss->bBossIsDisable)
 		{
 			PawnChannel = ECollisionChannel::ECC_GameTraceChannel5;
 		}

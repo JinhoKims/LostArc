@@ -6,19 +6,24 @@
 #include "Character/MonsterCharacterBase.h"
 #include "BossMonsterCharacter.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
 	GENERATED_BODY()
 
 public:
-	bool bisBossJumping;
+	UPROPERTY(BlueprintReadWrite)
+	bool bBossIsDisable;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsAbsent;
 	
 	ABossMonsterCharacter();
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
-
+	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void MonsterJumpEffect();
 

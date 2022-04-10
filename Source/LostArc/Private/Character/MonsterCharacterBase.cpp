@@ -43,7 +43,11 @@ void AMonsterCharacterBase::BeginPlay()
 
 float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	float FFinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
+	UE_LOG(LogTemp,Warning,TEXT("%f"), FFinalDamage);
+	
+	return FFinalDamage;
 }
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
