@@ -26,6 +26,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* BossSkill_4_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	UAnimMontage* Boss_Groggy_Montage;
 	
 	UBossMonsterAnimInstance();
 	virtual void PlayAttackMontage() override;
@@ -33,7 +36,7 @@ public:
 	int32 GetBasicAttackStep();
 
 	UFUNCTION()
-	virtual void AnimNotify_MonsterJumpCheck();
+	virtual void AnimNotify_MonsterJumpCheck(); // boss enum state : defualt, skll, groggery
 
 	UFUNCTION()
 	virtual void AnimNotify_Skill_2_EffectCheck();
