@@ -14,7 +14,6 @@ class LOSTARC_API AMonsterBaseAIController : public AAIController
 public:
 	static const FName HomePosKey;
 	static const FName TargetKey;
-	static const FName ChargeKey;
 	
 	AMonsterBaseAIController();
 	virtual void OnPossess(APawn* InPawn) override;

@@ -1,10 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Controller/BossMonsterAIController.h"
-
 #include "BehaviorTree/BehaviorTree.h"
 
-const FName ABossMonsterAIController::IsAirKey(TEXT("IsAir"));
+const FName ABossMonsterAIController::IsChargeKey(TEXT("Charge"));
 
 ABossMonsterAIController::ABossMonsterAIController()
 {

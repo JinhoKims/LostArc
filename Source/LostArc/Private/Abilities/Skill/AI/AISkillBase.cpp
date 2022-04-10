@@ -6,7 +6,6 @@
 #include "Character/MonsterCharacterBase.h"
 
 bool UAISkillBase::bAnimationRunning = false;
-bool UAISkillBase::bIsAir = false;
 
 bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 {

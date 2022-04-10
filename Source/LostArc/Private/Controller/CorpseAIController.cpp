@@ -13,10 +13,7 @@ const FName ACorpseAIController::TargetKey(TEXT("Target")); // 블랙보드와 �
 
 ACorpseAIController::ACorpseAIController()
 {
-	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("BlackboardData'/Game/ArcCharacter/Corpse/AI/BB_Corpse.BB_Corpse'"));
-	if (BBObject.Succeeded()) { BBAsset = BBObject.Object; }
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/ArcCharacter/Corpse/AI/BT_Corpse.BT_Corpse'"));
-	if (BTObject.Succeeded()) { BTAsset = BTObject.Object; }
+	
 }
 
 void ACorpseAIController::OnPossess(APawn* InPawn)

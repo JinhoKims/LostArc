@@ -20,6 +20,5 @@ void UBTService_Charger::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 	auto Monster = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
 	if(Monster == nullptr) return;
 	
-	OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMonsterBaseAIController::ChargeKey,  Monster->GetAbilityComponent()->GetCDProperty());
-	OwnerComp.GetBlackboardComponent()->SetValueAsBool(ABossMonsterAIController::IsAirKey, UAISkillBase::bIsAir);
+	OwnerComp.GetBlackboardComponent()->SetValueAsBool(ABossMonsterAIController::IsChargeKey,  Monster->GetAbilityComponent()->GetCDProperty());
 }

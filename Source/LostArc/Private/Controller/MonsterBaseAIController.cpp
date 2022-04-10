@@ -7,7 +7,6 @@
 
 const FName AMonsterBaseAIController::HomePosKey(TEXT("HomePos"));
 const FName AMonsterBaseAIController::TargetKey(TEXT("Target")); // 블랙보드와 연동할 키를 컨트롤러에서 정의해 줌
-const FName AMonsterBaseAIController::ChargeKey(TEXT("Charge"));
 
 AMonsterBaseAIController::AMonsterBaseAIController()
 {

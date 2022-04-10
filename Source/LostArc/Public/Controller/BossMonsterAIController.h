@@ -12,7 +12,7 @@ class LOSTARC_API ABossMonsterAIController : public AMonsterBaseAIController
 	GENERATED_BODY()
 
 public:
-	static const FName IsAirKey;
+	static const FName IsChargeKey;
 	
 	ABossMonsterAIController();
 };

@@ -15,7 +15,6 @@ class LOSTARC_API UAISkillBase : public UObject
 
 public:
 	static bool bAnimationRunning;
-	static bool bIsAir;
 	
 	virtual bool Use(class AMonsterCharacterBase* Monster);
 	virtual bool AbilityStateCheck(class AMonsterCharacterBase* Monster);
