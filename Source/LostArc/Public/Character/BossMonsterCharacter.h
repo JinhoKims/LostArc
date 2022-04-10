@@ -6,15 +6,13 @@
 #include "Character/MonsterCharacterBase.h"
 #include "BossMonsterCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMonsterSkillEffectCheckDelegate, EAbilityType, Type);
-
 UCLASS()
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
 	GENERATED_BODY()
 
 public:
-	bool bBossJump;
+	bool bisBossJumping;
 	
 	ABossMonsterCharacter();
 	virtual void PostInitializeComponents() override;
@@ -33,7 +31,4 @@ public:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;
-
-	UPROPERTY(BlueprintAssignable, VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	FOnMonsterSkillEffectCheckDelegate OnMonsterSkillEffectCheckDelegate;
 };

@@ -18,10 +18,7 @@ class LOSTARC_API UMonsterBaseAnimInstance : public UAnimInstance
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, meta = (AllowPrivateAccess = true))
 	bool bMonsterIsDead;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
-	UAnimMontage* MonsterFlinchMontage;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* MonsterAttackMontage;
 

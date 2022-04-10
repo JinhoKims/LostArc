@@ -19,9 +19,7 @@ public:
 	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bCharging = false);
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
-	void BackupTimer(class AMonsterCharacterBase* Monster);
 	void AIAbilityHitDetection(EAbilityType Type);
-	void AnimNotifyEffectCheck(EAbilityType Type);
 	float GetBasicAttackRange();
 
 protected:
@@ -40,5 +38,4 @@ private:
 	TArray<TSubclassOf<AActor>> IndicatorClass;
 
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
-	FTimerHandle BackupProperty;
 };

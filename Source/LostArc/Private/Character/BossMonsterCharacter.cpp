@@ -45,7 +45,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
 			UAISkillBase::bAnimationRunning = false;
-			bBossJump = false;
+			bisBossJumping = false;
 			AbilityComponent->ResetCDTimer(this);
 			GetCapsuleComponent()->SetCollisionProfileName(FName("Monster"));
 			break;

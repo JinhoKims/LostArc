@@ -48,19 +48,9 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, true); // 쿨타임 계산
 }
 
-void UAIAbilityComponent::BackupTimer(AMonsterCharacterBase* Monster)
-{
-	Monster->GetWorldTimerManager().SetTimer(BackupProperty, FTimerDelegate::CreateLambda([&](){ UE_LOG(LogTemp,Warning,TEXT("Backup!")); AIAbilityCDProperty.Value = true; }), 5.f, true);
-}
-
 void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
 {
 	
-}
-
-void UAIAbilityComponent::AnimNotifyEffectCheck(EAbilityType Type)
-{
-	Abilities[Type]->AbilityEffect(Cast<AMonsterCharacterBase>(GetOwner()));
 }
 
 float UAIAbilityComponent::GetBasicAttackRange()

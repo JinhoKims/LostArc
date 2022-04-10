@@ -19,7 +19,7 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 	if (MonsterCharacter == nullptr) return EBTNodeResult::Failed;
 	
 	auto MonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterCharacter->GetMesh()->GetAnimInstance());
-	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterFlinchMontage) || (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage))) return EBTNodeResult::Failed;
+	if (MonsterAnim->Montage_IsPlaying(MonsterAnim->MonsterDeathMontage)) return EBTNodeResult::Failed;
 
 	auto AbilityComp = MonsterCharacter->GetAbilityComponent();
 

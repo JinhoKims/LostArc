@@ -38,11 +38,6 @@ bool UAISkillBase::AbilityStateCheck(AMonsterCharacterBase* Monster)
 	return true;
 }
 
-void UAISkillBase::AbilityEffect(AMonsterCharacterBase* Monster)
-{
-	
-}
-
 void UAISkillBase::SetIndicator(TSubclassOf<AActor> Indicator)
 {
 	if(Indicator != nullptr)

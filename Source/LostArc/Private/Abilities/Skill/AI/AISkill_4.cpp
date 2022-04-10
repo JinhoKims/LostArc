@@ -21,15 +21,10 @@ bool UAISkill_4::Use(AMonsterCharacterBase* Monster)
 		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
 		auto BossMonster = Cast<ABossMonsterCharacter>(Monster);
 		Monster->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		BossMonster->bBossJump = true;
+		BossMonster->bisBossJumping = true;
 		BossMonsterAnim->Montage_Play(BossMonsterAnim->BossSkill_4_Montage, 1.f);
 		return true;
 	}
 	else
 		return false;
-}
-
-void UAISkill_4::AbilityEffect(AMonsterCharacterBase* Monster)
-{
-	
 }

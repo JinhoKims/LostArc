@@ -10,7 +10,7 @@
 UBTService_Detect::UBTService_Detect()
 {
 	NodeName = TEXT("Detect");
-	Interval = 1.0f; // 서비스 호출 주기
+	Interval = 0.5f; // 서비스 호출 주기
 }
 
 void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
@@ -25,7 +25,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	auto IsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
 	if(IsBoss != nullptr)
 	{
-		if(IsBoss->bBossJump)
+		if(IsBoss->bisBossJumping)
 		{
 			PawnChannel = ECollisionChannel::ECC_GameTraceChannel5;
 		}

@@ -14,5 +14,4 @@ class LOSTARC_API UAISkill_4 : public UAISkillBase
 public:
 	UAISkill_4(const FObjectInitializer& ObjectInitializer);
 	virtual bool Use(AMonsterCharacterBase* Monster) override;
-	virtual void AbilityEffect(AMonsterCharacterBase* Monster) override;
 };
