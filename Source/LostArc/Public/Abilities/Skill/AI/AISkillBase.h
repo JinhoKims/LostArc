@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Templates/SubclassOf.h"
 #include "UObject/NoExportTypes.h"
+#include "Character/BossMonsterCharacter.h"
 #include "Component/LostArcCharacterAbilityComponent.h"
 #include "AISkillBase.generated.h"
 
@@ -14,7 +15,7 @@ class LOSTARC_API UAISkillBase : public UObject
 	GENERATED_BODY()
 
 public:
-	static bool bAnimationRunning;
+	static bool bMonsterAnimationRunning;
 	
 	virtual bool Use(class AMonsterCharacterBase* Monster);
 	virtual bool AbilityStateCheck(class AMonsterCharacterBase* Monster);

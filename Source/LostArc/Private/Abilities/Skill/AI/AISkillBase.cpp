@@ -3,9 +3,10 @@
 
 #include "Abilities/Skill/AI/AISkillBase.h"
 #include "NavigationSystem.h"
+#include "Character/BossMonsterCharacter.h"
 #include "Character/MonsterCharacterBase.h"
 
-bool UAISkillBase::bAnimationRunning = false;
+bool UAISkillBase::bMonsterAnimationRunning = false;
 
 bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 {
@@ -15,22 +16,24 @@ bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 		{
 			auto Transform = Monster->GetMesh()->GetComponentTransform();
 			Transform.SetRotation(Monster->GetActorRotation().Quaternion());
-			
 			GetWorld()->SpawnActor<AActor>(Skill_Indicator, Transform);
 		}
+		
+		auto Boss = Cast<ABossMonsterCharacter>(Monster);
+		Boss->BossState = EBossState::Casting;
+		
 		return true;
 	}
 	else
 	{
 		return false;
 	}
-
-	
 }
+
 
 bool UAISkillBase::AbilityStateCheck(AMonsterCharacterBase* Monster)
 {
-	if(bAnimationRunning)
+	if(bMonsterAnimationRunning)
 	{
 		return false;
 	}

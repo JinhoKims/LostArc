@@ -6,6 +6,15 @@
 #include "Character/MonsterCharacterBase.h"
 #include "BossMonsterCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum EBossState
+{
+	Default,
+	Casting,
+	Groggy 
+};
+
+
 UCLASS(Blueprintable)
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
@@ -17,6 +26,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsAbsent;
+
+	UPROPERTY(BlueprintReadWrite) // 블프에서 사용하려면 TEnumAsByte로 선언
+	TEnumAsByte<EBossState> BossState;
 	
 	ABossMonsterCharacter();
 	virtual void PostInitializeComponents() override;

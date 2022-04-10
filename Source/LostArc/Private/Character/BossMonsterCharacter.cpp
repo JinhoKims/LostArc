@@ -32,11 +32,16 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 {
 	auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(MonsterAnim);
 
+	if(bInterrupted)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Interrupted"));
+	}
+	
 	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackStep(); i++)
 	{
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{
-			UAISkillBase::bAnimationRunning = false;
+			UAISkillBase::bMonsterAnimationRunning = false;
 			break;
 		}
 	}
@@ -45,12 +50,19 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(Montage->IsValidSectionName(FName(FString::Printf(TEXT("Skill_%d"), i))))
 		{
-			UAISkillBase::bAnimationRunning = false;
+			UAISkillBase::bMonsterAnimationRunning = false;
 			bBossIsDisable = false;
 			AbilityComponent->ResetCDTimer(this);
 			GetCapsuleComponent()->SetCollisionProfileName(FName("Monster"));
 			break;
 		}
+	}
+	
+	if(Montage->IsValidSectionName(FName("Groggy")))
+	{
+		BossState = EBossState::Default;
+		AbilityComponent->ResetCDTimer(this);
+		UAISkillBase::bMonsterAnimationRunning = false;
 	}
 }
 
@@ -58,13 +70,10 @@ float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& 
 {
 	float FFinalDamage = Super::Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	if(bIsAbsent)
+	if(bIsAbsent && BossState != EBossState::Groggy)
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Shit!"));
-	}
-	else
-	{
-		UE_LOG(LogTemp,Warning,TEXT("Nope"));
+		BossState = EBossState::Groggy; // 중복으로 스턴먹는거 방지
+		MonsterAnim->Montage_Play(Cast<UBossMonsterAnimInstance>(MonsterAnim)->Boss_Groggy_Montage);
 	}
 	
 	return FFinalDamage;

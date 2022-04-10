@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Component/AIAbilityComponent.h"
 #include "GameFramework/Character.h"
 #include "MonsterCharacterBase.generated.h"
 
@@ -19,7 +18,7 @@ public:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	class UMonsterBaseAnimInstance* GetMonsterAnim() { return MonsterAnim; }
 	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
-	float GetBasicAttackRange() { return AbilityComponent->GetBasicAttackRange(); }
+	float GetBasicAttackRange();
 
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);

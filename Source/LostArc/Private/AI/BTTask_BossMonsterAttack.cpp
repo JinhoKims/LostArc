@@ -34,7 +34,7 @@ EBTNodeResult::Type UBTTask_BossMonsterAttack::ExecuteTask(UBehaviorTreeComponen
 
 void UBTTask_BossMonsterAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	if(!UAISkillBase::bAnimationRunning)
+	if(!UAISkillBase::bMonsterAnimationRunning)
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); 
 	}

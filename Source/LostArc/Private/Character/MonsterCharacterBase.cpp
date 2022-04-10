@@ -2,8 +2,8 @@
 
 #include "Character/MonsterCharacterBase.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
-#include "Component/AIAbilityComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Component/AIAbilityComponent.h"
 #include "Controller/MonsterBaseAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -48,6 +48,11 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 	UE_LOG(LogTemp,Warning,TEXT("%f"), FFinalDamage);
 	
 	return FFinalDamage;
+}
+
+float AMonsterCharacterBase::GetBasicAttackRange()
+{
+	return AbilityComponent->GetBasicAttackRange();
 }
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)

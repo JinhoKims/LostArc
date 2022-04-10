@@ -3,7 +3,6 @@
 #include "Component/AIAbilityComponent.h"
 #include "TimerManager.h"
 #include "Character/BossMonsterCharacter.h"
-#include "Character/LostArcPlayerCharacter.h"
 #include "Controller/BossMonsterAIController.h"
 
 // Sets default values for this component's properties
@@ -36,7 +35,7 @@ void UAIAbilityComponent::BeginPlay()
 void UAIAbilityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	UAISkillBase::bAnimationRunning = false;
+	UAISkillBase::bMonsterAnimationRunning = false;
 	Abilities.Empty();
 }
 

@@ -34,13 +34,13 @@ public:
 	virtual void PlayAttackMontage() override;
 	TArray<UAnimMontage*> GetBossBasicAttackMontages();
 	int32 GetBasicAttackStep();
-
-	UFUNCTION()
-	virtual void AnimNotify_MonsterJumpCheck(); // boss enum state : defualt, skll, groggery
-
+	
 	UFUNCTION()
 	virtual void AnimNotify_Skill_2_EffectCheck();
 
 	UFUNCTION()
 	virtual void AnimNotify_Skill_3_EffectCheck();
+
+	UFUNCTION()
+	virtual void AnimNotify_Skill_4_EffectCheck(); 
 };
