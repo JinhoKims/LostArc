@@ -36,14 +36,16 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 	{
 		if(BossState == EBossState::Groggy)
 		{
-			UE_LOG(LogTemp,Warning,TEXT("Stun!"));
 			if(AbilityComponent->GetIndicatorActorRef() != nullptr)
 			{
 				AbilityComponent->GetIndicatorActorRef()->Destroy();
 			}
 			if(Montage->IsValidSectionName(FName("Skill_2")))
 			{
-				AbilityComponent->GetMeteorActorRef()->Destroy();
+				if(AbilityComponent->GetMeteorActorRef() != nullptr)
+				{
+					AbilityComponent->GetMeteorActorRef()->Destroy();
+				}
 			}
 		}
 	}
