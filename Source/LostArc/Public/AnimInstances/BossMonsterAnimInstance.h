@@ -32,8 +32,7 @@ public:
 	
 	UBossMonsterAnimInstance();
 	virtual void PlayAttackMontage() override;
-	TArray<UAnimMontage*> GetBossBasicAttackMontages();
-	int32 GetBasicAttackStep();
+	int32 GetBossBasicAttackTotalStep();
 	
 	UFUNCTION()
 	virtual void AnimNotify_Skill_2_EffectCheck();

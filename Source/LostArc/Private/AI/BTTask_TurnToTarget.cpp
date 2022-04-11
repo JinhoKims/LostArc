@@ -28,4 +28,3 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 
 	return EBTNodeResult::Succeeded;
 }
-

@@ -21,11 +21,10 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (ControllingPawn == nullptr) return;
 	
 	ECollisionChannel PawnChannel = ECollisionChannel::ECC_GameTraceChannel4;
-
-	auto IsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
-	if(IsBoss != nullptr)
+	auto bIsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
+	if(bIsBoss != nullptr)
 	{
-		if(IsBoss->bBossIsDisable)
+		if(bIsBoss->bBossIsDisable)
 		{
 			PawnChannel = ECollisionChannel::ECC_GameTraceChannel5;
 		}
@@ -33,12 +32,10 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	
 	UWorld* World = ControllingPawn->GetWorld();
 	FVector Center = ControllingPawn->GetActorLocation();
-	float DetectRadius = 2048.0f;
-	if (nullptr == World) return;
-
-	TArray<FOverlapResult> OverlapResults;
 	FCollisionQueryParams CollisionQueryParams(NAME_None, false, ControllingPawn);
-	
+	TArray<FOverlapResult> OverlapResults;
+
+	float DetectRadius = 2048.0f; // 예측 반경 Key화 하기
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, PawnChannel, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
 
 	if (bResult)
@@ -49,7 +46,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			if (Player && Player->GetController()->IsPlayerController())
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, Player); // TargetKey에 Player 정보를 저장한다. (Value로)
-
 				//DrawDebugSphere(World, Center, DetectRadius, 32, FColor::Green, false, 0.2f);
 				//DrawDebugPoint(World, Player->GetActorLocation(), 10.0f, FColor::Blue, false, 0.2f);
 				//DrawDebugLine(World, ControllingPawn->GetActorLocation(), Player->GetActorLocation(), FColor::Blue, false, 0.2f);
@@ -67,5 +63,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	{
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, nullptr);
 	}
+	
 	DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
 }

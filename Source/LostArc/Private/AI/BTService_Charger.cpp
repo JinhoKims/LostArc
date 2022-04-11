@@ -2,7 +2,6 @@
 
 #include "AI/BTService_Charger.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "Character/MonsterCharacterBase.h"
 #include "Component/AIAbilityComponent.h"
 #include "Controller/BossMonsterAIController.h"
 #include "Controller/MonsterBaseAIController.h"
@@ -17,7 +16,7 @@ void UBTService_Charger::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	
-	auto Monster = Cast<AMonsterCharacterBase>(OwnerComp.GetAIOwner()->GetPawn());
+	auto Monster = Cast<ABossMonsterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	if(Monster == nullptr) return;
 	
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool(ABossMonsterAIController::IsChargeKey,  Monster->GetAbilityComponent()->GetCDProperty());

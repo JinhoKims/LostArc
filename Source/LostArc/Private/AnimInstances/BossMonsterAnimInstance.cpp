@@ -10,11 +10,11 @@ UBossMonsterAnimInstance::UBossMonsterAnimInstance()
 
 void UBossMonsterAnimInstance::PlayAttackMontage()
 {
-	auto Number = FMath::RandRange(0, GetBasicAttackStep() - 1);
+	auto Number = FMath::RandRange(0, GetBossBasicAttackTotalStep() - 1);
 	Montage_Play(BossBasicAttackMontages[Number], 1.f);
 }
 
-int32 UBossMonsterAnimInstance::GetBasicAttackStep()
+int32 UBossMonsterAnimInstance::GetBossBasicAttackTotalStep()
 {
 	return BossBasicAttackMontages.Num();
 }
@@ -35,9 +35,4 @@ void UBossMonsterAnimInstance::AnimNotify_Skill_4_EffectCheck()
 {
 	auto BossMonster = Cast<ABossMonsterCharacter>(GetOwningActor());
 	BossMonster->MonsterJumpEffect();
-}
-
-TArray<UAnimMontage*> UBossMonsterAnimInstance::GetBossBasicAttackMontages()
-{
-	return BossBasicAttackMontages;
 }

@@ -14,7 +14,6 @@ enum EBossState
 	Groggy 
 };
 
-
 UCLASS(Blueprintable)
 class LOSTARC_API ABossMonsterCharacter : public AMonsterCharacterBase
 {
@@ -34,9 +33,10 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-	float GetBasicAttackRange();
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
+	virtual float GetBasicAttackRange() override;
+	virtual void MonsterAttack() override;
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void MonsterJumpEffect();

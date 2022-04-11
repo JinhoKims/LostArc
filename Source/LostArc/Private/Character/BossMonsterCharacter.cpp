@@ -22,14 +22,11 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 void ABossMonsterCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	
 }
 
 void ABossMonsterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
@@ -54,11 +51,12 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		}
 	}
 	
-	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackStep(); i++)
+	for(int i = 1; i <= BossMonsterAnim->GetBossBasicAttackTotalStep(); i++)
 	{
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{
 			UAISkillBase::bMonsterAnimationRunning = false;
+			OnBasicAttackEnd.Broadcast();
 			break;
 		}
 	}
@@ -90,16 +88,18 @@ float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& 
 	if(bIsAbsent && BossState != EBossState::Groggy)
 	{
 		BossState = EBossState::Groggy; // 중복으로 스턴먹는거 방지
-		
 		MonsterAnim->Montage_Play(Cast<UBossMonsterAnimInstance>(MonsterAnim)->Boss_Groggy_Montage);
-		
 	}
 	
 	return FFinalDamage;
 }
 
-
 float ABossMonsterCharacter::GetBasicAttackRange()
 {
 	return AbilityComponent->GetBasicAttackRange();
+}
+
+void ABossMonsterCharacter::MonsterAttack()
+{
+	AbilityComponent->AIAbilityCast(this);
 }

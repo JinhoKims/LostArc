@@ -28,7 +28,7 @@ void UAIAbilityComponent::InitializeComponent()
 void UAIAbilityComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	auto Monster = Cast<ABossMonsterCharacter>(GetOwner());
+	auto Monster = Cast<AMonsterCharacterBase>(GetOwner());
 	ResetCDTimer(Monster);
 }
 
@@ -49,7 +49,6 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 
 void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
 {
-	
 }
 
 float UAIAbilityComponent::GetBasicAttackRange()
@@ -57,11 +56,11 @@ float UAIAbilityComponent::GetBasicAttackRange()
 	return Abilities[EAbilityType::BasicAttack]->GetSkillRadius().Key;
 }
 
-void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bCharging)
+void UAIAbilityComponent::AIAbilityCast(AMonsterCharacterBase* Monster, bool bIsSkill)
 {
 	AIAbilityCDProperty.Value = false;
 	
-	if(bCharging)
+	if(bIsSkill)
 	{
 		int32 Type = FMath::RandRange(1, 4);
 		Abilities[Type]->Use(Monster);

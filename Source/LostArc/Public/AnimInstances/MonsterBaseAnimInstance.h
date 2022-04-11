@@ -7,7 +7,6 @@
 #include "Component/LostArcCharacterAbilityComponent.h"
 #include "MonsterBaseAnimInstance.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMonsterAttackHitCheckDelegate, EAbilityType)
 DECLARE_MULTICAST_DELEGATE(FOnMonsterDeadCheckDelegate)
 
 UCLASS()
@@ -25,11 +24,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* MonsterDeathMontage;
 	
-	FOnMonsterAttackHitCheckDelegate OnMonsterAttackHitCheck;
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
-
-	UFUNCTION()
-	void AnimNotify_MonsterAttackHitCheck();
 
 	UFUNCTION()
 	void AnimNotify_MonsterDeadCheck();

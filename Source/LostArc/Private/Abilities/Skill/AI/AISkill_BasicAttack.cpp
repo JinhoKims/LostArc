@@ -18,15 +18,10 @@ bool UAISkill_BasicAttack::Use(AMonsterCharacterBase* Monster)
 	if(Super::Use(Monster))
 	{
 		auto BossMonsterAnim = Cast<UBossMonsterAnimInstance>(Monster->GetMonsterAnim());
-		if(!IsValid(BossMonsterAnim)) return false;
-		for(int i = 0; i < BossMonsterAnim->GetBasicAttackStep(); i++)
+		if(IsValid(BossMonsterAnim))
 		{
-			if(!BossMonsterAnim->Montage_IsPlaying(BossMonsterAnim->GetBossBasicAttackMontages()[i]))
-			{
-				bMonsterAnimationRunning = true;
-				BossMonsterAnim->PlayAttackMontage();
-				return true;
-			}
+			BossMonsterAnim->PlayAttackMontage();
+			return true;
 		}
 	}
 	return false;

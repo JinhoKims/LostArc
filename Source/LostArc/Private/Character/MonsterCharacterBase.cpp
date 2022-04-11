@@ -50,6 +50,11 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 }
 
 
+float AMonsterCharacterBase::GetBasicAttackRange()
+{
+	return BasicAttackRange;
+}
+
 void AMonsterCharacterBase::MonsterAttack()
 {
 	MonsterAnim->PlayAttackMontage();
@@ -57,8 +62,8 @@ void AMonsterCharacterBase::MonsterAttack()
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	if(Montage->IsValidSectionName(FName("Attack")))
+	if(Montage->IsValidSectionName(FName("BasicAttack")))
 	{
-		bIsAttacking = false;
+		OnBasicAttackEnd.Broadcast();
 	}
 }

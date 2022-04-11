@@ -15,11 +15,6 @@ void UMonsterBaseAnimInstance::PlayDeathMontage()
 	// MonsterBase에서 NotifyCheck로 Destroy하기
 }
 
-void UMonsterBaseAnimInstance::AnimNotify_MonsterAttackHitCheck()
-{
-	OnMonsterAttackHitCheck.Broadcast(EAbilityType::BasicAttack);
-}
-
 void UMonsterBaseAnimInstance::AnimNotify_MonsterDeadCheck()
 {
 	OnMonsterDeadCheck.Broadcast();

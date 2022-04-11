@@ -16,7 +16,7 @@ class LOSTARC_API UAIAbilityComponent : public UActorComponent
 
 public:	
 	UAIAbilityComponent();
-	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bCharging = false);
+	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bIsSkill = false);
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
 	AActor*& GetIndicatorActorRef() { return IndicatorRef; } // 포인터 레퍼런스를 반환
