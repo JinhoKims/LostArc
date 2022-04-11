@@ -20,7 +20,7 @@ AMonsterCharacterBase::AMonsterCharacterBase()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
-	AbilityComponent = CreateDefaultSubobject<UAIAbilityComponent>(TEXT("ABILITY"));
+	
 }
 
 void AMonsterCharacterBase::PostInitializeComponents()
@@ -31,7 +31,6 @@ void AMonsterCharacterBase::PostInitializeComponents()
 	if (MonsterAnim != nullptr)
 	{
 		MonsterAnim->OnMontageEnded.AddDynamic(this, &AMonsterCharacterBase::OnAttackMontageEnded);
-		MonsterAnim->OnMonsterAttackHitCheck.AddUObject(AbilityComponent, &UAIAbilityComponent::AIAbilityHitDetection);
 	}
 }
 
@@ -50,12 +49,16 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 	return FFinalDamage;
 }
 
-float AMonsterCharacterBase::GetBasicAttackRange()
+
+void AMonsterCharacterBase::MonsterAttack()
 {
-	return AbilityComponent->GetBasicAttackRange();
+	MonsterAnim->PlayAttackMontage();
 }
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	
+	if(Montage->IsValidSectionName(FName("Attack")))
+	{
+		bIsAttacking = false;
+	}
 }

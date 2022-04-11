@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Abilities/Skill/LostArcSkill_BasicAttack.h"
 
 ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -8,8 +7,8 @@ ULostArcSkill_BasicAttack::ULostArcSkill_BasicAttack(const FObjectInitializer& O
 	CoolDown = 0.f;
 	ManaCost = 0.f;
 	SkillRatio = 0.5f;
-	SkillRadius.Key = 250.0f;
-	SkillRadius.Value = 110.f;
+	SkillRadius.Key = 300.0f;
+	SkillRadius.Value = 120.f;
 	bBasicAttacking = false;
 	CurrentCombo = 0;
 	MaxCombo = 3;

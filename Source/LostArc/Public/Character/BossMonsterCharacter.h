@@ -34,7 +34,9 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	float GetBasicAttackRange();
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
+	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void MonsterJumpEffect();
@@ -48,4 +50,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component, meta = (AllowPrivateAccess = true))
+	class UAIAbilityComponent* AbilityComponent;
 };

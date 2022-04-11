@@ -15,11 +15,15 @@ ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
 	IndicatorClass.Init(NULL, 4);
+	
+	AbilityComponent = CreateDefaultSubobject<UAIAbilityComponent>(TEXT("ABILITY"));
 }
 
 void ABossMonsterCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	
 }
 
 void ABossMonsterCharacter::BeginPlay()
@@ -92,4 +96,10 @@ float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& 
 	}
 	
 	return FFinalDamage;
+}
+
+
+float ABossMonsterCharacter::GetBasicAttackRange()
+{
+	return AbilityComponent->GetBasicAttackRange();
 }

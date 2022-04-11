@@ -17,8 +17,10 @@ public:
 	virtual void BeginPlay() override;
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	class UMonsterBaseAnimInstance* GetMonsterAnim() { return MonsterAnim; }
-	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
+	void SetIsAttacking(bool bFlag) { bIsAttacking=bFlag; }
+	bool GetIsAttacking() { return bIsAttacking; }
 	float GetBasicAttackRange();
+	void MonsterAttack();
 
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
@@ -36,6 +38,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	class UMonsterBaseAnimInstance* MonsterAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component, meta = (AllowPrivateAccess = true))
-	class UAIAbilityComponent* AbilityComponent;
+private:
+	bool bIsAttacking;
 };
