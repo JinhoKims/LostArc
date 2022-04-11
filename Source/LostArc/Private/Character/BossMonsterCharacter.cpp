@@ -34,7 +34,18 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 
 	if(bInterrupted)
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Interrupted"));
+		if(BossState == EBossState::Groggy)
+		{
+			UE_LOG(LogTemp,Warning,TEXT("Stun!"));
+			if(AbilityComponent->GetIndicatorActorRef() != nullptr)
+			{
+				AbilityComponent->GetIndicatorActorRef()->Destroy();
+			}
+			if(Montage->IsValidSectionName(FName("Skill_2")))
+			{
+				AbilityComponent->GetMeteorActorRef()->Destroy();
+			}
+		}
 	}
 	
 	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackStep(); i++)
@@ -73,7 +84,9 @@ float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& 
 	if(bIsAbsent && BossState != EBossState::Groggy)
 	{
 		BossState = EBossState::Groggy; // 중복으로 스턴먹는거 방지
+		
 		MonsterAnim->Montage_Play(Cast<UBossMonsterAnimInstance>(MonsterAnim)->Boss_Groggy_Montage);
+		
 	}
 	
 	return FFinalDamage;

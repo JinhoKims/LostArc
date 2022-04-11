@@ -19,6 +19,8 @@ public:
 	void AIAbilityCast(class AMonsterCharacterBase* Monster, bool bCharging = false);
 	bool GetCDProperty() { return AIAbilityCDProperty.Value; }
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
+	AActor*& GetIndicatorActorRef() { return IndicatorRef; } // 포인터 레퍼런스를 반환
+	AActor*& GetMeteorActorRef() { return MeteorActorRef; } // 포인터 레퍼런스를 반환
 	void AIAbilityHitDetection(EAbilityType Type);
 	float GetBasicAttackRange();
 
@@ -34,8 +36,14 @@ private:
 	UPROPERTY(meta = (AllowPrivateAccess = true))
 	TArray<UAISkillBase*> Abilities;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Indicator, meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
 	TArray<TSubclassOf<AActor>> IndicatorClass;
 
+	UPROPERTY(BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	AActor* IndicatorRef;
+
+	UPROPERTY(BlueprintReadWrite, Category = Ability, meta = (AllowPrivateAccess = true))
+	AActor* MeteorActorRef;
+	
 	TPair<FTimerHandle, bool> AIAbilityCDProperty;
 };

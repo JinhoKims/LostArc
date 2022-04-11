@@ -5,6 +5,7 @@
 #include "NavigationSystem.h"
 #include "Character/BossMonsterCharacter.h"
 #include "Character/MonsterCharacterBase.h"
+#include "Component/AIAbilityComponent.h"
 
 bool UAISkillBase::bMonsterAnimationRunning = false;
 
@@ -12,16 +13,16 @@ bool UAISkillBase::Use(AMonsterCharacterBase* Monster)
 {
 	if(AbilityStateCheck(Monster))
 	{
+		auto Boss = Cast<ABossMonsterCharacter>(Monster);
 		if(Skill_Indicator != nullptr)
 		{
+			auto Component = Boss->GetAbilityComponent();
 			auto Transform = Monster->GetMesh()->GetComponentTransform();
 			Transform.SetRotation(Monster->GetActorRotation().Quaternion());
-			GetWorld()->SpawnActor<AActor>(Skill_Indicator, Transform);
+			Component->GetIndicatorActorRef() = GetWorld()->SpawnActor<AActor>(Skill_Indicator, Transform);
 		}
 		
-		auto Boss = Cast<ABossMonsterCharacter>(Monster);
 		Boss->BossState = EBossState::Casting;
-		
 		return true;
 	}
 	else
