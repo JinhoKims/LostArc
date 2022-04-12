@@ -10,14 +10,8 @@ UBossMonsterAnimInstance::UBossMonsterAnimInstance()
 
 void UBossMonsterAnimInstance::PlayAttackMontage()
 {
-	auto Number = FMath::RandRange(0, GetBossBasicAttackTotalStep() - 1);
-	Montage_Play(MonsterBasicAttackMontages[Number], 1.f);
-}
-
-int32 UBossMonsterAnimInstance::GetBossBasicAttackTotalStep()
-{
-	return MonsterBasicAttackMontages.Num();
-
+	auto Index = FMath::RandRange(0, GetBasicAttackMontageSize() - 1);
+	Montage_Play(MonsterBasicAttackMontages[Index], 1.f);
 }
 
 void UBossMonsterAnimInstance::AnimNotify_Skill_2_EffectCheck()

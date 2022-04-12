@@ -51,7 +51,7 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 		}
 	}
 	
-	for(int i = 1; i <= BossMonsterAnim->GetBossBasicAttackTotalStep(); i++)
+	for(int i = 1; i <= BossMonsterAnim->GetBasicAttackMontageSize(); i++)
 	{
 		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("BasicAttack_%d"), i))))
 		{

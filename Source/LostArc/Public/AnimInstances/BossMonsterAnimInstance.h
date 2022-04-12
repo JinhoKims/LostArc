@@ -29,7 +29,6 @@ public:
 	
 	UBossMonsterAnimInstance();
 	virtual void PlayAttackMontage() override;
-	int32 GetBossBasicAttackTotalStep();
 	
 	UFUNCTION()
 	virtual void AnimNotify_Skill_2_EffectCheck();

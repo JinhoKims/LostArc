@@ -11,8 +11,9 @@
 AMonsterCharacterBase::AMonsterCharacterBase()
 {
 	MonsterHP = 100.f;
-	GetCharacterMovement()->MaxWalkSpeed = 200.f; // 400.f
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
+	GetCharacterMovement()->MaxWalkSpeed = 300.f; // 400.f
+	BasicAttackRange = 250.f;
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 64.0f, 0.f);
 	
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
@@ -51,7 +52,6 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 	return FFinalDamage;
 }
 
-
 float AMonsterCharacterBase::GetBasicAttackRange()
 {
 	return BasicAttackRange;
@@ -64,8 +64,12 @@ void AMonsterCharacterBase::MonsterAttack()
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	if(Montage->IsValidSectionName(FName("BasicAttack")))
+	for(int i = 1; i <= MonsterAnim->GetBasicAttackMontageSize(); i++)
 	{
-		OnBasicAttackEnd.Broadcast();
+		if (Montage->IsValidSectionName(FName(FString::Printf(TEXT("Attack_%d"), i))))
+		{
+			OnBasicAttackEnd.Broadcast();
+			break;
+		}
 	}
 }

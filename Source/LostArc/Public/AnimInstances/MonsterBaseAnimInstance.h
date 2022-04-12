@@ -19,9 +19,6 @@ public:
 	bool bMonsterIsDead;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
-	UAnimMontage* MonsterAttackMontage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
 	UAnimMontage* MonsterDeathMontage;
 	
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
@@ -30,6 +27,7 @@ public:
 	virtual void PlayAttackMontage();
 	void PlayDeathMontage();
 	void SetDeadAnim();
+	int32 GetBasicAttackMontageSize();
 
 	UFUNCTION()
 	void AnimNotify_MonsterDeadCheck();

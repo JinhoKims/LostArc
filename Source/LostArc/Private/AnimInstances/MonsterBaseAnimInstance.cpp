@@ -9,7 +9,8 @@ UMonsterBaseAnimInstance::UMonsterBaseAnimInstance()
 
 void UMonsterBaseAnimInstance::PlayAttackMontage()
 {
-	Montage_Play(MonsterAttackMontage, 1.f);
+	auto Index = FMath::RandRange(0, GetBasicAttackMontageSize() - 1);
+	Montage_Play(MonsterBasicAttackMontages[Index], 1.f);
 }
 
 void UMonsterBaseAnimInstance::PlayDeathMontage()
@@ -28,4 +29,9 @@ void UMonsterBaseAnimInstance::AnimNotify_MonsterDeadCheck()
 void UMonsterBaseAnimInstance::SetDeadAnim()
 {
 	bMonsterIsDead = true;
+}
+
+int32 UMonsterBaseAnimInstance::GetBasicAttackMontageSize()
+{
+	return MonsterBasicAttackMontages.Num();
 }

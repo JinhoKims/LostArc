@@ -33,7 +33,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	}
 	else
 	{
-		FDetectRadius = 512.f;
+		FDetectRadius = 1024.f;
 	}
 	
 	UWorld* World = ControllingPawn->GetWorld();
