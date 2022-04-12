@@ -36,6 +36,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float BasicAttackRange;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float MonsterRotateSpeed;
 	
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	class UMonsterBaseAnimInstance* MonsterAnim;

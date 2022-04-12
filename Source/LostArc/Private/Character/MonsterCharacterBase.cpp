@@ -10,10 +10,10 @@
 // Sets default values
 AMonsterCharacterBase::AMonsterCharacterBase()
 {
-	MonsterHP = 100.f;
-	GetCharacterMovement()->MaxWalkSpeed = 300.f; // 400.f
-	BasicAttackRange = 250.f;
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 64.0f, 0.f);
+	// MonsterHP = 100.f;
+	// GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed; 
+	// BasicAttackRange = 250.f;
+	// GetCharacterMovement()->RotationRate = FRotator(0.f, 64.0f, 0.f);
 	
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
@@ -41,6 +41,11 @@ void AMonsterCharacterBase::PostInitializeComponents()
 void AMonsterCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp,Warning,TEXT(" Rnage : %f"), BasicAttackRange);
+
+	
+	
 }
 
 float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -48,7 +53,18 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 	float FFinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	
 	UE_LOG(LogTemp,Warning,TEXT("%f"), FFinalDamage);
-	
+
+	if (FFinalDamage > 0.f)
+	{
+		MonsterHP -= FFinalDamage;
+		if(MonsterHP <= 0.f)
+		{
+			MonsterAnim->SetDeadAnim();
+			SetActorEnableCollision(false);
+			GetController()->Destroyed();
+		}
+	}
+
 	return FFinalDamage;
 }
 

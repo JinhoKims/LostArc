@@ -25,12 +25,8 @@ public:
 	
 	UMonsterBaseAnimInstance();
 	virtual void PlayAttackMontage();
-	void PlayDeathMontage();
-	void SetDeadAnim();
 	int32 GetBasicAttackMontageSize();
-
-	UFUNCTION()
-	void AnimNotify_MonsterDeadCheck();
+	void SetDeadAnim();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))

@@ -13,19 +13,6 @@ void UMonsterBaseAnimInstance::PlayAttackMontage()
 	Montage_Play(MonsterBasicAttackMontages[Index], 1.f);
 }
 
-void UMonsterBaseAnimInstance::PlayDeathMontage()
-{
-	Montage_Play(MonsterDeathMontage, 1.0f);
-	TryGetPawnOwner()->SetActorEnableCollision(false);
-
-	// MonsterBase에서 NotifyCheck로 Destroy하기
-}
-
-void UMonsterBaseAnimInstance::AnimNotify_MonsterDeadCheck()
-{
-	OnMonsterDeadCheck.Broadcast();
-}
-
 void UMonsterBaseAnimInstance::SetDeadAnim()
 {
 	bMonsterIsDead = true;

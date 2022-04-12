@@ -10,9 +10,9 @@
 
 ABossMonsterCharacter::ABossMonsterCharacter():AMonsterCharacterBase()
 {
-	MonsterHP = 1000.f;
-	GetCharacterMovement()->MaxWalkSpeed = 400.f; // 400.f
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
+	// MonsterHP = 1000.f;
+	// GetCharacterMovement()->MaxWalkSpeed = 400.f; // 400.f
+	// GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
 	AIControllerClass = ABossMonsterAIController::StaticClass();
 	IndicatorClass.Init(NULL, 4);
 	
@@ -83,12 +83,15 @@ void ABossMonsterCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bIn
 
 float ABossMonsterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	float FFinalDamage = Super::Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	float FFinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	if(bIsAbsent && BossState != EBossState::Groggy)
+	if(FFinalDamage > 0.f)
 	{
-		BossState = EBossState::Groggy; // 중복으로 스턴먹는거 방지
-		MonsterAnim->Montage_Play(Cast<UBossMonsterAnimInstance>(MonsterAnim)->Boss_Groggy_Montage);
+		if(bIsAbsent && BossState != EBossState::Groggy)
+		{
+			BossState = EBossState::Groggy; // 중복으로 스턴먹는거 방지
+			MonsterAnim->Montage_Play(Cast<UBossMonsterAnimInstance>(MonsterAnim)->Boss_Groggy_Montage);
+		}
 	}
 	
 	return FFinalDamage;
