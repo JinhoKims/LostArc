@@ -2,6 +2,11 @@
 
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 
+UMonsterBaseAnimInstance::UMonsterBaseAnimInstance()
+{
+	MonsterBasicAttackMontages.Init(NULL, 4);
+}
+
 void UMonsterBaseAnimInstance::PlayAttackMontage()
 {
 	Montage_Play(MonsterAttackMontage, 1.f);

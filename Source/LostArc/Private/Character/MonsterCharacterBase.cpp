@@ -19,8 +19,6 @@ AMonsterCharacterBase::AMonsterCharacterBase()
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	
-	
 }
 
 void AMonsterCharacterBase::PostInitializeComponents()

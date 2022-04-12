@@ -26,6 +26,11 @@ public:
 	
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	TArray<UAnimMontage*> MonsterBasicAttackMontages;
+
+	UMonsterBaseAnimInstance();
+
 	UFUNCTION()
 	void AnimNotify_MonsterDeadCheck();
 	
