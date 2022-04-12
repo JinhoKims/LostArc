@@ -21,6 +21,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (ControllingPawn == nullptr) return;
 	
 	ECollisionChannel PawnChannel = ECollisionChannel::ECC_GameTraceChannel4;
+
 	auto bIsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
 	if(bIsBoss != nullptr)
 	{
@@ -28,6 +29,11 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		{
 			PawnChannel = ECollisionChannel::ECC_GameTraceChannel5;
 		}
+		FDetectRadius = 2048.f;
+	}
+	else
+	{
+		FDetectRadius = 512.f;
 	}
 	
 	UWorld* World = ControllingPawn->GetWorld();
@@ -35,8 +41,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	FCollisionQueryParams CollisionQueryParams(NAME_None, false, ControllingPawn);
 	TArray<FOverlapResult> OverlapResults;
 
-	float DetectRadius = 2048.0f; // 예측 반경 Key화 하기
-	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, PawnChannel, FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParams);
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, PawnChannel, FCollisionShape::MakeSphere(FDetectRadius), CollisionQueryParams);
 
 	if (bResult)
 	{
@@ -64,5 +69,5 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(AMonsterBaseAIController::TargetKey, nullptr);
 	}
 	
-	DrawDebugSphere(World, Center, DetectRadius, 64, FColor::Red, false, 0.2f);
+	DrawDebugSphere(World, Center, FDetectRadius, 64, FColor::Red, false, 0.2f);
 }

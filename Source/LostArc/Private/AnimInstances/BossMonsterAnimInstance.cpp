@@ -5,18 +5,19 @@
 
 UBossMonsterAnimInstance::UBossMonsterAnimInstance()
 {
-	BossBasicAttackMontages.Init(NULL, 3);
+	MonsterBasicAttackMontages.Init(NULL, 3);
 }
 
 void UBossMonsterAnimInstance::PlayAttackMontage()
 {
 	auto Number = FMath::RandRange(0, GetBossBasicAttackTotalStep() - 1);
-	Montage_Play(BossBasicAttackMontages[Number], 1.f);
+	Montage_Play(MonsterBasicAttackMontages[Number], 1.f);
 }
 
 int32 UBossMonsterAnimInstance::GetBossBasicAttackTotalStep()
 {
-	return BossBasicAttackMontages.Num();
+	return MonsterBasicAttackMontages.Num();
+
 }
 
 void UBossMonsterAnimInstance::AnimNotify_Skill_2_EffectCheck()

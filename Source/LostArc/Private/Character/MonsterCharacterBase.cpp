@@ -10,6 +10,10 @@
 // Sets default values
 AMonsterCharacterBase::AMonsterCharacterBase()
 {
+	MonsterHP = 100.f;
+	GetCharacterMovement()->MaxWalkSpeed = 200.f; // 400.f
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 128.0f, 0.f);
+	
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
 

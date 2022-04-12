@@ -25,16 +25,16 @@ public:
 	UAnimMontage* MonsterDeathMontage;
 	
 	FOnMonsterDeadCheckDelegate OnMonsterDeadCheck;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
-	TArray<UAnimMontage*> MonsterBasicAttackMontages;
-
-	UMonsterBaseAnimInstance();
-
-	UFUNCTION()
-	void AnimNotify_MonsterDeadCheck();
 	
+	UMonsterBaseAnimInstance();
 	virtual void PlayAttackMontage();
 	void PlayDeathMontage();
 	void SetDeadAnim();
+
+	UFUNCTION()
+	void AnimNotify_MonsterDeadCheck();
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage, Meta = (AllowPrviateAccess = true))
+	TArray<UAnimMontage*> MonsterBasicAttackMontages;
 };
