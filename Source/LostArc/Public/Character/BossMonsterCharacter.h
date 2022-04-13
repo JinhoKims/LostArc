@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/MonsterCharacterBase.h"
+#include "Component/LostArcCharacterAbilityComponent.h"
 #include "BossMonsterCharacter.generated.h"
 
 UENUM(BlueprintType)
@@ -37,6 +38,9 @@ public:
 	class UAIAbilityComponent* GetAbilityComponent() { return AbilityComponent; }
 	virtual float GetBasicAttackRange() override;
 	virtual void MonsterAttack() override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void BossMonsterAttackHitCheck();
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void MonsterJumpEffect();

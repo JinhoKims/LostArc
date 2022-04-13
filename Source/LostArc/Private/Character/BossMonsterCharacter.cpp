@@ -106,3 +106,26 @@ void ABossMonsterCharacter::MonsterAttack()
 {
 	AbilityComponent->AIAbilityCast(this);
 }
+
+void ABossMonsterCharacter::BossMonsterAttackHitCheck()
+{
+	float FRange = 650.f , FRadius = 75.f;
+	FDamageEvent DamageEvent; FHitResult HitResult; FVector direction;
+	FCollisionQueryParams Params(NAME_None, false, this);
+	
+	float dotValue = FMath::Cos(((PI * 2) / 360) * (FRadius / 2));
+	auto bResult = GetWorld()->SweepSingleByChannel(HitResult, GetActorLocation(), GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel4, FCollisionShape::MakeSphere(FRange), Params);
+	
+	if(bResult && HitResult.Actor.IsValid())
+	{
+		direction = HitResult.Actor.Get()->GetActorLocation() - GetActorLocation();
+		if (direction.Size() < FRange)
+		{
+			if (FVector::DotProduct(direction.GetSafeNormal(), GetActorForwardVector()) > dotValue)
+			{
+				HitResult.Actor->TakeDamage(MonsterStr * 2.f, DamageEvent, GetController(), this);
+			}
+		}
+	}
+}
+

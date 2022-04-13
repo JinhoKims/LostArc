@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/MonsterCharacterBase.h"
+
+#include "DrawDebugHelpers.h"
 #include "AnimInstances/MonsterBaseAnimInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "Component/AIAbilityComponent.h"
@@ -10,20 +12,14 @@
 // Sets default values
 AMonsterCharacterBase::AMonsterCharacterBase()
 {
-	// MonsterHP = 100.f;
-	// GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed; 
-	// BasicAttackRange = 250.f;
-	// GetCharacterMovement()->RotationRate = FRotator(0.f, 64.0f, 0.f);
-	
-	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Monster"));
-
 	AIControllerClass = AMonsterBaseAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-
-	bUseControllerRotationYaw = false;
+	PrimaryActorTick.bCanEverTick = true;
+	
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	bUseControllerRotationYaw = false;
 }
 
 void AMonsterCharacterBase::PostInitializeComponents()
@@ -41,11 +37,6 @@ void AMonsterCharacterBase::PostInitializeComponents()
 void AMonsterCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp,Warning,TEXT(" Rnage : %f"), BasicAttackRange);
-
-	
-	
 }
 
 float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -76,6 +67,26 @@ float AMonsterCharacterBase::GetBasicAttackRange()
 void AMonsterCharacterBase::MonsterAttack()
 {
 	MonsterAnim->PlayAttackMontage();
+}
+
+void AMonsterCharacterBase::TheMonsterAttackHitCheck()
+{
+	FDamageEvent DamageEvent; FHitResult HitResult; FVector direction;
+	float dotValue = FMath::Cos(((PI * 2) / 360) * (BasicAttackRadius / 2));
+	FCollisionQueryParams Params(NAME_None, false, this);
+	auto bResult = GetWorld()->SweepSingleByChannel(HitResult, GetActorLocation(), GetActorLocation(),FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel4, FCollisionShape::MakeSphere(BasicAttackRange), Params);
+	
+	if(bResult && HitResult.Actor.IsValid())
+	{
+		direction = HitResult.Actor.Get()->GetActorLocation() - GetActorLocation();
+		if (direction.Size() < BasicAttackRange) 
+		{
+			if (FVector::DotProduct(direction.GetSafeNormal(), GetActorForwardVector()) > dotValue)
+			{
+				HitResult.Actor->TakeDamage(MonsterStr, DamageEvent, GetController(), this);
+			}
+		}
+	}
 }
 
 void AMonsterCharacterBase::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)

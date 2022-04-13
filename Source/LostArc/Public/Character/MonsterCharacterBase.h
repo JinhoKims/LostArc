@@ -24,6 +24,9 @@ public:
 	virtual float GetBasicAttackRange();
 	virtual void MonsterAttack();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void TheMonsterAttackHitCheck();
+
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
@@ -35,11 +38,18 @@ protected:
 	float MonsterSpeed;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float MonsterStr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float BasicAttackRange;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float BasicAttackRadius;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float MonsterRotateSpeed;
 	
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	class UMonsterBaseAnimInstance* MonsterAnim;
+	
 };

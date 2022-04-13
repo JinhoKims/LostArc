@@ -47,10 +47,6 @@ void UAIAbilityComponent::ResetCDTimer(AMonsterCharacterBase* Monster)
 	Monster->GetWorldTimerManager().SetTimer(AIAbilityCDProperty.Key, FTimerDelegate::CreateLambda([&]() { AIAbilityCDProperty.Value = true; }), FTimeScale, true); // 쿨타임 계산
 }
 
-void UAIAbilityComponent::AIAbilityHitDetection(EAbilityType Type)
-{
-}
-
 float UAIAbilityComponent::GetBasicAttackRange()
 {
 	return Abilities[EAbilityType::BasicAttack]->GetSkillRadius().Key;

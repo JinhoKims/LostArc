@@ -21,7 +21,6 @@ public:
 	void ResetCDTimer(class AMonsterCharacterBase* Monster);
 	AActor*& GetIndicatorActorRef() { return IndicatorRef; } // 포인터 레퍼런스를 반환
 	AActor*& GetMeteorActorRef() { return MeteorActorRef; } // 포인터 레퍼런스를 반환
-	void AIAbilityHitDetection(EAbilityType Type);
 	float GetBasicAttackRange();
 
 protected:
