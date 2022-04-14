@@ -37,6 +37,7 @@ public:
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent) override;
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
 	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
+	bool EquipSlotEmptyCheck(ULostArcItemEquipBase* CheckItem);
 	
 	EAccessoryType IndexDecoding(int32 &SlotIndex, bool bTrans = true);
 	int32 IndexEncoding(EAccessoryType AcType, int32 Index);

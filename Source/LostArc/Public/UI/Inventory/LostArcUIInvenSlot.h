@@ -6,9 +6,6 @@
 #include "UI/LostArcUISlotBase.h"
 #include "LostArcUIInvenSlot.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcUIInvenSlot : public ULostArcUISlotBase
 {
@@ -29,7 +26,6 @@ protected:
 	virtual void NativeConstruct() override;
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-
 private:
 	FDelegateHandle ItemQuantityHandle;
 };

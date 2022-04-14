@@ -8,9 +8,6 @@
 #include "Component/LostArcCharacterEquipComponent.h"
 #include "LostArcItemEquipBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LOSTARC_API ULostArcItemEquipBase : public ULostArcItemBase
 {

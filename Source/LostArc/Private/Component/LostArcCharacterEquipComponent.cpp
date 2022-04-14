@@ -163,6 +163,31 @@ ULostArcAbilityBase* ULostArcCharacterEquipComponent::GetAbility(int32 SlotIndex
 	}
 }
 
+bool ULostArcCharacterEquipComponent::EquipSlotEmptyCheck(ULostArcItemEquipBase* CheckItem)
+{
+	int32 iCurrentSlotCount = 0;
+	auto CheckItemType = CheckItem->
+	auto MaxSlotCount = EquipMaxSlot.Find(CheckItem->GetAcType());
+
+
+	
+	for(int i=0; i < EquipMaxSlot.Find(CheckItem->GetAcType()); i++)
+	{
+		
+	}
+	
+	
+	
+	EquipSlot.Find(EAccessoryType::Necklace)->EquipArray[0] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
+	EquipSlot.Find(EAccessoryType::Earring)->EquipArray[0] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
+	EquipSlot.Find(EAccessoryType::Earring)->EquipArray[1] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
+	EquipSlot.Find(EAccessoryType::Ring)->EquipArray[0] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
+	EquipSlot.Find(EAccessoryType::Ring)->EquipArray[1] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
+	
+	UE_LOG(LogTemp,Warning,TEXT("Equip Current Count : %d"), iCurrentSlotCount);
+	return iCurrentSlotCount == 5 ? false : true;
+}
+
 EAccessoryType ULostArcCharacterEquipComponent::IndexDecoding(int32& SlotIndex, bool bTrans)
 {
 	switch (SlotIndex)
