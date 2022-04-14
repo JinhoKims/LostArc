@@ -22,9 +22,11 @@ public:
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent = nullptr) override;
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
 	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
-
-	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
+	
 	void DeleteItemAfterCheckingQuantity();
+
+	UFUNCTION(BlueprintCallable)
+	void AddPickupItem(FString ItemName, int32 ItemCount = 1);
 	
 protected:
 	virtual void InitializeComponent() override;
