@@ -38,8 +38,6 @@ bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 
 FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if(ULostArcSkillBase::bAnimationRunning)
-		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	if(Cast<ULostArcSkillBase>(SlotData))
 		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
@@ -50,29 +48,29 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 		auto EquipData = Cast<ULostArcItemEquipBase>(SlotData);
 		if(EquipData != nullptr)
 		{
-			if(APlayer->InventoryComponent->InventorySlotEmptyCheck())
+			if(APlayer->InventoryComponent->InventorySlotEmptyCheck()) // 인벤토리가 한 칸 이상 비었을 경우에만
 			{
-				if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData))
-				{
-					UE_LOG(LogTemp,Warning,TEXT("Equip On"));
-					return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-				}
+
+				return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+				// if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData)) // 장비 슬롯이 비었을 때만 장착
+				// {
+				// 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+				// }
 			}
-			else
-			{
-				if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData))
-				{
-					UE_LOG(LogTemp,Warning,TEXT("Equip On"));
-					return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-				}
-			}
+			// else
+			// {
+			// 	if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData)) // 장비 슬롯이 비었을 때만 장착
+			// 	{
+			// 		return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+			// 	}
+			// }
 		}
 		else
 		{
 			return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 		}
 	}
-	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) // LeftMouseClick
 	{
 		return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	}

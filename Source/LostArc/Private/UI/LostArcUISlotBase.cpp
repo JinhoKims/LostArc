@@ -36,7 +36,6 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 	FEventReply reply;
 	reply.NativeReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	
-	if(ULostArcSkillBase::bAnimationRunning) return reply.NativeReply;
 	if(Cast<ULostArcSkillBase>(SlotData))
 	{
 		return reply.NativeReply;
@@ -56,7 +55,7 @@ FReply ULostArcUISlotBase::NativeOnMouseButtonDown(const FGeometry& InGeometry, 
 			}
 		}
 	}
-	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) // Left Mouse Clicked
 	{
 		if (SlotData)
 		{
@@ -87,7 +86,7 @@ void ULostArcUISlotBase::NativeOnDragDetected(const FGeometry& InGeometry, const
 		
 		// 드래그 시작 위치의 슬롯 정보를 저장 (OnDrop에서 Owner가 됨)
 		oper->DefaultDragVisual = DraggedItem;
-		oper->SlotComponent = this->SlotComponent;
+		oper->SlotComponent = this->SlotComponent; // 드래그 시 이미 현재 슬롯 컴포넌트를 도착지 컴포넌트로 교체함
 		oper->SlotIndex = this->SlotIndex;
 		oper->SlotType = this->SlotType;
 		OutOperation = oper;

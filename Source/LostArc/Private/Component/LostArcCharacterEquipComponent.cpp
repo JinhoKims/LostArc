@@ -173,8 +173,7 @@ bool ULostArcCharacterEquipComponent::EquipSlotEmptyCheck(ULostArcItemEquipBase*
 	{
 		EquipSlot.Find(EItemType)->EquipArray[i] != nullptr ? iCurrentSlotCount++ : iCurrentSlotCount;
 	}
-
-	UE_LOG(LogTemp,Warning,TEXT("Equip Occupancy Counts : %d"), iCurrentSlotCount);
+	UE_LOG(LogTemp,Warning,TEXT("Current Equip Slot : %d"), *MaxSlotCount);
 	return iCurrentSlotCount == *MaxSlotCount ? false : true; 
 }
 

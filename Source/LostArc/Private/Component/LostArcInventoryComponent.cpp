@@ -184,7 +184,6 @@ bool ULostArcInventoryComponent::InventorySlotEmptyCheck()
 			iCurrentSlotCount++;
 		}
 	}
-	UE_LOG(LogTemp,Warning,TEXT("Count : %d"), iCurrentSlotCount);
 	return iCurrentSlotCount == MaxSlotCount ? false : true;
 }
 

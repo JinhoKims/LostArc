@@ -2,7 +2,6 @@
 
 
 #include "UI/Equip/LostArcUIEquipSlot.h"
-
 #include "Abilities/Skill/LostArcSkillBase.h"
 #include "Component/LostArcAbilityInterface.h"
 #include "Component/LostArcCharacterEquipComponent.h"
@@ -38,22 +37,22 @@ bool ULostArcUIEquipSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 		return false;
 }
 
-void ULostArcUIEquipSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+void ULostArcUIEquipSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) // 빈 화면에 장비 아이템을 드래그할 때
 {
 	auto Inter = Cast<ILostArcAbilityInterface>(SlotComponent);
 
 	if(Inter != nullptr)
 	{
-		Inter->UseAbility(SlotIndex);
+		auto APlayer = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
+		if(APlayer->InventoryComponent->InventorySlotEmptyCheck()) // 인벤토리에 빈 공간이 있을 때만 장착 해제
+		{
+			Inter->UseAbility(SlotIndex);
+		}
 	}
 }
 
 FReply ULostArcUIEquipSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	UE_LOG(LogTemp,Warning,TEXT("Equip click"));
-
-	if(ULostArcSkillBase::bAnimationRunning)
-		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	if(Cast<ULostArcSkillBase>(SlotData))
 		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
@@ -62,12 +61,12 @@ FReply ULostArcUIEquipSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 		Cast<ALostArcPlayerController>(GetOwningPlayer())->bOnSlotClick = true;
 		auto APlayer = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 		
-		if(APlayer->InventoryComponent->InventorySlotEmptyCheck())
+		if(APlayer->InventoryComponent->InventorySlotEmptyCheck()) // 인벤토리가 비었을 경우에만 장착 해제 
 		{
 			return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 		}
 	}
-	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) // Left Mouse Clicked
 	{
 		return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	}

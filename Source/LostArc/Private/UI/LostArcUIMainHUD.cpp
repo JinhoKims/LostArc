@@ -37,7 +37,6 @@ void ULostArcUIMainHUD::EnableWidget(ESlotType EType)
 bool ULostArcUIMainHUD::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
-	
 	ULostArcUISlotDrag* WidgetDD = Cast<ULostArcUISlotDrag>(InOperation);
 	if (WidgetDD == nullptr || WidgetDD->SlotType != ESlotType::TitleTab) return false;
 	
