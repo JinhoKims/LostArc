@@ -104,6 +104,11 @@ void ULostArcUIQuickSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	}
 }
 
+FReply ULostArcUIQuickSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+}
+
 void ULostArcUIQuickSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
 	if(SlotData != nullptr)

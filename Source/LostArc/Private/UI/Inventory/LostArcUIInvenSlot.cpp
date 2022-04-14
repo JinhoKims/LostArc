@@ -33,6 +33,14 @@ bool ULostArcUIInvenSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	return false;
 }
 
+FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+
+	
+
+	
+}
+
 void ULostArcUIInvenSlot::RefreshSlotData(ULostArcAbilityBase* NewData)
 {
 	if (SlotData != nullptr) // Unbinding Delegate

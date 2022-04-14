@@ -123,7 +123,7 @@ bool ULostArcInventoryComponent::SetAbility(ULostArcAbilityBase* OwnerAbility, i
 	auto OwnerItem = Cast<ULostArcItemBase>(OwnerAbility);
 	if(OwnerItem == nullptr) return false;
 	
-	if(SlotIndex == -1)
+	if(SlotIndex == -1) // one click
 	{
 		for(int i = 0; i < 16; i++)
 		{
@@ -137,7 +137,7 @@ bool ULostArcInventoryComponent::SetAbility(ULostArcAbilityBase* OwnerAbility, i
 		
 		return false;
 	}
-	else
+	else // drag
 	{
 		if(InventorySlot[SlotIndex] == nullptr)
 		{
@@ -171,6 +171,21 @@ ULostArcAbilityBase* ULostArcInventoryComponent::GetAbility(int32 SlotIndex, boo
 		else
 			return InventorySlot[SlotIndex];
 	}
+}
+
+bool ULostArcInventoryComponent::InventorySlotEmptyCheck()
+{
+	int32 iCurrentSlotCount = 0;
+	
+	for (int i = 0; i < MaxSlotCount; i++) 
+	{
+		if (InventorySlot[i] != nullptr)
+		{
+			iCurrentSlotCount++;
+		}
+	}
+	UE_LOG(LogTemp,Warning,TEXT("Count : %d"), iCurrentSlotCount);
+	return iCurrentSlotCount == MaxSlotCount ? false : true;
 }
 
 void ULostArcInventoryComponent::AddPickupItem(FString ItemName, int32 ItemCount)

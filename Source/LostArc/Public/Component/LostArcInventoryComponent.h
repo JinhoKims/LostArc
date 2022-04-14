@@ -22,7 +22,7 @@ public:
 	virtual void SwappingSlot(int32 OwnerIndex, int32 DistIndex, UActorComponent* OwnerComponent = nullptr) override;
 	virtual bool SetAbility(ULostArcAbilityBase* OwnerAbility, int32 SlotIndex = -1) override;
 	virtual ULostArcAbilityBase* GetAbility(int32 SlotIndex, bool bTrans = false) override;
-	
+	bool InventorySlotEmptyCheck();
 	void DeleteItemAfterCheckingQuantity();
 
 	UFUNCTION(BlueprintCallable)

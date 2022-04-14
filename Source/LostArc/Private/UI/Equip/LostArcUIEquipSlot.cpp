@@ -3,10 +3,13 @@
 
 #include "UI/Equip/LostArcUIEquipSlot.h"
 
+#include "Abilities/Skill/LostArcSkillBase.h"
 #include "Component/LostArcAbilityInterface.h"
 #include "Component/LostArcCharacterEquipComponent.h"
+#include "Component/LostArcInventoryComponent.h"
+#include "Controller/LostArcPlayerController.h"
 
-void ULostArcUIEquipSlot::NativeConstruct()
+	void ULostArcUIEquipSlot::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -43,6 +46,33 @@ void ULostArcUIEquipSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDrop
 	{
 		Inter->UseAbility(SlotIndex);
 	}
+}
+
+FReply ULostArcUIEquipSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	UE_LOG(LogTemp,Warning,TEXT("Equip click"));
+
+	if(ULostArcSkillBase::bAnimationRunning)
+		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	if(Cast<ULostArcSkillBase>(SlotData))
+		return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+
+	if (InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) // Right Mouse Clicked
+	{
+		Cast<ALostArcPlayerController>(GetOwningPlayer())->bOnSlotClick = true;
+		auto APlayer = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
+		
+		if(APlayer->InventoryComponent->InventorySlotEmptyCheck())
+		{
+			return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+		}
+	}
+	else if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	{
+		return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	}
+		
+	return Super::Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }
 
 void ULostArcUIEquipSlot::RefreshSlotData(ULostArcAbilityBase* NewData)

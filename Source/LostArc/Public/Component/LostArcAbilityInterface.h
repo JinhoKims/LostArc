@@ -14,9 +14,6 @@ class ULostArcAbilityInterface : public UInterface
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
 class LOSTARC_API ILostArcAbilityInterface
 {
 	GENERATED_BODY()
