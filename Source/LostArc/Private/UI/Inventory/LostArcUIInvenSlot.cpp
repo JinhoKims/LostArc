@@ -46,24 +46,19 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 		Cast<ALostArcPlayerController>(GetOwningPlayer())->bOnSlotClick = true;
 		auto APlayer = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
 		auto EquipData = Cast<ULostArcItemEquipBase>(SlotData);
-		if(EquipData != nullptr)
+		if(EquipData != nullptr) // 장신구 아이템을 장착할 때
 		{
-			if(APlayer->InventoryComponent->InventorySlotEmptyCheck()) // 인벤토리가 한 칸 이상 비었을 경우에만
+			if(APlayer->InventoryComponent->InventorySlotEmptyCheck()) // 인벤토리가 한 칸 이상 비었을 경우에는
 			{
-
-				return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-				// if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData)) // 장비 슬롯이 비었을 때만 장착
-				// {
-				// 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-				// }
+				return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent); // 아무 곳이나 장착 가능
 			}
-			// else
-			// {
-			// 	if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData)) // 장비 슬롯이 비었을 때만 장착
-			// 	{
-			// 		return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-			// 	}
-			// }
+			else // 인벤토리가 꽉 찼을 경우엔
+			{
+				if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData)) // 해당 장비 슬롯이 하나 이상 비었을 때만 장착 가능
+				{
+					return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+				}
+			}
 		}
 		else
 		{
