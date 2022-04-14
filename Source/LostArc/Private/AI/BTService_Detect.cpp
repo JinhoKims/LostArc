@@ -20,7 +20,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (ControllingPawn == nullptr) return;
 	
-	ECollisionChannel PawnChannel = ECollisionChannel::ECC_GameTraceChannel4;
+	ECollisionChannel PawnChannel = ECollisionChannel::ECC_GameTraceChannel7;
 
 	auto bIsBoss = Cast<ABossMonsterCharacter>(ControllingPawn);
 	if(bIsBoss != nullptr)

@@ -52,6 +52,8 @@ float AMonsterCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& 
 		{
 			MonsterAnim->SetDeadAnim();
 			SetActorEnableCollision(false);
+			DropPickupItem();
+			
 			GetController()->Destroyed();
 		}
 	}

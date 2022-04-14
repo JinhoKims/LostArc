@@ -23,12 +23,15 @@ public:
 	class UMonsterBaseAnimInstance* GetMonsterAnim() { return MonsterAnim; }
 	virtual float GetBasicAttackRange();
 	virtual void MonsterAttack();
+	
+	UFUNCTION()
+	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void TheMonsterAttackHitCheck();
-
-	UFUNCTION()
-	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void DropPickupItem();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
