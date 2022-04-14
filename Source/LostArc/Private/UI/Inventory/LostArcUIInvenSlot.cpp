@@ -47,11 +47,12 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 	{
 		Cast<ALostArcPlayerController>(GetOwningPlayer())->bOnSlotClick = true;
 		auto APlayer = Cast<ALostArcPlayerCharacter>(GetOwningPlayerPawn());
-		if(Cast<ULostArcItemEquipBase>(SlotData) != nullptr)
+		auto EquipData = Cast<ULostArcItemEquipBase>(SlotData);
+		if(EquipData != nullptr)
 		{
 			if(APlayer->InventoryComponent->InventorySlotEmptyCheck())
 			{
-				if(APlayer->EquipComponent->EquipSlotEmptyCheck())
+				if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData))
 				{
 					UE_LOG(LogTemp,Warning,TEXT("Equip On"));
 					return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
@@ -59,7 +60,7 @@ FReply ULostArcUIInvenSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 			}
 			else
 			{
-				if(APlayer->EquipComponent->EquipSlotEmptyCheck())
+				if(APlayer->EquipComponent->EquipSlotEmptyCheck(EquipData))
 				{
 					UE_LOG(LogTemp,Warning,TEXT("Equip On"));
 					return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
