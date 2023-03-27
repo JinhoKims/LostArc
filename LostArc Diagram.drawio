@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-03-27T20:02:52.633Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="I8h0RBy7BMSHegiFWz4C" version="21.1.1" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-03-27T20:23:02.550Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="9VwG5JVgu9nsJbeT8NYj" version="21.1.1" type="github" pages="2">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2868" dy="1576" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="2390" dy="1397" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -1123,7 +1123,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="n9HPPruHNtVBHVuEQaSM-13" value="PlayerCharacter" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="110" y="620" width="180" height="130" as="geometry" />
+          <mxGeometry x="95" y="730" width="180" height="130" as="geometry" />
         </mxCell>
         <mxCell id="n9HPPruHNtVBHVuEQaSM-14" value="+ Abilites: ActorComponent" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="n9HPPruHNtVBHVuEQaSM-13">
           <mxGeometry y="26" width="180" height="26" as="geometry" />
@@ -1166,7 +1166,9 @@
           <mxGeometry x="520" y="160" width="140" height="80" as="geometry" />
         </mxCell>
         <mxCell id="n9HPPruHNtVBHVuEQaSM-34" value="PlayerMainHUD" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="340" y="620" width="180" height="130" as="geometry" />
+          <mxGeometry x="350" y="530" width="180" height="130" as="geometry">
+            <mxRectangle x="320" y="530" width="130" height="30" as="alternateBounds" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="n9HPPruHNtVBHVuEQaSM-35" value="+&amp;nbsp;BP_Inven&lt;span style=&quot;background-color: initial;&quot;&gt;:&amp;nbsp;&lt;/span&gt;UserWidget" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="n9HPPruHNtVBHVuEQaSM-34">
           <mxGeometry y="26" width="180" height="26" as="geometry" />
@@ -1179,6 +1181,21 @@
         </mxCell>
         <mxCell id="n9HPPruHNtVBHVuEQaSM-38" value="+ BP_BAR&lt;span style=&quot;background-color: initial;&quot;&gt;:&amp;nbsp;&lt;/span&gt;UserWidget" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="n9HPPruHNtVBHVuEQaSM-34">
           <mxGeometry y="104" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="11JpBbgZyn9_jQgEf6ca-1" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="170" y="460" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="11JpBbgZyn9_jQgEf6ca-17" value="PlayerController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="52.5" y="574" width="265" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="11JpBbgZyn9_jQgEf6ca-18" value="+ PlayerHUD: UserWidget" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="11JpBbgZyn9_jQgEf6ca-17">
+          <mxGeometry y="26" width="265" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="11JpBbgZyn9_jQgEf6ca-19" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=16;" vertex="1" parent="11JpBbgZyn9_jQgEf6ca-17">
+          <mxGeometry y="52" width="265" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="11JpBbgZyn9_jQgEf6ca-20" value="+&amp;nbsp;SetupInputComponent&lt;span style=&quot;background-color: initial;&quot;&gt;(type): void&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="11JpBbgZyn9_jQgEf6ca-17">
+          <mxGeometry y="60" width="265" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
