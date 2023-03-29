@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-29T23:46:25.256Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="EOSOl9X-_sQDM5zhRog6" version="21.1.1" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2023-03-29T23:52:55.489Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="ibq_0RW_283dbaXSNx7y" version="21.1.1" type="github" pages="4">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2607" dy="1524" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -1197,7 +1197,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="FnbJQRDqWW6XIHS50ZEP-11" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=16;" parent="1" vertex="1">
-          <mxGeometry x="515" y="370" width="30" height="60" as="geometry" />
+          <mxGeometry x="515" y="360" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="re-DCT8DUme5pg6rLcIC-21" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" parent="1" source="FnbJQRDqWW6XIHS50ZEP-12" target="FnbJQRDqWW6XIHS50ZEP-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -1265,11 +1265,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="nayh0cIiQMD8P9-9rjt3-1" value="Input" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="530" y="460" width="60" height="30" as="geometry" />
+        <mxCell id="nayh0cIiQMD8P9-9rjt3-1" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Input&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="530" y="460" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nayh0cIiQMD8P9-9rjt3-3" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;데이터 관리&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="530" y="630" width="90" height="30" as="geometry" />
+        <mxCell id="nayh0cIiQMD8P9-9rjt3-3" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;메시지 전달&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="530" y="630" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nayh0cIiQMD8P9-9rjt3-4" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;데이터 읽기&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="920" y="764" width="70" height="30" as="geometry" />
