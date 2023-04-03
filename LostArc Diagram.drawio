@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-30T14:52:59.063Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="zq9GmdD7K5bYes8-e6K_" version="21.1.2" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2023-04-03T11:13:26.947Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="EDR2bWs0S5cttRmpWLBt" version="21.1.2" type="github" pages="4">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1434" dy="838" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -1308,10 +1308,21 @@
     </mxGraphModel>
   </diagram>
   <diagram id="J4ag-63gikeXuUPazKgs" name="페이지-4">
-    <mxGraphModel dx="1434" dy="838" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1834" dy="1238" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="_j9THbHmmMyN3-xXC7Uo-2" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="_j9THbHmmMyN3-xXC7Uo-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-35" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_j9THbHmmMyN3-xXC7Uo-1" value="컴포넌트 초기화" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-95" y="-79" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_j9THbHmmMyN3-xXC7Uo-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-95" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
